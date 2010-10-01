@@ -207,8 +207,11 @@ Our _bin/gem\_name_ file is empty, which results in this Nothing Travesty. Get r
 
     require 'gem_name/cli'
     GemName::CLI.start
+    
 
-Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _gem\_name/cli_ file to require. Ok, so it's therefore obvious that the next step is to create this file, but what does it do? 
+Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _gem\_name/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/gem\_name_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
+
+ Ok, so it's therefore obvious that the next step is to create this file, but what does it do? 
 
 This new _gem\_name/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
 
@@ -279,6 +282,33 @@ With our features and specs all passing now, we're at a good point to commit our
 
 It was aforementioned that we could use Thor for more than just CLI. That we could use it to create a generator. This is true. We can even create generator_s_, but let's not get too carried away right now and just focus on creating the one.
 
-## Generating a generator
+## Testing a generator
 
-You saw that pun coming? Damn.
+You saw that pun coming, right? Yeah, pretty obvious.
+ 
+We're going to mix it up a bit and add a new feature to our gem: a generator for a _recipes_ directory. The idea is that we can run our generator like this:
+
+    gem_name recipe dinner steak
+    
+This will generate a _recipes_ directory at the current location, a _dinner_ directory inside that and then a _steak.txt_ file inside that. This _steak.txt_ file will contain the scaffold for a recipe, such as the ingredients and the instructions.
+
+Thankfully for us, Aruba has ways of testing that a generator generates files and directories. Let's create a new file called _features/generator.feature_ and fill it with this content:
+
+    Feature: Generating things
+      In order to generate useful directory structures
+      As a user
+      I want gem_name to hold my hand, tightly
+      
+      Scenario: Recipes
+        When I run "gem_name recipe dinner steak"
+        Then the following files should exist:
+          | dinner/steak.txt |
+        Then the file "dinner/steak.txt" should contain:
+          """
+            ##### Ingredients #####
+            Ingredients for delicious food go here.
+            
+            
+            ##### Instructions #####
+            Tips on how to make delicious food go here.
+          """
