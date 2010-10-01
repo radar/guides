@@ -1,3 +1,5 @@
+# Developing a RubyGem using Bundler
+
 Bundler is a tool created by Carl Lerche, Yehuda Katz and various superb contributors for managing Rubygems dependencies in Ruby libraries. Bundler 1.0 was released around the same time as Rails 3 and it's the Rails project where Bundler is probably most well-known usage occurs. But remember, Bundler isn't just for Rails!
 
 Did you know that you can use Bundler for not only gem dependency management but also for writing our own gems? It's really easy to do this and Bundler provides a couple of things to help you along this path. 
