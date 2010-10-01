@@ -18,7 +18,7 @@ To begin to create a gem using Bundler, use the `bundle gem` command like this:
     
 We call our gem `gem_name` because we're not very imaginative with gem names and the chance that somebody else has named their gem this is pretty low.
     
-This command creates a scaffold directory for our new gem and if we have Git installed initializes a Git repository in this directory. The files generated are:
+This command creates a scaffold directory for our new gem and if we have Git installed initializes a Git repository in this directory so we can start committing right away. The files generated are:
 
  * **Gemfile**: Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _gem\_name.gemspec_ too. It's best practice to specify the gems that our library depends on for "production" usage in the _gemspec_, and the gems for development of the library in the _Gemfile_.
  
