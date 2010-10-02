@@ -316,18 +316,45 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
     Feature: Generating things
       In order to generate many a thing
       As a CLI newbie
-      I want gem_name to hold my hand, tightly
+      I want foodie to hold my hand, tightly
       
       Scenario: Recipes
-        When I run "gem_name recipe dinner steak"
+        When I run "foodie recipe dinner steak"
         Then the following files should exist:
           | dinner/steak.txt |
         Then the file "dinner/steak.txt" should contain:
           """
-            ##### Ingredients #####
-            Ingredients for delicious food go here.
-            
-            
-            ##### Instructions #####
-            Tips on how to make delicious food go here.
+          ##### Ingredients #####
+          Ingredients for delicious food go here.
+          
+          
+          ##### Instructions #####
+          Tips on how to make delicious food go here.
           """
+When we run this feature we'll be told that there's an undefined step and a failing scenario. We'll get to the failure in just a bit. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
+
+
+    Then /^the file "([^"]*)" should contain:$/ do |file, content|
+      check_file_content(file, content, true)
+    end
+   
+Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not? Well, because currently we don't have a `recipe` task that does this for us defined in `Foodie::CLI`. We can define invoke a generator class just like we invoke a CLI class:
+
+    desc "recipe", "Generates a recipe scaffold"
+    def recipe(group, name)
+      Foodie::Recipe.start([group, name])
+    end
+    
+The first argument for this method are the arguments passed to the generator.
+    
+To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories.
+
+    module Foodie
+      class Recipe < Thor::Group
+        include Thor::Actions
+      end
+    end
+    
+By inheriting from `Thor::Group`, we're defining a generator rather than a CLI.
+    
+To make this generator, ya know, generate stuff we simply define methods in the class. Let's define a `create_group` method now which will create a directory using the name we have passed in.
