@@ -338,23 +338,88 @@ When we run this feature we'll be told that there's an undefined step and a fail
       check_file_content(file, content, true)
     end
    
-Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not? Well, because currently we don't have a `recipe` task that does this for us defined in `Foodie::CLI`. We can define invoke a generator class just like we invoke a CLI class:
+Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not? 
+
+## Writing a generator 
+
+Well, because currently we don't have a `recipe` task that does this for us defined in `Foodie::CLI`. We can define invoke a generator class just like we invoke a CLI class:
 
     desc "recipe", "Generates a recipe scaffold"
     def recipe(group, name)
-      Foodie::Recipe.start([group, name])
+      Foodie::Generators::Recipe.start([group, name])
     end
     
-The first argument for this method are the arguments passed to the generator.
-    
-To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories.
+The first argument for this method are the arguments passed to the generator. We will need to require the file for this new class too, which we can do by putting this line at the top of _lib/foodie/cli.rb_:
 
-    module Foodie
-      class Recipe < Thor::Group
-        include Thor::Actions
-      end
+    require 'foodie/generators/recipe'
+    
+To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories. Because this is a generator class, we will put it in a new namespace called "generators", making the location of this file _lib/foodie/generators/recipe.rb_:
+
+   require 'thor/group'
+   module Foodie
+     module Generators
+       class Recipe < Thor::Group
+         include Thor::Actions
+         
+         argument :group, :type => :string
+         argument :name, :type => :string
+       end
+     end
+   end
+    
+By inheriting from `Thor::Group`, we're defining a generator rather than a CLI. When we call `argument`, we are defining arguments for our generator. These are the same arguments in the same order they are passed in from the `recipe` task back in `Foodie::CLI`
+    
+To make this generator, ya know, generate stuff we simply define methods in the class. All methods defined in a `Thor::Group` descendant will be ran when `start` is called on it. Let's define a `create_group` method inside this class which will create a directory using the name we have passed in.
+
+    def create_group
+      empty_directory(group)
     end
+
+To put the file in this directory and to save our foodie-friends some typing, we will use the `template` method. This will copy over a file from a pre-defined source location. We will define a `copy_recipe` method to do this now:
+
+    def copy_recipe
+      template("recipe.txt", "#{group}/#{name}.txt")
+    end
+
+It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec bin/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
+
+    create  dinner
+    Could not find "recipe.txt" in any of your source paths. Please invoke Foodie::Generators::Recipe.source_root(PATH) with the PATH containing your templates. Currently you have no source paths.
     
-By inheriting from `Thor::Group`, we're defining a generator rather than a CLI.
-    
-To make this generator, ya know, generate stuff we simply define methods in the class. Let's define a `create_group` method now which will create a directory using the name we have passed in.
+The first line tells us that the _dinner_ directory has been created. Nothing too fancy there.
+  
+The second line is more exciting though! It's asking us to define the `source_root` method for our generator. That's easy! We can define it as a class method in `Foodie::Generators::Recipe` like this:
+
+    def self.source_root
+      File.dirname(__FILE__) + "/recipe"
+    end
+
+This tells our generator where to find the template. Now all we need to do is to create the template, which we can put at _lib/foodie/generators/recipe/recipe.txt_:
+
+    ##### Ingredients #####
+    Ingredients for delicious food go here.
+     
+     
+    ##### Instructions #####
+    Tips on how to make delicious food go here.
+  
+And that's all! When we run `bundle exec cucumber features` all our features will be passing:
+
+    3 scenarios (3 passed)
+    7 steps (7 passed)
+
+## Releasing the gem
+
+The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
+
+To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
+
+Secondly, it creates a tag for the current commit reflecting the current version and will push it to the set up remote. It's encouraged that you host the code on GitHub so that others may easily find it. 
+
+If this push succeeds then the final step will be the push to Rubygems.org which will now allow other people to download and install the gem.
+
+## Summary
+
+Whilst this isn't an _exhaustive_ guide on developing a gem, it covers the basics needed for gem development. It's really, _really_ recommended that you check out the source for Bundler, Rails and RSpec for great examples of gem development.
+
+**If you've found any errors for this guide or if you have any suggestions, please file an issue on http://github.com/radar/guides.**
