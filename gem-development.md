@@ -56,27 +56,35 @@ Bundler has detected our gem and has loaded the gemspec and our gem is bundled j
 
 To run the `rspec` command for our bundle, we must use `bundle exec rspec`. This will use the bundled version of rspec rather than the system version. We can run it now by running `bundle exec rspec spec` to test precisely nothing. At least it works, right?
 
-We can write our first test with this framework now in place. For testing, we create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_ but this is a simple gem, so we won't. Let's call this new file _spec/greeter_spec.rb_ and fill it with this content:
+We can write our first test with this framework now in place. For testing, we create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_ but this is a simple gem, so we won't. Let's call this new file _spec/food_spec.rb_ and fill it with this content:
 
-    describe GemName::Greeter do
-      it "greets" do
-        GemName::Greeter.person("Ryan").should eql("Hello Ryan!")
+    describe GemName::Food do
+      it "broccoli is gross" do
+        GemName::Food.portrayal("Broccoli").should eql("Gross!")
+      end
+      
+      it "anything else is delicious" do
+        GemName::Food.portrayal("Broccoli").should eql("Delicious!")
       end
     end
 
-When we run `bundle exec rspec spec` again, we'll be told the `GemName::Greeter` constant doesn't exist. This is true, and we should define it in _lib/gem_name/greeter.rb_ like this:
+When we run `bundle exec rspec spec` again, we'll be told the `GemName::Food` constant doesn't exist. This is true, and we should define it in _lib/gem_name/food.rb_ like this:
 
     module GemName
-      class Greeter
-        def self.person(name)
-          "Hello #{name}!"
+      class Food
+        def self.portrayal(food)
+          if food.downcase == "broccoli"
+            "Gross!"
+          else
+            "Delicious"
+          end
         end
       end
     end
 
 We can then require this file at the top of our spec file by using this line:
 
-    require 'gem_name/greeter'
+    require 'gem_name/food'
     
 When we run our specs with `bundle exec rspec spec` this test will pass:
 
@@ -89,7 +97,9 @@ It's all well and dandy that we can write our own code, but what if we want to d
 
 ## Using other gems
 
-To use another gem, we must first specify it as a dependency in our _gem\_name.gemspec_. For this gem, we're going to use the `activesupport` gem to greet a group of things. This will be done through the `group` in our `GemName::Greeter` class which will pluralize the name of the group we specify and output "What's up, [group]?". We can specify the dependency on the `faker` gem in _gem\_name.gemspec_ by adding this line inside the `Gem::Specification` object:
+We're now going to use Active Support's `pluralize` method by calling it using a method from our gem.
+
+To use another gem, we must first specify it as a dependency in our _gem\_name.gemspec_. We can specify the dependency on the `activesupport` gem in _gem\_name.gemspec_ by adding this line inside the `Gem::Specification` object:
 
     s.add_dependency "activesupport", "3.0.0"
     
@@ -99,18 +109,18 @@ If we wanted to specify a particular version we may use this line:
     
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies.
 
-When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `group` method before we code it. Let's add this test to _spec/greeter\_spec.rb_ now inside our `describe GemName::Greeter` block:
+When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `group` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe GemName::Food` block:
 
-    it "greets a group" do
-      GemName::Greeter.group("peep").should eql("What's up, peeps?")
+    it "portrays a group" do
+      GemName::Food.pluralize("Tomato").should eql("Tomatoes")
     end
 
 Of course when we run this spec with `bundle exec rspec spec` it will fail:
 
-    Failure/Error: GemName::Greeter.group("peep").should eql("What's up, peeps?")
-         undefined method `group' for GemName::Greeter:Class
+    Failure/Error: GemName::Food.pluralize("Tomato").should eql("Tomatoes")
+         undefined method `pluralize' for GemName::Food:Class
 
-We can now define this `group` method in _lib/gem\_name/greeter.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
+We can now define this `pluralize` method in _lib/gem\_name/food.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
 
     require 'active_support/inflector'
     
@@ -148,20 +158,20 @@ We will define a new `group` in our _Gemfile_ now for the Cucumber things:
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
-Our CLI is going to have two methods, which correspond to the two methods which we have defined in `GemName::Greeter`. We will now create a _features_ directory where we will make sweet, sweet love to Aruba to write tests for our CLI. In this directory we'll create a new file called _features/greeter.feature_ and in it, fill it with this juicy code:
+Our CLI is going to have two methods, which correspond to the two methods which we have defined in `GemName::Food`. We will now create a _features_ directory where we will make sweet, sweet love to Aruba to write tests for our CLI. In this directory we'll create a new file called _features/food.feature_ and in it, fill it with this juicy code:
 
-    Feature: Greeter
-      In order to greet people or things
+    Feature: Food
+      In order to portray or pluralize food
       As a CLI
-      I want to be as friendly as I can be
+      I want to be as objective as possible
   
-      Scenario: Normal greeting
-        When I run "gem_name greet Ryan"
-        Then the output should contain "Hello Ryan!"
+      Scenario: Broccoli is gross
+        When I run "gem_name portray broccoli"
+        Then the output should contain "Gross!"
 
-      Scenario: Group greeting
-        When I run "gem_name group --name peep"
-        Then the output should contain "What's up, peeps?"
+      Scenario: Tomato, or Tomato?
+        When I run "gem_name pluralize --thing Tomato"
+        Then the output should contain "Tomatoes"
         
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
 
@@ -238,22 +248,22 @@ We also need to require it at the top of _gem\_name/cli.rb_
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
-    Could not find task "greet"
+    Could not find task "portray"
     ...
     Could not find task "group"
     
-Thor tasks are defined as plain ol' methods, but with a slight twist. To define the `greet` task in our `GemName::CLI` class we will write this inside the `GemName::CLI` class:
+Thor tasks are defined as plain ol' methods, but with a slight twist. To define the `portray` task in our `GemName::CLI` class we will write this inside the `GemName::CLI` class:
 
-    desc "greet NAME", "Greets people"
-    def greet(name)
-      puts GemName::Greeter.greet(name)
+    desc "portray ITEM", "Determines if a piece of food is gross or delicious"
+    def portray(name)
+      puts GemName::Food.portray(name)
     end
     
-The `desc` method is the "slight twist" here. The method defined after it becomes a task with the given description. The first argument for `desc` is the usage instructions for the task whilst the second is the short description of what that task accomplishes. The `greet` method is defined with a single argument, which will be the first argument passed to this task on the command line. Inside the `greet` method we call `GemName::Greeter.greet` and pass it this argument.
+The `desc` method is the "slight twist" here. The method defined after it becomes a task with the given description. The first argument for `desc` is the usage instructions for the task whilst the second is the short description of what that task accomplishes. The `portray` method is defined with a single argument, which will be the first argument passed to this task on the command line. Inside the `portray` method we call `GemName::Food.portray` and pass it this argument.
 
-In the `GemName::CLI` class we're referencing the `GemName::Greeter` class without requiring the file that defines it. Under the `require 'thor'` at the top of this file, put this line to require the file that defines `GemName::Greeter`:
+In the `GemName::CLI` class we're referencing the `GemName::Food` class without requiring the file that defines it. Under the `require 'thor'` at the top of this file, put this line to require the file that defines `GemName::Food`:
 
-    require 'gem_name/greeter'
+    require 'gem_name/food'
     
 When we re-run our features using `bundle exec cucumber features` our first scenario will pass:
 
@@ -263,13 +273,13 @@ When we re-run our features using `bundle exec cucumber features` our first scen
 The second and third are still failing because we haven't defined the `group` task for them. This time rather than defining a task that takes an argument, we'll define a task that reads in the value from an option passed to the task. To define the `group` task we use this code in `GemName::CLI`:
 
 
-    desc "group", "Greets a group of things"
-    method_option :name => :string, :aliases => "-n"
-    def group
-      puts GemName::Greeter.group(options[:name])
+    desc "pluralize", "Pluralizes a word"
+    method_option :word => :string, :aliases => "-n"
+    def pluralize
+      puts GemName::Food.pluralize(options[:word])
     end
 
-Here there's the new `method_option` method we use which defines, well, a method option. It takes a hash which indicates the details of an option how they should be returned to our task. Check out the Thor README for a full list of valid types. We can also define aliases for this method using the `:aliases` Inside the task we reference the value of the options through the `options` hash and we use `GemName::Greeter.group` to greet a group of things.
+Here there's the new `method_option` method we use which defines, well, a method option. It takes a hash which indicates the details of an option how they should be returned to our task. Check out the Thor README for a full list of valid types. We can also define aliases for this method using the `:aliases` Inside the task we reference the value of the options through the `options` hash and we use `GemName::Food.pluralize` to pluralize a word.
 
 When we run our scenarios again with `bundle exec cucumber features` both scenarios will be passing:
 
@@ -280,7 +290,7 @@ This introduction should have whet your appetite to learn more about Thor and it
 
 With our features and specs all passing now, we're at a good point to commit our code. 
 
-It was aforementioned that we could use Thor for more than just CLI. That we could use it to create a generator. This is true. We can even create generator_s_, but let's not get too carried away right now and just focus on creating the one.
+It was aforementioned that we could use Thor for more than just CLI. That we could use it to create a generator. This is true. We can even create generator*s*, but let's not get too carried away right now and just focus on creating the one.
 
 ## Testing a generator
 
