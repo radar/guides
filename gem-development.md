@@ -274,7 +274,7 @@ The second and third are still failing because we haven't defined the `group` ta
 
 
     desc "pluralize", "Pluralizes a word"
-    method_option :word => :string, :aliases => "-w"
+    method_option :word, :aliases => "-w"
     def pluralize
       puts GemName::Food.pluralize(options[:word])
     end
