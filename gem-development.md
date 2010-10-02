@@ -285,6 +285,15 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
 
     2 scenarios (2 passed)
     4 steps (4 passed)
+    
+If we want to add more options later on, we can define them by using the `method_options` helper like this:
+
+    method_options :word => :string, :uppercase => :boolean
+    def pluralize
+      # accessed as options[:word], options[:uppercase]
+    end
+    
+In this example, `options[:word]` will return a `String` object, whilst `options[:uppercase]` will return either `true` or `false`, depending on the value it has received.
 
 This introduction should have whet your appetite to learn more about Thor and it's encouraged that you do that now. Check out `Bundler::CLI` for a great example of using Thor as a CLI tool.
 
