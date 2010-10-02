@@ -60,11 +60,11 @@ We can write our first test with this framework now in place. For testing, we cr
 
     describe GemName::Food do
       it "broccoli is gross" do
-        GemName::Food.portrayal("Broccoli").should eql("Gross!")
+        GemName::Food.portray("Broccoli").should eql("Gross!")
       end
       
       it "anything else is delicious" do
-        GemName::Food.portrayal("Broccoli").should eql("Delicious!")
+        GemName::Food.portray("Not Broccoli").should eql("Delicious!")
       end
     end
 
@@ -72,7 +72,7 @@ When we run `bundle exec rspec spec` again, we'll be told the `GemName::Food` co
 
     module GemName
       class Food
-        def self.portrayal(food)
+        def self.portray(food)
           if food.downcase == "broccoli"
             "Gross!"
           else
@@ -111,7 +111,7 @@ However, relying on a version simply greater than the latest-at-the-time is a su
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `group` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe GemName::Food` block:
 
-    it "portrays a group" do
+    it "pluralizes a word" do
       GemName::Food.pluralize("Tomato").should eql("Tomatoes")
     end
 
@@ -124,16 +124,16 @@ We can now define this `pluralize` method in _lib/gem\_name/food.rb_ by first of
 
     require 'active_support/inflector'
     
-Next, we can define the `group` method like this:
+Next, we can define the `pluralize` method like this:
 
-    def self.group(grp)
-      "What's up, #{grp.pluralize}"
+    def self.pluralize(word)
+      word.pluralize
     end
 
 When we run `bundle exec rspec spec` both our specs will pass:
 
-    ..
-    2 examples, 0 failures
+    ...
+    3 examples, 0 failures
     
 This brings another checkpoint where it'd be a good idea to commit our efforts so far.
 
@@ -170,7 +170,7 @@ Our CLI is going to have two methods, which correspond to the two methods which 
         Then the output should contain "Gross!"
 
       Scenario: Tomato, or Tomato?
-        When I run "gem_name pluralize --thing Tomato"
+        When I run "gem_name pluralize --word Tomato"
         Then the output should contain "Tomatoes"
         
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
@@ -223,7 +223,7 @@ Boom! When we run `bundle exec cucumber features` again it will whinge that ther
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do? 
 
-This new _gem\_name/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
+This new _gem\_name/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz (& collaborators) as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
 
 For now we'll just look at how we can craft a CLI using Thor and then afterwards, if you behave, we'll look at how to write a generation using it too.
 
@@ -274,12 +274,12 @@ The second and third are still failing because we haven't defined the `group` ta
 
 
     desc "pluralize", "Pluralizes a word"
-    method_option :word => :string, :aliases => "-n"
+    method_option :word => :string, :aliases => "-w"
     def pluralize
       puts GemName::Food.pluralize(options[:word])
     end
 
-Here there's the new `method_option` method we use which defines, well, a method option. It takes a hash which indicates the details of an option how they should be returned to our task. Check out the Thor README for a full list of valid types. We can also define aliases for this method using the `:aliases` Inside the task we reference the value of the options through the `options` hash and we use `GemName::Food.pluralize` to pluralize a word.
+Here there's the new `method_option` method we use which defines, well, a method option. It takes a hash which indicates the details of an option how they should be returned to our task. Check out the Thor README for a full list of valid types. We can also define aliases for this method using the `:aliases` option passed to `method_option`. Inside the task we reference the value of the options through the `options` hash and we use `GemName::Food.pluralize` to pluralize a word.
 
 When we run our scenarios again with `bundle exec cucumber features` both scenarios will be passing:
 
@@ -305,8 +305,8 @@ This will generate a _recipes_ directory at the current location, a _dinner_ dir
 Thankfully for us, Aruba has ways of testing that a generator generates files and directories. Let's create a new file called _features/generator.feature_ and fill it with this content:
 
     Feature: Generating things
-      In order to generate useful directory structures
-      As a user
+      In order to generate many a thing
+      As a CLI newbie
       I want gem_name to hold my hand, tightly
       
       Scenario: Recipes
