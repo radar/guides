@@ -206,7 +206,9 @@ OK, so it's not *that* cryptic. It just means it can't find the executable file 
     #!/usr/bin/env ruby
     print "nothing."
     
-If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error.
+If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error. Hey, speaking of running, we should `chmod` this file to be an executable from our terminal:
+
+    chmod +x bin/foodie
 
 Alright so we've got the executable file, now what? If we re-run our features we get *nothing* for the output. Nothing! Literally!
 
