@@ -375,11 +375,13 @@ To make this generator, ya know, generate stuff we simply define methods in the 
       empty_directory(group)
     end
 
-To put the file in this directory and to save our foodie-friends some typing, we will use the `template` method. This will copy over a file from a pre-defined source location. We will define a `copy_recipe` method to do this now:
+To put the file in this directory and to save our foodie-friends some typing, we will use the `template` method. This will copy over a file from a pre-defined source location and evaluate it as if it were an ERB template. We will define a `copy_recipe` method to do this now:
 
     def copy_recipe
       template("recipe.txt", "#{group}/#{name}.txt")
     end
+    
+If we had any ERB calls in this file, they would be evaluated and the result would be output in the new template file.
 
 It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec bin/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
 
