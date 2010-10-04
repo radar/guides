@@ -201,7 +201,7 @@ We have to re-run `bundle exec cucumber features`, just to see what happens next
 
     sh: foodie: command not found
    
-OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create one in the _bin_ directory and name it _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
+OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _bin_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
 
     #!/usr/bin/env ruby
     print "nothing."
