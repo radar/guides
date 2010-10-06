@@ -431,6 +431,8 @@ Secondly, it creates a tag for the current commit reflecting the current version
 
 If this push succeeds then the final step will be the push to Rubygems.org which will now allow other people to download and install the gem.
 
+If we want to release a second version of our gem, we should make your changes and then commit them to GitHub. Afterwards, we will bump the version number in _lib/foodie/version.rb_ to whatever we see fit, make another commit to GitHub with a useful message such as "bumped to 0.0.2" and then run `rake release` again.
+
 ## Summary
 
 Whilst this isn't an _exhaustive_ guide on developing a gem, it covers the basics needed for gem development. It's really, _really_ recommended that you check out the source for Bundler, Rails and RSpec for great examples of gem development.
