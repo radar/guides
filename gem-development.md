@@ -329,13 +329,16 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
         Then the file "dinner/steak.txt" should contain:
           """
           ##### Ingredients #####
-          Ingredients for delicious food go here.
+          Ingredients for delicious steak go here.
           
           
           ##### Instructions #####
-          Tips on how to make delicious food go here.
+          Tips on how to make delicious steak go here.
           """
-When we run this feature we'll be told that there's an undefined step and a failing scenario. We'll get to the failure in just a bit. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
+          
+It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon. 
+
+When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
 
 
     Then /^the file "([^"]*)" should contain:$/ do |file, content|
@@ -403,16 +406,20 @@ The second line is more exciting though! It's asking us to define the `source_ro
 This tells our generator where to find the template. Now all we need to do is to create the template, which we can put at _lib/foodie/generators/recipe/recipe.txt_:
 
     ##### Ingredients #####
-    Ingredients for delicious food go here.
+    Ingredients for delicious <%= name %> go here.
      
      
     ##### Instructions #####
-    Tips on how to make delicious food go here.
+    Tips on how to make delicious <%= name %> go here.
+    
+When we use the `template` method, the template file is treated like an ERB template which is evaluated within the current `binding` which means that it has access to the same methods and variables as the method that calls it. 
   
-And that's all! When we run `bundle exec cucumber features` all our features will be passing:
+And that's all! When we run `bundle exec cucumber features` all our features will be passing!
 
     3 scenarios (3 passed)
     7 steps (7 passed)
+
+Amazing stuff, hey?
 
 ## Releasing the gem
 
