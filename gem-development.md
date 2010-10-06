@@ -40,11 +40,15 @@ There's our base and our layout, now get developing!
 
 For this guide, we're going to use RSpec to test our gem. We write tests to ensure that everything goes according to plan and to prevent future-us from building a time machine to come back and kick our asses. 
 
-To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _Gemfile_ that we need to use `rspec` to test our gem. We will put these lines in:
+To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
-    group :test do
-      gem 'rspec', '2.0.0.beta.22'
-    end
+    s.add_development_dependency "rspec", "~> 2.0.0.beta.22"
+    
+Because we have the `gemspec` method call in our _Gemfile_, Bundler will add this gem automatically to a group called "development" which then we can reference any time we want to load these gems with this line:
+
+    Bundler.require(:default, :development)
+    
+The benefit of putting this dependency specification inside of _foodie.gemspec_ rather than the _Gemfile_ is that anybody who runs `gem install foodie --dev` will get these development dependencies installed too. This command is used for when people wish to test a gem without having to fork it or clone it from GitHub.
 
 When we run `bundle install`, rspec will be installed for this library and any other library we use with Bundler, but not for the system. This is an important distinction to make: any gem installed by Bundler will not muck about with gems installed by `gem install`. It is effectively a sandboxed environment. It is best practice to use Bundler to manage our gems so that we do not have gem version conflicts.
 
@@ -149,12 +153,10 @@ Like "Aruba". (BAM)[http://github.com/aslakhellesoy/aruba].
 
 David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing tool, which they both use for RSpec and Cucumber, and now we too can use it for testing our gems. Oh hey, speaking of Cucumber that's also what we're going to be using to define the Aruba tests. Human-code-client-readable tests are the way of the future, man.
 
-We will define a new `group` in our _Gemfile_ now for the Cucumber things:
+We will define a new development dependency in _foodie.gemspec_ now for the Cucumber things:
 
-    group :cucumber do
-      gem 'cucumber'
-      gem 'aruba'
-    end
+    s.add_development_dependency "cucumber"
+    s.add_development_dependency "aruba"
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
