@@ -426,7 +426,7 @@ The final step before releasing our gem is to give it a summary and description 
 
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
 
-Secondly, it creates a tag for the current commit reflecting the current version and will push it to the set up remote. It's encouraged that you host the code on GitHub so that others may easily find it. 
+Secondly, it creates a tag for the current commit reflecting the current version and will push it to the set up remote. It's encouraged that we host the code on GitHub so that others may easily find it. 
 
 If this push succeeds then the final step will be the push to Rubygems.org which will now allow other people to download and install the gem.
 
