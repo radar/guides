@@ -80,7 +80,7 @@ When we run `bundle exec rspec spec` again, we'll be told the `Foodie::Food` con
           if food.downcase == "broccoli"
             "Gross!"
           else
-            "Delicious"
+            "Delicious!"
           end
         end
       end
