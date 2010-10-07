@@ -92,8 +92,7 @@ We can then require this file at the top of our spec file by using this line:
     
 When we run our specs with `bundle exec rspec spec` this test will pass:
 
-    .
-    1 example, 0 failures
+    2 example, 0 failures
 
 Great success! If we're using Git (or any other source control system), this is a great checkpoint to commit our code. Always remember to commit often!
 
