@@ -437,3 +437,5 @@ If we want to release a second version of our gem, we should make your changes a
 Whilst this isn't an _exhaustive_ guide on developing a gem, it covers the basics needed for gem development. It's really, _really_ recommended that you check out the source for Bundler, Rails and RSpec for great examples of gem development.
 
 **If you've found any errors for this guide or if you have any suggestions, please file an issue on http://github.com/radar/guides.**
+
+** If you're looking for the complete source code for this example it can be found [here](http://github.com/radar/guides/tree/master/gem-development/foodie)**
