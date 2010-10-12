@@ -20,13 +20,13 @@ We call our gem `foodie` because this gem is going to do a couple of things arou
     
 This command creates a scaffold directory for our new gem and if we have Git installed initializes a Git repository in this directory so we can start committing right away. The files generated are:
 
- * **Gemfile**: Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify the gems that our library depends on for "production" usage in the _gemspec_, and the gems for development of the library in the _Gemfile_.
+ * **Gemfile**: Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify the gems that our library depends on all in the _gemspec_.
  
  * **Rakefile**: Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
  
  * **.gitignore**: (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
  
- * **foodie.gemspec**: The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run. Remember: "production" dependencies in the gemspec, development dependencies in the _Gemfile_
+ * **foodie.gemspec**: The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
  
  * **lib/foodie.rb**: The main file to define our gem's code. This is the file that will be required by Bundler (or any similarly smart system) when our gem is loaded. This file defines a `module` which we can use a namespace for all our gem's code. It's best practice to put our code in...
  
