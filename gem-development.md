@@ -450,4 +450,6 @@ Whilst this isn't an _exhaustive_ guide on developing a gem, it covers the basic
 
 **If you've found any errors for this guide or if you have any suggestions, please file an issue on http://github.com/radar/guides.**
 
+**I'd like to thank [Andre Arko](http://github.com/indirect) for his involvement in the Bundler project and for answering my questions about it. Without his help, this guide would have been difficult to write.**
+
 ** If you're looking for the complete source code for this example it can be found [here](http://github.com/radar/guides/tree/master/gem-development/foodie)**
