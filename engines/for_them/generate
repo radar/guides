@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+require 'rails'
+require 'rails/generators'
+
+# Set up a fake Rails app.
+# Hey, don't diss me. This is how Rails itself does.
+# Checkout railties/test/abstract_unit.rb
+class Generator < Rails::Application
+  config.generators do |g|
+    g.orm :active_record, :migration => true
+  end
+end
+
+Rails::Generators.configure!
+
+
+generator = ARGV.shift.to_sym
+# TODO: figure out how to set orm option automatically
+Rails::Generators.invoke generator, ARGV
