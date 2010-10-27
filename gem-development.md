@@ -22,17 +22,17 @@ This command creates a scaffold directory for our new gem and if we have Git ins
 
  * [**Gemfile**](gem-development/foodie/Gemfile) : Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify the gems that our library depends on all in the _gemspec_.
  
- * **Rakefile**: Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
+ * [**Rakefile**](gem-development/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
  
- * **.gitignore**: (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
+ * [**.gitignore**](gem-development/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
  
- * **foodie.gemspec**: The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
+ * [**foodie.gemspec**](gem-development/foodie/foodie.gemspec): The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
  
- * **lib/foodie.rb**: The main file to define our gem's code. This is the file that will be required by Bundler (or any similarly smart system) when our gem is loaded. This file defines a `module` which we can use a namespace for all our gem's code. It's best practice to put our code in...
+ * [**lib/foodie.rb**](gem-development/foodie/lib/foodie.rb): The main file to define our gem's code. This is the file that will be required by Bundler (or any similarly smart system) when our gem is loaded. This file defines a `module` which we can use a namespace for all our gem's code. It's best practice to put our code in...
  
- * **lib/foodie**: here. This folder should contain all the code (classes, etc.) for our gem. The _lib/foodie.rb_ file is there for setting up our gem's environment, whilst all the parts to it go in this folder. If our gem has multiple uses, separating this out so that people can require one class/file at a time can be really helpful.
+ * [**lib/foodie**](gem-development/foodie/lib/foodie): here. This folder should contain all the code (classes, etc.) for our gem. The _lib/foodie.rb_ file is there for setting up our gem's environment, whilst all the parts to it go in this folder. If our gem has multiple uses, separating this out so that people can require one class/file at a time can be really helpful.
  
- * **lib/foodie/version.rb**: Defines a `Foodie` constant and in it, a `VERSION` constant. This file is loaded by the _foodie.gemspec_ to specify a version for the gem specification. When we release a new version of the gem we will increment a part of this version number to indicate to Rubygems that we're releasing a new version.
+ * [**lib/foodie/version.rb**](gem-development/foodie/lib/foodie/version.rb): Defines a `Foodie` constant and in it, a `VERSION` constant. This file is loaded by the _foodie.gemspec_ to specify a version for the gem specification. When we release a new version of the gem we will increment a part of this version number to indicate to Rubygems that we're releasing a new version.
  
 There's our base and our layout, now get developing!
 
