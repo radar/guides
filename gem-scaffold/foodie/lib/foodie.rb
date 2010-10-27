@@ -1,0 +1,3 @@
+module Foodie
+  # Your code goes here...
+end
