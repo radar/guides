@@ -16,4 +16,26 @@ Thankfully, Jose Valim's got that covered too.
 
 ## enginex
 
-enginex is a gem that Jose Valim's written for his upcoming book, SHAMELESS PROMOTIONAL TITLE AND LINK GOES HERE, which generates a pretty decent scaffold for an engine, including a very bare-bones Rails application inside _spec/dummy_ which we can use to test our engine's functionality.
+enginex is a gem that Jose Valim's written for his upcoming book, SHAMELESS PROMOTIONAL TITLE AND LINK GOES HERE, which generates a pretty decent scaffold for an engine, including a very bare-bones Rails application inside _spec/dummy_ which we can use to test our engine's functionality. Rather than just simply talking what this gem does, let's see it in action.
+
+Firstly, we're going to need to install the gem which is as easy as using this command:
+
+    gem install enginex
+    
+This gem provides us with a command called `enginex` which we can use to generate the beginnings of the scaffold for our engine. Our engine's name is an absolutely terrible pun on the word "forum": it's going to be called `for_them`. Let's generate the scaffold now by running using this new command, telling it the (terrible) name of our new engine and passing the option to generate RSpec tests:
+
+    enginex for_them -t rspec --cucumber
+
+By using 
+
+Let's go through what this command actually generates. It operates by a 4-part process, generating slightly different things at each step.
+
+For the first step, this command obviously needs to generate a directory to contain the engine in, and it does. This directory is called _for\_them_, the name that we gave our engine. The first step is setting up the skeleton for our engine to become a gem. By making this engine a gem, we can easily distribute it by uploading it to rubygems.org or rubyforge.org. This step generates the following files:
+
+* _for\_them.gemspec_: (in the future, plainly referenced as "the _gemspec_") Contains a `Gem::Specification` for this engine, setting up things such as the name of the gem, its current version and any of its dependencies for either "real-world" operation or development.
+* _Gemfile_: Configuration file for Bundler. Configures "http://rubygems.org" to be the source for all gems and then determines what gems the engine depends on by looking them up from the _gemspec_.
+* _lib/for\_them.rb_: Defines a module for our gem called `ForThem` and nothing else. This is the base module where our engine class will be namespaced in.
+* _MIT\_LICENSE_: An MIT License file for the gem which is useful if we choose to release it under the MIT License.
+* _README.rdoc_: Tells anybody who reads it that the "project rocks and uses the MIT-LICENSE". We can use this to tell users how to install or use our engine.
+* _spec/dummy_: A very basic Rails application which we can use to test our engine.
+    
