@@ -228,7 +228,7 @@ Boom! When we run `bundle exec cucumber features` again it will whinge that ther
 
 This new _foodie/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz (& collaborators) as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
 
-For now we'll just look at how we can craft a CLI using Thor and then afterwards, if you behave, we'll look at how to write a generation using it too.
+For now we'll just look at how we can craft a CLI using Thor and then afterwards, if you behave, we'll look at how to write a generator using it too.
 
 ## Crafting a CLI
 
