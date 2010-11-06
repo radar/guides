@@ -232,22 +232,20 @@ For now we'll just look at how we can craft a CLI using Thor and then afterwards
 
 ## Crafting a CLI
 
+To make this CLI work we're going to need to create a `Foodie::CLI` class and define a `start` method on it. Or you know, there's probably a gem out there for us to use. Like [Thor](http://github.com/wycats/thor). Named after the badass lightning god from norse mythology, this gem is definitely on the fast-track to being just as badass. This gem is what we'll be using to build our CLI interface and then later on the generator (if you behave, remember?).
+
 Let's define the _foodie/cli.rb_ file now like this:
 
+    require 'thor'
     module Foodie
       class CLI < Thor
     
       end
     end
     
-The `Thor` class has a series of methods that we can use to define CLI methods in our class. Our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
-
+The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
 
     s.add_dependency "thor"
-    
-We also need to require it at the top of _foodie/cli.rb_
-
-    require 'thor'
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
