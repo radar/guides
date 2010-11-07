@@ -6,9 +6,9 @@ There's currently only one guide: "Developing a RubyGem using Bundler". It teach
 
 I'm currently in the planning stages of the second guide: "Writing a Rails 3 Engine" which will be a chapter in the book I am co-authoring with [Yehuda Katz](http://yehudakatz.com) called [Rails 3 in Action](http://manning.com/katz) as well as freely available here as a form of promotion for the book.
 
-## You made a mistake!
+## You made a mistake! / I don't understand!
 
-Please file an [issue](http://github.com/radar/guides/issues) and I'll see what I can do about it.
+Please file an [issue](http://github.com/radar/guides/issues) and I'll see what I can do about it. If you don't understand something then I'm Doing It Wrong.
 
 ## A bit of background
 
