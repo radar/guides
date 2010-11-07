@@ -20,7 +20,7 @@ We call our gem `foodie` because this gem is going to do a couple of things arou
     
 This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and if we have Git installed initializes a Git repository in this directory so we can start committing right away. The files generated are:
 
- * [**Gemfile**](gem-scaffold/foodie/Gemfile) : Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify the gems that our library depends on all in the _gemspec_.
+ * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify the gems that our library depends on all in the _gemspec_.
  
  * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
  
