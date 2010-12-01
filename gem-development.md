@@ -52,6 +52,8 @@ The benefit of putting this dependency specification inside of _foodie.gemspec_ 
 
 When we run `bundle install`, rspec will be installed for this library and any other library we use with Bundler, but not for the system. This is an important distinction to make: any gem installed by Bundler will not muck about with gems installed by `gem install`. It is effectively a sandboxed environment. It is best practice to use Bundler to manage our gems so that we do not have gem version conflicts.
 
+By running `bundle install`, Bundler will generate the **extremely important** _Gemfile.lock_ file. This file is responsible for ensuring that every system this library is developed on has the *exact same* gems and so it should always be checked into version control. For more information on this file [read "THE GEMFILE.LOCK" section of the `bundle install` manpage](https://github.com/carlhuda/bundler/blob/1-0-stable/man/bundle-install.ronn#L226-246).
+
 Additionally in the `bundle install` output, we will see this line:
 
     Using foodie (0.0.1) from source at /path/to/foodie
