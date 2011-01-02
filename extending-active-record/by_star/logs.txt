@@ -1,0 +1,2 @@
+# Logfile created on 2011-01-02 18:29:10 +1000 by logger.rb/25413
+D, [2011-01-02T18:29:10.434103 #9976] DEBUG -- :   [1m[36mPost Load (0.2ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE ("posts"."created_at" BETWEEN '2011-01-01 00:00:00.000000' AND '2011-12-31 23:59:59.999999')[0m
