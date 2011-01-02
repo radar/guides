@@ -176,36 +176,114 @@ We're just flying through these. The final modification we'll make to how this m
 
 We're going to get the `by_year` method to take a set of options which will modify its behaviour. This set of options will only contain one key, but as it will be a `Hash` object, it leaves it open to taking multiple options at a later stage. Options that are not `:field` (or `'field'` if people feel so inclined) will do nothing. Let's write a new spec for this now in `spec/lib/by_star_spec.rb`:
 
+    it "a specified year, with options" do
+      published_posts = Post.by_year(Time.now.year, :field => "published_at")
+      published_posts.map(&:text).should include("First published post!")
+      published_posts.map(&:text).should_not include("First post!")
+    end
     
+Here the options are going to be `{ :field => "published_at" }` and this will modify the `by_year` method to look up based on this field instead. We ensure that we don't see the "First post!" post because this doesn't have a `published_at` field set, and shouldn't show up in our test if the options are being interpreted as they should be. The `published_at` field doesn't exist in our database's schema yet, so we'll add it to the `spec/support/schema.rb` file, changing our `posts` table definition to this:
+ 
+    ActiveRecord::Schema.define do
+      self.verbose = false
 
+      create_table :posts, :force => true do |t|
+        t.string :text
+        t.timestamps
+        t.datetime :published_at
+      end
+    end
 
+When we re-run our tests, the `posts` table will be re-created with this new field. To get a record with the `published_at` attribute set to something, we'll set one up in `spec/support/data.rb`:
 
+    Post.create(:text => "First published post!", :published_at => Time.now)
 
+Now to get this variety of the `by_year` method to work, we'll convert the method to this:
 
+    def by_year(year=Time.now.year, options={ :field => "created_at" })
+      start_time = Date.strptime("#{year}-01-01", "%Y-%m-%d").to_time
+      end_time = start_time.end_of_year
+      field = options[:field]
+      
+      where(self.arel_table[field].in(start_time..end_time))
+    end
 
+There we have the `options` defaulting to a hash with the `:field` key set to "created_at". If we pass through another field, like we do in the test, then it will alter the field used to do the lookup. So, does this test pass? Let's find out:
 
+    $ bundle exec rspec spec/
+    ...
 
+    Finished in 0.0049 seconds
+    3 examples, 0 failures
 
+There we go, passing too! One final thing: the class configuration.
 
+## Configuring the gem in the class
 
+If we've got a model that doesn't have a `created_at` field, but does have another field, then we don't want to always be passing in the `:field` option everywhere. Instead, we want to configure this option on a per-class basis like this:
 
+    class Event < ActiveRecord::Base
+      by_star do
+        field :date
+      end
+    end
 
+To test this implementation, we'll define a new model called `Event` in `spec/support/models.rb` using exactly the same code as above. Then we'll need to add the table for this to `spec/support/schema.rb`:
 
+    create_table :events, :force => true do |t|
+      t.string :name
+      t.date :date
+    end
 
+And then finally, to test that this actually works, we need to add data to `spec/support/data.rb`:
 
+    Event.create(:name => "The Party", :date => Time.now)
 
+Oh, and yes we'll need to add a test for this too in `spec/lib/by_star_spec.rb`:
+    
+    it "pre-configured field" do
+      Event.by_year.map(&:name).should include("The Party")
+    end
 
+Let's run our specs now:
 
+    $ bundle exec rspec spec
+    ... undefined method `by_star' for Event(Table doesn't exist):Class
 
+There's currently no `by_star` method defined on the `Event` class... because we're still yet to define it. This method takes a block which we'll use to configure the gem for this model and we'll now place it inside the `ByStar` module inside `lib/by_star.rb`:
 
+    def by_star(&block)
+      @config ||= ByStar::Config.new
+      @config.instance_eval(&block) if block_given?
+      @config
+    end
+    
+    class Config
+      def field(value=nil)
+        @field = value if value
+        @field
+      end
+    end
 
+When the `by_star` method is called, it will get a new `ByStar::Config` object and evaluate the block it's given within the context of that object, so that any method called inside the block is now called on the `ByStar::Config` object itself. In the `Config` class, we define a `field` method which will set `@field` to a value if one's given and return it, or if no value is given then simply return the set value. Using this, we can reference the field as `by_star.field` in our `by_year` method. But we must take care to recognise that the passed option to the method should have precedence over the class's default. Therefore, our `by_year` method should now look like this:
 
+     def by_year(year=Time.now.year, options = {})
+       beginning_of_year = Date.strptime("#{year}-01-01", "%Y-%m-%d").beginning_of_year
+       end_of_year = beginning_of_year.end_of_year
+       field = options[:field] || by_star.field || "created_at"
+       where(self.arel_table[field].in(beginning_of_year..end_of_year))
+     end
+     
+We've taken out the default in the `options` argument for the method, because if it defaulted to `created_at` then we wouldn't know if that was what was passed in or if that was the default. So instead, on the second-to-last line for this method, we check if the `:field` key in `options` is set and if it isn't then fall back to `by_star.field` and if that's not set then finally `created_at` becomes our default once more. One more run of our specs and everything should now be peachy:
 
+     $ bundle exec rspec spec/
+     ....
 
+     Finished in 0.01141 seconds
+     4 examples, 0 failures
 
+## Conclusion
 
+In this guide you have learned how to extend Active Record to have a `by_year` method which finds records based on the current year, or one that was passed in. The lookup field is configurable by passing in a `:field` option to the method. Finally, we set up a way to configure the options for our method using a class method called `by_star`.
 
-
-
-
-
+I hope you've learned something by reading this, and thanks for doing so!
