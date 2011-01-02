@@ -286,4 +286,6 @@ We've taken out the default in the `options` argument for the method, because if
 
 In this guide you have learned how to extend Active Record to have a `by_year` method which finds records based on the current year, or one that was passed in. The lookup field is configurable by passing in a `:field` option to the method. Finally, we set up a way to configure the options for our method using a class method called `by_star`.
 
-I hope you've learned something by reading this, and thanks for doing so!
+I hope you've learned something by reading this, and thanks for doing so! You can find the end-result of this gem in the [extending-active-record directory][https://github.com/radar/guides/tree/master/extending-active-record] on [this project][http://github.com/radar/guides].
+
+If you like my work, [donate to me!][http://pledgie.com/campaigns/14034].
