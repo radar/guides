@@ -1,8 +1,8 @@
 # Extending Active Record
 
-This guide will demonstrate how we can extend Active Record's functionality to provide a couple of new methods on our models which will allow us to find records based on a specified month or year, implementing the same functionality as found in the []() gem, but in a modern Rails 3 way using the features that Active Record and ARel provide.
+This guide will demonstrate how we can extend Active Record's functionality to provide a couple of new methods on our models which will allow us to find records based on a specified month or year, implementing the same functionality as found in the [by_star](http://github.com/radar/by_star) gem, but in a modern Rails 3 way using the features that Active Record and ARel provide.
 
-This guide assumes you've read the "[]()" guide which introduces how to develop a basic gem with Bundler. We extensively use the skills learned in that guide in this guide to build this gem, including Bundler and RSpec. 
+This guide assumes you've read the "[Gem Development](http://github.com/radar/guides/blob/master/gem-development.md)" guide which introduces how to develop a basic gem with Bundler. We extensively use the skills learned in that guide in this guide to build this gem, including Bundler and RSpec. 
 
 When we're done here, we'll have a gem that we can add into a Rails application and then be able to call methods on the Active Record models in the application, such as these `by_year` permutations which will find records based on the year passed in:
 
@@ -286,6 +286,6 @@ We've taken out the default in the `options` argument for the method, because if
 
 In this guide you have learned how to extend Active Record to have a `by_year` method which finds records based on the current year, or one that was passed in. The lookup field is configurable by passing in a `:field` option to the method. Finally, we set up a way to configure the options for our method using a class method called `by_star`.
 
-I hope you've learned something by reading this, and thanks for doing so! You can find the end-result of this gem in the []() on []().
+I hope you've learned something by reading this, and thanks for doing so! You can find the end-result of this gem in the [extending-active-record directory](https://github.com/radar/guides/tree/master/extending-active-record) on [this project](http://github.com/radar/guides).
 
-If you like my work, []().
+If you like my work, [donate to me!](http://pledgie.com/campaigns/14034).
