@@ -134,7 +134,7 @@ Such is the power of Active Record 3.
 
 With this method defined, let's see if we can have one passing spec now:
 
-    $ ber spec/
+    $ bundle exec rspec spec/
     .
 
     Finished in 0.00169 seconds
@@ -164,7 +164,7 @@ To get `by_year` to support this we will change the method to now take one argum
 
 The `Date.strptime` call here will convert the year into a `Date` object, and then we call `to_time` on it to get a `Time` object, just like the one we got from `Time.now`. Let's see if this makes our spec run now:
 
-    $ ber spec/
+    $ bundle exec rspec spec/
     ..
 
     Finished in 0.00358 seconds
