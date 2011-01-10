@@ -16,7 +16,7 @@ To begin this guide, we're going to start off with the very basic method of crea
 
 To get started we'll type http://gist.github.com into our browser's URL bar and press enter. BLAMMO. We're now at the place where Gists are born. At this page, we're presented with a screen that mostly contains a Gist box itself:
 
-![A new Gist](using-gist/new-gist.png)
+![A new Gist](/radar/guides/raw/master/using-gist/a-gist.png)
 
 Right up the top we've got a box that says "name this file..." which is very, very special. We can type anything we like into this and it's a great way to give meaning to the content that we're able to put there. By typing a name there such as "test.rb", Gist will know (by magic!) that this file is a Ruby file! What does this mean? Well, wait and see what happens when we create the content!
 
@@ -34,7 +34,7 @@ Once this is done, we've got two options. We can create either a public Gist or 
 
 In this case, we'll create a public Gist, generating a Gist that is ever so pretty.
 
-![Our first Gist](using-gist/first-gist.png)
+![Our first Gist](/radar/guides/raw/master/using-gist/a-gist.png)
 
 Because we've named the file "test.rb", Gist knows that this is a Ruby file and highlights it accordingly. If we didn't name this file, we could have used the "Language" drop-down on the new Gist page to get the same effect. Naming files is so much cooler though.
 
@@ -44,15 +44,15 @@ There we have it, our first ever, well done Gist. Now, what do we do if we want 
 
 Now that we've got our very own Gist, we can do with it as we please, such as editing it. Let's press the "edit" button to be taken to a screen similar to the "new gist" screen.
 
-![The edit button](using-gist/edit-gist.png)
+![The edit button](/radar/guides/raw/master/using-gist/a-gist.png)
 
-![The edit screen](using-gist/2-edit-gist.png)
+![The edit screen](/radar/guides/raw/master/using-gist/a-gist.png)
 
 On this screen, we've got a couple of things we can do. We can change the name of the file which could mean that the syntax highlighting changes for our Gist, but only if we change the extension to something different. We could change the content of the Gist which would generate a new revision. Or we could add another file.
 
 Let's add a new file. This seems to be the concept that people have the most difficulty with, so hopefully this informative diagram clearly points out where the "Add another file..." link is.
 
-![Add another file](using-gist/add-another-file-gist.png)
+![Add another file](/radar/guides/raw/master/using-gist/add-another-file-gist.png)
 
 By pressing this link, we're given another Gist box! Two for the price of one! PHWOAR. In this new Gist box we can enter a completely different filename and different content. Content, like this:
 
@@ -64,7 +64,7 @@ By pressing this link, we're given another Gist box! Two for the price of one! P
 
 This time, let's select "Ruby" from the "Language" select box and see what happens when we press "Save Gist".
 
-![DOTS HAVE BEEN THROWN](using-gist/dots-gist.png)
+![DOTS HAVE BEEN THROWN](/radar/guides/raw/master/using-gist/a-gist.png)
 
 ZOMG. Two Ruby files! In one Gist! Amazing!
 
@@ -78,7 +78,7 @@ Gists can be embedded into a page using two ways: JavaScript or an `iframe`.
 
 By clicking the "Show embed" link on a Gist we can get a JavaScript snippet which we can place on a page which will show all the files in the Gist. Alternatively, we can click the "embed" link on a single file just to get the embed snippet for a single Gist.
 
-![Embed this!](using-gist/embed-gist.png)
+![Embed this!](/radar/guides/raw/master/using-gist/a-gist.png)
 
 These snippets are simple `script` tags:
 
@@ -88,7 +88,7 @@ These snippets are simple `script` tags:
 
 Alternatively, Gist offers a JavaScript-free way of embedding. If we chuck (throw?) a `.pibb` extension on the end of the Gist we'll see a page like this:
 
-![Pibb embed](using-gist/pibb-gist.png)
+![Pibb embed](/radar/guides/raw/master/using-gist/a-gist.png)
 
 We can embed this into a page using an `iframe` tag:
 
