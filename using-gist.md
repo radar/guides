@@ -92,7 +92,7 @@ Alternatively, Gist offers a JavaScript-free way of embedding. If we chuck (thro
 
 We can embed this into a page using an `iframe` tag:
 
-      <iframe src="https://gist.github.com/772646.pibb">
+    <iframe src="https://gist.github.com/772646.pibb">
 
 ## Conclusion
 
