@@ -196,9 +196,9 @@ See those yellow things? They're undefined steps:
     
 We can define them by requiring Aruba. In Cucumber, all _.rb_ files in the _features/support_ directory are required. To prove this to ourselves, we can add a _features/support/setup.rb_ file (create the _support_ directory first) and put in this single line:
 
-    require 'aruba'
+    require 'aruba/cucumber'
    
-This loads Aruba which will define the steps our Cucumber features need to be awesome.
+This loads the Cucumber steps provided by Aruba which are the same steps our Cucumber features need to be awesome.
    
 We have to re-run `bundle exec cucumber features`, just to see what happens next. We see red. Red like the blood incessantly seeping from the walls. It contains this cryptic message:
 
