@@ -1,6 +1,8 @@
 # Using Gist
 
-Gist is a pastebin-like service except that it doesn't suck like [the](http://pastebin.org) [others](http://paste.pocoo.org/). Elaborating on the "it doesn't suck" part: Gist is built on top of the wonderful Git version control system and when you create a new Gist it creates a new Git repository just for your Gist. When the Gist is edited, a new commit is created and Gist provides a little navigation menu on the right hand-side of a page which lets people view the different versions of your Gist, with the most recent shown by default. The dots next to each version represent the number of lines added (green) and the number of lines taken away (red), with a maximum of 7 dots showing. 
+Gist is a pastebin-like service except that it doesn't suck like [the](http://pastebin.org) [many](http://pastie.org) [others](http://paste.pocoo.org/). These others can be slow to load or generally lacking in the many wonderful features that Gist provides. Again: it doesn't suck.
+
+Elaborating on the "it doesn't suck" part: Gist is built on top of the wonderful Git version control system and when you create a new Gist it creates a new Git repository just for your Gist. When the Gist is edited, a new commit is created and Gist provides a little navigation menu on the right hand-side of a page which lets people view the different versions of your Gist, with the most recent shown by default. The dots next to each version represent the number of lines added (green) and the number of lines taken away (red), with a maximum of 7 dots showing. 
 
 ![A gist](/radar/guides/raw/master/using-gist/a-gist.png)
 
