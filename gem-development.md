@@ -422,6 +422,13 @@ Amazing stuff, hey?
 
 ## Releasing the gem
 
+If we haven't already, we should commit all the files for our repository:
+
+    git add .
+    git commit -m "The beginnings of the foodie gem"
+
+This is because the `foodie.gemspec` file uses `git ls-files` to detect which files should be added to the gem when we release it.s
+
 The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
 
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
