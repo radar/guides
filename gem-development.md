@@ -114,7 +114,7 @@ If we wanted to specify a particular version we may use this line:
     
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies.
 
-When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `group` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
+When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
 
     it "pluralizes a word" do
       Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
@@ -228,7 +228,7 @@ Boom! When we run `bundle exec cucumber features` again it will whinge that ther
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do? 
 
-This new _foodie/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz (& collaborators) as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
+This new _lib/foodie/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz (& collaborators) as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
 
 For now we'll just look at how we can craft a CLI using Thor and then afterwards, if you behave, we'll look at how to write a generator using it too.
 
@@ -236,7 +236,7 @@ For now we'll just look at how we can craft a CLI using Thor and then afterwards
 
 To make this CLI work we're going to need to create a `Foodie::CLI` class and define a `start` method on it. Or you know, there's probably a gem out there for us to use. Like [Thor](http://github.com/wycats/thor). Named after the badass lightning god from norse mythology, this gem is definitely on the fast-track to being just as badass. This gem is what we'll be using to build our CLI interface and then later on the generator (if you behave, remember?).
 
-Let's define the _foodie/cli.rb_ file now like this:
+Let's define the _lib/foodie/cli.rb_ file now like this:
 
     require 'thor'
     module Foodie
@@ -253,7 +253,7 @@ To install this new dependency, we use `bundle install`. When we run `bundle exe
 
     Could not find task "portray"
     ...
-    Could not find task "group"
+    Could not find task "pluralize"
     
 Thor tasks are defined as plain ol' methods, but with a slight twist. To define the `portray` task in our `Foodie::CLI` class we will write this inside the `Foodie::CLI` class:
 
@@ -273,7 +273,7 @@ When we re-run our features using `bundle exec cucumber features` our first scen
     2 scenarios (1 failed, 1 passed)
     4 steps (1 failed, 3 passed)
 
-The second and third are still failing because we haven't defined the `group` task for them. This time rather than defining a task that takes an argument, we'll define a task that reads in the value from an option passed to the task. To define the `group` task we use this code in `Foodie::CLI`:
+The second and third are still failing because we haven't defined the `pluralize` task for them. This time rather than defining a task that takes an argument, we'll define a task that reads in the value from an option passed to the task. To define the `pluralize` task we use this code in `Foodie::CLI`:
 
 
     desc "pluralize", "Pluralizes a word"
@@ -288,6 +288,8 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
 
     2 scenarios (2 passed)
     4 steps (4 passed)
+
+We can try executing the cli app by running `bundle exec bin/foodie portray broccoli`.
     
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
@@ -298,7 +300,7 @@ If we want to add more options later on, we can define them by using the `method
     
 In this example, `options[:word]` will return a `String` object, whilst `options[:uppercase]` will return either `true` or `false`, depending on the value it has received.
 
-This introduction should have whet your appetite to learn more about Thor and it's encouraged that you do that now. Check out `Bundler::CLI` for a great example of using Thor as a CLI tool.
+This introduction should have wet your appetite to learn more about Thor and it's encouraged that you do that now. Check out `Bundler::CLI` for a great example of using Thor as a CLI tool.
 
 With our features and specs all passing now, we're at a good point to commit our code. 
 
@@ -361,17 +363,17 @@ The first argument for this method are the arguments passed to the generator. We
     
 To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories. Because this is a generator class, we will put it in a new namespace called "generators", making the location of this file _lib/foodie/generators/recipe.rb_:
 
-   require 'thor/group'
-   module Foodie
-     module Generators
-       class Recipe < Thor::Group
-         include Thor::Actions
+    require 'thor/group'
+    module Foodie
+      module Generators
+        class Recipe < Thor::Group
+          include Thor::Actions
          
-         argument :group, :type => :string
-         argument :name, :type => :string
-       end
-     end
-   end
+          argument :group, :type => :string
+          argument :name, :type => :string
+        end
+      end
+    end
     
 By inheriting from `Thor::Group`, we're defining a generator rather than a CLI. When we call `argument`, we are defining arguments for our generator. These are the same arguments in the same order they are passed in from the `recipe` task back in `Foodie::CLI`
     
