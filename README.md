@@ -27,3 +27,13 @@ Make sure you have jekyll installed (`gem install jekyll`), and run:
   $ jekyll --server
 
 The pages will be available at http://localhost:4000/
+
+Thanks
+======
+
+Huge thanks to [thoughtbot](http//thoughtbot.com) whose [handbook](http://handbook.thoughtbot.com) this is based off of.
+
+Legal
+=====
+
+The actual content of the articles is licensed under Creative Commons. The code that this project consists of is licensed under MIT.
