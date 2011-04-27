@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{{ page.title }} - RubyGems Guides</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+  <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+  <link href="/stylesheets/screen.css" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+  <!--[if !IE]>-->
+    <meta name="viewport" content="width=device-width">
+    <script type="text/javascript">
+      window.scrollTo(0, 1);
+    </script>
+  <!--<![endif]-->
+</head>
+<body class="default">
+<section id="head-wrapper">
+  <section id="small-top">
+    <header>
+      <a href="/">
+        <h1>RubyGems Guides</h1>
+      </a>
+    </header>
+  </section>
+</section>
+
+<section id="container">
+  <div class="nav">
+    <span class="previous"><a href="{{ page.previous }}" class="left">&larr; Previous</a></span>
+    <span class="next"><a href="{{ page.next }}" class="right">Next &rarr;</a></span>
+  </div>
+  <section id="content">
+    {{ content }}
+  </section>
+  <div class="nav">
+    <span class="previous"><a href="{{ page.previous }}" class="left">&larr; Previous</a></span>
+    <span class="next"><a href="{{ page.next }}" class="right">Next &rarr;</a></span>
+  </div>
+  <footer>
+    <p>blah blah footer</p>
+  </footer>
+</section>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10315684-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

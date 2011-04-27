@@ -1,0 +1,204 @@
+@import 'flutie';
+
+body {
+  font-family: helvetica neue, helvetica, sans-serif;
+  line-height: 1;
+}
+body.home {
+  background: url("/images/background.jpg") repeat;
+}
+
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+#head-wrapper {
+  background: url("/images/background.jpg") repeat;
+  width: 100%;
+
+  #small-top {
+    margin: 0 auto;
+    padding: 20px 0;
+    max-width: 480px;
+
+    header {
+      margin: 0 auto;
+      height: 75px;
+      max-width: 450px;
+
+      a {
+        text-decoration: none;
+      }
+
+      h1 {
+        background: url("/images/logo-small.png") 5px 0 no-repeat;
+        float: left;
+        height: 70px;
+        padding-top: 13px;
+        text-indent: 90px;
+        color: white;
+        font: 300 42px/42px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+        letter-spacing: 1px;
+        text-shadow: 0 0 1px #333;
+      }
+    }
+  }
+
+  #homepage-top {
+    margin: 0 auto;
+    padding: 30px 0;
+    width: 978px;
+
+    header {
+      height: 150px;
+
+      h1 {
+        background: url("/images/logo.png") 5px 0 no-repeat;
+        float: left;
+        height: 150px;
+        text-indent: -9999px;
+        width: 168px;
+      }
+
+      #the-sell {
+        float: left;
+        margin: 25px 0 0 0;
+        width: 726px;
+
+        h2 {
+          color: white;
+          font: 300 42px/42px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+          letter-spacing: 1px;
+          text-shadow: 0 0 1px #333;
+        }
+
+        p.tagline {
+          color: #CCC;
+          font: 300 18px/22px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+          margin: 6px 0 0 0;
+          text-shadow: 0 0 1px #333;
+
+          a, a:visited, a:link {
+            color: #ccc;
+          }
+        }
+      }
+    }
+
+    #chapters {
+      margin: 0 0 0 168px;
+
+      a, a:visited, a:link {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #AD141E;
+      }
+
+      h2 {
+        color: white;
+        font: 700 30px/32px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+        text-shadow: 0 1px 1px #222;
+        margin-top: 20px;
+      }
+
+      p {
+        color: #AAA;
+        font: 300 16px/18px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+        margin: 4px 122px 0 0;
+
+        a, a:visited, a:link {
+          color: #AAA;
+        }
+
+        a:hover {
+          color: #AD141E;
+        }
+      }
+    }
+  }
+}
+
+#container {
+  margin: 0 auto;
+  max-width: 480px;
+  padding: 0 7px;
+
+  .nav {
+    margin: 25px 0 0 0;
+    height: 24px;
+    text-transform: uppercase;
+    font-size: 16px;
+    width: 100%;
+
+    a {
+      color: #AD141E;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  #content {
+    font: 400 16px/24px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+
+    a {
+      color: #AD141E;
+    }
+
+    h1 {
+      font: 700 30px/50px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+      padding-top: 10px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 25px 0;
+      clear: both;
+    }
+
+    p {
+      margin: 1em 0;
+    }
+
+    pre {
+      background: #333;
+      color: #fff;
+      padding: 10px;
+      font-family: Courier, Sans-serif;
+    }
+
+    ul, ol {
+      padding-top: 10px;
+      margin-left: 30px;
+      list-style: square;
+
+      li {
+        padding-bottom: 8px;
+      }
+    }
+
+    ol {
+      list-style: decimal;
+    }
+  }
+
+  footer {
+    margin: 50px 0;
+    text-align: center;
+    p {
+      color: #666;
+      font: 400 14px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+      a, a:visited, a:link {
+        color: #666;
+      }
+    }
+  }
+}
