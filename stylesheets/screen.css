@@ -591,7 +591,7 @@ body.home {
   float: right; }
 
 #head-wrapper {
-  background: url("/images/background.jpg") repeat;
+  background: #240101 url("/images/background.jpg") repeat;
   width: 100%; }
   #head-wrapper #small-top {
     margin: 0 auto;
