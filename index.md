@@ -3,7 +3,7 @@ layout: home
 ---
 
 [What is a gem?](/what-is-a-gem)
----------------
+--------------------------------
 
 Unpack the mystery behind what's in a RubyGem.
 

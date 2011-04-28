@@ -696,6 +696,11 @@ body.home {
       color: #fff;
       padding: 10px;
       font-family: Courier, Sans-serif; }
+      #container #content pre code {
+        background: #333; }
+    #container #content code {
+      background: #eee;
+      padding: 2px; }
     #container #content ul, #container #content ol {
       padding-top: 10px;
       margin-left: 30px;

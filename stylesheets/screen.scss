@@ -173,6 +173,15 @@ body.home {
       color: #fff;
       padding: 10px;
       font-family: Courier, Sans-serif;
+
+      code {
+        background: #333;
+      }
+    }
+
+    code {
+      background: #eee;
+      padding: 2px;
     }
 
     ul, ol {
