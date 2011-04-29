@@ -137,10 +137,7 @@ The Gemspec
 
 Your application, your gem's users, and you 6 months from now need to know who
 wrote a gem, when, and what it does. The gemspec tells you this information and
-is your guide to understanding what a gem contains for you. Many developers
-generate these files from build tools like [Hoe](http://seattlerb.rubyforge.org/hoe/),
-[Jeweler](https://github.com/technicalpickles/jeweler), or just plain old
-[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html).
+is your guide to understanding what a gem contains for you.
 
 Here's an example of one. The next tutorial covers [how to make a
 gem](/make-your-own-gem).

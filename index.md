@@ -7,10 +7,10 @@ layout: home
 
 Unpack the mystery behind what's in a RubyGem.
 
-[Make your own gem](/)
+[Make your own gem](/make-your-own-gem)
 ---------------
 
-From start to finish, what you'll need to do.
+Start with an idea, end with a distributable package of Ruby code.
 
 [Patterns](/)
 ---------------

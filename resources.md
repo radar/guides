@@ -16,6 +16,7 @@ Tutorials
 
 * [Making Ruby Gems](http://timelessrepo.com/making-ruby-gems)
 * [Gem Sawyer, Modern Day Ruby Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/)
+* [Gemcutter & Jeweler](http://railscasts.com/episodes/183-gemcutter-jeweler)
 
 Presentations
 -------------
