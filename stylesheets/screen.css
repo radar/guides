@@ -689,6 +689,8 @@ body.home {
       font-weight: bold;
       margin: 25px 0;
       clear: both; }
+    #container #content h3 {
+      font-size: 16px; }
     #container #content p {
       margin: 1em 0; }
     #container #content pre {

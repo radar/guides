@@ -37,5 +37,5 @@ Patterns
 --------
 
 * [Gem Packaging: Best Practices](http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices)
-* [Gem Best Practice](http://blog.nofail.de/2010/11/gem-best-practice/)
 * [Rubygems Good Practice](http://yehudakatz.com/2009/07/24/rubygems-good-practice/)
+* [Gem Development Best Practices](http://blog.carbonfive.com/2011/01/22/gem-development-best-practices/)
