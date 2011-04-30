@@ -167,6 +167,8 @@ can handle loading the dependency instead of the user.
 
 Explain ~>.
 
+### `require 'rubygems'`
+
 <a id="loading-code"> </a>
 Loading code
 ------------
@@ -175,13 +177,9 @@ Loading code
 Other files
 -----------
 
-<a id="requiring-rubygems"> </a>
-Requiring `'rubygems'`
---------------------
-
 <a id="prerelease-gems"> </a>
 Prerelease gems
---------------------
+---------------
 
 
 Credits
