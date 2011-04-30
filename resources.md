@@ -30,7 +30,7 @@ Philosophy
 
 * [Semantic Versioning](http://semver.org/)
 * [Ruby Packaging Standard](http://chneukirchen.github.com/rps/)
-* [Why "require 'rubygems'" Is Wrong](http://tomayko.com/writings/require-rubygems-antipattern)
+* [Why `require 'rubygems'` Is Wrong](http://tomayko.com/writings/require-rubygems-antipattern)
 * [How to Name Gems](http://blog.segment7.net/2010/11/15/how-to-name-gems)
 
 Patterns

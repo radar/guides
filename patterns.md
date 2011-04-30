@@ -124,6 +124,49 @@ managing a complex version manifest for many gems.
 Declaring dependencies
 ----------------------
 
+Gems work with other gems. Here's some tips to make sure they're nice to each
+other.
+
+### Runtime vs. development
+
+RubyGems provides two main "types" of dependencies: runtime and development.
+Runtime dependencies are what your gem needs to work (such as
+[rails](http://rubygems.org/gems/rails) needing
+[activesupport](http://rubygems.org/gems/activesupport)).
+
+Development dependencies are useful for when someone wants to make
+modifications to your gem. Once specified, someone can run
+`gem install --dev your_gem` and RubyGems will grab both sets of dependencies
+necessary. Usually development dependencies include test frameworks, build
+systems, etc.
+
+Setting them in your gemspec is easy, just use `add_runtime_dependency` and
+`add_development_dependency`:
+
+    Gem::Specification.new do |s|
+      s.name = "hola"
+      s.version = "2.0.0"
+      s.add_runtime_dependency("daemons", ["= 1.1.0"])
+      s.add_development_dependency("bourne", [">= 0"])
+
+
+### Don't use `gem` from within your gem
+
+You may have seen some code like this around to make sure you're using a
+specific version of a gem:
+
+    gem "extlib", ">= 1.0.8"
+    require "extlib"
+
+It's reasonable for appliations that consume gems to use this (but they could
+also use a tool like [Bundler](http://gembundler.com)). Gems themselves **should
+not** do this, they should instead use dependencies in the gemspec so RubyGems
+can handle loading the dependency instead of the user.
+
+### The twiddle-wakka
+
+Explain ~>.
+
 <a id="loading-code"> </a>
 Loading code
 ------------
@@ -140,3 +183,12 @@ Requiring `'rubygems'`
 Prerelease gems
 --------------------
 
+
+Credits
+-------
+
+Several sources were used for content for this guide:
+
+* [Rubygems Good Practice](http://yehudakatz.com/2009/07/24/rubygems-good-practice/)
+* [Gem Packaging: Best Practices](http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices)
+* [How to Name Gems](http://blog.segment7.net/2010/11/15/how-to-name-gems)
