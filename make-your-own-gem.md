@@ -25,23 +25,24 @@ Introduction
 
 Creating and publishing your own gem is simple thanks to the tools baked right
 into RubyGems. Let’s make a simple “hello world” gem, and feel free to
-play along at home! This is really as simple as it gets.
+play along at home! The code for the gem we're going to make here is up
+[on GitHub](http://github.com/qrush/hola).
 
 <a id="first-gem"> </a>
 Your first gem
 --------------
 
-I started with just one Ruby file for my “hola” gem, and the gemspec.
-You'll need a new name for yours (maybe hola_yourusername) to publish it. By
+I started with just one Ruby file for my `hola` gem, and the gemspec.
+You'll need a new name for yours (maybe `hola_yourusername`) to publish it. By
 the way, there's some [basic
 recommendations](http://blog.segment7.net/2010/11/15/how-to-name-gems) to follow
 for naming a gem.
 
     % tree
     .
-    +-- hola.gemspec
-    `-- lib
-        `-- hola.rb
+    ├── hola.gemspec
+    └── lib
+        └── hola.rb
 
 Code for your package is placed within the `lib` directory. The convention is
 to have *one* Ruby file with the *same* name as your gem, since that gets
@@ -59,9 +60,9 @@ output.
     end
 
 The gemspec defines what’s in the gem, who made it, and the version of the gem.
-It’s also your interface to RubyGems.org, all of the information you see on a
-gem page (like [jekyll](http://rubygems.org/gems/jekyll)’s) comes from the
-gemspec.
+It’s also your interface to [RubyGems.org](http://rubygems.org). All of the
+information you see on a gem page
+(like [jekyll](http://rubygems.org/gems/jekyll)’s) comes from the gemspec.
 
     % cat hola.gemspec
     Gem::Specification.new do |s|
@@ -140,7 +141,7 @@ this gem.
 
     % cat lib/hola.rb
     class Hola
-      def self.hi(language = :english)
+      def self.hi(language = "english")
         translator = Translator.new(language)
         puts translator.hi
       end
@@ -153,7 +154,7 @@ this gem.
 
       def hi
         case @language
-        when :spanish
+        when "spanish"
           "hola mundo"
         else
           "hello world"
@@ -377,7 +378,6 @@ Finally, to run the test:
     % rake test
     (in /Users/qrush/Dev/ruby/hola)
     Loaded suite
-    /Users/qrush/.rvm/gems/ruby-1.9.2-p180/gems/rake-0.8.7/lib/rake/rake_test_loader
     Started
     ...
     Finished in 0.000736 seconds.
@@ -403,14 +403,15 @@ to mark up your code with RDoc. Here's a simple example:
       # Say hi to the world!
       #
       # Example:
-      #   >> Hola.hi("dude")
-      #   => Hello world, dude!
+      #   >> Hola.hi("spanish")
+      #   => hola mundo
       #
       # Arguments:
-      #   name: (String)
+      #   language: (String)
 
-      def self.hi(name)
-        puts "Hello world, #{name}!"
+      def self.hi(language = "english")
+        translator = Translator.new(language)
+        puts translator.hi
       end
     end
 
@@ -434,6 +435,5 @@ Credits
 -------
 
 This tutorial was adapted from [Gem Sawyer, Modern Day Ruby
-Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/)
-
+Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/).
 The code for this gem can be found [on GitHub](https://github.com/qrush/hola).
