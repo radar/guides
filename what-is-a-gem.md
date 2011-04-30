@@ -5,9 +5,6 @@ previous: /
 next: /make-your-own-gem
 ---
 
-What is a gem?
-==============
-
 Learn what a gem can do for your Ruby application, and what's inside of one.
 
 Introduction

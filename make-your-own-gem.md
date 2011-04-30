@@ -5,9 +5,6 @@ previous: /what-is-a-gem
 next: /patterns
 ---
 
-Make your own gem
-=================
-
 From start to finish, learn how to package your Ruby code in a gem.
 This guide has several parts, jump to any here:
 

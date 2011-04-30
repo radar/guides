@@ -5,9 +5,6 @@ previous: /make-your-own-gem
 next: /command-reference
 ---
 
-Patterns
-========
-
 Common practices to make your gem users and other developers' lives easier.
 
 * [Consistent naming](#consistent-naming)
@@ -180,7 +177,6 @@ Other files
 <a id="prerelease-gems"> </a>
 Prerelease gems
 ---------------
-
 
 Credits
 -------

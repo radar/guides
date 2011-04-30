@@ -146,15 +146,19 @@ body.home {
   }
 
   #content {
-    font: 400 16px/24px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+    font: 400 16px/24px helvetica neue, sans-serif;
 
     a {
       color: #AD141E;
     }
 
     h1 {
-      font: 700 30px/50px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+      font: 700 30px/50px helvetica neue, sans-serif;
       padding-top: 10px;
+      a {
+        color: #000;
+        text-decoration: none;
+      }
     }
 
     h2 {

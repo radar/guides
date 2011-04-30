@@ -5,9 +5,6 @@ previous: /run-your-own-gem-server
 next: /faqs
 ---
 
-Resources
-==============
-
 A collection of helpful material about RubyGems. Feel free to
 [fork](http://github.com/rubygems/guides) and add your own!
 

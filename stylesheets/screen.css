@@ -678,12 +678,15 @@ body.home {
     #container .nav a:hover {
       text-decoration: underline; }
   #container #content {
-    font: 400 16px/24px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif; }
+    font: 400 16px/24px helvetica neue, sans-serif; }
     #container #content a {
       color: #AD141E; }
     #container #content h1 {
-      font: 700 30px/50px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+      font: 700 30px/50px helvetica neue, sans-serif;
       padding-top: 10px; }
+      #container #content h1 a {
+        color: #000;
+        text-decoration: none; }
     #container #content h2 {
       font-size: 18px;
       font-weight: bold;
