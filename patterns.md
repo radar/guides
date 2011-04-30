@@ -15,7 +15,6 @@ Common practices to make your gem users and other developers' lives easier.
 * [Declaring dependencies](#declaring-dependencies)
 * [Loading code](#loading-code)
 * [Other files](#other-files)
-* [Requiring 'rubygems'](#requiring-rubygems)
 * [Prerelease gems](#prerelease-gems)
 
 <a id="consistent-naming"> </a>
