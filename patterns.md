@@ -88,10 +88,11 @@ single number starting with 1 and incremented for each successive version), or
 it can be really strange (Knuth’s[#knuth] TeX project had version numbers: 3,
 3.1, 3.14, 3.141, 3.1415; each successive version added another digit to PI).
 
-The RubyGems team **strongly recommends** gem developers to follow [Semantic
-Versioning](http://semver.org) for their gem's versions. The RubyGems library itself does
-not enforce a strict versioning policy, but using an "irrational" policy will
-only be a disservice to those in the community who use your gems.
+The RubyGems team recommends gem developers to follow 
+[Semantic Versioning](http://semver.org) for their gem's versions. The RubyGems
+library itself does not enforce a strict versioning policy, but using an
+"irrational" policy will only be a disservice to those in the community who use
+your gems.
 
 Let's say we have a 'stack' gem that holds a `Stack` class with both `push` and
 `pop` functionalty. Our `CHANGELOG` with SemVer version bumping might look
