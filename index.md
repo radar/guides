@@ -12,27 +12,27 @@ Unpack the mystery behind what's in a RubyGem.
 
 Start with an idea, end with a distributable package of Ruby code.
 
-[Patterns](/)
+[Patterns](/patterns)
 ---------------
 
 Common gem packaging patterns and recommendations for building yours.
 
-[Command Reference](/)
----------------
-
-In depth coverage of each `gem` command.
-
-[Specification Reference](/)
+[Specification Reference](/specification-reference)
 ---------------
 
 Learn about the data in each gem package and how you can configure it.
 
-[RubyGems.org API](/)
+[Command Reference](/command-reference)
+---------------
+
+In depth coverage of each `gem` command.
+
+[RubyGems.org API](/rubygems-org-api)
 ---------------
 
 Interact with publicly available gems over HTTP.
 
-[Run your own gem server](/)
+[Run your own gem server](/run-your-own-gem-server)
 ---------------
 
 Need to serve gems locally or for your organization? Go here.
@@ -42,7 +42,7 @@ Need to serve gems locally or for your organization? Go here.
 
 Great blog posts, tutorials, and other sites to help you out.
 
-[Frequently Asked Questions](/)
+[Frequently Asked Questions](/faqs)
 ---------------
 
 More of the "why" and "wtf" than "how".
