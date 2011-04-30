@@ -83,6 +83,43 @@ run `gem install Hola` or `gem install hola` ? Just keep it lowercase.
 Semantic versioning
 -------------------
 
+A versioning policy is merely a set of simple rules governing how version
+numbers are allocated. It can be very simple (e.g. the version number is a
+single number starting with 1 and incremented for each successive version), or
+it can be really strange (Knuth’s[#knuth] TeX project had version numbers: 3,
+3.1, 3.14, 3.141, 3.1415; each successive version added another digit to PI).
+
+The RubyGems team **strongly recommends** gem developers to follow [Semantic
+Versioning](http://semver.org) for their gem's versions. The RubyGems library itself does
+not enforce a strict versioning policy, but using an "irrational" policy will
+only be a disservice to those in the community who use your gems.
+
+Let's say we have a 'stack' gem that holds a `Stack` class with both `push` and
+`pop` functionalty. Our `CHANGELOG` with SemVer version bumping might look
+like this:
+
+* **Version 0.0.1**: The initial Stack class is release.
+* **Version 0.0.2**: Switched to a linked list implementation because it is cooler.
+* **Version 0.1.0**: Added a `depth` method.
+* **Version 1.0.0**: Added `top` and made `pop` return nil (pop used to return the old top item).
+* **Version 1.1.0**: `push` now returns the value pushed (it used it return nil).
+* **Version 1.1.1**: Fixed a bug in the linked list implementation.
+* **Version 1.1.2**: Fixed a bug introduced in the last fix.
+
+This system can basically boil down to:
+
+* **PATCH** `0.0.x` level changes for implementation level detail changes, such as
+  small bug fixes
+* **MINOR** `0.x.0` level changes for any backwards compatible API changes, such as
+  new functionality/features
+* **MAJOR** `x.0.0` level changes for backwards *incompatible* API changes, such
+  as changes that will break existing users code if they update
+
+If you're dealing with a lot of gem dependencies in your application, we
+recommend that you take a look into [Bundler](http://gembundler.com) or
+[Isolate](http://github.com/jbarnette/isolate) which do a great job of
+managing a complex version manifest for many gems.
+
 <a id="declaring-dependencies"> </a>
 Declaring dependencies
 ----------------------
