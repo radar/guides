@@ -7,6 +7,12 @@ next: /make-your-own-gem
 
 Learn what a gem can do for your Ruby application, and what's inside of one.
 
+* [Introduction](#introduction)
+* [Structure of a Gem](#structure)
+* [Requiring code](#requiring)
+* [The Gemspec](#gemspec)
+
+<a id="introduction"> </a>
 Introduction
 ------------
 
@@ -30,6 +36,7 @@ ubiquitous and extremely useful.
 For information installing RubyGems, please visit the
 [Downloads](http://rubygems.org/pages/download) page.
 
+<a id="structure"> </a>
 Structure of a Gem
 ------------------
 
@@ -69,8 +76,9 @@ The final piece is the gemspec, which contains information about the gem. The
 gem's files, test information, platform, version number and more are all laid
 out here along with the author's email and name.
 
-Gem structure
--------------
+<a id="requiring"> </a>
+Requiring code
+--------------
 
 RubyGems manages your Ruby load path, or how your Ruby code is found
 by the `require` statement. When you `require` a gem, really you’re just placing
@@ -129,6 +137,7 @@ example:
     |   |   `-- ...
     |   |-- freewill.rb
 
+<a id="gemspec"> </a>
 The Gemspec
 -----------
 
