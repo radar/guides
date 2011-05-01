@@ -11,7 +11,6 @@ Common practices to make your gem users and other developers' lives easier.
 * [Semantic versioning](#semantic-versioning)
 * [Declaring dependencies](#declaring-dependencies)
 * [Loading code](#loading-code)
-* [Other files](#other-files)
 * [Prerelease gems](#prerelease-gems)
 
 <a id="consistent-naming"> </a>
@@ -82,10 +81,10 @@ Semantic versioning
 A versioning policy is merely a set of simple rules governing how version
 numbers are allocated. It can be very simple (e.g. the version number is a
 single number starting with 1 and incremented for each successive version), or
-it can be really strange (Knuth’s[#knuth] TeX project had version numbers: 3,
+it can be really strange (Knuth’s TeX project had version numbers: 3,
 3.1, 3.14, 3.141, 3.1415; each successive version added another digit to PI).
 
-The RubyGems team recommends gem developers to follow 
+The RubyGems team recommends gem developers to follow
 [Semantic Versioning](http://semver.org) for their gem's versions. The RubyGems
 library itself does not enforce a strict versioning policy, but using an
 "irrational" policy will only be a disservice to those in the community who use
@@ -146,7 +145,6 @@ Setting them in your gemspec is easy, just use `add_runtime_dependency` and
       s.add_runtime_dependency("daemons", ["= 1.1.0"])
       s.add_development_dependency("bourne", [">= 0"])
 
-
 ### Don't use `gem` from within your gem
 
 You may have seen some code like this around to make sure you're using a
@@ -160,23 +158,189 @@ also use a tool like [Bundler](http://gembundler.com)). Gems themselves **should
 not** do this, they should instead use dependencies in the gemspec so RubyGems
 can handle loading the dependency instead of the user.
 
-### The twiddle-wakka
+### Pessimistic version constraint
 
-Explain ~>.
+If your gem properly follows [SemVer](http://semver.org) with its versioning
+scheme, then other Ruby developers can take advantage of this when choosing a
+version constaint to lock down your gem in their app.
 
-### `require 'rubygems'`
+Let's say the following releases exist:
+
+* **Version 2.1.0** — Baseline
+* **Version 2.2.0** — Introduced some new (backward compatible) features.
+* **Version 2.2.1** — Removed some bugs
+* **Version 2.2.2** — Streamlined your code
+* **Version 2.3.0** — More new features (but still backwards compatible).
+* **Version 3.0.0** — Reworked the interface. Code written to verion 2.x might not work.
+
+Someone who wants to use your gem has determined that version 2.2.0 works with
+their software, but version 2.1.0 doesn’t have a feature they need. Adding a
+dependency in a gem (or a `Gemfile` from Bundler) might look like:
+
+    # gemspec
+    spec.add_runtime_dependency 'library',
+      '>= 2.2.0'
+
+    # bundler
+    gem 'library', '>= 2.2.0'
+
+This is an "optimistic" version constraint. It's saying that all changes from
+2.x on *will* work with my software, but this is usually not the case (see
+version 3.0.0!)
+
+The alternative here is to be "pessimistic". This explictly excludes the version
+that might break their code.
+
+    # gemspec
+    spec.add_runtime_dependency 'library',
+      ['>= 2.2.0', '< 3.0']
+
+    # bundler
+    gem 'library', '>= 2.2.0', '< 3.0'
+
+RubyGems provides a shortcut for this, commonly known as the
+[twiddle-wakka](http://robots.thoughtbot.com/post/2508037841/twiddle-wakka):
+
+    # gemspec
+    spec.add_runtime_dependency 'library',
+      '~> 2.2'
+
+    # bundler
+    gem 'library', '~> 2.2'
+
+Notice that we dropped the `PATCH` level of the version number. Had we said
+`~> 2.2.0`, that would have been equivalent to `['>= 2.2.0', '< 2.3.0']`.
+
+The important note to take home here is to be aware others *will* be using
+your gems, and guard yourself from potential bugs/failures in future releases
+by using `~>` instead of `>=` if at all possible.
+
+### Requiring rubygems
+
+This line:
+
+    require 'rubygems'
+
+Should not be neecessary in your gem code, since RubyGems is loaded
+already when a gem is required. Not having `require 'rubygems'` in your code
+means that the gem can be easily used without needing the RubyGems client to
+run.
+
+For more information please check out [Ryan
+Tomayko's](http://tomayko.com/writings/require-rubygems-antipattern) original
+post about the subject.
 
 <a id="loading-code"> </a>
 Loading code
 ------------
 
-<a id="other-files"> </a>
-Other files
------------
+At its core, RubyGems exists to help you manage Ruby's `$LOAD_PATH`, which is
+how the `require` statement picks up new code. There's several things you can
+do to make sure you're loading code the right way.
+
+### Respect the global load path
+
+When packaging your gem files, you need to be careful of what is in your `lib`
+directory. Every gem you have installed gets its `lib` directory appended onto
+your `$LOAD_PATH`. This means any file on the top level of the `lib` directory
+could get required.
+
+For example, let's say we have a `foo` gem with the following structure:
+
+    .
+    └── lib
+        ├── foo
+        │   └── cgi.rb
+        ├── erb.rb
+        ├── foo.rb
+        └── set.rb
+
+This might seem harmless since your custom `erb` and `set` files are within
+your gem, but actually anyone who requires this gem will not be able to bring
+in the [ERB](http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html) or
+[Set](http://www.ruby-doc.org/stdlib/libdoc/set/rdoc/classes/Set.html) classes
+provided by Ruby's stdlib.
+
+The best way to get around this is to keep files in a different directory
+under `lib`. The usual convention is to be consistent and put them in the same
+folder name as your gem's name, for example `lib/foo/cgi.rb`.
+
+### Requiring files relative to each other
+
+Gems should not have to use `__FILE__` to bring in other Ruby files in your
+gem. Code this like this is surprisingly common in gems:
+
+    require File.join(
+              File.dirname(__FILE__),
+              "foo", "bar")
+
+    # or
+
+    require File.expand_path(File.join(
+              File.dirname(__FILE__), 
+              "foo", "bar"))
+
+The fix is simple, just require the file relative to the load path:
+
+    require 'foo/bar'
+
+The [make your own gem](/make-your-own-gem) guide has a great example of this
+behavior in practice, with a running test suite. The code for that gem is [on
+GitHub](http://github.com/qrush/hola) as well.
+
+### Mangling the load path
+
+Gems should not need to change the `$LOAD_PATH` variable. RubyGems itself
+manages this for you. Code like this shouldn't be necessary:
+
+    lp = File.expand_path(File.dirname(__FILE__))
+    unless $LOAD_PATH.include?(lp)
+      $LOAD_PATH.unshift(lp)
+    end
+
+    # or
+
+    __DIR__ = File.dirname(__FILE__)
+
+    $LOAD_PATH.unshift __DIR__ unless
+      $LOAD_PATH.include?(__DIR__) ||
+      $LOAD_PATH.include?(File.expand_path(__DIR__))
+
+When rubygems activates a gem, it adds your package’s `lib` folder to the
+`$LOAD_PATH` ready to be required normally by another lib or application. Its
+safe to assume you can relative `require` any file in your `lib` folder.
 
 <a id="prerelease-gems"> </a>
 Prerelease gems
 ---------------
+
+Many gem developers have versions of their gem ready to go out for
+testing or "edge" releases before a big gem release. RubyGems supports the
+concept of "prerelease" versions, which could be anything from betas, alphas,
+you name it, that aren't worthy of a real gem release yet.
+
+Taking advantage of this is easy, all you need is a letter in the gem version.
+For example, here's what a prerelease gemspec's `version` field might look
+like:
+
+    Gem::Specification.new do |s|
+      s.name = "hola"
+      s.version = "1.0.0.pre"
+
+Other prerelease version numbers might include `2.0.0.rc1`, or `1.5.0.beta.3`.
+It just has to have a letter in it, and you're set. These gems can then be
+installed with the `--pre` flag, like so:
+
+    % gem list factory_girl -r --pre
+
+    *** REMOTE GEMS ***
+
+    factory_girl (2.0.0.beta2, 2.0.0.beta1)
+    factory_girl_rails (1.1.beta1)
+
+    % gem install factory_girl --pre
+    Successfully installed factory_girl-2.0.0.beta2
+    1 gem installed
 
 Credits
 -------
