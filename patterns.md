@@ -53,10 +53,14 @@ to name them, paraphrased below.
 
 ### Use underscores for spaces
 
-Such as [newrelic_rpm](http://rubygems.org/gems/newrelic_rpm) or
-[factory_girl](http://rubygems.org/gems/factory_girl). This matches the file in
-your gem that your users will `require` along with the name. For example,
-`gem install my_gem` will match `require 'my_gem'`
+This is a typical Ruby convention, for example if a class name is
+`BufferedLogger`, the file for it is usually `buffered_logger.rb`. Some
+examples of gems that this include [newrelic_rpm](http://rubygems.org/gems/newrelic_rpm)
+and [factory_girl](http://rubygems.org/gems/factory_girl). 
+
+The main reason behind this is that the file name matches what your users will
+`require` along with the name. For example, `gem install my_gem` will match
+`require 'my_gem'`.
 
 ### Use dashes for extensions
 
@@ -94,11 +98,11 @@ Let's say we have a 'stack' gem that holds a `Stack` class with both `push` and
 `pop` functionalty. Our `CHANGELOG` with SemVer version bumping might look
 like this:
 
-* **Version 0.0.1**: The initial Stack class is release.
+* **Version 0.0.1**: The initial `Stack` class is released.
 * **Version 0.0.2**: Switched to a linked list implementation because it is cooler.
 * **Version 0.1.0**: Added a `depth` method.
-* **Version 1.0.0**: Added `top` and made `pop` return nil (pop used to return the old top item).
-* **Version 1.1.0**: `push` now returns the value pushed (it used it return nil).
+* **Version 1.0.0**: Added `top` and made `pop` return `nil` (`pop` used to return the old top item).
+* **Version 1.1.0**: `push` now returns the value pushed (it used it return `nil`).
 * **Version 1.1.1**: Fixed a bug in the linked list implementation.
 * **Version 1.1.2**: Fixed a bug introduced in the last fix.
 
@@ -189,7 +193,7 @@ This is an "optimistic" version constraint. It's saying that all changes from
 version 3.0.0!)
 
 The alternative here is to be "pessimistic". This explictly excludes the version
-that might break their code.
+that might break your code.
 
     # gemspec
     spec.add_runtime_dependency 'library',
@@ -217,11 +221,11 @@ by using `~>` instead of `>=` if at all possible.
 
 ### Requiring rubygems
 
-This line:
+This line...
 
     require 'rubygems'
 
-Should not be neecessary in your gem code, since RubyGems is loaded
+...should not be necessary in your gem code, since RubyGems is loaded
 already when a gem is required. Not having `require 'rubygems'` in your code
 means that the gem can be easily used without needing the RubyGems client to
 run.
