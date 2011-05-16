@@ -1,3 +1,5 @@
+gem "rdoc"
+require 'rdoc/rdoc'
 require 'rake/rdoctask'
 require 'fileutils'
 

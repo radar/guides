@@ -7,14 +7,25 @@ next: /rubygems-org-api
 
 <%= klass.description %>
 
-# Attributes
-<% unless klass.attributes.empty? %>
-  <% klass.each_attribute do |attrib| %>
-## <%= h attrib.name %>
-
-<% if attrib.comment %>
-<%= attrib.description.strip %>
+<% sections = {} %>
+<% klass.each_section do |section, constants, attributes| %>
+  <% sections[section] = attributes %>
 <% end %>
 
+<% sections.to_a.reverse.each do |section, attributes| %>
+
+  <% if section.title %>
+# <%= section.title %>
+  <% end %>
+
+<%= section.description if section.comment %>
+
+  <% unless attributes.empty? %>
+    <% attributes.each do |attrib| %>
+
+## <%= h attrib.name %>
+
+<%= attrib.description.strip if attrib.comment %>
+    <% end %>
   <% end %>
 <% end %>
