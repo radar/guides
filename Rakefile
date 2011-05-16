@@ -7,8 +7,6 @@ $:.unshift "."
 
 Rake::RDocTask.new(:rdoc_spec) do |rd|
   spec_file = File.join(ENV["RUBYGEMS_DIR"].to_s, "lib", "rubygems", "specification.rb")
-  raise "#{spec_file} does not exist" unless File.exist?(spec_file)
-
   rd.rdoc_files.include(spec_file)
   rd.template = "jekdoc"
 end
@@ -25,3 +23,16 @@ end
 
 desc "generate specification guide"
 task :spec_guide => [:rdoc_spec, :move_spec, :clean]
+
+
+desc "generate command guide"
+task :command_guide do
+  require 'rubygems/command_manager'
+  require 'rdoc/erbio'
+  names = Gem::CommandManager.instance.command_names
+  erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
+
+  open 'command-reference.md', 'w' do |io|
+    erbio.result binding
+  end
+end
