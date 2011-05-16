@@ -177,10 +177,11 @@ body.home {
     }
 
     pre {
+      overflow: auto;
       background: #333;
       color: #fff;
       padding: 10px;
-      font-family: Courier, Sans-serif;
+      font-family: Monaco, Consolas, "Courier New", Courier, Sans-serif;
 
       code {
         background: #333;

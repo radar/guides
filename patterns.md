@@ -146,8 +146,10 @@ Setting them in your gemspec is easy, just use `add_runtime_dependency` and
     Gem::Specification.new do |s|
       s.name = "hola"
       s.version = "2.0.0"
-      s.add_runtime_dependency("daemons", ["= 1.1.0"])
-      s.add_development_dependency("bourne", [">= 0"])
+      s.add_runtime_dependency "daemons",
+        ["= 1.1.0"]
+      s.add_development_dependency "bourne",
+        [">= 0"]
 
 ### Don't use `gem` from within your gem
 

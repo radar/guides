@@ -664,7 +664,7 @@ body.home {
 
 #container {
   margin: 0 auto;
-  max-width: 480px;
+  max-width: 600px;
   padding: 0 7px; }
   #container .nav {
     margin: 25px 0 0 0;
@@ -697,10 +697,11 @@ body.home {
     #container #content p {
       margin: 1em 0; }
     #container #content pre {
+      overflow: auto;
       background: #333;
       color: #fff;
       padding: 10px;
-      font-family: Courier, Sans-serif; }
+      font-family: Monaco, Consolas, "Courier New", Courier, Sans-serif; }
       #container #content pre code {
         background: #333; }
     #container #content code {
