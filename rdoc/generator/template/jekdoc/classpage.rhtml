@@ -1,0 +1,20 @@
+---
+layout: default
+title: Specification Reference
+previous: /command-reference
+next: /rubygems-org-api
+---
+
+<%= klass.description %>
+
+# Attributes
+<% unless klass.attributes.empty? %>
+  <% klass.each_attribute do |attrib| %>
+## <%= h attrib.name %>
+
+<% if attrib.comment %>
+<%= attrib.description.strip %>
+<% end %>
+
+  <% end %>
+<% end %>
