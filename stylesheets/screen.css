@@ -716,7 +716,7 @@ body.home {
       margin-left: 30px;
       list-style: square; }
       #container #content ul li, #container #content ol li {
-        padding-bottom: 8px; }
+        padding-bottom: 0px; }
     #container #content ol {
       list-style: decimal; }
   #container footer {

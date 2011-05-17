@@ -22,15 +22,112 @@ end</pre>
   
   
 
-
-  
-# Required gemspec attributes
-  
-
-
-  
+## Required gemspec attributes
+    
+* [name](#name)
+    
+* [require_paths](#require_paths)
+    
+* [rubygems_version](#rubygems_version)
+    
+* [summary](#summary)
+    
+* [version](#version)
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+      
+        
+* [files](#files)
+        
+* [platform=](#platform=)
+        
+      
+        
+      
+        
+      
+    
+## Optional gemspec attributes
+    
+* [bindir](#bindir)
+    
+* [cert_chain](#cert_chain)
+    
+* [default_executable](#default_executable)
+    
+* [description](#description)
+    
+* [email](#email)
+    
+* [homepage](#homepage)
+    
+* [post_install_message](#post_install_message)
+    
+* [required_ruby_version](#required_ruby_version)
+    
+* [required_rubygems_version](#required_rubygems_version)
+    
+* [signing_key](#signing_key)
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+      
+        
+* [add_development_dependency](#add_development_dependency)
+        
+* [add_runtime_dependency](#add_runtime_dependency)
+        
+* [author=](#author=)
+        
+* [authors=](#authors=)
+        
+* [executables](#executables)
+        
+* [extensions](#extensions)
+        
+* [extra_rdoc_files](#extra_rdoc_files)
+        
+* [license=](#license=)
+        
+* [licenses=](#licenses=)
+        
+* [rdoc_options](#rdoc_options)
+        
+* [required_ruby_version=](#required_ruby_version=)
+        
+* [requirements](#requirements)
+        
+* [test_files=](#test_files=)
+        
+      
+        
+      
+        
+      
     
 
+
+# Required gemspec attributes
+
+
+    
+
+<a id="name"> </a>
 ## name
 
 <p>This gem’s name.</p>
@@ -39,6 +136,7 @@ end</pre>
 
 <pre>spec.name = 'rake'</pre>    
 
+<a id="require_paths"> </a>
 ## require_paths
 
 <p>Paths in the gem to add to <tt>$LOAD_PATH</tt> when this gem is activated.</p>
@@ -51,19 +149,14 @@ spec.require_path = '.'
 # If you have 'lib' and 'ext' directories...
 spec.require_paths &lt;&lt; 'ext'</pre>    
 
+<a id="rubygems_version"> </a>
 ## rubygems_version
 
 <p>The version of RubyGems used to create this gem.</p>
 
 <p>Do not set this, it is set automatically when the gem is packaged.</p>    
 
-## specification_version
-
-<p>The <a href="Specification.html">Gem::Specification</a> version of this
-gemspec.</p>
-
-<p>Do not set this, it is set automatically when the gem is packaged.</p>    
-
+<a id="summary"> </a>
 ## summary
 
 <p>A short summary of this gem’s description.  Displayed in `gem list -d`.</p>
@@ -74,6 +167,7 @@ gemspec.</p>
 
 <pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>    
 
+<a id="version"> </a>
 ## version
 
 <p>This gem’s version.</p>
@@ -85,7 +179,6 @@ A gem is a ‘prerelease’ gem if the version has a letter in it, such as
 <p>Usage:</p>
 
 <pre>spec.version = '0.4.1'</pre>    
-  
 
   
     
@@ -98,6 +191,7 @@ A gem is a ‘prerelease’ gem if the version has a letter in it, such as
     
       
       
+<a id="files"> </a>
 ## files
 
         
@@ -120,6 +214,7 @@ spec.files = Dir['lib/**/*.rb'] + Dir['bin/*']
 spec.files += Dir['[A-Z]*'] + Dir['test/**/*']
 spec.files.reject! { |fn| fn.include? &quot;CVS&quot; }</pre>        
       
+<a id="platform="> </a>
 ## platform=
 
         
@@ -149,14 +244,12 @@ filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
       
   
 
-  
 # Optional gemspec attributes
-  
 
 
-  
     
 
+<a id="bindir"> </a>
 ## bindir
 
 <p>The path in the gem for executable scripts.  Usually ‘bin’</p>
@@ -165,17 +258,20 @@ filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
 
 <pre>spec.bindir = 'bin'</pre>    
 
+<a id="cert_chain"> </a>
 ## cert_chain
 
 <p>The certificate chain used to sign this gem.  See Gem::Security for
 details.</p>    
 
+<a id="default_executable"> </a>
 ## default_executable
 
 <p>Sets the default executable for this gem.</p>
 
 <p>Deprecated: You must now specify the executable name to  Gem.bin_path.</p>    
 
+<a id="description"> </a>
 ## description
 
 <p>A long description of this gem</p>
@@ -189,6 +285,7 @@ details.</p>
   dependencies are specified in standard Ruby syntax.
 EOF</pre>    
 
+<a id="email"> </a>
 ## email
 
 <p>A contact email for this gem</p>
@@ -198,6 +295,7 @@ EOF</pre>
 <pre>spec.email = 'john.jones@example.com'
 spec.email = ['jack@example.com', 'jill@example.com']</pre>    
 
+<a id="homepage"> </a>
 ## homepage
 
 <p>The URL of this gem’s home page</p>
@@ -206,22 +304,25 @@ spec.email = ['jack@example.com', 'jill@example.com']</pre>
 
 <pre>spec.homepage = 'http://rake.rubyforge.org'</pre>    
 
+<a id="post_install_message"> </a>
 ## post_install_message
 
 <p>A message that gets displayed after the gem is installed</p>    
 
+<a id="required_ruby_version"> </a>
 ## required_ruby_version
 
 <p>The version of ruby required by this gem</p>    
 
+<a id="required_rubygems_version"> </a>
 ## required_rubygems_version
 
 <p>The RubyGems version required by this gem</p>    
 
+<a id="signing_key"> </a>
 ## signing_key
 
 <p>The key used to sign this gem.  See Gem::Security for details.</p>    
-  
 
   
     
@@ -234,6 +335,7 @@ spec.email = ['jack@example.com', 'jill@example.com']</pre>
     
       
       
+<a id="add_development_dependency"> </a>
 ## add_development_dependency
 
         
@@ -245,6 +347,7 @@ to this <a href="../Gem.html">Gem</a>. For example:</p>
 <p>Development dependencies aren’t installed by default and aren’t activated
 when a gem is required.</p>        
       
+<a id="add_runtime_dependency"> </a>
 ## add_runtime_dependency
 
         
@@ -253,6 +356,7 @@ this <a href="../Gem.html">Gem</a>. For example:</p>
 
 <pre>spec.add_runtime_dependency 'example', '~&gt; 1.1', '&gt;= 1.1.4'</pre>        
       
+<a id="author="> </a>
 ## author=
 
         
@@ -263,6 +367,7 @@ href="Specification.html#method-i-authors">authors</a></p>
 
 <pre>spec.author = 'John Jones'</pre>        
       
+<a id="authors="> </a>
 ## authors=
 
         
@@ -272,6 +377,7 @@ href="Specification.html#method-i-authors">authors</a></p>
 
 <pre>spec.authors = ['John Jones', 'Mary Smith']</pre>        
       
+<a id="executables"> </a>
 ## executables
 
         
@@ -285,6 +391,7 @@ found in bindir.</p>
 
 <pre>spec.executables &lt;&lt; 'rake'</pre>        
       
+<a id="extensions"> </a>
 ## extensions
 
         
@@ -298,6 +405,7 @@ whatever) code to be compiled on the user’s machine.</p>
 
 <pre>spec.extensions &lt;&lt; 'ext/rmagic/extconf.rb'</pre>        
       
+<a id="extra_rdoc_files"> </a>
 ## extra_rdoc_files
 
         
@@ -312,6 +420,7 @@ a more complete set of documentation.</p>
 
 <pre>spec.extra_rdoc_files = ['README', 'doc/user-guide.txt']</pre>        
       
+<a id="license="> </a>
 ## license=
 
         
@@ -326,6 +435,7 @@ of the license inside of the gem when you build it.</p>
 
 <pre>spec.license = 'MIT'</pre>        
       
+<a id="licenses="> </a>
 ## licenses=
 
         
@@ -340,6 +450,7 @@ of the license inside of the gem when you build it.</p>
 
 <pre>spec.licenses = ['MIT', 'GPL-2']</pre>        
       
+<a id="rdoc_options"> </a>
 ## rdoc_options
 
         
@@ -351,6 +462,7 @@ of the license inside of the gem when you build it.</p>
   '--main' &lt;&lt; 'README' &lt;&lt;
   '--line-numbers'</pre>        
       
+<a id="required_ruby_version="> </a>
 ## required_ruby_version=
 
         
@@ -364,6 +476,7 @@ spec.required_ruby_version = '&gt;= 1.8.6'
 # Hopefully by now:
 spec.required_ruby_version = '&gt;= 1.9.2'</pre>        
       
+<a id="requirements"> </a>
 ## requirements
 
         
@@ -375,6 +488,7 @@ to work. It’s simply information for the user.</p>
 <pre>spec.requirements &lt;&lt; 'libmagick, v6.0 or greater'
 spec.requirements &lt;&lt; 'A powerful graphics card'</pre>        
       
+<a id="test_files="> </a>
 ## test_files=
 
         

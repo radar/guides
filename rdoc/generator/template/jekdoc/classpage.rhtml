@@ -13,27 +13,39 @@ next: /rubygems-org-api
 <% end %>
 
 <% sections.to_a.reverse.each do |section, attributes| %>
+## <%= section.title %>
+    <% attributes.each do |attrib| %>
+* [<%= attrib.name %>](#<%= attrib.name %>)
+    <% end %>
+    <% klass.methods_by_type(section).each do |type, visibilities| %>
+      <% visibilities.each do |visibility, methods| %>
+        <% methods.each do |method| %>
+* [<%= method.name %>](#<%= method.name %>)
+        <% end %>
+      <% end %>
+    <% end %>
+<% end %>
 
-  <% if section.title %>
+<% sections.to_a.reverse.each do |section, attributes| %>
+
 # <%= section.title %>
-  <% end %>
 
-<%= section.description if section.comment %>
+<%= section.description %>
 
-  <% unless attributes.empty? %>
     <% attributes.each do |attrib| %>
 
+<a id="<%= attrib.name %>"> </a>
 ## <%= attrib.name %>
 
 <%= attrib.description.strip if attrib.comment %>
     <% end %>
-  <% end %>
 
   <% klass.methods_by_type(section).each do |type, visibilities| %>
     <% next if visibilities.empty? %>
     <% visibilities.each do |visibility, methods| %>
       <% next if methods.empty? %>
       <% methods.each do |method| %>
+<a id="<%= method.name %>"> </a>
 ## <%= method.name %>
 
         <% if method.comment %>
