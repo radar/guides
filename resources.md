@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Resources
-previous: /run-your-own-gem-server
+previous: /c-extensions
 next: /faqs
 ---
 
