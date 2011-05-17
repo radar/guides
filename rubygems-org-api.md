@@ -5,12 +5,7 @@ previous: /specification-reference
 next: /run-your-own-gem-server
 ---
 
-<!-- TODO: make a layout for this -->
-<style type="text/css">
-  #container {
-    max-width: 920px;
-  }
-</style>
+{% include big.html %}
 
 How to interact with RubyGems.org over HTTP.
 

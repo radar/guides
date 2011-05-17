@@ -5,16 +5,23 @@ previous: /command-reference
 next: /rubygems-org-api
 ---
 
+{% include big.html %}
+
 
 <p>The <a href="Specification.html">Specification</a> class contains the
 metadata for a <a href="../Gem.html">Gem</a>.  Typically defined in a
 .gemspec file or a Rakefile, and looks like this:</p>
 
-<pre>spec = Gem::Specification.new do |s|
-  s.name = 'example'
-  s.version = '1.0'
-  s.summary = 'Example gem specification'
-  ...
+<pre>Gem::Specification.new do |s|
+  s.name        = 'example'
+  s.version     = '0.1.0'
+  s.date        = '2011-05-17'
+  s.summary     = &quot;This is an example!&quot;
+  s.description = &quot;Much longer explanation of the example!&quot;
+  s.authors     = [&quot;Ruby Coder&quot;]
+  s.email       = 'rubycoder@example.com'
+  s.files       = [&quot;lib/example.rb&quot;]
+  s.homepage    = 'http://rubygems.org/gems/example'
 end</pre>
 
   
