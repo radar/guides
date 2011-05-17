@@ -7,6 +7,22 @@ next: /specification-reference
 
 What each `gem` command does, and how to use it.
 
-<% names.each do |name| %>
-  <%= name %>
+<% commands.each do |name, command| %>
+* [gem <%= name %>](#<%= name %>)
+<% end %>
+
+<% commands.each do |name, command| %>
+## <%= name %>
+
+<%= command.summary %>
+
+  <% if command.arguments != "" %>
+### Arguments
+
+<%= command.arguments.gsub("<", "&lt;").gsub(">", "&gt;") %>
+  <% end %>
+
+### Usage
+
+    <%= command.usage %>
 <% end %>

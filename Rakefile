@@ -29,9 +29,14 @@ desc "generate command guide"
 task :command_guide do
   require 'rubygems/command_manager'
   require 'rdoc/erbio'
-  names = Gem::CommandManager.instance.command_names
-  erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
 
+  names    = Gem::CommandManager.instance.command_names
+  commands = {}
+  names.each do |name|
+    commands[name] = Gem::CommandManager.instance[name]
+  end
+
+  erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
   open 'command-reference.md', 'w' do |io|
     erbio.result binding
   end
