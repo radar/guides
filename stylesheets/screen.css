@@ -631,12 +631,12 @@ body.home {
         width: 726px; }
         #head-wrapper #homepage-top header #the-sell h2 {
           color: white;
-          font: 300 42px/42px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+          font: 300 42px/42px helvetica neue, sans-serif;
           letter-spacing: 1px;
           text-shadow: 0 0 1px #333; }
         #head-wrapper #homepage-top header #the-sell p.tagline {
           color: #CCC;
-          font: 300 18px/22px "proxima-nova-1", "proxima-nova-2", "museo-sans-1", "museo-sans-2", helvetica neue, sans-serif;
+          font: 300 18px/22px helvetica neue, sans-serif;
           margin: 6px 0 0 0;
           text-shadow: 0 0 1px #333; }
           #head-wrapper #homepage-top header #the-sell p.tagline a, #head-wrapper #homepage-top header #the-sell p.tagline a:visited, #head-wrapper #homepage-top header #the-sell p.tagline a:link {
@@ -664,7 +664,7 @@ body.home {
 
 #container {
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 480px;
   padding: 0 7px; }
   #container .nav {
     margin: 25px 0 0 0;
@@ -691,7 +691,9 @@ body.home {
       font-size: 18px;
       font-weight: bold;
       margin: 25px 0;
-      clear: both; }
+      clear: both;
+      border-top: 1px solid #ddd;
+      padding-top: 10px; }
     #container #content h3 {
       font-size: 14px; }
     #container #content p {
@@ -707,6 +709,8 @@ body.home {
     #container #content code {
       background: #eee;
       padding: 2px; }
+    #container #content tt {
+      display: inline; }
     #container #content ul, #container #content ol {
       padding-top: 10px;
       margin-left: 30px;

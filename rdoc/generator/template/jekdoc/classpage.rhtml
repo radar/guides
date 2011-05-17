@@ -9,7 +9,7 @@ next: /rubygems-org-api
 
 <% sections = {} %>
 <% klass.each_section do |section, constants, attributes| %>
-  <% sections[section] = attributes %>
+  <% sections[section] = attributes if section.title =~ /attributes/ %>
 <% end %>
 
 <% sections.to_a.reverse.each do |section, attributes| %>
@@ -23,9 +23,23 @@ next: /rubygems-org-api
   <% unless attributes.empty? %>
     <% attributes.each do |attrib| %>
 
-## <%= h attrib.name %>
+## <%= attrib.name %>
 
 <%= attrib.description.strip if attrib.comment %>
+    <% end %>
+  <% end %>
+
+  <% klass.methods_by_type(section).each do |type, visibilities| %>
+    <% next if visibilities.empty? %>
+    <% visibilities.each do |visibility, methods| %>
+      <% next if methods.empty? %>
+      <% methods.each do |method| %>
+## <%= method.name %>
+
+        <% if method.comment %>
+<%= method.description.strip %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
