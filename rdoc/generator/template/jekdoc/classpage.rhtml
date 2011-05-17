@@ -12,46 +12,39 @@ next: /rubygems-org-api
   <% sections[section] = attributes if section.title =~ /attributes/ %>
 <% end %>
 
+<% all_methods = {} %>
 <% sections.to_a.reverse.each do |section, attributes| %>
-## <%= section.title %>
-    <% attributes.each do |attrib| %>
-* [<%= attrib.name %>](#<%= attrib.name %>)
-    <% end %>
-    <% klass.methods_by_type(section).each do |type, visibilities| %>
-      <% visibilities.each do |visibility, methods| %>
-        <% methods.each do |method| %>
-* [<%= method.name %>](#<%= method.name %>)
-        <% end %>
+  <% all_methods[section] = {} %>
+  <% attributes.each do |attrib| %>
+    <% all_methods[section][attrib.name] = attrib %>
+  <% end %>
+  <% klass.methods_by_type(section).each do |type, visibilities| %>
+    <% visibilities.each do |visibility, methods| %>
+      <% methods.each do |method| %>
+        <% all_methods[section][method.name] = method %>
       <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% all_methods.each do |section, methods| %>
+## <%= section.title %>
+    <% methods.sort_by(&:first).each do |name, method| %>
+* [<%= name %>](#<%= name %>)
     <% end %>
 <% end %>
 
-<% sections.to_a.reverse.each do |section, attributes| %>
+<% all_methods.each do |section, methods| %>
 
 # <%= section.title %>
 
 <%= section.description %>
 
-    <% attributes.each do |attrib| %>
+    <% methods.sort_by(&:first).each do |name, method| %>
 
-<a id="<%= attrib.name %>"> </a>
-## <%= attrib.name %>
+<a id="<%= name %>"> </a>
+## <%= name %>
 
-<%= attrib.description.strip if attrib.comment %>
-    <% end %>
-
-  <% klass.methods_by_type(section).each do |type, visibilities| %>
-    <% next if visibilities.empty? %>
-    <% visibilities.each do |visibility, methods| %>
-      <% next if methods.empty? %>
-      <% methods.each do |method| %>
-<a id="<%= method.name %>"> </a>
-## <%= method.name %>
-
-        <% if method.comment %>
 <%= method.description.strip %>
-        <% end %>
-      <% end %>
     <% end %>
-  <% end %>
 <% end %>
