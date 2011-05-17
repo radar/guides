@@ -15,7 +15,6 @@ metadata for a <a href="../Gem.html">Gem</a>.  Typically defined in a
 <pre>Gem::Specification.new do |s|
   s.name        = 'example'
   s.version     = '0.1.0'
-  s.date        = '2011-05-17'
   s.summary     = &quot;This is an example!&quot;
   s.description = &quot;Much longer explanation of the example!&quot;
   s.authors     = [&quot;Ruby Coder&quot;]
@@ -24,103 +23,7 @@ metadata for a <a href="../Gem.html">Gem</a>.  Typically defined in a
   s.homepage    = 'http://rubygems.org/gems/example'
 end</pre>
 
-  
-  
-  
-  
 
-  
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-  
-    
-      
-    
-      
-    
-      
-    
-  
-    
-      
-        
-      
-        
-      
-    
-      
-    
-      
-    
-  
-  
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-  
-    
-      
-    
-      
-    
-      
-    
-  
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-      
-    
-      
-    
-  
 
 ## Required gemspec attributes
     

@@ -9,25 +9,27 @@ next: /rubygems-org-api
 
 <%= klass.description %>
 
-<% sections = {} %>
-<% klass.each_section do |section, constants, attributes| %>
-  <% sections[section] = attributes if section.title =~ /attributes/ %>
-<% end %>
+<%
+  sections = {}
+  klass.each_section do |section, constants, attributes|
+    sections[section] = attributes if section.title =~ /attributes/
+  end
 
-<% all_methods = {} %>
-<% sections.to_a.reverse.each do |section, attributes| %>
-  <% all_methods[section] = {} %>
-  <% attributes.each do |attrib| %>
-    <% all_methods[section][attrib.name] = attrib %>
-  <% end %>
-  <% klass.methods_by_type(section).each do |type, visibilities| %>
-    <% visibilities.each do |visibility, methods| %>
-      <% methods.each do |method| %>
-        <% all_methods[section][method.name] = method %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
+  all_methods = {}
+  sections.to_a.reverse.each do |section, attributes|
+    all_methods[section] = {}
+    attributes.each do |attrib|
+      all_methods[section][attrib.name] = attrib
+    end
+    klass.methods_by_type(section).each do |type, visibilities|
+      visibilities.each do |visibility, methods|
+        methods.each do |method|
+          all_methods[section][method.name] = method
+        end
+      end
+    end
+  end
+%>
 
 <% all_methods.each do |section, methods| %>
 ## <%= section.title %>
