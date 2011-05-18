@@ -36,6 +36,14 @@ task :command_guide do
     commands[name] = Gem::CommandManager.instance[name]
   end
 
+  def htmlify(string)
+    if string
+      string.gsub("<", "&lt;").gsub(">", "&gt;")
+    else
+      ""
+    end
+  end
+
   erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
   open 'command-reference.md', 'w' do |io|
     erbio.result binding

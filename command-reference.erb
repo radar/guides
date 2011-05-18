@@ -12,17 +12,23 @@ What each `gem` command does, and how to use it.
 <% end %>
 
 <% commands.each do |name, command| %>
-## <%= name %>
+## gem <%= name %>
 
-<%= command.summary %>
+<%= htmlify(command.summary) %>
 
   <% if command.arguments != "" %>
 ### Arguments
 
-<%= command.arguments.gsub("<", "&lt;").gsub(">", "&gt;") %>
+<%= htmlify(command.arguments) %>
   <% end %>
 
 ### Usage
 
     <%= command.usage %>
+
+  <% if command.description != "" %>
+### Description
+
+<%= htmlify(command.description).gsub(/^  /, "    ") %>
+  <% end %>
 <% end %>
