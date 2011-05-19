@@ -287,9 +287,9 @@ to add it in the gemspec.
 
     % head -4 hola.gemspec
     Gem::Specification.new do |s|
-      s.name               = 'hola'
-      s.version            = '0.0.1'
-      s.default_executable = 'hola'
+      s.name        = 'hola'
+      s.version     = '0.0.1'
+      s.executables << 'hola'
 
 Push up that new gem, and you'll have your own command line utility published!
 You can add more executables as well in the `bin` directory if you need to,
