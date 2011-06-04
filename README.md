@@ -48,7 +48,7 @@ where your code directory is, and run:
 Thanks
 ======
 
-Huge thanks to [thoughtbot](http//thoughtbot.com) whose [handbook](http://handbook.thoughtbot.com) this is based off of.
+Huge thanks to [thoughtbot](http://thoughtbot.com) whose [handbook](http://handbook.thoughtbot.com) this is based off of.
 
 Legal
 =====
