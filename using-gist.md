@@ -100,30 +100,8 @@ We can embed this into a page using an `iframe` tag:
 
 Gist is a super-powerful-and-awesome service. Use it, and use it properly.
 
+## Addendum #1
 
+Please please please please please please please do not put additional code afterwards in a comment. That is what the edit button is for.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![The edit button](/radar/guides/raw/master/using-gist/edit-gist.png)
