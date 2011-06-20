@@ -177,7 +177,7 @@ The `Translator` is now in `lib/hola`, which can easily be picked up with a
 `require` statement from `lib/hola.rb`. The code for the `Translator` did not
 change much:
 
-    % cat lib/hola.rb
+    % cat lib/hola/translator.rb
     class Hola::Translator
       def initialize(language)
         @language = language
