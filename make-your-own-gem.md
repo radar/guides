@@ -214,11 +214,12 @@ Let's try this out. First, fire up `irb`!
     => "hola mundo"
 
 We need to use a strange command line flag here: `-Ilib`. Usually RubyGems
-includes the `lib` directory for us, and it will for gem executables. However,
-if we're running it outside of RubyGems, we have to bring it in ourselves. It's 
-possible to manipulate the `$LOAD_PATH` from within the code itself, but that's
-considered an anti-pattern in most cases. There's many more anti-patterns 
-(and good patterns!) for gems, explained in [this guide](/patterns).
+includes the `lib` directory for us, so end users don't need to worry about 
+configuring their load paths. However, if we're running our code outside of 
+RubyGems, we have to configure things ourselves. It's possible to manipulate 
+the `$LOAD_PATH` from within the code itself, but that's considered an 
+anti-pattern in most cases. There's many more anti-patterns (and good patterns!) 
+for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
 your gemspec's `files` array before publishing a new gem! For this reason
