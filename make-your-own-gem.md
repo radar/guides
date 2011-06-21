@@ -205,21 +205,17 @@ But now our `hola.rb` file has some code to load the `Translator`:
 
     require 'hola/translator'
 
-Let's try this out. First, jump into the `lib` directory, then fire up `irb`!
+Let's try this out. First, fire up `irb`!
 
-    % cd lib
-
-    % irb -rhola
+    % irb -Ilib -rhola
     irb(main):001:0> Hola.hi(:english)
     => "hello world"
     irb(main):002:0> Hola.hi(:spanish)
     => "hola mundo"
 
-Why did we jump into `lib`? Well, by default Ruby adds the current directory
-to your `$LOAD_PATH`. Since we didn't load RubyGems for that last `irb`
-session, we have to rely on only Ruby's `require` to figure out where files
-are. We could have appended the `lib` directory onto the `$LOAD_PATH` array,
-but that's considered a bad pattern for gems. There's many more anti-patterns
+Why did we specify `-Ilib`? Well, in order to use the local version of our gem
+we need to add to the `$LOAD_PATH` with `-I`. We could have done this inside of
+our gem but that's considered a bad pattern for gems. There's many more anti-patterns
 (and good patterns!) for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
