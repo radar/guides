@@ -213,9 +213,11 @@ Let's try this out. First, fire up `irb`!
     irb(main):002:0> Hola.hi(:spanish)
     => "hola mundo"
 
-Why did we specify `-Ilib`? Well, in order to use the local version of our gem
-we need to add to the `$LOAD_PATH` with `-I`. We could have done this inside of
-our gem but that's considered a bad pattern for gems. There's many more anti-patterns
+We need to use a strange command line flag here: `-Ilib`. Usually RubyGems
+includes the `lib` directory for us, and it will for gem executables. However,
+if we're running it outside of RubyGems, we have to bring it in ourselves. It's 
+possible to manipulate the `$LOAD_PATH` from within the code itself, but that's
+considered an anti-pattern in most cases. There's many more anti-patterns 
 (and good patterns!) for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
@@ -273,10 +275,6 @@ argument as the language to say hello with. Here's an example of running it:
 
     % ruby -Ilib ./bin/hola spanish
     hola mundo
-
-There's another strange command line flag here: `-Ilib`. Usually RubyGems
-includes the `lib` directory for us, and it will for gem executables. However,
-if we're running it outside of RubyGems, we have to bring it in ourselves.
 
 Finally, to get Hola's executable included when we push the gem, you'll need
 to add it in the gemspec.
