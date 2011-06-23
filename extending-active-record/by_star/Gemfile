@@ -1,4 +1,4 @@
-source :gemcutter
+source :rubygems
 
 # Specify your gem's dependencies in by_star.gemspec
 gemspec
