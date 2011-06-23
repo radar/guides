@@ -150,7 +150,7 @@ It deserves one.
 
 Before we go jumping headlong into giving our gem the best darn CLI a gem-with-only-two-methods-that-both-return-useless-strings it can have, let's consider how we're going to test this first. We're zealots, remember? Now if only there was a tool we could use. It would have to have a cool name, of course.
 
-Like "Aruba". [BAM](http://github.com/aslakhellesoy/aruba)
+Like "Aruba". [BAM](https://github.com/cucumber/aruba)
 
 David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing tool, which they both use for RSpec and Cucumber, and now we too can use it for testing our gems. Oh hey, speaking of Cucumber that's also what we're going to be using to define the Aruba tests. Human-code-client-readable tests are the way of the future, man.
 
