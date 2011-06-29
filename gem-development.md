@@ -431,6 +431,8 @@ This is because the `foodie.gemspec` file uses `git ls-files` to detect which fi
 
 The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
 
+Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.0.1.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
+
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
 
 Secondly, it creates a tag for the current commit reflecting the current version and will push it to the set up remote. It's encouraged that we host the code on GitHub so that others may easily find it. 
