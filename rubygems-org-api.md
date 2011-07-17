@@ -34,7 +34,7 @@ Returns some basic information about the given gem. For example, here's Rails in
     {
       "name": "rails",
       "info": "Rails is a framework for building web-application using CGI, FCGI, mod_ruby,
-               or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or 
+               or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or
                Oracle with eRuby- or Builder-based templates.",
       "version": "2.3.5",
       "version_downloads": 2451,
@@ -173,7 +173,7 @@ Gem Version Download Methods
 
 ### GET - `/api/v1/versions/[rubygem name]-[rubygem version]/downloads.json`
 
-Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data. 
+Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data.
 
     $ curl http://rubygems.org/api/v1/versions/coulda-0.6.3/downloads.json
 

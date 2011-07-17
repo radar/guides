@@ -214,11 +214,11 @@ Let's try this out. First, fire up `irb`!
     => "hola mundo"
 
 We need to use a strange command line flag here: `-Ilib`. Usually RubyGems
-includes the `lib` directory for us, so end users don't need to worry about 
-configuring their load paths. However, if we're running our code outside of 
-RubyGems, we have to configure things ourselves. It's possible to manipulate 
-the `$LOAD_PATH` from within the code itself, but that's considered an 
-anti-pattern in most cases. There are many more anti-patterns (and good patterns!) 
+includes the `lib` directory for us, so end users don't need to worry about
+configuring their load paths. However, if we're running our code outside of
+RubyGems, we have to configure things ourselves. It's possible to manipulate
+the `$LOAD_PATH` from within the code itself, but that's considered an
+anti-pattern in most cases. There are many more anti-patterns (and good patterns!)
 for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
@@ -386,7 +386,7 @@ Documenting your code
 ---------------------
 
 By default most gems use RDoc to generate docs. There's a lot of
-[great](http://handyrailstips.com/tips/12-documenting-your-application-or-plugin-using-rdoc) 
+[great](http://handyrailstips.com/tips/12-documenting-your-application-or-plugin-using-rdoc)
 [tutorials](http://docs.seattlerb.org/rdoc/RDoc/Markup.html) for learning how
 to mark up your code with RDoc. Here's a simple example:
 

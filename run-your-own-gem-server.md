@@ -58,12 +58,12 @@ And run the server:
 
 Now you can push gems using the `gem inabox` command.  The first time you do this, you'll be prompted for the location of your gem server.
 
-    [~/dev/secretgem] gem build secretgem.gemspec  
+    [~/dev/secretgem] gem build secretgem.gemspec
       Successfully built RubyGem
       Name: secretgem
       Version: 0.0.1
       File: secretgem-0.0.1.gem
-    [~/dev/secretgem] gem inabox ./secretgem-0.0.1.gem 
+    [~/dev/secretgem] gem inabox ./secretgem-0.0.1.gem
     Enter the root url for your personal geminabox instance. (E.g. http://gems/)
     Host:  http://localhost:9292
     Pushing secretgem-0.0.1.gem to http://localhost:9292/...

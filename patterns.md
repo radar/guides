@@ -56,7 +56,7 @@ to name them, paraphrased below.
 This is a typical Ruby convention, for example if a class name is
 `BufferedLogger`, the file for it is usually `buffered_logger.rb`. Some
 examples of gems that this include [newrelic_rpm](http://rubygems.org/gems/newrelic_rpm)
-and [factory_girl](http://rubygems.org/gems/factory_girl). 
+and [factory_girl](http://rubygems.org/gems/factory_girl).
 
 The main reason behind this is that the file name matches what your users will
 `require` along with the name. For example, `gem install my_gem` will match
@@ -283,7 +283,7 @@ gem. Code this like this is surprisingly common in gems:
     # or
 
     require File.expand_path(File.join(
-              File.dirname(__FILE__), 
+              File.dirname(__FILE__),
               "foo", "bar"))
 
 The fix is simple, just require the file relative to the load path:

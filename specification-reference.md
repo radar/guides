@@ -26,69 +26,69 @@ end</pre>
 
 
 ## Required gemspec attributes
-    
+
 * [files](#files)
-    
+
 * [name](#name)
-    
+
 * [platform=](#platform=)
-    
+
 * [require_paths](#require_paths)
-    
+
 * [rubygems_version](#rubygems_version)
-    
+
 * [summary](#summary)
-    
+
 * [version](#version)
-    
+
 ## Optional gemspec attributes
-    
+
 * [add_development_dependency](#add_development_dependency)
-    
+
 * [add_runtime_dependency](#add_runtime_dependency)
-    
+
 * [author=](#author=)
-    
+
 * [authors=](#authors=)
-    
+
 * [bindir](#bindir)
-    
+
 * [cert_chain](#cert_chain)
-    
+
 * [description](#description)
-    
+
 * [email](#email)
-    
+
 * [executables](#executables)
-    
+
 * [extensions](#extensions)
-    
+
 * [extra_rdoc_files](#extra_rdoc_files)
-    
+
 * [homepage](#homepage)
-    
+
 * [license=](#license=)
-    
+
 * [licenses=](#licenses=)
-    
+
 * [post_install_message](#post_install_message)
-    
+
 * [rdoc_options](#rdoc_options)
-    
+
 * [required_ruby_version=](#required_ruby_version=)
-    
+
 * [requirements](#requirements)
-    
+
 * [signing_key](#signing_key)
-    
+
 * [test_files=](#test_files=)
-    
+
 
 
 # Required gemspec attributes
 
 
-    
+
 
 <a id="files"> </a>
 ## files
@@ -112,7 +112,7 @@ spec.files = FileList['lib/**/*.rb',
 # or without Rake...
 spec.files = Dir['lib/**/*.rb'] + Dir['bin/*']
 spec.files += Dir['[A-Z]*'] + Dir['test/**/*']
-spec.files.reject! { |fn| fn.include? &quot;CVS&quot; }</pre>    
+spec.files.reject! { |fn| fn.include? &quot;CVS&quot; }</pre>
 
 <a id="name"> </a>
 ## name
@@ -121,7 +121,7 @@ spec.files.reject! { |fn| fn.include? &quot;CVS&quot; }</pre>
 
 <p>Usage:</p>
 
-<pre>spec.name = 'rake'</pre>    
+<pre>spec.name = 'rake'</pre>
 
 <a id="platform="> </a>
 ## platform=
@@ -145,7 +145,7 @@ filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
 
 <p>Usage:</p>
 
-<pre>spec.platform = Gem::Platform::Win32</pre>    
+<pre>spec.platform = Gem::Platform::Win32</pre>
 
 <a id="require_paths"> </a>
 ## require_paths
@@ -158,14 +158,14 @@ filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
 spec.require_path = '.'
 
 # If you have 'lib' and 'ext' directories...
-spec.require_paths &lt;&lt; 'ext'</pre>    
+spec.require_paths &lt;&lt; 'ext'</pre>
 
 <a id="rubygems_version"> </a>
 ## rubygems_version
 
 <p>The version of RubyGems used to create this gem.</p>
 
-<p>Do not set this, it is set automatically when the gem is packaged.</p>    
+<p>Do not set this, it is set automatically when the gem is packaged.</p>
 
 <a id="summary"> </a>
 ## summary
@@ -176,7 +176,7 @@ spec.require_paths &lt;&lt; 'ext'</pre>
 
 <p>Usage:</p>
 
-<pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>    
+<pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>
 
 <a id="version"> </a>
 ## version
@@ -189,12 +189,12 @@ A gem is a ‘prerelease’ gem if the version has a letter in it, such as
 
 <p>Usage:</p>
 
-<pre>spec.version = '0.4.1'</pre>    
+<pre>spec.version = '0.4.1'</pre>
 
 # Optional gemspec attributes
 
 
-    
+
 
 <a id="add_development_dependency"> </a>
 ## add_development_dependency
@@ -207,7 +207,7 @@ to this gem.</p>
 <pre>spec.add_development_dependency 'example', '~&gt; 1.1', '&gt;= 1.1.4'</pre>
 
 <p>Development dependencies aren’t installed by default and aren’t activated
-when a gem is required.</p>    
+when a gem is required.</p>
 
 <a id="add_runtime_dependency"> </a>
 ## add_runtime_dependency
@@ -217,7 +217,7 @@ this gem.</p>
 
 <p>Usage:</p>
 
-<pre>spec.add_runtime_dependency 'example', '~&gt; 1.1', '&gt;= 1.1.4'</pre>    
+<pre>spec.add_runtime_dependency 'example', '~&gt; 1.1', '&gt;= 1.1.4'</pre>
 
 <a id="author="> </a>
 ## author=
@@ -227,7 +227,7 @@ href="Specification.html#method-i-authors">authors</a></p>
 
 <p>Usage:</p>
 
-<pre>spec.author = 'John Jones'</pre>    
+<pre>spec.author = 'John Jones'</pre>
 
 <a id="authors="> </a>
 ## authors=
@@ -236,7 +236,7 @@ href="Specification.html#method-i-authors">authors</a></p>
 
 <p>Usage:</p>
 
-<pre>spec.authors = ['John Jones', 'Mary Smith']</pre>    
+<pre>spec.authors = ['John Jones', 'Mary Smith']</pre>
 
 <a id="bindir"> </a>
 ## bindir
@@ -245,13 +245,13 @@ href="Specification.html#method-i-authors">authors</a></p>
 
 <p>Usage:</p>
 
-<pre>spec.bindir = 'bin'</pre>    
+<pre>spec.bindir = 'bin'</pre>
 
 <a id="cert_chain"> </a>
 ## cert_chain
 
 <p>The certificate chain used to sign this gem.  See Gem::Security for
-details.</p>    
+details.</p>
 
 <a id="description"> </a>
 ## description
@@ -265,7 +265,7 @@ details.</p>
 <pre>spec.description = &lt;&lt;-EOF
   Rake is a Make-like program implemented in Ruby. Tasks and
   dependencies are specified in standard Ruby syntax.
-EOF</pre>    
+EOF</pre>
 
 <a id="email"> </a>
 ## email
@@ -275,7 +275,7 @@ EOF</pre>
 <p>Usage:</p>
 
 <pre>spec.email = 'john.jones@example.com'
-spec.email = ['jack@example.com', 'jill@example.com']</pre>    
+spec.email = ['jack@example.com', 'jill@example.com']</pre>
 
 <a id="executables"> </a>
 ## executables
@@ -288,7 +288,7 @@ found in bindir.</p>
 
 <p>Usage:</p>
 
-<pre>spec.executables &lt;&lt; 'rake'</pre>    
+<pre>spec.executables &lt;&lt; 'rake'</pre>
 
 <a id="extensions"> </a>
 ## extensions
@@ -301,7 +301,7 @@ whatever) code to be compiled on the user’s machine.</p>
 
 <p>Usage:</p>
 
-<pre>spec.extensions &lt;&lt; 'ext/rmagic/extconf.rb'</pre>    
+<pre>spec.extensions &lt;&lt; 'ext/rmagic/extconf.rb'</pre>
 
 <a id="extra_rdoc_files"> </a>
 ## extra_rdoc_files
@@ -315,7 +315,7 @@ a more complete set of documentation.</p>
 
 <p>Usage:</p>
 
-<pre>spec.extra_rdoc_files = ['README', 'doc/user-guide.txt']</pre>    
+<pre>spec.extra_rdoc_files = ['README', 'doc/user-guide.txt']</pre>
 
 <a id="homepage"> </a>
 ## homepage
@@ -324,7 +324,7 @@ a more complete set of documentation.</p>
 
 <p>Usage:</p>
 
-<pre>spec.homepage = 'http://rake.rubyforge.org'</pre>    
+<pre>spec.homepage = 'http://rake.rubyforge.org'</pre>
 
 <a id="license="> </a>
 ## license=
@@ -338,7 +338,7 @@ of the license inside of the gem when you build it.</p>
 
 <p>Usage:</p>
 
-<pre>spec.license = 'MIT'</pre>    
+<pre>spec.license = 'MIT'</pre>
 
 <a id="licenses="> </a>
 ## licenses=
@@ -352,7 +352,7 @@ of the license inside of the gem when you build it.</p>
 
 <p>Usage:</p>
 
-<pre>spec.licenses = ['MIT', 'GPL-2']</pre>    
+<pre>spec.licenses = ['MIT', 'GPL-2']</pre>
 
 <a id="post_install_message"> </a>
 ## post_install_message
@@ -361,7 +361,7 @@ of the license inside of the gem when you build it.</p>
 
 <p>Usage:</p>
 
-<pre>spec.post_install_message = &quot;Thanks for installing!&quot;</pre>    
+<pre>spec.post_install_message = &quot;Thanks for installing!&quot;</pre>
 
 <a id="rdoc_options"> </a>
 ## rdoc_options
@@ -372,7 +372,7 @@ of the license inside of the gem when you build it.</p>
 
 <pre>spec.rdoc_options &lt;&lt; '--title' &lt;&lt; 'Rake -- Ruby Make' &lt;&lt;
   '--main' &lt;&lt; 'README' &lt;&lt;
-  '--line-numbers'</pre>    
+  '--line-numbers'</pre>
 
 <a id="required_ruby_version="> </a>
 ## required_ruby_version=
@@ -385,7 +385,7 @@ of the license inside of the gem when you build it.</p>
 spec.required_ruby_version = '&gt;= 1.8.6'
 
 # Hopefully by now:
-spec.required_ruby_version = '&gt;= 1.9.2'</pre>    
+spec.required_ruby_version = '&gt;= 1.9.2'</pre>
 
 <a id="requirements"> </a>
 ## requirements
@@ -396,12 +396,12 @@ to work. It’s simply information for the user.</p>
 <p>Usage:</p>
 
 <pre>spec.requirements &lt;&lt; 'libmagick, v6.0'
-spec.requirements &lt;&lt; 'A good graphics card'</pre>    
+spec.requirements &lt;&lt; 'A good graphics card'</pre>
 
 <a id="signing_key"> </a>
 ## signing_key
 
-<p>The key used to sign this gem.  See Gem::Security for details.</p>    
+<p>The key used to sign this gem.  See Gem::Security for details.</p>
 
 <a id="test_files="> </a>
 ## test_files=
@@ -412,4 +412,4 @@ user requests a gem to be unit tested.</p>
 <p>Usage:</p>
 
 <pre>spec.test_files = Dir.glob('test/tc_*.rb')
-spec.test_files = ['tests/test-suite.rb']</pre>    
+spec.test_files = ['tests/test-suite.rb']</pre>
