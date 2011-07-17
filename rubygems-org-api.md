@@ -255,7 +255,7 @@ List the webhooks registered under your account.
           "url": "http://gemwhisperer.heroku.com",
           "failure_count": 1
         }
-      ]
+      ],
       "rails": [
         {
           "url": "http://example.com",
