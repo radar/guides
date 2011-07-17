@@ -188,7 +188,8 @@ Gem Version Download Methods
 
 ### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.json`
 
-Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data.
+Returns a JSON object containing the number of downloads by day for a
+particular gem version for 90 days of data.
 
     $ curl http://rubygems.org/api/v1/versions/coulda-0.6.3/downloads.json
 
@@ -201,9 +202,11 @@ Returns a JSON object containing the number of downloads by day for a particular
 
 ### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads/search.json?from=[START DATE]&to=[END DATE]`
 
-Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data.
+Returns a JSON object containing the number of downloads by day for a
+particular gem version between a date range, specified by the parameters `from`
+and `to`. Dates values should be specified in the format YYYY-MM-DD.
 
-    $ curl http://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-1&to=2011-11-5</h5>
+    $ curl http://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-01&to=2011-11-05</h5>
 
     {
       "2011-11-01":0,
