@@ -215,7 +215,7 @@ Returns a JSON object containing the number of downloads by day for a particular
 Owner Methods
 -------------
 
-### GET - `/api/v1/gems/[rubygem name]/owners.json`
+### GET - `/api/v1/gems/[rubygem name]/owners.(json|yaml)`
 
 View all owners of a gem that you own. These users can all push to this gem.
 
