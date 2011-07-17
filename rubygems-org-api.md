@@ -38,7 +38,7 @@ examples in the README. You can install the library with the command:
 Gem Methods
 -----------
 
-### GET - `/api/v1/gems/[name].(json|xml)`
+### GET - `/api/v1/gems/[GEM NAME].(json|xml)`
 
 Returns some basic information about the given gem. For example, here's Rails in JSON:
 
@@ -109,7 +109,8 @@ or XML:
 
 ### GET - `/api/v1/search.(json|xml)?query=[YOUR QUERY]`
 
-Submit a search to Gemcutter for active gems, just like a search query on the site. Returns an array of the XML or JSON representation of gems that match.
+Submit a search to Gemcutter for active gems, just like a search query on the
+site. Returns an array of the XML or JSON representation of gems that match.
 
     $ curl 'http://rubygems.org/api/v1/search.json?query=cucumber'
 
@@ -117,7 +118,8 @@ Submit a search to Gemcutter for active gems, just like a search query on the si
 
 ### GET - `/api/v1/gems.(json|xml)`
 
-List all gems that you own. Returns an array of the XML or JSON representation of gems you own.
+List all gems that you own. Returns an array of the XML or JSON representation
+of gems you own.
 
     $ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
               http://rubygems.org/api/v1/gems.json
@@ -125,7 +127,7 @@ List all gems that you own. Returns an array of the XML or JSON representation o
 
 ### POST - `/api/v1/gems`
 
-Submit a gem to RubyGems.org. Must have your API key supplied and give a built RubyGem in the body of the request.
+Submit a gem to RubyGems.org. Must post a built RubyGem in the request body.
 
     $ curl --data-binary @gemcutter-0.2.1.gem \
            -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
@@ -160,7 +162,7 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 Gem Version Methods
 -------------------
 
-### GET - `/api/v1/versions/[rubygem name].json`
+### GET - `/api/v1/versions/[GEM NAME].json`
 
 Returns a JSON array of gem version details like the below:
 
@@ -184,7 +186,7 @@ Returns a JSON array of gem version details like the below:
 Gem Version Download Methods
 ----------------------------
 
-### GET - `/api/v1/versions/[rubygem name]-[rubygem version]/downloads.json`
+### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.json`
 
 Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data.
 
@@ -197,7 +199,7 @@ Returns a JSON object containing the number of downloads by day for a particular
       ...
     }
 
-### GET - `/api/v1/versions/[rubygem name]-[rubygem version]/downloads/search.json?from=[start date str]&to=[end date str]`
+### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads/search.json?from=[START DATE]&to=[END DATE]`
 
 Returns a JSON object containing the number of downloads by day for a particular gem version for 90 days of data.
 
@@ -215,7 +217,7 @@ Returns a JSON object containing the number of downloads by day for a particular
 Owner Methods
 -------------
 
-### GET - `/api/v1/gems/[rubygem name]/owners.(json|yaml)`
+### GET - `/api/v1/gems/[GEM NAME]/owners.(json|yaml)`
 
 View all owners of a gem that you own. These users can all push to this gem.
 
@@ -231,7 +233,7 @@ View all owners of a gem that you own. These users can all push to this gem.
       }
     ]
 
-### POST - `/api/v1/gems/[rubygem name]/owners`
+### POST - `/api/v1/gems/[GEM NAME]/owners`
 
 Add an owner to a RubyGem you own, giving that user permission to manage it.
 
@@ -241,7 +243,7 @@ Add an owner to a RubyGem you own, giving that user permission to manage it.
 
     Owner added successfully.
 
-### DELETE - `/api/v1/gems/[rubygem name]/owners`
+### DELETE - `/api/v1/gems/[GEM NAME]/owners`
 
 Remove a user's permission to manage a RubyGem you own.
 
@@ -347,7 +349,7 @@ Retrieve your API key using HTTP basic auth.
 
     701243f217cdf23b1370c7b66b65ca97
 
-### GET - `/api/v1/dependencies?gems=[comma delimited rubygems]`
+### GET - `/api/v1/dependencies?gems=[COMMA DELIMITED GEM NAMES]`
 
 Returns a marshalled array of hashes for all versions of given gems. Each hash
 contains a gem version with its dependencies making this useful for resolving dependencies.
