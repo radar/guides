@@ -38,7 +38,7 @@ examples in the README. You can install the library with the command:
 Gem Methods
 -----------
 
-### GET - `/api/v1/gems/[GEM NAME].(json|xml)`
+### GET - `/api/v1/gems/[GEM NAME].(json|xml|yaml)`
 
 Returns some basic information about the given gem. For example, here's Rails in JSON:
 
@@ -107,7 +107,7 @@ or XML:
       </dependencies>
     </rubygem>
 
-### GET - `/api/v1/search.(json|xml)?query=[YOUR QUERY]`
+### GET - `/api/v1/search.(json|xml|yaml)?query=[YOUR QUERY]`
 
 Submit a search to Gemcutter for active gems, just like a search query on the
 site. Returns an array of the XML or JSON representation of gems that match.
@@ -116,7 +116,7 @@ site. Returns an array of the XML or JSON representation of gems that match.
 
     $ curl 'http://rubygems.org/api/v1/search.xml?query=cucumber'
 
-### GET - `/api/v1/gems.(json|xml)`
+### GET - `/api/v1/gems.(json|xml|yaml)`
 
 List all gems that you own. Returns an array of the XML or JSON representation
 of gems you own.
