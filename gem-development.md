@@ -60,9 +60,7 @@ Additionally in the `bundle install` output, we will see this line:
     
 Bundler has detected our gem and has loaded the gemspec and our gem is bundled just like every other gem.
 
-To run the `rspec` command for our bundle, we must use `bundle exec rspec`. This will use the bundled version of rspec rather than the system version. We can run it now by running `bundle exec rspec spec` to test precisely nothing. At least it works, right?
-
-We can write our first test with this framework now in place. For testing, we create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_ but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with this content:
+We can write our first test with this framework now in place. For testing, first we create a folder to put our tests in called _spec_ (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_ but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with this content:
 
     describe Foodie::Food do
       it "broccoli is gross" do
