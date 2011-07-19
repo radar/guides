@@ -42,7 +42,7 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
-    s.add_development_dependency "rspec", "~> 2.0.0.beta.22"
+    s.add_development_dependency "rspec", "~> 2.6"
     
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will add this gem automatically to a group called "development" which then we can reference any time we want to load these gems with this line:
 
