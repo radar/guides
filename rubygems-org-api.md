@@ -14,9 +14,9 @@ help!](http://github.com/rubygems/gemcutter) RubyGems itself and the
 [gemcutter gem](http://rubygems.org/gems/gemcutter) uses the API to push gems,
 add owners, and more.
 
-* [Gem Methods](#gem): Query or create rubygems to be hosted
-* [Gem Version Methods](#gemversion): Query for information about versions of a particular ruby gem
-* [Gem Version Download Methods](#gemversiondownloads): for download statistics about a particular ruby gem version
+* [Gem Methods](#gem): Query or create gems to be hosted
+* [Gem Version Methods](#gemversion): Query for information about versions of a particular gem
+* [Gem Download Methods](#gemdownloads): Query for download statistics
 * [Owner Methods](#owner): Manage owners for gems
 * [Webhook Methods](#webhook): Manage notifications for when gems are pushed
 * [Misc Methods](#misc): Various other interactions with the site
@@ -182,9 +182,19 @@ Returns a JSON array of gem version details like the below:
        }
     ]
 
-<a id="gemversiondownloads"> </a>
-Gem Version Download Methods
-----------------------------
+<a id="gemdownloads"> </a>
+Gem Download Methods
+--------------------
+
+### GET - `/api/v1/downloads.json`
+
+Returns a JSON object containing the total number of downloads on RubyGems.
+
+    $ curl http://rubygems.org/api/v1/downloads.json
+
+    {
+      "total": 242674788
+    }
 
 ### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.json`
 
