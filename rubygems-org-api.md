@@ -353,14 +353,16 @@ SHA2-hashed concatenation of the gem name, the gem version and your API key.
 Misc Methods
 ------------
 
-### GET - `/api/v1/api_key`
+### GET - `/api/v1/api_key.(json|xml|yaml)`
 
 Retrieve your API key using HTTP basic auth.
 
     $ curl -u "nick@gemcutter.org:schwwwwing" \
-           http://rubygems.org/api/v1/api_key
+           http://rubygems.org/api/v1/api_key.json
 
-    701243f217cdf23b1370c7b66b65ca97
+    {
+      "rubygems_api_key": "701243f217cdf23b1370c7b66b65ca97"
+    }
 
 ### GET - `/api/v1/dependencies?gems=[COMMA DELIMITED GEM NAMES]`
 
