@@ -188,12 +188,24 @@ Gem Download Methods
 
 ### GET - `/api/v1/downloads.(json|xml|yaml)`
 
-Returns a JSON object containing the total number of downloads on RubyGems.
+Returns a an object containing the total number of downloads on RubyGems.
 
     $ curl https://rubygems.org/api/v1/downloads.json
 
     {
       "total": 242674788
+    }
+
+### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)`
+
+Returns an object containing the total number of downloads for a paritcular gem
+as well as the total number of downloads for the specified version.
+
+    $ curl https://rubygems.org/api/v1/downloads/rails_admin-0.0.0.json
+
+    {
+      "version_downloads": 3142,
+      "total_downloads": 3142
     }
 
 ### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.json`
