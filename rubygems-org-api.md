@@ -186,7 +186,7 @@ Returns a JSON array of gem version details like the below:
 Gem Download Methods
 --------------------
 
-### GET - `/api/v1/downloads.json`
+### GET - `/api/v1/downloads.(json|xml|yaml)`
 
 Returns a JSON object containing the total number of downloads on RubyGems.
 
@@ -230,7 +230,7 @@ and `to`. Dates values should be specified in the format YYYY-MM-DD.
 Owner Methods
 -------------
 
-### GET - `/api/v1/gems/[GEM NAME]/owners.(json|yaml)`
+### GET - `/api/v1/gems/[GEM NAME]/owners.(json|xml|yaml)`
 
 View all owners of a gem that you own. These users can all push to this gem.
 
@@ -270,7 +270,7 @@ Remove a user's permission to manage a RubyGem you own.
 WebHook Methods
 ---------------
 
-### GET - `/api/v1/web_hooks.json`
+### GET - `/api/v1/web_hooks.(json|xml|yaml)`
 
 List the webhooks registered under your account.
 
