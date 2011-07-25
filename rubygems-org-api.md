@@ -101,7 +101,7 @@ or XML:
         <runtime type="array">
           <dependency>
             <name>activesupport</name>
-            <requirements>>= 2.3.5</requirements>
+            <requirements>&gt;= 2.3.5</requirements>
           </dependency>
         </runtime>
       </dependencies>
