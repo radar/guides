@@ -162,9 +162,9 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 Gem Version Methods
 -------------------
 
-### GET - `/api/v1/versions/[GEM NAME].json`
+### GET - `/api/v1/versions/[GEM NAME].(json|xml)`
 
-Returns a JSON array of gem version details like the below:
+Returns an array of gem version details like the below:
 
     $ curl https://rubygems.org/api/v1/versions/coulda.json
 
@@ -188,7 +188,7 @@ Gem Download Methods
 
 ### GET - `/api/v1/downloads.(json|xml|yaml)`
 
-Returns a an object containing the total number of downloads on RubyGems.
+Returns an object containing the total number of downloads on RubyGems.
 
     $ curl https://rubygems.org/api/v1/downloads.json
 
@@ -208,10 +208,10 @@ as well as the total number of downloads for the specified version.
       "total_downloads": 3142
     }
 
-### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.json`
+### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.(json|yaml)`
 
-Returns a JSON object containing the number of downloads by day for a
-particular gem version for 90 days of data.
+Returns an object containing the number of downloads by day for a particular
+gem version for 90 days of data.
 
     $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads.json
 
@@ -222,11 +222,11 @@ particular gem version for 90 days of data.
       ...
     }
 
-### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads/search.json?from=[START DATE]&to=[END DATE]`
+### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads/search.(json|yaml)?from=[START DATE]&to=[END DATE]`
 
-Returns a JSON object containing the number of downloads by day for a
-particular gem version between a date range, specified by the parameters `from`
-and `to`. Dates values should be specified in the format YYYY-MM-DD.
+Returns an object containing the number of downloads by day for a particular
+gem version between a date range, specified by the parameters `from` and `to`.
+Dates values should be specified in the format YYYY-MM-DD.
 
     $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-01&to=2011-11-05</h5>
 
