@@ -228,7 +228,7 @@ Returns an object containing the number of downloads by day for a particular
 gem version between a date range, specified by the parameters `from` and `to`.
 Dates values should be specified in the format YYYY-MM-DD.
 
-    $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-01&to=2011-11-05</h5>
+    $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-01&to=2011-11-05
 
     {
       "2011-11-01":0,
