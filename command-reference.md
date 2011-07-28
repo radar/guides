@@ -8,61 +8,61 @@ next: /specification-reference
 What each `gem` command does, and how to use it.
 
 
-* [gem build](#build)
+* [gem build](#gem_build)
 
-* [gem cert](#cert)
+* [gem cert](#gem_cert)
 
-* [gem check](#check)
+* [gem check](#gem_check)
 
-* [gem cleanup](#cleanup)
+* [gem cleanup](#gem_cleanup)
 
-* [gem contents](#contents)
+* [gem contents](#gem_contents)
 
-* [gem dependency](#dependency)
+* [gem dependency](#gem_dependency)
 
-* [gem environment](#environment)
+* [gem environment](#gem_environment)
 
-* [gem fetch](#fetch)
+* [gem fetch](#gem_fetch)
 
-* [gem generate_index](#generate_index)
+* [gem generate_index](#gem_generate_index)
 
-* [gem help](#help)
+* [gem help](#gem_help)
 
-* [gem install](#install)
+* [gem install](#gem_install)
 
-* [gem list](#list)
+* [gem list](#gem_list)
 
-* [gem lock](#lock)
+* [gem lock](#gem_lock)
 
-* [gem outdated](#outdated)
+* [gem outdated](#gem_outdated)
 
-* [gem owner](#owner)
+* [gem owner](#gem_owner)
 
-* [gem pristine](#pristine)
+* [gem pristine](#gem_pristine)
 
-* [gem push](#push)
+* [gem push](#gem_push)
 
-* [gem query](#query)
+* [gem query](#gem_query)
 
-* [gem rdoc](#rdoc)
+* [gem rdoc](#gem_rdoc)
 
-* [gem search](#search)
+* [gem search](#gem_search)
 
-* [gem server](#server)
+* [gem server](#gem_server)
 
-* [gem sources](#sources)
+* [gem sources](#gem_sources)
 
-* [gem specification](#specification)
+* [gem specification](#gem_specification)
 
-* [gem stale](#stale)
+* [gem stale](#gem_stale)
 
-* [gem uninstall](#uninstall)
+* [gem uninstall](#gem_uninstall)
 
-* [gem unpack](#unpack)
+* [gem unpack](#gem_unpack)
 
-* [gem update](#update)
+* [gem update](#gem_update)
 
-* [gem which](#which)
+* [gem which](#gem_which)
 
 
 
