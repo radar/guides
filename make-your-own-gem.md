@@ -222,12 +222,12 @@ anti-pattern in most cases. There are many more anti-patterns (and good patterns
 for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
-your gemspec's `files` array before publishing a new gem! For this reason
-alone, many developers use automation tools like
-[Hoe](http://seattlerb.rubyforge.org/hoe/),
-[Jeweler](https://github.com/technicalpickles/jeweler), or just plain old
-[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html) to generate
-the gemspec.
+your gemspec's `files` array before publishing a new gem! For this reason alone,
+many developers automate this with [Hoe](http://seattlerb.rubyforge.org/hoe/),
+[Jeweler](https://github.com/technicalpickles/jeweler),
+[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html), or
+[just a dynamic gemspec
+](https://github.com/wycats/newgem-template/blob/master/newgem.gemspec).
 
 Adding more directories with more code from here is pretty much the same
 process. Split your Ruby files up when it makes sense! Making a sane order for
