@@ -18,7 +18,7 @@ To begin to create a gem using Bundler, use the `bundle gem` command like this:
     
 We call our gem `foodie` because this gem is going to do a couple of things around food, such as portraying them as either "Delicious!" or "Gross!". Stay tuned.
     
-This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and if we have Git installed initializes a Git repository in this directory so we can start committing right away. The files generated are:
+This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. The files generated are:
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
  
@@ -44,7 +44,7 @@ To get started with writing our tests, we'll create a _spec_ directory at the ro
 
     s.add_development_dependency "rspec", "~> 2.6"
     
-Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with this line:
+Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
 
     Bundler.require(:default, :development)
     
@@ -52,15 +52,15 @@ The benefit of putting this dependency specification inside of _foodie.gemspec_ 
 
 When we run `bundle install`, rspec will be installed for this library and any other library we use with Bundler, but not for the system. This is an important distinction to make: any gem installed by Bundler will not muck about with gems installed by `gem install`. It is effectively a sandboxed environment. It is best practice to use Bundler to manage our gems so that we do not have gem version conflicts.
 
-By running `bundle install`, Bundler will generate the **extremely important** _Gemfile.lock_ file. This file is responsible for ensuring that every system this library is developed on has the *exact same* gems and so it should always be checked into version control. For more information on this file [read "THE GEMFILE.LOCK" section of the `bundle install` manpage](https://github.com/carlhuda/bundler/blob/1-0-stable/man/bundle-install.ronn#L226-246).
+By running `bundle install`, Bundler will generate the **extremely important** _Gemfile.lock_ file. This file is responsible for ensuring that every system this library is developed on has the *exact same* gems so it should always be checked into version control. For more information on this file [read "THE GEMFILE.LOCK" section of the `bundle install` manpage](https://github.com/carlhuda/bundler/blob/1-0-stable/man/bundle-install.ronn#L226-246).
 
 Additionally in the `bundle install` output, we will see this line:
 
     Using foodie (0.0.1) from source at /path/to/foodie
     
-Bundler has detected our gem and has loaded the gemspec and our gem is bundled just like every other gem.
+Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
-We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_ but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with this content:
+We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_; but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with the following:
 
     describe Foodie::Food do
       it "broccoli is gross" do
@@ -287,7 +287,7 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
     2 scenarios (2 passed)
     4 steps (4 passed)
 
-We can try executing the cli app by running `bundle exec bin/foodie portray broccoli`.
+We can try executing the CLI app by running `bundle exec bin/foodie portray broccoli`.
     
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
@@ -433,11 +433,11 @@ The final step before releasing our gem is to give it a summary and description 
 
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
 
-Secondly, it creates a tag for the current commit reflecting the current version and will push it to the set up remote. It's encouraged that we host the code on GitHub so that others may easily find it. 
+Second, it creates a tag for the current commit reflecting the current version and pushes it to the git remote. It's encouraged that we host the code on GitHub so that others may easily find it. 
 
 If this push succeeds then the final step will be the push to Rubygems.org which will now allow other people to download and install the gem.
 
-If we want to release a second version of our gem, we should make your changes and then commit them to GitHub. Afterwards, we will bump the version number in _lib/foodie/version.rb_ to whatever we see fit, make another commit to GitHub with a useful message such as "bumped to 0.0.2" and then run `rake release` again.
+If we want to release a second version of our gem, we should make our changes and then commit them to GitHub. Afterwards, we will bump the version number in _lib/foodie/version.rb_ to whatever we see fit, make another commit to GitHub with a useful message such as "bumped to 0.0.2" and then run `rake release` again.
 
 If we want to make this process a little easier we could install the "gem-release" gem with:
 
