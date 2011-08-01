@@ -104,13 +104,19 @@ We're now going to use Active Support's `pluralize` method by calling it using a
 
 To use another gem, we must first specify it as a dependency in our _foodie.gemspec_. We can specify the dependency on the `activesupport` gem in _foodie.gemspec_ by adding this line inside the `Gem::Specification` object:
 
-    s.add_dependency "activesupport", "3.0.0"
+    s.add_dependency "activesupport"
     
 If we wanted to specify a particular version we may use this line:
 
+    s.add_dependency "activesupport", "3.0.0"
+
+Or specify a version constraint:
+
     s.add_dependency "activesupport", ">= 2.3.8"
     
-However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies.
+However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
+
+    s.add_dependency "activesupport", "~> 3.0.0"
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
 
