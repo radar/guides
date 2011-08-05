@@ -196,6 +196,26 @@ Returns an object containing the total number of downloads on RubyGems.
       "total": 242674788
     }
 
+### GET - `/api/v1/downloads/top.(json|xml|yaml)`
+
+Returns an object containing the top 50 downloaded gem versions for today.
+
+    $ curl https://rubygems.org/api/v1/downloads/top.json
+
+    {
+      "gems": [
+        [
+          # version attributes
+          {
+            'full_name' => 'mime-types-1.16' # more attributes ...
+          },
+          # downloads today
+          2806
+        ],
+        # more download/version pairs ...
+      ]
+    }
+
 ### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)`
 
 Returns an object containing the total number of downloads for a paritcular gem
