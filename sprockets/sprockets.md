@@ -352,7 +352,7 @@ lines of this
 method look like this:
 
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='50'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='49'>
   pathname   = Pathname.new(static_root.join(logical_path))
   attributes = attributes_for(pathname)
 
@@ -372,7 +372,7 @@ point, and joining them together results in
 This code then calls out to `attributes_for`, defined in
 `lib/sprockets/base.rb`:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='48'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='53'>
 def attributes_for(path)
   AssetAttributes.new(self, path)
 end
