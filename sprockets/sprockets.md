@@ -355,12 +355,6 @@ method look like this:
 <div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='49'>
   pathname   = Pathname.new(static_root.join(logical_path))
   attributes = attributes_for(pathname)
-
-  entries = entries(pathname.dirname)
-
-  if entries.empty?
-    return nil
-  end
 </div>
 
 The method defines a new `pathname` object, joining the `static_root`
@@ -388,6 +382,47 @@ def initialize(environment, path)
   @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
 end
 </div>
+
+We've passed in the current `Sprockets::Environment` object into this
+method which is received as the `environment` object and stored in the
+instance variable `@environment`. The path that's passed in is the
+`#{Rails.root}/public/assets/application.css` `Pathname` object that was created earlier. If
+this path wasn't a `Pathname` already, this method would convert it into
+one.
+
+Back to `find_asset_in_static_root` now, and the next thing this method
+does is these couple of lines:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='53'>
+  entries = entries(pathname.dirname)
+
+  if entries.empty?
+    return nil
+  end
+</div>
+
+The `entries` method that is used here is defined in
+`lib/sprockets/base.rb` like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='53'>
+def entries(pathname)
+  trail.entries(pathname)
+end
+</div>
+
+The `trail` method is defined by an `attr_reader` call in
+`Sprockets::Trail`'s `self.included` method in `lib/sprockets/trail.rb`:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='6'>
+def self.included(base)
+  base.instance_eval do
+    attr_reader :trail
+    protected :trail
+  end
+end
+</div>
+
+TODO: Find where/how `@trail` is defined. 
 
 # Here be dragons
 
