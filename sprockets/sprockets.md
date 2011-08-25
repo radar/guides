@@ -247,9 +247,9 @@ def path(logical_path, fingerprint = true, prefix = nil)
 end
 </div>
 
-If the file contains a "fingerprint" (an MD5 hash which is unique for this "version" of this file) then it will return a path such as `application-13e6dd6f2d0d01b7203c43a264d6c9ef.css`. We are operating in the development environment for now, and so this will simply return the `application.css` path we've come to know and love.
+If the file contains a "fingerprint" (an MD5 hash which is unique for this "version" of this file) then it will return a path such as `application-13e6dd6f2d0d01b7203c43a264d6c9ef.css`. We are operating in the development environment for now, and so this will simply return the `application.css` filename we've come to know and love.
 
-The final three lines of this method will append the `assets` prefix which has been passed in, so that our path now becomes `assets/application.css` and this will also prefix a forward-slash to this path, turning it into `/assets/application.css`.
+The final three lines of this method will append the `assets` prefix which has been passed in, coming from the `Rails.application.config.assets.prefix`, so that our path now becomes `assets/application.css` and this will also prefix a forward-slash to this path (unless it has one already), turning it into `/assets/application.css`. The third and final line simply returns the `url`, just in case the `unless` does nothing.
 
 This return value then bubbles up through `rewrite_asset_path` to `compute_public_path` to `asset_path` and finally back to the `stylesheet_link_tag` method where it's then specified as the `href` to the `link` tag that it renders.
 
@@ -261,44 +261,139 @@ In production, things work very similarly to the process just described except f
 
 This means that this code in `path` inside `Sprockets::Environment` will be called:
 
-    if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
-      url = path_with_fingerprint(logical_path, asset.digest)
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='90'>
+if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
+  url = attributes_for(logical_path).path_with_fingerprint(asset.digest)
+else
+</div>
 
-In this case, `fingerprint` is going to be `true` so that part of the `if` will run. But what does `find_asset` do? Well, it takes the `logical_path` (in this case, just `application.css`), sans any single forward slash at the beginning. 
+In this case, `fingerprint` is going to be `true` so that part of the `if` will run. But what does `find_asset` do? Well, it takes the `logical_path` (in this case, just `application.css`, as the conversion to `/assets/application.css` hasn't yet been done), sans any single forward slash at the beginning. 
 
-The `find_asset` method is defined in `sprockets/lib/environment.rb`:
+The `find_asset` method is defined in `sprockets/lib/sprockets/environment.rb`:
 
-    def find_asset(logical_path, options = {})
-      logical_path = Pathname.new(logical_path)
-      index = options[:_index] || self.index
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='54'>
+def find_asset(path, options = {})
+  cache_asset(path) { super }
+end
+</div>
 
-      if asset = find_fresh_asset_from_cache(logical_path)
-        asset
-      elsif asset = index.find_asset(logical_path, options.merge(:_environment => self))
-        @cache[logical_path.to_s] = asset
-        asset.to_a.each { |a| @cache[a.pathname.to_s] = a }
-        asset
-      end
-    end
+This simply calls the `cache_asset` method and passes in the result of
+`super`, which is another `find_asset` method. To understand
+`cache_asset` we must first understand this other `find_asset` method. This one is defined
+within `sprockets/lib/sprockets/base.rb`:
 
-The `logical_path` argument here is still going to be `"application.css"`. This method begins by converting `logical_path` into a `Pathname` object and setting up an `index` variable which is a `Sprockets::EnvironmentIndex` object.
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='61'>
+def find_asset(path, options = {})
+  pathname = Pathname.new(path)
 
-First the asset is searched for in a cache with the `find_fresh_asset_from_cache` method, which is passed the now-`Pathname`'d `logical_path` argument. We don't know yet what this cache is, so let's look at what `find_fresh_asset_from_cache` is defined as:
+  if pathname.absolute?
+    build_asset(detect_logical_path(path).to_s, pathname, options)
+  else
+    find_asset_in_static_root(pathname) ||
+      find_asset_in_path(pathname, options)
+  end
+end
+</div>
 
-    def find_fresh_asset_from_cache(logical_path)
-      if asset = @cache[logical_path.to_s]
-        if path_fingerprint(logical_path)
-          asset
-        elsif asset.stale?
-          nil
-        else
-          asset
-        end
-      else
-        nil
-      end
-    end
+This method creates a new `Pathname` object out of the `path` that we
+are given and checks to see if that path is `absolute?`. In this case,
+`application.css` is not going to be absolute path and so the code for
+the `if` is not run, but instead we fall to the `else` and the
+`find_asset_in_static_root` method in it, which is passed this new
+`Pathname` object. 
 
+This method is defined in
+`sprockets/lib/sprockets/static_compilation.rb` and begins like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='46'>
+def find_asset_in_static_root(logical_path)
+  return unless static_root
+</div>
+
+This method first calls the `static_root` method, which is pretty boring:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='8'>
+def static_root
+  @static_root
+end
+</div>
+
+This instance variable is defined using the `static_root=` method
+defined underneath its getter brother:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='12'>
+def static_root=(root)
+  expire_index!
+  @static_root = root ? Pathname.new(root) : nil
+end
+</div>
+
+This method is called inside an old friend, the `actionpack/lib/sprockets/railtie.rb`
+file, which is responsible for creating the Railtie within Rails itself
+that is used to load Sprockets. The call to `static_root=` is within the
+"sprockets.environment" initializer, and is called like this:
+
+<div class="example" data-repo='rails'
+data-file='actionpack/lib/sprockets/railtie.rb' data-start='20'>
+app.assets = Sprockets::Environment.new(app.root.to_s) do |env|
+  env.static_root = File.join(app.root.join('public'), config.assets.prefix)
+</div>
+
+In this situation, we can see a new `Sprockets::Environment` object is
+initialized and that initialization is given a block where the
+`static_root=` method is called, a `File.join`'d path of
+`#{app.root}/public/#{config.assets.prefix}` is given, which evaluates
+to `#{Rails.root}/public/assets` in default installations.
+
+So that's how `@static_root` is set, and so armed with that knowledge we
+know that the `static_root` method call in `find_asset_in_static_root`
+is going to return a value, and therefore go further. The next couple of
+lines of this
+method look like this:
+
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='50'>
+  pathname   = Pathname.new(static_root.join(logical_path))
+  attributes = attributes_for(pathname)
+
+  entries = entries(pathname.dirname)
+
+  if entries.empty?
+    return nil
+  end
+</div>
+
+The method defines a new `pathname` object, joining the `static_root`
+and the `logical_path` together. The `logical_path` in this instance is
+the `Pathname` object consisting just of `application.css` at this
+point, and joining them together results in
+`#{Rails.root}/public/assets/application.css`.
+
+This code then calls out to `attributes_for`, defined in
+`lib/sprockets/base.rb`:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='48'>
+def attributes_for(path)
+  AssetAttributes.new(self, path)
+end
+</div>
+
+This `AssetAttributes` class is defined inside
+`lib/sprockets/asset_attributes.rb`, and it's `initialize` method is
+defined like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='7'>
+def initialize(environment, path)
+  @environment = environment
+  @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
+end
+</div>
+
+# Here be dragons
+
+** I am currently in the process of re-working this document using
+[http://github.com/radar/muse](muse). Please excuse me while I move the
+furniture about.**
 This `@cache` variable method is set up in the `expire_index!` method which actually serves two purposes: one is to initialize this cache when the `initialize` method for `Sprockets::Environment` is called. This happened way back when the `Sprockets::Railtie`'s `after_initialize` hook ran). The second is to clear this cache.
 
 The moment, our `@cache` variable is going to be just an empty hash, and so the first `if` in this method will return nothing. The `asset` variable therefore won't be set, and so it will fall to the `else` which just returns `nil`
@@ -331,8 +426,6 @@ This then falls down to the `index` (it's a `Sprockets::EnvironmentIndex` object
         end
       end
     end
-
-This method receives the `path` argument which is still the `String` `"application.css"`. This method makes a new `Pathname` object out of that `path` and then calls `absolute?` on it. The pathname is absolute if it begins with a preceding slash, but in this case it doesn't have one, and so it will fall to the `else` in this method.
 
 This begins by removing any slash at the beginning of the path, but ours doesn't have one and so it will be left as is. The `@assets` variable is set up in the `initialize` method of `Sprockets::EnvironmentIndex`, and is just an empty `Hash` object at this stage. This means that this `@assets` hash would not contain the key of `"application.css"` at this point, and so it will go to the `else` for `@assets.key?(logical_path)`. 
 
