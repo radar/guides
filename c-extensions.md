@@ -298,6 +298,11 @@ If the C source and `extconf.rb` build script have not changed, then running
 The code for this tutorial is [available on
 github](https://github.com/jdleesmiller/hola).
 
+A good alternative to writing your own Rakefile like the one above is to use the
+[rake compiler](https://github.com/luislavena/rake-compiler), which does the
+same stuff -- and much more -- out of the box. It also lets you more easily
+target multiple platforms and interpreters.
+
 Advice
 ======
 
