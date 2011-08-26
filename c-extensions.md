@@ -12,7 +12,7 @@ To get started, we'll add a C method to the `hola` gem from the
 [advice](#advice) and some [references](#references) for further reading.
 
 <a id="tutorial"> </a>
-Tutorial: Add a C extension to `hola` 
+Tutorial: Add a C extension to `hola`
 ========================================
 
 At the end of the [make your own gem](/make-your-own-gem) guide, `hola` looked
@@ -34,11 +34,11 @@ like this:
 Now we'll add in a simple C extension.
 
 <a id="tutorial-ext"> </a>
-Create an `ext` folder
-----------------------
+Create an `ext` directory
+-------------------------
 
-Just as we put the ruby source files in the `lib/hola` folder, we put the C
-extension source files in `ext/hola`. This folder contains two files:
+Just as we put the ruby source files in the `lib/hola` directory, we put the C
+extension source files in `ext/hola`. This directory contains two files:
 
     % tree ext
     ext
@@ -46,9 +46,11 @@ extension source files in `ext/hola`. This folder contains two files:
         |-- extconf.rb
         `-- hola.c
 
+Create `extconf.rb`
+-------------------
 `extconf.rb` tells rubygems how to build the extension. For `hola`, it reads:
 
-    % cat ext/hola/extconf.rb 
+    % cat ext/hola/extconf.rb
     require 'mkmf'
 
     create_makefile('hola/hola')
@@ -57,22 +59,18 @@ extension source files in `ext/hola`. This folder contains two files:
 a [Makefile](http://en.wikipedia.org/wiki/Makefile) which, in turn, automates
 the process of building the extension. So, when rubygems installs a gem, it
 first runs the gem's `extconf.rb`, and then it runs `make` on the resulting
-`Makefile`.
+`Makefile`. For more about make, [see below](#make).
 
-The output from `make` is a [dynamically linked
-library](http://en.wikipedia.org/wiki/Shared_object). If we build `hola` on
-Linux, the output is a file called `hola/hola.so`, where `.so` stands for
-'shared object'. The extension is platform-dependent; it would be `.dll` on
-Windows, or `.dylib` on Mac OS X. The name is what we pass to `create_makefile`.
-
-In general, a good convention for the name is `<gem_name>/<gem_name>`. While it
-is somewhat annoying to repeat the gem name in so many places, it will be seen
-that it helps to avoid [naming conflicts](#naming), which are even more
-annoying.
+Create the C extension
+----------------------
+In general, a good convention for the c file name is
+`ext/<gem_name>/<gem_name>.c`. While it is somewhat annoying to repeat the gem
+name in so many places, it helps to avoid [naming conflicts](#naming), which are
+even more annoying.
 
 The C source code for the extension is in `hola.c`, which reads:
 
-    % cat ext/hola/hola.c 
+    % cat ext/hola/hola.c
     #include <ruby.h>
 
     /* our new native method; it just returns
@@ -111,30 +109,30 @@ Modify the `gemspec`
 For rubygems to know that a gem contains a C extension, we have to tell it about
 `extconf.rb`, and we have to include the C source files in the `files` list.
 
-    % cat hola.gemspec 
+    % cat hola.gemspec
     Gem::Specification.new do |s|
-      ... (other stuff) ...
+      # ... (other stuff) ...
 
       s.files = Dir.glob('lib/**/*.rb') +
-                Dir.glob('ext/**/*{.c,.h}')
+                Dir.glob('ext/**/*.{c,h,rb}')
       s.extensions = ['ext/hola/extconf.rb']
       s.executables = ['hola']
 
-      ... (other stuff) ...
+      # ... (other stuff) ...
     end
 
 Here we're computing the `files` list dynamically; when we run `gem build`,
 rubygems will include all matching files in the gem. Rubygems automatically
 adds the `extensions` and `executables` to the gem, so you don't have to list
-them under `files`. 
+them under `files`.
 
 <a id="tutorial-load"> </a>
 Load the extension
 ------------------
 
 The final step is to require the shared object so that ruby will load the
-extension with the rest of the gem. To do this, we simply require `hola/hola` at
-the top of `lib/hola.rb`:
+extension with the rest of the gem. To do this, we simply require `hola/hola` in
+`lib/hola.rb`:
 
     % cat lib/hola.rb
     require 'hola/hola'
@@ -145,7 +143,7 @@ This works because rubygems copies the shared object from `ext` to `lib` when
 the gem is installed. It seems a bit like magic, but we can now build and
 install the gem to see what's going on:
 
-    % gem build hola.gemspec 
+    % gem build hola.gemspec
     Successfully built RubyGem
     Name: hola
     Version: 0.0.1
@@ -155,14 +153,14 @@ The `gem build` command creates a `.gem` file from the `.gemspec`. It includes
 all of the source files, but it doesn't compile the extension; that happens when
 the gem is installed:
 
-    % gem install hola-0.0.1.gem 
+    % gem install hola-0.0.1.gem
     Building native extensions.  This could take a while...
     Successfully installed hola-0.0.1
     1 gem installed
 
 Where exactly the gem is installed to depends on how ruby is set up. On Linux
-with [rvm](http://beginrescueend.com/), the ruby version manager, the gem is
-installed into the following folder:
+with [rvm](http://beginrescueend.com/), the gem is installed into the following
+directory:
 
     % tree ~/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/
     /home/john/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/
@@ -183,38 +181,33 @@ installed into the following folder:
     `-- test
         `-- test_hola.rb
 
-We can see that the `ext/hola` folder contains our `extconf.rb` and `hola.c`
-files, in addition to the `Makefile` generated during the install, the `hola.o`
-object file generated by the compiler, and the finished product, `hola.so`. We
-can also see that there is a copy of `hola.so` in `lib/hola`.
+We can see that the `ext/hola` directory contains our `extconf.rb` and `hola.c`
+files. We can also see that the install has generated a Makefile, a `hola.o`
+object file generated by the compiler, and the finished product, `hola.so`. And
+as mentioned before, notice that `hola.so` has been copied to `lib/hola`.
 
-When we require the gem, rubygems puts `hola`'s `lib` folder on the
-`$LOAD_PATH`, which is where `require` looks for files:
+When we require the gem, rubygems adds `hola`'s `lib` directory to `$LOAD_PATH`,
+which is where `require` looks for files:
 
     % irb -rubygems
     ruby-1.8.7-p352 :001 > require 'hola'
-     => true 
+     => true
     ruby-1.8.7-p352 :002 > puts $LOAD_PATH
     /home/john/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/lib
     ... (lots of standard paths) ...
     .
-    => nil 
+    => nil
 
-When it sees `require 'hola/hola'` at the top of `lib/hola.rb`, it finds
-`~/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/lib/hola/hola.so`.
-(Note that we don't have to write the `.so` extension -- ruby figures this out
-for itself, which is fortunate, because it is platform-dependent.)
-
-Finally, we can call our C extension's `bonjour` method: 
+Finally, we can call our C extension's `bonjour` method:
 
     ruby-1.8.7-p352 :003 > Hola.bonjour
-    => "bonjour!" 
+    => "bonjour!"
 
-The string `"bonjour!"` came from our C extension. Hooray! 
+The string `"bonjour!"` came from our C extension. Hooray!
 
 Of course, we should also add a test to our test suite:
 
-    % cat test/test_hola.rb 
+    % cat test/test_hola.rb
     require 'test/unit'
     require 'hola'
 
@@ -228,20 +221,21 @@ Of course, we should also add a test to our test suite:
     end
 
 <a id="tutorial-rakefile"> </a>
-Add helpful tasks to the `Rakefile`
------------------------------------
+Add `Rake` tasks
+----------------
 
 Building and installing the gem every time you make a change quickly gets
 tedious.  To speed things up, it helps to add some extra tasks to your Rakefile
-that automate the build process. The following should work on any unix, but
-it would need some tweaking to run on Windows.
+that automate the build process. The following should work on any unix. For
+cross-platform `Rake` tasks see
+[rake-compiler](https://github.com/luislavena/rake-compiler).
 
     require 'rake/testtask'
     require 'rake/clean'
 
     NAME = 'hola'
 
-    # rule to build the extension: this says 
+    # rule to build the extension: this says
     # that the extension should be rebuilt
     # after any change to the files in ext
     file "lib/#{NAME}/#{NAME}.so" =>
@@ -276,14 +270,13 @@ it would need some tweaking to run on Windows.
 
 Now typing `rake` will run the tests after building (or rebuilding) the
 extension, as necessary:
-    
+
     % rake
     (in /home/john/rubygems_hola)
     /home/john/.rvm/rubies/ruby-1.8.7-p352/bin/ruby extconf.rb
     creating Makefile
     make
-    gcc -I. -I/home/john/.rvm/rubies/ruby-1.8.7-p352/lib/ruby/1.8/i686-linux -I/home/john/.rvm/rubies/ruby-1.8.7-p352/lib/ruby/1.8/i686-linux -I. -D_FILE_OFFSET_BITS=64  -fPIC -g -O2  -fPIC   -c hola.c
-    gcc -shared -o hola.so hola.o -L. -L/home/john/.rvm/rubies/ruby-1.8.7-p352/lib -Wl,-R/home/john/.rvm/rubies/ruby-1.8.7-p352/lib -L.  -rdynamic -Wl,-export-dynamic    -Wl,-R -Wl,/home/john/.rvm/rubies/ruby-1.8.7-p352/lib -L/home/john/.rvm/rubies/ruby-1.8.7-p352/lib -lruby  -lrt -ldl -lcrypt -lm   -lc
+    # gcc output ...
     cp ext/hola/hola.so lib/hola
     Loaded suite /home/john/.rvm/gems/ruby-1.8.7-p352/gems/rake-0.8.7/lib/rake/rake_test_loader
     Started
@@ -306,16 +299,25 @@ target multiple platforms and interpreters.
 Advice
 ======
 
+<a id="make"> </a>
+About Make
+----------
+The output from `make` is a [dynamically linked
+library](http://en.wikipedia.org/wiki/Shared_object). If we build `hola` on
+Linux, the output is a file called `hola/hola.so`, where `.so` stands for
+'shared object'. The extension is platform-dependent; it would be `.dll` on
+Windows, or `.dylib` on Mac OS X. The name is what we pass to `create_makefile`.
+
 <a id="naming"> </a>
 Extension Naming
 ----------------
 
 To avoid unintended interactions between gems, it's a good idea for each gem to
-keep all of its files in a single folder. This is the motivation behind the
+keep all of its files in a single directory. This is the motivation behind the
 naming conventions used in the [tutorial](#tutorial). To summarize, the
 suggested conventions for a gem with name `$g` are:
 
-1.   `ext/$g` is the folder that contains the source files and `extconf.rb`
+1.   `ext/$g` is the directory that contains the source files and `extconf.rb`
 1.   `ext/$g/$g.c` is the main source file (there may be others)
 1.   `ext/$g/$g.c` contains a function `Init_$g`
 1.   `ext/$g/extconf.rb` calls `create_makefile('$g/$g')`
@@ -323,10 +325,10 @@ suggested conventions for a gem with name `$g` are:
      list any C source or header files in `ext/$g`
 1.   the first require in `lib/$g.rb` is `require '$g/$g'`
 
-An alternative is to name the extension like `<gem_name>_ext` instead of
-`<gem_name>/<gem_name>`. The result is that the `<gem_name>_ext.so` file is
-installed into the gem's `lib` folder, and it can be required from
-`lib/<gem_name>.rb` as `require '<gem_name>_ext'`. This also works, though it is
+An alternative is to name the extension like `<$g>_ext` instead of
+`<$g>/<$g>`. The result is that the `<$g>_ext.so` file is
+installed into the gem's `lib` directory, and it can be required from
+`lib/<$g>.rb` as `require '<$g>_ext'`. This also works, though it is
 perhaps not as clean as the first convention.
 
 Wrapping Existing Libraries
@@ -345,14 +347,6 @@ but several tools also exist:
 *  [rb++](http://rbplusplus.rubyforge.org/) is nicer in several ways but is
    less stable
 
-Multi-Platform Extensions
--------------------------
-
-The focus of this guide has been on writing extensions for Linux, but it is also
-possible to write extensions that work on multiple operating systems.
-
-This section needs help! [Please contribute.](http://github.com/rubygems/guides)
-
 Multi-Implementation Extensions
 -------------------------------
 
@@ -366,7 +360,6 @@ for example.
 See [ruby-ffi](http://github.com/ffi/ffi) for a way to build extensions that
 work with other Ruby implementations.
 
-This section needs help! [Please contribute.](http://github.com/rubygems/guides)
 
 References
 ==========
