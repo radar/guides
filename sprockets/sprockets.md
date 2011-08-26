@@ -232,10 +232,11 @@ It returns the `Sprockets::Index` object and finally does something useful with 
 
 The `path` method defined on this object is defined within sprockets itself at `like this: 
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='89'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='92'>
 def path(logical_path, fingerprint = true, prefix = nil)
+  logger.warn "Sprockets::Environment#path is deprecated\n#{caller[0..2].join("\n")}"
   if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
-    url = attributes_for(logical_path).path_with_fingerprint(asset.digest)
+    url = asset.digest_path
   else
     url = logical_path
   end
@@ -261,9 +262,9 @@ In production, things work very similarly to the process just described except f
 
 This means that this code in `path` inside `Sprockets::Environment` will be called:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='90'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='94'>
 if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
-  url = attributes_for(logical_path).path_with_fingerprint(asset.digest)
+  url = asset.digest_path
 else
 </div>
 
@@ -271,44 +272,115 @@ In this case, `fingerprint` is going to be `true` so that part of the `if` will 
 
 The `find_asset` method is defined in `sprockets/lib/sprockets/environment.rb`:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='54'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='68'>
 def find_asset(path, options = {})
-  cache_asset(path) { super }
+  # Ensure inmemory cached assets are still fresh on every lookup
+  if (asset = @assets[path.to_s]) && asset.fresh?
+    asset
+  elsif asset = super
+    @assets[path.to_s] = @assets[asset.pathname.to_s] = asset
+    asset
+  end
 end
 </div>
 
-This simply calls the `cache_asset` method and passes in the result of
-`super`, which is another `find_asset` method. To understand
-`cache_asset` we must first understand this other `find_asset` method. This one is defined
-within `sprockets/lib/sprockets/base.rb`:
+This method first attempts to determine if there's a key in `@assets`
+that matches the name of our file. At this intial point, there won't be
+and so this will fall through.
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='61'>
+In the `elsif` underneath the `if`, the `super` method is called,
+calling the `find_asset` method which is defined in
+`lib/sprockets/base.rb`:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='96'>
 def find_asset(path, options = {})
   pathname = Pathname.new(path)
 
   if pathname.absolute?
-    build_asset(detect_logical_path(path).to_s, pathname, options)
+    build_asset(attributes_for(pathname).logical_path, pathname, options)
   else
-    find_asset_in_static_root(pathname) ||
-      find_asset_in_path(pathname, options)
+    find_asset_in_path(pathname, options)
   end
 end
 </div>
 
 This method creates a new `Pathname` object out of the `path` that we
 are given and checks to see if that path is `absolute?`. In this case,
-`application.css` is not going to be absolute path and so the code for
+`application.css` is not an absolute path and so the code for
 the `if` is not run, but instead we fall to the `else` and the
-`find_asset_in_static_root` method in it, which is passed this new
+`find_asset_in_path` method in it, which is passed this new
 `Pathname` object. 
 
 This method is defined in
-`sprockets/lib/sprockets/static_compilation.rb` and begins like this:
+`sprockets/lib/sprockets/trail.rb` and begins like this:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='46'>
-def find_asset_in_static_root(logical_path)
-  return unless static_root
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='90'>
+def find_asset_in_path(logical_path, options = {})
+  # Strip fingerprint on logical path if there is one.
+  # Not sure how valuable this feature is...
+  if fingerprint = attributes_for(logical_path).path_fingerprint
+    pathname = resolve(logical_path.to_s.sub("-#{fingerprint}", ''))
+  else
+    pathname = resolve(logical_path)
 </div>
+
+This calls the `attributes_for` method on the `logical_path` passed in,
+which is the `Pathname` version of `"application.css"`. This
+`attributes_for` method is defined in `lib/sprockets/base.rb` like this:
+
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='86'>
+def attributes_for(path)
+  AssetAttributes.new(self, path)
+end
+</div>
+
+With the `AssetAttributes` class defined in
+`lib/sprockets/asset_attributes.rb`, along with its `initialize` method
+which looks like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='11'>
+def initialize(environment, path)
+  @environment = environment
+  @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
+end
+</div>
+
+The `environment` object here is simply the same
+`Sprockets::Environment` object that we've using so far, nothing special
+going on here.
+
+The path is converted into a `Pathname` object if it isn't one already,
+but it is, since this was already done in the `find_asset` method.
+
+Once `AssetAttributes.new` has done its thing, then the
+`path_fingerprint` method is called on this object:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='115'>
+# Gets digest fingerprint.
+#
+#     "foo-0aa2105d29558f3eb790d411d7d8fb66.js"
+#     # => "0aa2105d29558f3eb790d411d7d8fb66"
+#
+def path_fingerprint
+  pathname.basename(extensions.join).to_s =~ /-([0-9a-f]{7,40})$/ ? $1 : nil
+end
+</div>
+
+This method, as its comment implies, will grab the fingerprint from a
+given filename if it has one. The whole purpose of this is that
+Sprockets needs to remove that fingerprint from the file, as it will
+try to resolve it to a location at `public/assets/application.css`.
+
+Our file doesn't contain a fingerprint, and therefore will fall to the
+elsif??? 
+
+##### HERE BE DRAGONS #####
+###
+###
+##
+###
+
 
 This method first calls the `static_root` method, which is pretty boring:
 
