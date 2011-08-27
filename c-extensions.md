@@ -55,11 +55,18 @@ Create `extconf.rb`
 
     create_makefile('hola/hola')
 
-`mkmf` is part of ruby's standard library; it automates the process of creating
+`mkmf`, a ruby standard library, automates the process of creating
 a [Makefile](http://en.wikipedia.org/wiki/Makefile) which, in turn, automates
-the process of building the extension. So, when rubygems installs a gem, it
-first runs the gem's `extconf.rb`, and then it runs `make` on the resulting
-`Makefile`. For more about make, [see below](#make).
+the process of building the extension. When rubygems installs a gem, it
+runs the gem's `extconf.rb` and then runs `make` on the resulting
+`Makefile`. The output from make is a [dynamically linked
+library](http://en.wikipedia.org/wiki/Shared_object). Since its extension is
+platform-dependent, try this to find your platform's extension:
+
+    % irb -rrbconfig
+    >> RbConfig::CONFIG['DLEXT']"
+    # extensions are .bundle on my OS
+    => bundle
 
 Create the C extension
 ----------------------
@@ -299,15 +306,6 @@ target multiple platforms and interpreters.
 Advice
 ======
 
-<a id="make"> </a>
-About Make
-----------
-The output from `make` is a [dynamically linked
-library](http://en.wikipedia.org/wiki/Shared_object). If we build `hola` on
-Linux, the output is a file called `hola/hola.so`, where `.so` stands for
-'shared object'. The extension is platform-dependent; it would be `.dll` on
-Windows, or `.dylib` on Mac OS X. The name is what we pass to `create_makefile`.
-
 <a id="naming"> </a>
 Extension Naming
 ----------------
@@ -325,10 +323,10 @@ suggested conventions for a gem with name `$g` are:
      list any C source or header files in `ext/$g`
 1.   the first require in `lib/$g.rb` is `require '$g/$g'`
 
-An alternative is to name the extension like `<$g>_ext` instead of
-`<$g>/<$g>`. The result is that the `<$g>_ext.so` file is
+An alternative is to name the extension like `$g_ext` instead of
+`$g/$g`. The result is that the `$g_ext.so` file is
 installed into the gem's `lib` directory, and it can be required from
-`lib/<$g>.rb` as `require '<$g>_ext'`. This also works, though it is
+`lib/$g.rb` as `require '$g_ext'`. This also works, though it is
 perhaps not as clean as the first convention.
 
 Wrapping Existing Libraries
