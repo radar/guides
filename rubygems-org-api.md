@@ -21,6 +21,17 @@ add owners, and more.
 * [Webhook Methods](#webhook): Manage notifications for when gems are pushed
 * [Misc Methods](#misc): Various other interactions with the site
 
+<a id="authorization"> </a>
+API Authorization
+-----------------
+
+Some API calls require an Authorization header. To find your API key, click on
+your username when logged in and then click on 'Edit Profile'. An example of
+using the API key:
+
+    $ curl -H 'Authorization:YOUR_API_KEY' \
+      https://rubygems.org/api/v1/some_api_call.json
+
 <a id="library"> </a>
 Ruby Library
 ------------

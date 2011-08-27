@@ -101,16 +101,17 @@ Of course, our smoke test isn’t over yet: Let’s `require` our gem and use it
     >> Hola.hi
     Hello world!
 
-Hola now needs to be shared with the rest of the Ruby community. Publishing
-your gem out to RubyGems.org only takes one command, granted you have an
-account on the site. Once you’re signed up, then you can push out a gem.
+Hola now needs to be shared with the rest of the Ruby community. Publishing your
+gem out to RubyGems.org only takes one command, granted you have an account on
+the site. To setup your computer with your rubygems account:
+
+    $ curl -u qrush https://rubygems.org/api/v1/api_key.yaml >
+    ~/.gem/credentials
+    Enter host password for user 'qrush':
+
+Once this has been setup, push out the gem:
 
     % gem push hola-0.0.0.gem
-    Enter your RubyGems.org credentials.
-    Don't have an account yet? Create one at http://rubygems.org/sign_up
-       Email:   nick@quaran.to
-       Password:
-    Signed in.
     Pushing gem to RubyGems.org...
     Successfully registered gem: hola (0.0.0)
 
