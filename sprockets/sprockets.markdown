@@ -1,4 +1,4 @@
-<p>This is a detailed guide to the internal workings of Sprockets. Hopefully with this information, somebody else besides Josh Peek, Sam Stephenson, Yehuda Katz and (partially) myself can begin to understand how Sprockets works.
+This is a detailed guide to the internal workings of Sprockets. Hopefully with this information, somebody else besides Josh Peek, Sam Stephenson, Yehuda Katz and (partially) myself can begin to understand how Sprockets works.
 
 ### Sprockets Asset Helpers
 
@@ -12,7 +12,7 @@ Let's take a look at the `stylesheet_link_tag` method from `Sprockets::Helpers::
 
 This method begins like this: 
 
-</p>
+
 
 **rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 4 lines, beginning line 42**
     
