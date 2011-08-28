@@ -254,7 +254,126 @@ The final three lines of this method will append the `assets` prefix which has b
 
 This return value then bubbles up through `rewrite_asset_path` to `compute_public_path` to `asset_path` and finally back to the `stylesheet_link_tag` method where it's then specified as the `href` to the `link` tag that it renders.
 
-And that, my friends, is all that is involved when you call `stylesheet_link_tag` within the development environment. Now let's look at what happens when we do the same thing, but in production.
+And that, my friends, is all that is involved when you call `stylesheet_link_tag` within the development environment. Now let's look at what happens when this file sis requested.
+
+#### Asset Request Cycle
+
+When an asset is requested in Sprockets it hits the small Rack application that sprockets has. This Rack application is mounted
+inside the `config.after_initialize` block inside the `Sprockets::Railtie` which is in `actionpack/lib/sprockets/railtie.rb`,
+using these three lines:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='60'>
+app.routes.prepend do
+  mount app.assets => config.assets.prefix
+end
+</div>
+
+The `app` object here is the same object we would get back if we used `Rails.application`, which would be an instance of our
+application class that inherits from `Rails::Application`. By calling `.routes.prepend` on that object, this Railtie places a
+new set of routes right at the top of our application's routes. In this case, it's just the one route which is mounting the
+`app.assets` object (a `Sprockets::Index` object) at `config.assets.prefix`, which by default is `/assets`.
+
+This means that any request going to `/assets` will hit this `Sprockets::Index` object and invoke a `call` method on it. The `Sprockets::Index` class is fairly bare itself and doesn't define its own `call` method, but it inherits a lot of behaviour from `Sprockets::Base`. The `Sprockets::Base` class itself doesn't define a `call` method for it's instances either. However, when the `Sprockets::Base` is declared it includes a couple of modules:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='12'>
+module Sprockets
+  # `Base` class for `Environment` and `Index`.
+  class Base
+    include Digest
+    include Caching, Processing, Server, StaticCompilation, Trail
+</div>
+
+It's the `Server` module here that provides this `call` method, which is defined within `lib/sprockets/server.rb`, beginning
+with these lines:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='12'>
+def call(env)
+  start_time = Time.now.to_f
+  time_elapsed = lambda { ((Time.now.to_f - start_time) * 1000).to_i }
+
+  msg = "Served asset #{env['PATH_INFO']} -"
+</div>
+
+This method accepts an `env` argument which is a `Hash` which represents the current Rack environment of the application,
+containing things such as headers set by previous pieces of Middleware as well as things such as the current request path,
+which is stored in `ENV['PATH_INFO']`.
+
+These few lines define the methodology that this method uses to work out how long an asset has taken to compile. The final line
+in the above example is the beginning of the output that Sprockets will put into the Rails log once it is done.
+
+Next, Sprockets checks for a forbidden request using these lines:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='28'>
+# URLs containing a `".."` are rejected for security reasons.
+if forbidden_request?(env)
+  return forbidden_response
+end
+</div>
+
+The comment describes acurrately enough what this method does, if the path contains ".." then it returns a
+`forbidden_response`. First, let's just see the simple code for `forbidden_request?`
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='125'>
+def forbidden_request?(env)
+  # Prevent access to files elsewhere on the file system
+  #
+  #     http://example.org/assets/../../../etc/passwd
+  #
+  env["PATH_INFO"].include?("..")
+end
+</div>
+
+The `env["PATH_INFO"]` method here is the request path that is requested from Sprockets, which would be `/application.css` at
+this point in time. If that path were to include two dots in a row, this `forbidden_request?` method would return `true` and
+the `forbidden_response` method would be called. The `forbidden_response` method looks like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='133'>
+# Returns a 403 Forbidden response tuple
+def forbidden_response
+  [ 403, { "Content-Type" => "text/plain", "Content-Length" => "9" }, [ "Forbidden" ] ]
+end
+</div>
+
+This response object is a standard three-part tuple that Rack expects, containing the HTTP status code first, a `Hash` of
+headers to present and finally an `Array` containing a `String` which represents the content for this response.
+
+In this case, our request is `/application.css` and therefore will not trigger this `forbidden_response` to be called, falling
+to the next few of lines of this `call` method:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='33'>
+# Mark session as "skipped" so no `Set-Cookie` header is set
+env['rack.session.options'] ||= {}
+env['rack.session.options'][:defer] = true
+env['rack.session.options'][:skip] = true
+</div>
+
+In the case of sprockets, it does not care so much about the session information for a user, and so this is deferred and
+skipped with these lines.
+
+Next, Sprockets gets to actually trying to find the asset that has been requested:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='37'>
+# Extract the path from everything after the leading slash
+path = env['PATH_INFO'].to_s.sub(/^\//, '')
+
+# Look up the asset.
+asset = find_asset(path)
+asset.to_a if asset
+</div>
+
+At the beginning of this, Sprockets removes the trailing slash from the beginning of `/application.css`, turning it into just
+`application.css`. This path is then passed to the `find_asset` method, which *should* find our asset, if it exists. If it does
+not exist, then `find_asset` will return `nil`.
+
+The `find_asset` method is defined within...
+
+******************************
+******************************
+******************************
+******************************
+******************************
+
+Now let's look at what happens when we do the same thing, but in production.
 
 #### Later, in production
 
