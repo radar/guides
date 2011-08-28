@@ -168,7 +168,7 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
            https://rubygems.org/api/v1/gems/unyank
 
     Successfully unyanked gem: bills (0.0.1)
-    
+
 ### GET - `/api/v1/gems/latest`
 
 Pulls the 50 newest first-version gems added to RubyGems.org. Returns an array of the XML or JSON representation of the gems.
@@ -179,13 +179,13 @@ Pulls the 50 newest first-version gems added to RubyGems.org. Returns an array o
 
 Pulls the 50 most recently updated gems. Returns an array of the XML or JSON representation of the gems.
 
-    $ curl 'https://rubygems.org/api/v1/gems/just_updated.json'    
+    $ curl 'https://rubygems.org/api/v1/gems/just_updated.json'
 
 <a id="gemversion"> </a>
 Gem Version Methods
 -------------------
 
-### GET - `/api/v1/versions/[GEM NAME].(json|xml)`
+### GET - `/api/v1/versions/[GEM NAME].(json|xml|yaml)`
 
 Returns an array of gem version details like the below:
 
