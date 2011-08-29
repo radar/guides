@@ -278,7 +278,7 @@ module Sprockets
 It's the `Server` module here that provides this `call` method, which is defined within `lib/sprockets/server.rb`, beginning
 with these lines:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='12'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='22'>
 def call(env)
   start_time = Time.now.to_f
   time_elapsed = lambda { ((Time.now.to_f - start_time) * 1000).to_i }
@@ -305,7 +305,7 @@ end
 The comment describes acurrately enough what this method does, if the path contains ".." then it returns a
 `forbidden_response`. First, let's just see the simple code for `forbidden_request?`
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='125'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='126'>
 def forbidden_request?(env)
   # Prevent access to files elsewhere on the file system
   #
@@ -319,7 +319,7 @@ The `env["PATH_INFO"]` method here is the request path that is requested from Sp
 this point in time. If that path were to include two dots in a row, this `forbidden_request?` method would return `true` and
 the `forbidden_response` method would be called. The `forbidden_response` method looks like this:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='133'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='134'>
 # Returns a 403 Forbidden response tuple
 def forbidden_response
   [ 403, { "Content-Type" => "text/plain", "Content-Length" => "9" }, [ "Forbidden" ] ]
@@ -344,7 +344,7 @@ skipped with these lines.
 
 Next, Sprockets gets to actually trying to find the asset that has been requested:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='37'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='38'>
 # Extract the path from everything after the leading slash
 path = env['PATH_INFO'].to_s.sub(/^\//, '')
 
@@ -357,51 +357,7 @@ At the beginning of this, Sprockets removes the trailing slash from the beginnin
 `application.css`. This path is then passed to the `find_asset` method, which *should* find our asset, if it exists. If it does
 not exist, then `find_asset` will return `nil`.
 
-The `find_asset` method is defined within...
-
-******************************
-******************************
-******************************
-******************************
-******************************
-
-Now let's look at what happens when we do the same thing, but in production.
-
-#### Later, in production
-
-In production, things work very similarly to the process just described except for (obviously) some key differences. In the production environment, `performing_caching?` will return `true` and therefore the `path` method in `Sprockets::EnvironmentIndex` will receive it's `fingerprint` argument as `true`, rather than `false`.
-
-This means that this code in `path` inside `Sprockets::Environment` will be called:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='94'>
-if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
-  url = asset.digest_path
-else
-</div>
-
-In this case, `fingerprint` is going to be `true` so that part of the `if` will run. But what does `find_asset` do? Well, it takes the `logical_path` (in this case, just `application.css`, as the conversion to `/assets/application.css` hasn't yet been done), sans any single forward slash at the beginning. 
-
-The `find_asset` method is defined in `sprockets/lib/sprockets/environment.rb`:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='68'>
-def find_asset(path, options = {})
-  # Ensure inmemory cached assets are still fresh on every lookup
-  if (asset = @assets[path.to_s]) && asset.fresh?
-    asset
-  elsif asset = super
-    @assets[path.to_s] = @assets[asset.pathname.to_s] = asset
-    asset
-  end
-end
-</div>
-
-This method first attempts to determine if there's a key in `@assets`
-that matches the name of our file. At this intial point, there won't be
-and so this will fall through.
-
-In the `elsif` underneath the `if`, the `super` method is called,
-calling the `find_asset` method which is defined in
-`lib/sprockets/base.rb`:
+The `find_asset` method is defined in `lib/sprockets/base.rb`:
 
 <div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='96'>
 def find_asset(path, options = {})
@@ -415,15 +371,7 @@ def find_asset(path, options = {})
 end
 </div>
 
-This method creates a new `Pathname` object out of the `path` that we
-are given and checks to see if that path is `absolute?`. In this case,
-`application.css` is not an absolute path and so the code for
-the `if` is not run, but instead we fall to the `else` and the
-`find_asset_in_path` method in it, which is passed this new
-`Pathname` object. 
-
-This method is defined in
-`sprockets/lib/sprockets/trail.rb` and begins like this:
+This method converts the `path` it receives, `"application.css"`, into a new `Pathname` object for the ease that `Pathname` objects provide over strings for dealing with file-system-like things. This `pathname` object is then checked for absoluteness with `absolute?`, which will return `false` because in no reality is `"application.css"` an absolute path to anything. Therefore, this method falls to `find_asset_in_path`, defined inside `lib/sprockets/trail.rb` and begins like this:
 
 <div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='90'>
 def find_asset_in_path(logical_path, options = {})
@@ -433,12 +381,10 @@ def find_asset_in_path(logical_path, options = {})
     pathname = resolve(logical_path.to_s.sub("-#{fingerprint}", ''))
   else
     pathname = resolve(logical_path)
+  end
 </div>
 
-This calls the `attributes_for` method on the `logical_path` passed in,
-which is the `Pathname` version of `"application.css"`. This
-`attributes_for` method is defined in `lib/sprockets/base.rb` like this:
-
+Here, Sprockets calls `attributes_for` which is set up back in `lib/sprockets/base.rb` using these simple lines:
 
 <div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='86'>
 def attributes_for(path)
@@ -446,346 +392,4 @@ def attributes_for(path)
 end
 </div>
 
-With the `AssetAttributes` class defined in
-`lib/sprockets/asset_attributes.rb`, along with its `initialize` method
-which looks like this:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='11'>
-def initialize(environment, path)
-  @environment = environment
-  @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
-end
-</div>
-
-The `environment` object here is simply the same
-`Sprockets::Environment` object that we've using so far, nothing special
-going on here.
-
-The path is converted into a `Pathname` object if it isn't one already,
-but it is, since this was already done in the `find_asset` method.
-
-Once `AssetAttributes.new` has done its thing, then the
-`path_fingerprint` method is called on this object:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='115'>
-# Gets digest fingerprint.
-#
-#     "foo-0aa2105d29558f3eb790d411d7d8fb66.js"
-#     # => "0aa2105d29558f3eb790d411d7d8fb66"
-#
-def path_fingerprint
-  pathname.basename(extensions.join).to_s =~ /-([0-9a-f]{7,40})$/ ? $1 : nil
-end
-</div>
-
-This method, as its comment implies, will grab the fingerprint from a
-given filename if it has one. The whole purpose of this is that
-Sprockets needs to remove that fingerprint from the file, as it will
-try to resolve it to a location at `public/assets/application.css`.
-
-Our file doesn't contain a fingerprint, and therefore will fall to the
-elsif??? 
-
-##### HERE BE DRAGONS #####
-###
-###
-##
-###
-
-
-This method first calls the `static_root` method, which is pretty boring:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='8'>
-def static_root
-  @static_root
-end
-</div>
-
-This instance variable is defined using the `static_root=` method
-defined underneath its getter brother:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='12'>
-def static_root=(root)
-  expire_index!
-  @static_root = root ? Pathname.new(root) : nil
-end
-</div>
-
-This method is called inside an old friend, the `actionpack/lib/sprockets/railtie.rb`
-file, which is responsible for creating the Railtie within Rails itself
-that is used to load Sprockets. The call to `static_root=` is within the
-"sprockets.environment" initializer, and is called like this:
-
-<div class="example" data-repo='rails'
-data-file='actionpack/lib/sprockets/railtie.rb' data-start='20'>
-app.assets = Sprockets::Environment.new(app.root.to_s) do |env|
-  env.static_root = File.join(app.root.join('public'), config.assets.prefix)
-</div>
-
-In this situation, we can see a new `Sprockets::Environment` object is
-initialized and that initialization is given a block where the
-`static_root=` method is called, a `File.join`'d path of
-`#{app.root}/public/#{config.assets.prefix}` is given, which evaluates
-to `#{Rails.root}/public/assets` in default installations.
-
-So that's how `@static_root` is set, and so armed with that knowledge we
-know that the `static_root` method call in `find_asset_in_static_root`
-is going to return a value, and therefore go further. The next couple of
-lines of this
-method look like this:
-
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='49'>
-  pathname   = Pathname.new(static_root.join(logical_path))
-  attributes = attributes_for(pathname)
-</div>
-
-The method defines a new `pathname` object, joining the `static_root`
-and the `logical_path` together. The `logical_path` in this instance is
-the `Pathname` object consisting just of `application.css` at this
-point, and joining them together results in
-`#{Rails.root}/public/assets/application.css`.
-
-This code then calls out to `attributes_for`, defined in
-`lib/sprockets/base.rb`:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='53'>
-def attributes_for(path)
-  AssetAttributes.new(self, path)
-end
-</div>
-
-This `AssetAttributes` class is defined inside
-`lib/sprockets/asset_attributes.rb`, and it's `initialize` method is
-defined like this:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='7'>
-def initialize(environment, path)
-  @environment = environment
-  @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
-end
-</div>
-
-We've passed in the current `Sprockets::Environment` object into this
-method which is received as the `environment` object and stored in the
-instance variable `@environment`. The path that's passed in is the
-`#{Rails.root}/public/assets/application.css` `Pathname` object that was created earlier. If
-this path wasn't a `Pathname` already, this method would convert it into
-one.
-
-Back to `find_asset_in_static_root` now, and the next thing this method
-does is these couple of lines:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='53'>
-  entries = entries(pathname.dirname)
-
-  if entries.empty?
-    return nil
-  end
-</div>
-
-The `entries` method that is used here is defined in
-`lib/sprockets/base.rb` like this:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/static_compilation.rb' data-start='53'>
-def entries(pathname)
-  trail.entries(pathname)
-end
-</div>
-
-The `trail` method is defined by an `attr_reader` call in
-`Sprockets::Trail`'s `self.included` method in `lib/sprockets/trail.rb`:
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='6'>
-def self.included(base)
-  base.instance_eval do
-    attr_reader :trail
-    protected :trail
-  end
-end
-</div>
-
-TODO: Find where/how `@trail` is defined. 
-
-# Here be dragons
-
-** I am currently in the process of re-working this document using
-[http://github.com/radar/muse](muse). Please excuse me while I move the
-furniture about.**
-This `@cache` variable method is set up in the `expire_index!` method which actually serves two purposes: one is to initialize this cache when the `initialize` method for `Sprockets::Environment` is called. This happened way back when the `Sprockets::Railtie`'s `after_initialize` hook ran). The second is to clear this cache.
-
-The moment, our `@cache` variable is going to be just an empty hash, and so the first `if` in this method will return nothing. The `asset` variable therefore won't be set, and so it will fall to the `else` which just returns `nil`
-
-So that clears the `if` in `find_asset`, so then it goes to the `elsif` which, as a reminder, is defined like this:
-
-    elsif asset = index.find_asset(logical_path, options.merge(:_environment => self))
-      @cache[logical_path.to_s] = asset
-      asset.to_a.each { |a| @cache[a.pathname.to_s] = a }
-      asset
-    end
-
-This then falls down to the `index` (it's a `Sprockets::EnvironmentIndex` object, remember?) object, and the `find_asset` path defined on it. This is a *different* `find_asset` to the one that we saw before. That one was defined for `Sprockets::Environment` objects, where as this one is for a `Sprockets::EnvironmentIndex` object. This method is defined in `sprockets/lib/environment_index.rb` like this:
-
-    def find_asset(path, options = {})
-      options[:_index] ||= self
-
-      pathname = Pathname.new(path)
-
-      if pathname.absolute?
-        build_asset(detect_logical_path(path).to_s, pathname, options)
-      else
-        logical_path = path.to_s.sub(/^\//, '')
-
-        if @assets.key?(logical_path)
-          @assets[logical_path]
-        else
-          @assets[logical_path] = find_asset_in_static_root(pathname) ||
-            find_asset_in_path(pathname, options)
-        end
-      end
-    end
-
-This begins by removing any slash at the beginning of the path, but ours doesn't have one and so it will be left as is. The `@assets` variable is set up in the `initialize` method of `Sprockets::EnvironmentIndex`, and is just an empty `Hash` object at this stage. This means that this `@assets` hash would not contain the key of `"application.css"` at this point, and so it will go to the `else` for `@assets.key?(logical_path)`. 
-
-Inside this `else`, Sprockets sets that `@assets[logical_path]` variable so that it doesn't have to find it again. To find that particular asset though, it first looks in a static root using `find_asset_in_static_root` and if it can't find one there then looks for it using `find_asset_in_path`.
-
-Let's see what `find_asset_in_static_root` does first. This method is actually defined in `sprockets/lib/static_compliation.rb` and begins with these two lines:
-
-    def find_asset_in_static_root(logical_path)
-      return unless static_root
-
-If `static_root` isn't set then this method will return nothing. So is this set? The method is defined at the top of `Sprockets::StaticCompilation` like this:
-
-    def static_root
-      @static_root
-    end
-
-But where is this `@static_root` variable set? If we look just underneath this `static_root` definition there's a `static_root=` definition which cleans the index and sets this variable:
-
-    def static_root=(root)
-      expire_index!
-      @static_root = root
-    end
-
-This `static_root=` method is called when `Sprockets::EnvironmentIndex` is initialized, using this line:
-
-      @static_root = static_root ? Pathname.new(static_root) : nil
-
-The `EnvironmentIndex` object was initialized earlier when the `index` method was called on the `Sprockets::Environment` object. It does this:
-
-    def index
-      EnvironmentIndex.new(self, @trail, @static_root)
-    end
-
-This `@static_root` variable is set up when the `after_initialize` hook sets up the `Sprockets::Environment` object, in `Sprockets::Railtie` using this line:
-
-    env.static_root = File.join(app.root.join("public"), assets.prefix)
-
-The `assets` object here is the `Rails.application.config.assets` object set up in `railties/lib/rails/application/configuration.rb`, with the `prefix` method on it returning simply `/assets`. This means that the `env.static_root` will result in a path that points at the `public/assets` directory within the application.
-
-This means that the `static_root` method back in `find_asset_in_static_root` is actually going to return a value and so the method will continue past this point. The next two lines in this method are these:
-
-    pathname   = Pathname.new(static_root.join(logical_path))
-    attributes = attributes_for(pathname)
- 
-The `logical_path` is still going to be `"application.css"`, and in this case it's going to be appended to the end of `static_path`, making the output something like `[Rails.root]/public/assets/application.css` and turning that into a `Pathname` object.
-
-Next, the `attributes_for` method is called on this new `Pathname` object. This method is defined like this:
-
-    def attributes_for(path)
-      AssetAttributes.new(self, path)
-    end
-
-The `AssetAttributes` class is actually `Sprockets::AssetAttributes`. This class serves the purpose of providing several helper methods, some of them which we'll see in just a bit, for the assets of this application. The `initialize` method for this class is defined like this:
-
-    def initialize(environment, path)
-      @environment = environment
-      @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
-    end
-
-
-The `environment` passed in is the `Sprockets::Environment` object we've been dealing with for a while now, and the `path` is the newly-initialized `Pathname` object set up just before `attributes_for` is called. No particularly big bit of magic going on here. Keep this little portion in mind for later on when this code is actually used.
-
-The next thing this `find_asset_in_static_root` method does is check the directory supposedly containing the assets for any entries by using this code:
-
-    entries = entries(pathname.dirname)
-
-    if entries.empty?
-      return nil
-    end
-
-The `entries` method is defined like this:
-
-    def entries(pathname)
-      @entries[pathname.to_s] ||= pathname.entries.reject { |entry| entry.to_s =~ /^\.\.?$/ }
-    rescue Errno::ENOENT
-      @entries[pathname.to_s] = []
-    end
-
-The little bonus thing here is that it caches the entries of a directory so that it doesn't have to look them up. The little `reject` call on the end of things will reject the `.` and `..` entries that would normally appear on an entries listing of this directory. If the directory can't be found (meaning an `Errno::ENOENT` exception is raised) then the cache for this directory is just set to an empty array.
-
-Obviously, if there's no entries in this directory then `find_asset_in_static_root` will return `nil`. In this case, there are no files and therefore this method will indeed return `nil`, marking the end of `find_asset_in_static_root`.
-
-Now back in the `find_asset` method, it will next try the `find_asset_in_path` method. This method is called like this:
-
-    find_asset_in_path(pathname, options)
-
-This method is defined in `Sprockets::EnvironmentIndex` and begins like this:
-
-    def find_asset_in_path(logical_path, options = {})
-      if fingerprint = path_fingerprint(logical_path)
-        pathname = resolve(logical_path.to_s.sub("-#{fingerprint}", ''))
-      else
-        pathname = resolve(logical_path)
-      end
-      
-The `path_fingerprint` method is defined inside `Sprockets::StaticCompilation` like this:
-
-    def path_fingerprint(path)
-      pathname = Pathname.new(path)
-      extensions = pathname.basename.to_s.scan(/\.[^.]+/).join
-      pathname.basename(extensions).to_s =~ /-([0-9a-f]{7,40})$/ ? $1 : nil
-    end
-
-This method takes an argument called `path` which is still just `"application.css"` at this point. From this specified path it attempts to grab a hexdigest at the end of this file, something like `"0abf44c386f64e72197c68d2f0aea31f"`, but if there isn't one it will return `nil`. Because `"applicaiton.css"` doesn't contain this hexdigest suffix, it will fall to the `else` in `find_asset_in_path` which calls the `resolve` method.
-
-Methods called `resolve` are defined in several spots in Sprockets, but this one is from `Sprockets::EnvironmentIndex` which contains this code:
-
-    def resolve(logical_path, options = {})
-      if block_given?
-        @trail.find(logical_path.to_s, logical_index_path(logical_path), options) do |path|
-          yield Pathname.new(path)
-        end
-      else
-        resolve(logical_path, options) do |pathname|
-          return pathname
-        end
-        raise FileNotFound, "couldn't find file '#{logical_path}'"
-      end
-    end
-
-In the first case, the `resolve` method is not passed a block and therefore it calls itself passing back through the `logical_path` and `options` it received, as well as a block. Now this goes back to the top of the method where the `if block_given?` statement evaluates to `true` and `@trail.find` is called.
-
-This `@trail` variable is set up when the `Sprockets::Environment` object is initialized with this line:
-
-    @trail = Hike::Trail.new(root)
-
-The `Hike::Trail` class comes from the `hike` gem which `sprockets` depends on. The `root` passed in to this method is `Rails.application.root`. The `initialize` method in `Hike::Trail` is defined like this:
-
-    def initialize(root = ".")
-      @root       = Pathname.new(root).expand_path
-      @paths      = Paths.new(@root)
-      @extensions = Extensions.new
-    end
-
-While the `find` method is defined this way:
-
-    def find(*args, &block)
-      index.find(*args, &block)
-    end
-
-The `index` method referenced here is defined in Hike also:
-
-    def index
-      Index.new(root, paths, extensions)
-    end
+These lines aren't very informative, so let's take a look at what the `AssetAttributes` class's `initialize` method looks like:
