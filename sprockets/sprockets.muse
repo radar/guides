@@ -368,3 +368,39 @@ end
 </div>
 
 These lines aren't very informative, so let's take a look at what the `AssetAttributes` class's `initialize` method looks like:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='11'>
+def initialize(environment, path)
+  @environment = environment
+  @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
+end
+</div>
+
+This method takes the `environment` argument it's given, which is the `Sprockets::Index` object that we are currently dealing with and stores it in the `@environment` instance variable for safe keeping. It then takes the path, checks to see if it is a `Pathname` and if it isn't, it will convert it into one. The `path` argument passed in here is already going to be a `Pathname` object as that was set up in the `find_asset` method.
+
+Now that the `initialize` method is done, we've now got a new `Sprockets::AssetAttributes` object. The next thing that happens is that `path_fingerprint` is called on this object. This method comes with a lovely comment explaining what it does:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/asset_attributes.rb' data-start='115'>
+# Gets digest fingerprint.
+#
+#     "foo-0aa2105d29558f3eb790d411d7d8fb66.js"
+#     # => "0aa2105d29558f3eb790d411d7d8fb66"
+#
+def path_fingerprint
+  pathname.basename(extensions.join).to_s =~ /-([0-9a-f]{7,40})$/ ? $1 : nil
+end
+</div>
+
+As the comment quite accurately describes, this method will take the fingerprint, or the *unique identifier* from this asset and return it. If there isn't one, then it will simply return `nil`. In this case, our asset is still `"application.css"` and therefore doesn't contain a fingerprint and so this method will return `nil`.
+
+In that case, the `if` statement's conditions in `find_asset_in_path` will return `false` and so it will fall to `else` to do its duty.
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='95'>
+else
+  pathname = resolve(logical_path)
+end
+</div>
+
+Not too much magic here, this `else` just calls the `resolve` method which should return a value which is stored into `pathname`. The `resolve` method is also defined within this file:
+
+TO BE CONTINUED...
