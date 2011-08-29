@@ -12,7 +12,7 @@ Let's take a look at the `stylesheet_link_tag` method from `Sprockets::Helpers::
 
 This method begins like this: 
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='42'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='37'>
 def stylesheet_link_tag(*sources)
   options = sources.extract_options!
   debug = options.key?(:debug) ? options.delete(:debug) : debug_assets?
@@ -38,27 +38,29 @@ What sprockets is doing here is reading this manifest file and compiling all the
 
 This helper then iterates through the list of sources specified and first dives in to checking the `debug` option. If `debug` is set to true for this though, either through `options[:debug]` being passed or by `debug_assets?` evaluating to `true`, this will happen:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='47'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='42'>
 sources.collect do |source|
   if debug && asset = asset_paths.asset_for(source, 'css')
     asset.to_a.map { |dep|
-      stylesheet_link_tag(dep, :debug => false, :body => true)
-    }.join("\n").html_safe
+      super(dep.to_s, { :href => asset_path(dep, 'css', true, :request) }.merge!(options))
+    }
 </div>
-      
+
+The `super` method here will call the `stylesheet_link_tag` method defined in `ActionView::Helpers::AssetTagHelper`. This is the default `stylesheet_link_tag` method that would be called if we didn't have Sprockets enabled.
+
 The `debug_assets?` method is defined as a private method further down in this file:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='71'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='59'>
 private
-  def debug_assets?
+def debug_assets?
+  Rails.application.config.assets.allow_debugging &&
+   (Rails.application.config.assets.debug ||
     params[:debug_assets] == '1' ||
-      params[:debug_assets] == 'true'
-  rescue NoMethodError
-    false
-  end
+    params[:debug_assets] == 'true')
+end
 </div>
 
-If `?debug_assets=1` or `?debug_assets=true` is appended to the page (or the parameter is set some other way) then the assets will be "debugged". There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
+If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be <em>debugged</em. There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
 
 Back to the code within `stylesheet_link_tag`, this snippet will get all the assets specified in the manifest file, iterate over each of them and render a `stylesheet_link_tag` for each of them, ensuring that `:debug` is set to false for them. 
 
@@ -81,7 +83,7 @@ end
 
 This calls the `asset_path` method which is defined like this:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='65'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='53'>
 def asset_path(source, default_ext = nil, body = false, protocol = nil)
   source = source.logical_path if source.respond_to?(:logical_path)
   path = asset_paths.compute_public_path(source, 'assets', default_ext, true, protocol)
@@ -113,7 +115,7 @@ This `RailsHelper::AssetPaths` inherits behaviour from `ActionView::AssetPaths`,
 
 The `asset_environment` method is defined also in this file:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='92'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='80'>
 def asset_environment
   Rails.application.assets
 end
@@ -123,7 +125,7 @@ The `assets` method called inside the `asset_environment` method returns a `Spro
 
 The `asset_prefix` is defined just above this:
  
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='85'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='73'>
 def asset_prefix
   Rails.application.config.assets.prefix
 end
@@ -132,7 +134,7 @@ end
 The next method is `compute_public_path` which is called on this new `RailsHelper::AssetPaths` instance. This is defined simply:
 
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='99'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='87'>
 def compute_public_path(source, dir, ext=nil, include_host=true, protocol=nil)
   super(source, asset_prefix, ext, include_host, protocol)
 end
@@ -180,7 +182,7 @@ Basically, if the path matches a URI-like fragment then it's a URI. Who would ha
 The `rewrite_extension` method is actually overridden in `Sprockets::Helpers::RailsHelpers::AssetPaths` like this:
 
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='123'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='122'>
 def rewrite_extension(source, dir, ext)
   if ext && File.extname(source).empty?
     "#{source}.#{ext}"
@@ -194,57 +196,30 @@ This method simply appends the correct extension to the end of the file (in this
 
 Next, the `rewrite_asset_path` is used and this method is also overridden in `Sprockets::Helpers::RailsHelpers::AssetPaths`:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='115'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='111'>
 def rewrite_asset_path(source, dir)
   if source[0] == ?/
     source
   else
-    asset_environment.path(source, performing_caching?, dir)
+    source = digest_for(source) if performing_caching?
+    source = File.join(dir, source)
+    source = "/#{source}" unless source =~ /^\//
+    source
   end
 end
 </div>
 
-If the `source` argument (now `"application.css"`, remember?) begins with a forward slash, it's returned as-is. If not, then the `assets` method is called and then the `path` method is called on that. First up though, `performing_caching?` is one of the arguments of this method, and is defined like this:
+If the `source` argument (now `"application.css"`, remember?) begins with a forward slash, it's returned as-is. If it doesn't, then the `digest_for` method is called, but only if `performing_caching?` evaluates to `true`. This is determined like this:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='132'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='131'>
 def performing_caching?
   config.action_controller.present? ? config.action_controller.perform_caching : config.perform_caching
 end
 </div>
 
-We saw that the `asset_environment` method earlier was defined like this:
+In the development environment, the `config.action_controller.perform_caching` value is set to `false` by default and so this `digest_for` line will not be run. The `rewrite_asset_path` method then joins the `dir` and `source` together to get a string such as `"assets/application.css"` which then has a forward slash prefixed to it by the next line of code.
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='92'>
-def asset_environment
-  Rails.application.assets
-end
-</div>
-
-It returns the `Sprockets::Index` object and finally does something useful with it, calling `path` on it.
-
-The `path` method defined on this object is defined within sprockets itself at `like this: 
-
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/server.rb' data-start='92'>
-def path(logical_path, fingerprint = true, prefix = nil)
-  logger.warn "Sprockets::Environment#path is deprecated\n#{caller[0..2].join("\n")}"
-  if fingerprint && asset = find_asset(logical_path.to_s.sub(/^\//, ''))
-    url = asset.digest_path
-  else
-    url = logical_path
-  end
-
-  url = File.join(prefix, url) if prefix
-  url = "/#{url}" unless url =~ /^\//
-
-  url
-end
-</div>
-
-If the file contains a "fingerprint" (an MD5 hash which is unique for this "version" of this file) then it will return a path such as `application-13e6dd6f2d0d01b7203c43a264d6c9ef.css`. We are operating in the development environment for now, and so this will simply return the `application.css` filename we've come to know and love.
-
-The final three lines of this method will append the `assets` prefix which has been passed in, coming from the `Rails.application.config.assets.prefix`, so that our path now becomes `assets/application.css` and this will also prefix a forward-slash to this path (unless it has one already), turning it into `/assets/application.css`. The third and final line simply returns the `url`, just in case the `unless` does nothing.
-
-This return value then bubbles up through `rewrite_asset_path` to `compute_public_path` to `asset_path` and finally back to the `stylesheet_link_tag` method where it's then specified as the `href` to the `link` tag that it renders.
+This return value then bubbles its way back up through `compute_public_path` to `asset_path` and finally back to the `stylesheet_link_tag` method where it's then specified as the `href` to the `link` tag that it renders, with help from the `stylesheet_link_tag` from `ActionView::Helpers::AssetTagHelper`.
 
 And that, my friends, is all that is involved when you call `stylesheet_link_tag` within the development environment. Now let's look at what happens when this file sis requested.
 
@@ -267,12 +242,12 @@ new set of routes right at the top of our application's routes. In this case, it
 
 This means that any request going to `/assets` will hit this `Sprockets::Index` object and invoke a `call` method on it. The `Sprockets::Index` class is fairly bare itself and doesn't define its own `call` method, but it inherits a lot of behaviour from `Sprockets::Base`. The `Sprockets::Base` class itself doesn't define a `call` method for it's instances either. However, when the `Sprockets::Base` is declared it includes a couple of modules:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='12'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='11'>
 module Sprockets
   # `Base` class for `Environment` and `Index`.
   class Base
     include Digest
-    include Caching, Processing, Server, StaticCompilation, Trail
+    include Caching, Processing, Server, Trail
 </div>
 
 It's the `Server` module here that provides this `call` method, which is defined within `lib/sprockets/server.rb`, beginning
@@ -359,7 +334,7 @@ not exist, then `find_asset` will return `nil`.
 
 The `find_asset` method is defined in `lib/sprockets/base.rb`:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='96'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='95'>
 def find_asset(path, options = {})
   pathname = Pathname.new(path)
 
@@ -386,7 +361,7 @@ def find_asset_in_path(logical_path, options = {})
 
 Here, Sprockets calls `attributes_for` which is set up back in `lib/sprockets/base.rb` using these simple lines:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='86'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/base.rb' data-start='85'>
 def attributes_for(path)
   AssetAttributes.new(self, path)
 end
