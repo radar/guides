@@ -23,7 +23,7 @@ The first argument for `stylesheet_link_tag` is a splatted `sources` which means
 
 The `debug` option will expand any manifest file into its contained parts and render each file individually. For example, in a project I have here, this line:
 
-    <%= stylesheet_link_tag "application" %>
+    &lt;%= stylesheet_link_tag "application" %&gt;
 
 When a request is made to this page that uses this layout that renders this file, it will be printed as a single line:
     
@@ -447,7 +447,7 @@ end
 
 This method will return all the search paths that Sprockets will look through to find a particular asset. If this file is called "index" then the `paths` will only be the file that is being requested. If it's not, then it will extract the extensions from the path and build a new path called `"application/index.css"`, adding that to the list of `paths` to search through.
 
-It is done this way so that we can have folders containing specific groups of assets. For instance, for a "projects" resource we could have a "projects/index.css" file under `app/assets/stylesheets` and that would then specify directives or CSS for projects. This file would be includable from another sprockets-powered CSS file with simply `//= require "projects"` or with a `<%= stylesheet_link_tag "projects" %>` in the layout. Sprockets will attempt to look for a file in the asset paths called "projects.css" and if it fails to find that then it will look for "projects/index.css" as a fallback.
+It is done this way so that we can have folders containing specific groups of assets. For instance, for a "projects" resource we could have a "projects/index.css" file under `app/assets/stylesheets` and that would then specify directives or CSS for projects. This file would be includable from another sprockets-powered CSS file with simply `//= require "projects"` or with a `stylesheet_link_tag "projects"` in the layout. Sprockets will attempt to look for a file in the asset paths called "projects.css" and if it fails to find that then it will look for "projects/index.css" as a fallback.
 
 That is what this method is doing, providing two possible solutions to finding the asset. In the case of our "application.css" request, the `paths` will be the `Pathname` objects of "application.css" and "application/index.css".
 
