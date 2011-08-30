@@ -66,18 +66,28 @@ The `debug_assets?` method is defined as a private method further down in this f
         params[:debug_assets] == 'true')
     end
 
-If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be <em>debugged
-else
-  tag_options = {
-    'rel'   =&gt; "stylesheet",
-    'type'  =&gt; "text/css",
-    'media' =&gt; "screen",
-    'href'  =&gt; asset_path(source, 'css', body, :request)
-  }.merge(options.stringify_keys)
+If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be *debugged*. There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
 
-  tag 'link', tag_options
-end
+Back to the code within `stylesheet_link_tag`, this snippet will get all the assets specified in the manifest file, iterate over each of them and render a `stylesheet_link_tag` for each of them, ensuring that `:debug` is set to false for them.
 
+It's important to note here that the CSS files that the original `app/assets/stylesheets/application.css` points to can each be their own manifest file, and so on and so forth.
+
+If the `debug` option isn't specified and `debug_assets?` evaluates to `false` then the `else` for this `if` will be executed:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 10 lines, beginning line 52**
+    
+    else
+      tag_options = {
+        'rel'   =&gt; "stylesheet",
+        'type'  =&gt; "text/css",
+        'media' =&gt; "screen",
+        'href'  =&gt; asset_path(source, 'css', body, :request)
+      }.merge(options.stringify_keys)
+    
+      tag 'link', tag_options
+    end
 
 This calls the `asset_path` method which is defined like this:
 
@@ -447,7 +457,62 @@ In that case, the `if` statement's conditions in `find_asset_in_path` will retur
       pathname = resolve(logical_path)
     end
 
-Not too much magic here, this `else` just calls the `resolve` method which should return a value which is stored into `pathname`. The `resolve` method is also defined within this file:
+Not too much magic here, this `else` just calls the `resolve` method which should return a value which is stored into `pathname`. The `resolve` method is also defined within this file and begins like this:
 
-TO BE CONTINUED...
-</em>
+
+
+**sprockets: lib/sprockets/trail.rb, 3 lines, beginning line 70**
+    
+    def resolve(logical_path, options = {})
+      # If a block is given, preform an iterable search
+      if block_given?
+
+In this case, `resolve` is not being called with block and so the `if` statement's code is not run. The code inside the `else though goes like this, and *does* call `resolve with a block:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 6 lines, beginning line 77**
+    
+    else
+      resolve(logical_path, options) do |pathname|
+        return pathname
+      end
+      raise FileNotFound, "couldn't find file '#{logical_path}'"
+    end
+
+Alright then, so let's take a closer look at what the `if block_given?` contains:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 4 lines, beginning line 72**
+    
+    if block_given?
+      args = attributes_for(logical_path).search_paths + [options]
+      trail.find(*args) do |path|
+        yield Pathname.new(path)
+
+In this case, we see our old friend `attributes_for` called again which is then handed the `Pathname` equivalent of `"application.css"` and so it returns a new `AssetAttributes` object for that again. Next, the `search_paths` method is called on it, which is defined in `sprockets/lib/asset_attributes.rb` like this:
+
+
+
+**sprockets: lib/sprockets/asset_attributes.rb, 11 lines, beginning line 27**
+    
+    def search_paths
+      paths = [pathname.to_s]
+    
+      if pathname.basename(extensions.join).to_s != 'index'
+        path_without_extensions = extensions.inject(pathname) { |p, ext| p.sub(ext, '') }
+        index_path = path_without_extensions.join("index#{extensions.join}").to_s
+        paths &lt;&lt; index_path
+      end
+    
+      paths
+    end
+
+This method will return all the search paths that Sprockets will look through to find a particular asset. If this file is called "index" then the `paths` will only be the file that is being requested. If it's not, then it will extract the extensions from the path and build a new path called `"application/index.css"`, adding that to the list of `paths` to search through.
+
+It is done this way so that we can have folders containing specific groups of assets. For instance, for a "projects" resource we could have a "projects/index.css" file under `app/assets/stylesheets` and that would then specify directives or CSS for projects. This file would be includable from another sprockets-powered CSS file with simply `//= require "projects"` or with a `` in the layout. Sprockets will attempt to look for a file in the asset paths called "projects.css" and if it fails to find that then it will look for "projects/index.css" as a fallback.
+
+That is what this method is doing, providing two possible solutions to finding the asset. In the case of our "application.css" request, the `paths` will be the `Pathname` objects of "application.css" and "application/index.css".
+
+TO BE CONTINUED

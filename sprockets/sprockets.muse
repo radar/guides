@@ -60,9 +60,9 @@ def debug_assets?
 end
 </div>
 
-If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be <em>debugged</em. There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
+If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be *debugged*. There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
 
-Back to the code within `stylesheet_link_tag`, this snippet will get all the assets specified in the manifest file, iterate over each of them and render a `stylesheet_link_tag` for each of them, ensuring that `:debug` is set to false for them. 
+Back to the code within `stylesheet_link_tag`, this snippet will get all the assets specified in the manifest file, iterate over each of them and render a `stylesheet_link_tag` for each of them, ensuring that `:debug` is set to false for them.
 
 It's important to note here that the CSS files that the original `app/assets/stylesheets/application.css` points to can each be their own manifest file, and so on and so forth.
 
@@ -450,3 +450,5 @@ This method will return all the search paths that Sprockets will look through to
 It is done this way so that we can have folders containing specific groups of assets. For instance, for a "projects" resource we could have a "projects/index.css" file under `app/assets/stylesheets` and that would then specify directives or CSS for projects. This file would be includable from another sprockets-powered CSS file with simply `//= require "projects"` or with a `<%= stylesheet_link_tag "projects" %>` in the layout. Sprockets will attempt to look for a file in the asset paths called "projects.css" and if it fails to find that then it will look for "projects/index.css" as a fallback.
 
 That is what this method is doing, providing two possible solutions to finding the asset. In the case of our "application.css" request, the `paths` will be the `Pathname` objects of "application.css" and "application/index.css".
+
+TO BE CONTINUED
