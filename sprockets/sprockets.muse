@@ -1,5 +1,49 @@
 This is a detailed guide to the internal workings of Sprockets. Hopefully with this information, somebody else besides Josh Peek, Sam Stephenson, Yehuda Katz and (partially) myself can begin to understand how Sprockets works.
 
+
+### Sprockets Initialization
+
+To first understand Sprockets, we must first understand how it hooks into Rails. Just like with the Active Record and Action Pack components of Rails, Sprockets too has its own railtie. This is included by the `require "rails/all"` call in `config/application.rb` or if you don't have that then it must be required explicitly with `require "sprockets/railtie"`. This railtie is actually kept inside the `actionpack` gem itself, rather than the `sprockets` gem.
+
+The first thing this file does is define the `Sprockets` module and then inside that defines three `autoload`'d modules.
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='1'>
+module Sprockets
+  autoload :Helpers, "sprockets/helpers"
+  autoload :LazyCompressor, "sprockets/compressors"
+  autoload :NullCompressor, "sprockets/compressors"
+</div>
+
+This file then sets up the normal Railtie stuff, such as configuration:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='7'>
+class Railtie &lt; ::Rails::Railtie
+  config.default_asset_host_protocol = :relative
+</div>
+
+This configuration option is caught by the `config` options `method_missing` which will then store this setting in the configuration hash for the application. It is retreivable by calling simply `Rails.application.config.default_asset_host_protocol` again.
+
+Next, this Railtie defines some rake tasks:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='10'>
+rake_tasks do
+  load "sprockets/assets.rake"
+end
+</div>
+
+This `sprockets/assets.rake` file provides the `assets:precompile` and `assets:clean` Rake tasks we will see later on in this internals guide.
+
+After that, the Railtie defines an initializer, which will be appended onto the list of initializers currently at this point of Rails. Currently, this initializer will run directly after ActiveResource's initializers have run. Inside this initializer, there's a check first if Rails should even bother with loading sprockets at all:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='15'>
+config = app.config
+next unless config.assets.enabled
+</div>
+
+This is the `Rails.application.config.assets.enabled` flag. If it is set to a non-truthy value then this initializer will stop right there and then. By default though, it's enabled and so it will continue.
+
+TO BE CONTINUED
+
 ### Sprockets Asset Helpers
 
 Within Rails 3.1, the behaviour of `javascript_include_tag` and `stylesheet_link_tag` are modified by the `actionpack/lib/sprockets/rails_helper.rb` file which is required by `actionpack/lib/sprockets/railtie.rb`, which itself is required by `actionpack/lib/action_controller/railtie.rb` and so on, and so forth.
@@ -68,20 +112,13 @@ It's important to note here that the CSS files that the original `app/assets/sty
 
 If the `debug` option isn't specified and `debug_assets?` evaluates to `false` then the `else` for this `if` will be executed:
 
-<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='52'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='47'>
 else
-  tag_options = {
-    'rel'   => "stylesheet",
-    'type'  => "text/css",
-    'media' => "screen",
-    'href'  => asset_path(source, 'css', body, :request)
-  }.merge(options.stringify_keys)
-
-  tag 'link', tag_options
+  super(source.to_s, { :href => asset_path(source, 'css', body, :request) }.merge!(options))
 end
 </div>
 
-This calls the `asset_path` method which is defined like this:
+This will render just the one line, rather than expanding the dependencies of the stylesheet. This calls the `asset_path` method which is defined like this:
 
 <div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/helpers/rails_helper.rb' data-start='53'>
 def asset_path(source, default_ext = nil, body = false, protocol = nil)
@@ -425,8 +462,6 @@ Alright then, so let's take a closer look at what the `if block_given?` contains
 <div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='72'>
 if block_given?
   args = attributes_for(logical_path).search_paths + [options]
-  trail.find(*args) do |path|
-    yield Pathname.new(path)
 </div>
 
 In this case, we see our old friend `attributes_for` called again which is then handed the `Pathname` equivalent of `"application.css"` and so it returns a new `AssetAttributes` object for that again. Next, the `search_paths` method is called on it, which is defined in `sprockets/lib/asset_attributes.rb` like this:
@@ -451,4 +486,46 @@ It is done this way so that we can have folders containing specific groups of as
 
 That is what this method is doing, providing two possible solutions to finding the asset. In the case of our "application.css" request, the `paths` will be the `Pathname` objects of "application.css" and "application/index.css".
 
-TO BE CONTINUED
+Now that we know what `search_paths` is going to assign to `args`, let's take a look at the next couple of lines:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='74'>
+  trail.find(*args) do |path|
+    yield Pathname.new(path)
+  end
+</div>
+
+The `find` method called on `trail` here will look for the specified paths, using any options that were passed to `resolve` as part of the `args` array. In this situation, there were no options passed in and so these options will just be an empty hash. The `trail` method is defined further down in this file very simply:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='86'>
+  def trail
+    @trail
+  end
+</div>
+
+This `@trail` instance variable is set up as the first thing in the `initialize` method for `Sprockets::Environment`:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='20'>
+def initialize(root = ".")
+  @trail = Hike::Trail.new(root)
+</div>
+
+Where the `root` argument here is the root of the Rails application, exactly the same as `Rails.root` returns. The `find` method itself is defined within the Hike gem like this:
+
+<div class="example" data-repo='hike' data-file='lib/hike/trail.rb' data-start='138'>
+def find(*args, &block)
+  index.find(*args, &block)
+end
+</div>
+
+Where the `index` method is defined like this:
+
+<div class="example" data-repo='hike' data-file='lib/hike/trail.rb' data-start='152'>
+def index
+  Index.new(root, paths, extensions, aliases)
+end
+</div>
+
+
+## Rake tasks
+
+Cover assets:precompile and assets:clean here.
