@@ -1,0 +1,613 @@
+This is a detailed guide to the internal workings of Sprockets. Hopefully with this information, somebody else besides Josh Peek, Sam Stephenson, Yehuda Katz and (partially) myself can begin to understand how Sprockets works.
+
+
+### Sprockets Initialization
+
+To first understand Sprockets, we must first understand how it hooks into Rails. Just like with the Active Record and Action Pack components of Rails, Sprockets too has its own railtie. This is included by the `require "rails/all"` call in `config/application.rb` or if you don't have that then it must be required explicitly with `require "sprockets/railtie"`. This railtie is actually kept inside the `actionpack` gem itself, rather than the `sprockets` gem.
+
+The first thing this file does is define the `Sprockets` module and then inside that defines three `autoload`'d modules.
+
+
+
+**rails: actionpack/lib/sprockets/railtie.rb, 4 lines, beginning line 1**
+    
+    module Sprockets
+      autoload :Helpers, "sprockets/helpers"
+      autoload :LazyCompressor, "sprockets/compressors"
+      autoload :NullCompressor, "sprockets/compressors"
+
+This file then sets up the normal Railtie stuff, such as configuration:
+
+
+
+**rails: actionpack/lib/sprockets/railtie.rb, 2 lines, beginning line 7**
+    
+    class Railtie &lt; ::Rails::Railtie
+      config.default_asset_host_protocol = :relative
+
+This configuration option is caught by the `config` options `method_missing` which will then store this setting in the configuration hash for the application. It is retreivable by calling simply `Rails.application.config.default_asset_host_protocol` again.
+
+Next, this Railtie defines some rake tasks:
+
+
+
+**rails: actionpack/lib/sprockets/railtie.rb, 3 lines, beginning line 10**
+    
+    rake_tasks do
+      load "sprockets/assets.rake"
+    end
+
+This `sprockets/assets.rake` file provides the `assets:precompile` and `assets:clean` Rake tasks we will see later on in this internals guide.
+
+After that, the Railtie defines an initializer, which will be appended onto the list of initializers currently at this point of Rails. Currently, this initializer will run directly after ActiveResource's initializers have run. Inside this initializer, there's a check first if Rails should even bother with loading sprockets at all:
+
+
+
+**rails: actionpack/lib/sprockets/railtie.rb, 2 lines, beginning line 15**
+    
+    config = app.config
+    next unless config.assets.enabled
+
+This is the `Rails.application.config.assets.enabled` flag. If it is set to a non-truthy value then this initializer will stop right there and then. By default though, it's enabled and so it will continue.
+
+TO BE CONTINUED
+
+### Sprockets Asset Helpers
+
+Within Rails 3.1, the behaviour of `javascript_include_tag` and `stylesheet_link_tag` are modified by the `actionpack/lib/sprockets/rails_helper.rb` file which is required by `actionpack/lib/sprockets/railtie.rb`, which itself is required by `actionpack/lib/action_controller/railtie.rb` and so on, and so forth.
+
+The `Sprockets::Helpers::RailsHelper` is included into ActionView through the process described in my earlier [Sprockets Railtie Setup](https://gist.github.com/1032696) internals doc. Once this is included, it will override the `stylesheet_link_tag` and `javascript_include_tag` methods originally provided by Rails itself. Of course, if assets were disabled (`Rails.application.config.assets.enabled = false`) then the original Rails methods would be used and JavaScript assets would then exist in `public/javascripts`, not `app/assets/javascripts`. Let's just assume that you're using Sprockets.
+
+Let's take a look at the `stylesheet_link_tag` method from `Sprockets::Helpers::RailsHelper`. The `javascript_include_tag` method is very similar so if you want to know how that works, just replace `stylesheet_link_tag` with `javascript_include_tag` using your *mind powers* and I'm sure you can get the gist of it.
+
+#### What `stylesheet_link_tag` / `javascript_include_tag` does
+
+This method begins like this: 
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 4 lines, beginning line 37**
+    
+    def stylesheet_link_tag(*sources)
+      options = sources.extract_options!
+      debug = options.key?(:debug) ? options.delete(:debug) : debug_assets?
+      body  = options.key?(:body)  ? options.delete(:body)  : false
+
+The first argument for `stylesheet_link_tag` is a splatted `sources` which means that this method can take a list of stylesheets or manifest files and will process each of them. The method also takes some `options`, which are extracted out on the first line of this method using `extract_options!`. The two currently supported are `debug` and `body`.
+
+The `debug` option will expand any manifest file into its contained parts and render each file individually. For example, in a project I have here, this line:
+
+    &lt;%= stylesheet_link_tag "application" %&gt;
+
+When a request is made to this page that uses this layout that renders this file, it will be printed as a single line:
+    
+    <link href="/assets/application.css" media="screen" rel="stylesheet" type="text/css"> 
+
+Even though the file it's pointing to contains *directives* to Sprockets to include everything in `app/assets/stylesheets`:
+
+    *= require_self
+    *= require_tree .
+
+What sprockets is doing here is reading this manifest file and compiling all the CSS assets specified into one big fuck-off file and serving just that instead of the \*counts\* 13 CSS files I've got in that directory.
+
+This helper then iterates through the list of sources specified and first dives in to checking the `debug` option. If `debug` is set to true for this though, either through `options[:debug]` being passed or by `debug_assets?` evaluating to `true`, this will happen:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 5 lines, beginning line 42**
+    
+    sources.collect do |source|
+      if debug &amp;&amp; asset = asset_paths.asset_for(source, 'css')
+        asset.to_a.map { |dep|
+          super(dep.to_s, { :href =&gt; asset_path(dep, 'css', true, :request) }.merge!(options))
+        }
+
+The `super` method here will call the `stylesheet_link_tag` method defined in `ActionView::Helpers::AssetTagHelper`. This is the default `stylesheet_link_tag` method that would be called if we didn't have Sprockets enabled.
+
+The `debug_assets?` method is defined as a private method further down in this file:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 7 lines, beginning line 59**
+    
+    private
+    def debug_assets?
+      Rails.application.config.assets.allow_debugging &amp;&amp;
+       (Rails.application.config.assets.debug ||
+        params[:debug_assets] == '1' ||
+        params[:debug_assets] == 'true')
+    end
+
+If `Rails.application.config.assets.allow_debugging` is set to `true` and `Rails.application.config.assets.debug` is true or the `debug_asset` parameter in the request is either `'1'` or `'true'` then the assets will be *debugged*. There *may* be a case where `params` doesn't exist, and so this method rescues a potential `NoMethodError` that could be thrown. Although I can't imagine a situation in Rails where that would ever be the case.
+
+Back to the code within `stylesheet_link_tag`, this snippet will get all the assets specified in the manifest file, iterate over each of them and render a `stylesheet_link_tag` for each of them, ensuring that `:debug` is set to false for them.
+
+It's important to note here that the CSS files that the original `app/assets/stylesheets/application.css` points to can each be their own manifest file, and so on and so forth.
+
+If the `debug` option isn't specified and `debug_assets?` evaluates to `false` then the `else` for this `if` will be executed:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 3 lines, beginning line 47**
+    
+    else
+      super(source.to_s, { :href =&gt; asset_path(source, 'css', body, :request) }.merge!(options))
+    end
+
+This will render just the one line, rather than expanding the dependencies of the stylesheet. This calls the `asset_path` method which is defined like this:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 5 lines, beginning line 53**
+    
+    def asset_path(source, default_ext = nil, body = false, protocol = nil)
+      source = source.logical_path if source.respond_to?(:logical_path)
+      path = asset_paths.compute_public_path(source, 'assets', default_ext, true, protocol)
+      body ? "#{path}?body=1" : path
+    end
+
+(WIP: I don't know what `logical_path` is for, so let's skip over that for now. In my testing, `source` has always been a `String` object).
+
+This method then calls out to `asset_paths` which is defined at the top of this file:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 11 lines, beginning line 9**
+    
+    def asset_paths
+      @asset_paths ||= begin
+        config     = self.config if respond_to?(:config)
+        config   ||= Rails.application.config
+        controller = self.controller if respond_to?(:controller)
+        paths = RailsHelper::AssetPaths.new(config, controller)
+        paths.asset_environment = asset_environment
+        paths.asset_prefix      = asset_prefix
+        paths
+      end
+    end
+
+This method (obviously) initializes a new instance of the `RailsHelper::AssetPaths` class defined later in this file, passing through the `config` and `controller` objects of the current content, which would be the same `self.config` and `self.controller` available within a view.
+
+This `RailsHelper::AssetPaths` inherits behaviour from `ActionView::AssetPaths`, which is responsible for resolving the paths to the assets for vanilla Rails. The `RailsHelper::AssetPaths` overrides some of the methods defined within its superclass, though. 
+
+The `asset_environment` method is defined also in this file:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 3 lines, beginning line 80**
+    
+    def asset_environment
+      Rails.application.assets
+    end
+
+The `assets` method called inside the `asset_environment` method returns a `Sprockets::Index` instance, which we'll get to later.
+
+The `asset_prefix` is defined just above this:
+ 
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 3 lines, beginning line 73**
+    
+    def asset_prefix
+      Rails.application.config.assets.prefix
+    end
+
+The next method is `compute_public_path` which is called on this new `RailsHelper::AssetPaths` instance. This is defined simply:
+
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 3 lines, beginning line 87**
+    
+    def compute_public_path(source, dir, ext=nil, include_host=true, protocol=nil)
+      super(source, asset_prefix, ext, include_host, protocol)
+    end
+
+This calls back to the `compute_public_path` within `ActionView::AssetsPaths` (`actionpack/lib/action_view/asset_paths.rb`) which is defined like this:
+
+
+
+
+**rails: actionpack/lib/action_view/asset_paths.rb, 20 lines, beginning line 14**
+    
+    # Add the extension +ext+ if not present. Return full or scheme-relative URLs otherwise untouched.
+    # Prefix with &lt;tt&gt;/dir/&lt;/tt&gt; if lacking a leading +/+. Account for relative URL
+    # roots. Rewrite the asset path for cache-busting asset ids. Include
+    # asset host, if configured, with the correct request protocol.
+    #
+    # When include_host is true and the asset host does not specify the protocol
+    # the protocol parameter specifies how the protocol will be added.
+    # When :relative (default), the protocol will be determined by the client using current protocol
+    # When :request, the protocol will be the request protocol
+    # Otherwise, the protocol is used (E.g. :http, :https, etc)
+    def compute_public_path(source, dir, ext = nil, include_host = true, protocol = nil)
+      source = source.to_s
+      return source if is_uri?(source)
+    
+      source = rewrite_extension(source, dir, ext) if ext
+      source = rewrite_asset_path(source, dir)
+      source = rewrite_relative_url_root(source, relative_url_root) if has_request?
+      source = rewrite_host_and_protocol(source, protocol) if include_host
+      source
+    end
+
+This method, unlike those in Sprockets, actually has decent documentation.
+
+In this case, let's keep in mind that `source` is going to still be the `"application"` string from `stylesheet_link_tag` rather than a uri. The conditions for matching a uri are in the `is_uri?` method also defined in this file:
+
+
+
+
+**rails: actionpack/lib/action_view/asset_paths.rb, 3 lines, beginning line 41**
+    
+    def is_uri?(path)
+      path =~ %r{^[-a-z]+://|^cid:|^//}
+    end
+
+Basically, if the path matches a URI-like fragment then it's a URI. Who would have thought? ``"application"` is quite clearly NOT a URI and so this will continue to the `rewrite_extension` method.
+
+The `rewrite_extension` method is actually overridden in `Sprockets::Helpers::RailsHelpers::AssetPaths` like this:
+
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 7 lines, beginning line 122**
+    
+    def rewrite_extension(source, dir, ext)
+      if ext &amp;&amp; File.extname(source).empty?
+        "#{source}.#{ext}"
+      else
+        source
+      end
+    end
+    
+This method simply appends the correct extension to the end of the file (in this case, `ext` is set to `"css"` back in `stylesheet_link_tag`) if it doesn't have one already. If it does, then the filename will be left as-is. The `source` would now be `"application.css"`.
+
+Next, the `rewrite_asset_path` is used and this method is also overridden in `Sprockets::Helpers::RailsHelpers::AssetPaths`:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 10 lines, beginning line 111**
+    
+    def rewrite_asset_path(source, dir)
+      if source[0] == ?/
+        source
+      else
+        source = digest_for(source) if performing_caching?
+        source = File.join(dir, source)
+        source = "/#{source}" unless source =~ /^\//
+        source
+      end
+    end
+
+If the `source` argument (now `"application.css"`, remember?) begins with a forward slash, it's returned as-is. If it doesn't, then the `digest_for` method is called, but only if `performing_caching?` evaluates to `true`. This is determined like this:
+
+
+
+**rails: actionpack/lib/sprockets/helpers/rails_helper.rb, 3 lines, beginning line 131**
+    
+    def performing_caching?
+      config.action_controller.present? ? config.action_controller.perform_caching : config.perform_caching
+    end
+
+In the development environment, the `config.action_controller.perform_caching` value is set to `false` by default and so this `digest_for` line will not be run. The `rewrite_asset_path` method then joins the `dir` and `source` together to get a string such as `"assets/application.css"` which then has a forward slash prefixed to it by the next line of code.
+
+This return value then bubbles its way back up through `compute_public_path` to `asset_path` and finally back to the `stylesheet_link_tag` method where it's then specified as the `href` to the `link` tag that it renders, with help from the `stylesheet_link_tag` from `ActionView::Helpers::AssetTagHelper`.
+
+And that, my friends, is all that is involved when you call `stylesheet_link_tag` within the development environment. Now let's look at what happens when this file sis requested.
+
+#### Asset Request Cycle
+
+When an asset is requested in Sprockets it hits the small Rack application that sprockets has. This Rack application is mounted
+inside the `config.after_initialize` block inside the `Sprockets::Railtie` which is in `actionpack/lib/sprockets/railtie.rb`,
+using these three lines:
+
+
+
+**rails: actionpack/lib/sprockets/railtie.rb, 3 lines, beginning line 60**
+    
+    app.routes.prepend do
+      mount app.assets =&gt; config.assets.prefix
+    end
+
+The `app` object here is the same object we would get back if we used `Rails.application`, which would be an instance of our
+application class that inherits from `Rails::Application`. By calling `.routes.prepend` on that object, this Railtie places a
+new set of routes right at the top of our application's routes. In this case, it's just the one route which is mounting the
+`app.assets` object (a `Sprockets::Index` object) at `config.assets.prefix`, which by default is `/assets`.
+
+This means that any request going to `/assets` will hit this `Sprockets::Index` object and invoke a `call` method on it. The `Sprockets::Index` class is fairly bare itself and doesn't define its own `call` method, but it inherits a lot of behaviour from `Sprockets::Base`. The `Sprockets::Base` class itself doesn't define a `call` method for it's instances either. However, when the `Sprockets::Base` is declared it includes a couple of modules:
+
+
+
+**sprockets: lib/sprockets/base.rb, 5 lines, beginning line 11**
+    
+    module Sprockets
+      # `Base` class for `Environment` and `Index`.
+      class Base
+        include Digest
+        include Caching, Processing, Server, Trail
+
+It's the `Server` module here that provides this `call` method, which is defined within `lib/sprockets/server.rb`, beginning
+with these lines:
+
+
+
+**sprockets: lib/sprockets/server.rb, 5 lines, beginning line 22**
+    
+    def call(env)
+      start_time = Time.now.to_f
+      time_elapsed = lambda { ((Time.now.to_f - start_time) * 1000).to_i }
+    
+      msg = "Served asset #{env['PATH_INFO']} -"
+
+This method accepts an `env` argument which is a `Hash` which represents the current Rack environment of the application,
+containing things such as headers set by previous pieces of Middleware as well as things such as the current request path,
+which is stored in `ENV['PATH_INFO']`.
+
+These few lines define the methodology that this method uses to work out how long an asset has taken to compile. The final line
+in the above example is the beginning of the output that Sprockets will put into the Rails log once it is done.
+
+Next, Sprockets checks for a forbidden request using these lines:
+
+
+
+**sprockets: lib/sprockets/server.rb, 4 lines, beginning line 28**
+    
+    # URLs containing a `".."` are rejected for security reasons.
+    if forbidden_request?(env)
+      return forbidden_response
+    end
+
+The comment describes acurrately enough what this method does, if the path contains ".." then it returns a
+`forbidden_response`. First, let's just see the simple code for `forbidden_request?`
+
+
+
+**sprockets: lib/sprockets/server.rb, 7 lines, beginning line 126**
+    
+    def forbidden_request?(env)
+      # Prevent access to files elsewhere on the file system
+      #
+      #     http://example.org/assets/../../../etc/passwd
+      #
+      env["PATH_INFO"].include?("..")
+    end
+
+The `env["PATH_INFO"]` method here is the request path that is requested from Sprockets, which would be `/application.css` at
+this point in time. If that path were to include two dots in a row, this `forbidden_request?` method would return `true` and
+the `forbidden_response` method would be called. The `forbidden_response` method looks like this:
+
+
+
+**sprockets: lib/sprockets/server.rb, 4 lines, beginning line 134**
+    
+    # Returns a 403 Forbidden response tuple
+    def forbidden_response
+      [ 403, { "Content-Type" =&gt; "text/plain", "Content-Length" =&gt; "9" }, [ "Forbidden" ] ]
+    end
+
+This response object is a standard three-part tuple that Rack expects, containing the HTTP status code first, a `Hash` of
+headers to present and finally an `Array` containing a `String` which represents the content for this response.
+
+In this case, our request is `/application.css` and therefore will not trigger this `forbidden_response` to be called, falling
+to the next few of lines of this `call` method:
+
+
+
+**sprockets: lib/sprockets/server.rb, 4 lines, beginning line 33**
+    
+    # Mark session as "skipped" so no `Set-Cookie` header is set
+    env['rack.session.options'] ||= {}
+    env['rack.session.options'][:defer] = true
+    env['rack.session.options'][:skip] = true
+
+In the case of sprockets, it does not care so much about the session information for a user, and so this is deferred and
+skipped with these lines.
+
+Next, Sprockets gets to actually trying to find the asset that has been requested:
+
+
+
+**sprockets: lib/sprockets/server.rb, 6 lines, beginning line 38**
+    
+    # Extract the path from everything after the leading slash
+    path = env['PATH_INFO'].to_s.sub(/^\//, '')
+    
+    # Look up the asset.
+    asset = find_asset(path)
+    asset.to_a if asset
+
+At the beginning of this, Sprockets removes the trailing slash from the beginning of `/application.css`, turning it into just
+`application.css`. This path is then passed to the `find_asset` method, which *should* find our asset, if it exists. If it does
+not exist, then `find_asset` will return `nil`.
+
+The `find_asset` method is defined in `lib/sprockets/base.rb`:
+
+
+
+**sprockets: lib/sprockets/base.rb, 9 lines, beginning line 95**
+    
+    def find_asset(path, options = {})
+      pathname = Pathname.new(path)
+    
+      if pathname.absolute?
+        build_asset(attributes_for(pathname).logical_path, pathname, options)
+      else
+        find_asset_in_path(pathname, options)
+      end
+    end
+
+This method converts the `path` it receives, `"application.css"`, into a new `Pathname` object for the ease that `Pathname` objects provide over strings for dealing with file-system-like things. This `pathname` object is then checked for absoluteness with `absolute?`, which will return `false` because in no reality is `"application.css"` an absolute path to anything. Therefore, this method falls to `find_asset_in_path`, defined inside `lib/sprockets/trail.rb` and begins like this:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 8 lines, beginning line 90**
+    
+    def find_asset_in_path(logical_path, options = {})
+      # Strip fingerprint on logical path if there is one.
+      # Not sure how valuable this feature is...
+      if fingerprint = attributes_for(logical_path).path_fingerprint
+        pathname = resolve(logical_path.to_s.sub("-#{fingerprint}", ''))
+      else
+        pathname = resolve(logical_path)
+      end
+
+Here, Sprockets calls `attributes_for` which is set up back in `lib/sprockets/base.rb` using these simple lines:
+
+
+
+**sprockets: lib/sprockets/base.rb, 3 lines, beginning line 85**
+    
+    def attributes_for(path)
+      AssetAttributes.new(self, path)
+    end
+
+These lines aren't very informative, so let's take a look at what the `AssetAttributes` class's `initialize` method looks like:
+
+
+
+**sprockets: lib/sprockets/asset_attributes.rb, 4 lines, beginning line 11**
+    
+    def initialize(environment, path)
+      @environment = environment
+      @pathname = path.is_a?(Pathname) ? path : Pathname.new(path.to_s)
+    end
+
+This method takes the `environment` argument it's given, which is the `Sprockets::Index` object that we are currently dealing with and stores it in the `@environment` instance variable for safe keeping. It then takes the path, checks to see if it is a `Pathname` and if it isn't, it will convert it into one. The `path` argument passed in here is already going to be a `Pathname` object as that was set up in the `find_asset` method.
+
+Now that the `initialize` method is done, we've now got a new `Sprockets::AssetAttributes` object. The next thing that happens is that `path_fingerprint` is called on this object. This method comes with a lovely comment explaining what it does:
+
+
+
+**sprockets: lib/sprockets/asset_attributes.rb, 8 lines, beginning line 115**
+    
+    # Gets digest fingerprint.
+    #
+    #     "foo-0aa2105d29558f3eb790d411d7d8fb66.js"
+    #     # =&gt; "0aa2105d29558f3eb790d411d7d8fb66"
+    #
+    def path_fingerprint
+      pathname.basename(extensions.join).to_s =~ /-([0-9a-f]{7,40})$/ ? $1 : nil
+    end
+
+As the comment quite accurately describes, this method will take the fingerprint, or the *unique identifier* from this asset and return it. If there isn't one, then it will simply return `nil`. In this case, our asset is still `"application.css"` and therefore doesn't contain a fingerprint and so this method will return `nil`.
+
+In that case, the `if` statement's conditions in `find_asset_in_path` will return `false` and so it will fall to `else` to do its duty.
+
+
+
+**sprockets: lib/sprockets/trail.rb, 3 lines, beginning line 95**
+    
+    else
+      pathname = resolve(logical_path)
+    end
+
+Not too much magic here, this `else` just calls the `resolve` method which should return a value which is stored into `pathname`. The `resolve` method is also defined within this file and begins like this:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 3 lines, beginning line 70**
+    
+    def resolve(logical_path, options = {})
+      # If a block is given, preform an iterable search
+      if block_given?
+
+In this case, `resolve` is not being called with block and so the `if` statement's code is not run. The code inside the `else though goes like this, and *does* call `resolve with a block:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 6 lines, beginning line 77**
+    
+    else
+      resolve(logical_path, options) do |pathname|
+        return pathname
+      end
+      raise FileNotFound, "couldn't find file '#{logical_path}'"
+    end
+
+Alright then, so let's take a closer look at what the `if block_given?` contains:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 2 lines, beginning line 72**
+    
+    if block_given?
+      args = attributes_for(logical_path).search_paths + [options]
+
+In this case, we see our old friend `attributes_for` called again which is then handed the `Pathname` equivalent of `"application.css"` and so it returns a new `AssetAttributes` object for that again. Next, the `search_paths` method is called on it, which is defined in `sprockets/lib/asset_attributes.rb` like this:
+
+
+
+**sprockets: lib/sprockets/asset_attributes.rb, 11 lines, beginning line 27**
+    
+    def search_paths
+      paths = [pathname.to_s]
+    
+      if pathname.basename(extensions.join).to_s != 'index'
+        path_without_extensions = extensions.inject(pathname) { |p, ext| p.sub(ext, '') }
+        index_path = path_without_extensions.join("index#{extensions.join}").to_s
+        paths &lt;&lt; index_path
+      end
+    
+      paths
+    end
+
+This method will return all the search paths that Sprockets will look through to find a particular asset. If this file is called "index" then the `paths` will only be the file that is being requested. If it's not, then it will extract the extensions from the path and build a new path called `"application/index.css"`, adding that to the list of `paths` to search through.
+
+It is done this way so that we can have folders containing specific groups of assets. For instance, for a "projects" resource we could have a "projects/index.css" file under `app/assets/stylesheets` and that would then specify directives or CSS for projects. This file would be includable from another sprockets-powered CSS file with simply `//= require "projects"` or with a `stylesheet_link_tag "projects"` in the layout. Sprockets will attempt to look for a file in the asset paths called "projects.css" and if it fails to find that then it will look for "projects/index.css" as a fallback.
+
+That is what this method is doing, providing two possible solutions to finding the asset. In the case of our "application.css" request, the `paths` will be the `Pathname` objects of "application.css" and "application/index.css".
+
+Now that we know what `search_paths` is going to assign to `args`, let's take a look at the next couple of lines:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 3 lines, beginning line 74**
+    
+      trail.find(*args) do |path|
+        yield Pathname.new(path)
+      end
+
+The `find` method called on `trail` here will look for the specified paths, using any options that were passed to `resolve` as part of the `args` array. In this situation, there were no options passed in and so these options will just be an empty hash. The `trail` method is defined further down in this file very simply:
+
+
+
+**sprockets: lib/sprockets/trail.rb, 3 lines, beginning line 86**
+    
+      def trail
+        @trail
+      end
+
+This `@trail` instance variable is set up as the first thing in the `initialize` method for `Sprockets::Environment`:
+
+
+
+**sprockets: lib/sprockets/environment.rb, 2 lines, beginning line 20**
+    
+    def initialize(root = ".")
+      @trail = Hike::Trail.new(root)
+
+Where the `root` argument here is the root of the Rails application, exactly the same as `Rails.root` returns. The `find` method itself is defined within the Hike gem like this:
+
+
+
+**hike: lib/hike/trail.rb, 3 lines, beginning line 138**
+    
+    def find(*args, &amp;block)
+      index.find(*args, &amp;block)
+    end
+
+Where the `index` method is defined like this:
+
+
+
+**hike: lib/hike/trail.rb, 3 lines, beginning line 152**
+    
+    def index
+      Index.new(root, paths, extensions, aliases)
+    end
+
+
+## Rake tasks
+
+Cover assets:precompile and assets:clean here.
