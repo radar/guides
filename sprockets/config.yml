@@ -3,3 +3,5 @@ repos:
     url: base_repos/rails
   sprockets:
     url: base_repos/sprockets
+  hike:
+    url: base_repos/hike

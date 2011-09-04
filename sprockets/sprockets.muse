@@ -42,7 +42,224 @@ next unless config.assets.enabled
 
 This is the `Rails.application.config.assets.enabled` flag. If it is set to a non-truthy value then this initializer will stop right there and then. By default though, it's enabled and so it will continue.
 
-TO BE CONTINUED
+After this point, then sprockets is required and a new `Sprockets::Environment` object is set up:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='18'>
+require 'sprockets'
+
+app.assets = Sprockets::Environment.new(app.root.to_s) do |env|
+</div>
+
+The `initialize` method in `Sprockets::Environment` will receive the application's root. The `initialize` method in `Sprockets::Environment` is quite long and sets up a lot of the functionality. It begins by creating a new `Hike::Trail` object out of the root of the application that was passed in and setting a default logger:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='20'>
+def initialize(root = ".")
+  @trail = Hike::Trail.new(root)
+
+  self.logger = Logger.new($stderr)
+  self.logger.level = Logger::FATAL
+</div>
+
+This then sets up a new class based of the context class, defines a digest class and defaults the versioning to a blank string:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='27'>
+@context_class = Class.new(Context)
+
+# Set MD5 as the default digest
+require 'digest/md5'
+@digest_class = ::Digest::MD5
+@version = ''
+</div>
+
+This context class is used by the bundled asset feature in sprockets, which we'll see in greater detail later in this guide. The `@digest_class` variable is used to determine what digest class should be used to provide unique identifiers for precompiled assets, such as those generated with `rake assets:precompile`. Finally, `@version` will be used to provide a manually overridable string for the assets versions. We can change this in `config.assets.version` in `config/application.rb` to expire all our assets manually.
+
+Next, the `initialize` method sets up more default values:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='34'>
+@mime_types        = {}
+@engines           = Sprockets.engines
+@preprocessors     = Hash.new { |h, k| h[k] = [] }
+@postprocessors    = Hash.new { |h, k| h[k] = [] }
+@bundle_processors = Hash.new { |h, k| h[k] = [] }
+</div>
+
+We'll see what the mime types, pre-processors, post-processors and bundle processors are in just a bit, but first let's see what `Sprockets.engines` is. This method is defined in `lib/sprockets/engines.rb` which is loaded with the `lib/sprockets.rb` file that was required by the Railtie. The `lib/sprockets/engines.rb` file defines the `Sprockets::Engines` module and defines the `engines` method like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/engines.rb' data-start='41'>
+def engines(ext = nil)
+  if ext
+    ext = Sprockets::Utils.normalize_extension(ext)
+    @engines[ext]
+  else
+    @engines.dup
+  end
+end
+</div>
+
+When this method is called with no arguments, like in `Sprockets::Environment`'s `initialize` method, it will return a duplicated object of the engines currently registered with Sprockets. These engines are the templating engines that Sprockets will make use of in the asset pipeline. These should not be confused with the "engines" that Rails has. The ones for Sprockets are *templating engines*, where the ones in Rails are more like miniature applications.
+
+Now, it may *seem* like that there are no engines registered with Sprockets at the moment, there actually is. At the bottom of the `lib/sprockets/engines.rb` file, the `Sprockets` module is extended by the `Engines` module contained within (this is how the `engines` method is then provided for `Sprockets`) and then these default engines are registered: 
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/engines.rb' data-start='76'>
+  extend Engines
+  @engines = {}
+
+  # Cherry pick the default Tilt engines that make sense for
+  # Sprockets. We don't need ones that only generate html like HAML.
+
+  # Mmm, CoffeeScript
+  register_engine '.coffee', Tilt::CoffeeScriptTemplate
+
+  # JST engines
+  register_engine '.jst',    JstProcessor
+  register_engine '.eco',    EcoTemplate
+  register_engine '.ejs',    EjsTemplate
+
+  # CSS engines
+  register_engine '.less',   Tilt::LessTemplate
+  register_engine '.sass',   Tilt::SassTemplate
+  register_engine '.scss',   Tilt::ScssTemplate
+
+  # Other
+  register_engine '.erb',    Tilt::ERBTemplate
+  register_engine '.str',    Tilt::StringTemplate
+</div>
+
+All of these engines inherit from `Tilt::Template` which will be used to render these templates. The `register_engine` method is also defined within the `lib/sprockets/engines.rb` file and goes like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/engines.rb' data-start='63'>
+def register_engine(ext, klass)
+  ext = Sprockets::Utils.normalize_extension(ext)
+  @engines[ext] = klass
+end
+</div>
+
+This method calls `Sprockets::Utils.normalize_extension` to, uh, normalize the extension by doing this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/engines.rb' data-start=''>
+def self.normalize_extension(extension)
+  extension = extension.to_s
+  if extension[/^\./]
+    extension
+  else
+    ".#{extension}"
+  end
+end
+</div>
+
+This way, you can call `register_engine` and pass it an extension for that template *with or without* the dot prefix and this method will prefix the dot. Once `normalize_extension` has done its thing, then `register_engine` finishes by adding a new key to the `@engines` hash with the new extension and the specified class.
+
+Going back to `lib/sprockets/environment.rb` now, and the next thing that happens is that these engines are added to the trail:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='40'>
+@engines.each do |ext, klass|
+  add_engine_to_trail(ext, klass)
+end
+</div>
+
+The `add_engine_to_trail` method is defined in `lib/sprockets/processing.rb` beginning like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/processing.rb' data-start='270'>
+def add_engine_to_trail(ext, klass)
+  @trail.append_extension(ext.to_s)
+</div>
+
+The `@trail` object was originally set up earlier in the `initialize` method for our new `Sprockets::Environment` object, and is a `Hike::Trail` object. Therefore, this `append_extension` method is defined within Hike and not Sprockets. It is defined within `lib/hike/trail.rb` very simply:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/processing.rb' data-start='270'>
+def append_extensions(*extensions)
+  self.extensions.push(*extensions)
+end
+alias_method :append_extension, :append_extensions
+</div>
+
+This is so that Hike will be able to find files with the given extensions when they are searched for later on in this process.o
+
+Now that we know what the `Sprockets.engines` method does, we've still got the remainder of the `initialize` method for `Sprockets::Environment` to figure out. The next two lines in this method register mime types for CSS and JavaScript:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='44'>
+register_mime_type 'text/css', '.css'
+register_mime_type 'application/javascript', '.js'
+</div>
+
+This method works very similarly to the `register_engine` method we saw earlier, which was defined in `lib/sprockets/engines.rb'. The `register_mime_type` method is defined in `lib/sprockets/mime.rb` like this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/mime_type.rb' data-start='29'>
+def register_mime_type(mime_type, ext)
+  ext = Sprockets::Utils.normalize_extension(ext)
+  @mime_types[ext] = mime_type
+end
+</div>
+
+This calls `normalize_extension` again which will of course prefix the extension with a dot if it didn't have one. In this case though, there are dots. A new key is added to the `@mime_types` hash with this new extension with the `mime_type` being its value.
+
+Next in the `Sprockets::Environment#initialize` method, the `register_preprocessor` method is called:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='47'>
+register_preprocessor 'text/css', DirectiveProcessor
+register_preprocessor 'application/javascript', DirectiveProcessor
+</div>
+
+The `DirectiveProcessor` is the class that is responsible for parsing the `*= require 'blah'` and `//= require 'other_blah'` directives in our JavaScript and CSS files. We'll see the inner workings of this when we are going through the process of serving an asset.
+
+The `register_preprocessor` method is a little more complicated than the `register_engine` and `register_mime_types` method, and it is defined within `lib/sprockets/processing.rb`:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/processing.rb' data-start='90'>
+def register_preprocessor(mime_type, klass, &block)
+  expire_index!
+
+  if block_given?
+    name  = klass.to_s
+    klass = Class.new(Processor) do
+      @name      = name
+      @processor = block
+    end
+  end
+
+  @preprocessors[mime_type].push(klass)
+end
+</div>
+
+First, the `expire_index!` method is called. This method is defined in `lib/sprockets/environment.rb` and does the following: 
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='90'>
+def expire_index!
+  # Clear digest to be recomputed
+  @digest = nil
+  @assets = {}
+end
+
+This method ensures that our index is at a pristine state, where the digest has not yet been computed and there have been no assets served.
+
+After the pre-processor has been registered, a single post-processor is registered:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='50'>
+register_postprocessor 'application/javascript', SafetyColons
+</div>
+
+This class is responsible for adding semi-colons to the end of each file before they are concatenated into a single bundle. Without this, it could lead to JavaScript syntax errors.
+
+Next, a bundle processor is added for CSS files:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='51'>
+register_bundle_processor 'text/css', CharsetNormalizer
+</div>
+
+Bundle processors are run after the assets are concatenated. This one searches for `@charset` definitions in CSS files, keeps the first one and strips out the rest. Otherwise, multiple charset specifications will lead to undesired results. For more information, check out the comments on the `Sprockets::CharsetNormalizer` class.
+
+After `register_bundle_processor` runs, `expire_index!` is run again just for good measure and the new object is yielded if block is given to this method, which it is.
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='53'>
+expire_index!
+
+yield self if block_given?
+</div>
+
+
+
+
+
+
 
 ### Sprockets Asset Helpers
 
