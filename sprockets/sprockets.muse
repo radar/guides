@@ -1,6 +1,5 @@
 This is a detailed guide to the internal workings of Sprockets. Hopefully with this information, somebody else besides Josh Peek, Sam Stephenson, Yehuda Katz and (partially) myself can begin to understand how Sprockets works.
 
-
 ### Sprockets Initialization
 
 To first understand Sprockets, we must first understand how it hooks into Rails. Just like with the Active Record and Action Pack components of Rails, Sprockets too has its own railtie. This is included by the `require "rails/all"` call in `config/application.rb` or if you don't have that then it must be required explicitly with `require "sprockets/railtie"`. This railtie is actually kept inside the `actionpack` gem itself, rather than the `sprockets` gem.
@@ -136,7 +135,7 @@ end
 
 This method calls `Sprockets::Utils.normalize_extension` to, uh, normalize the extension by doing this:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/engines.rb' data-start=''>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/utils.rb' data-start='58'>
 def self.normalize_extension(extension)
   extension = extension.to_s
   if extension[/^\./]
@@ -166,7 +165,7 @@ def add_engine_to_trail(ext, klass)
 
 The `@trail` object was originally set up earlier in the `initialize` method for our new `Sprockets::Environment` object, and is a `Hike::Trail` object. Therefore, this `append_extension` method is defined within Hike and not Sprockets. It is defined within `lib/hike/trail.rb` very simply:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/processing.rb' data-start='270'>
+<div class="example" data-repo='hike' data-file='lib/hike/trail.rb' data-start='84'>
 def append_extensions(*extensions)
   self.extensions.push(*extensions)
 end
@@ -184,7 +183,7 @@ register_mime_type 'application/javascript', '.js'
 
 This method works very similarly to the `register_engine` method we saw earlier, which was defined in `lib/sprockets/engines.rb'. The `register_mime_type` method is defined in `lib/sprockets/mime.rb` like this:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/mime_type.rb' data-start='29'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/mime.rb' data-start='29'>
 def register_mime_type(mime_type, ext)
   ext = Sprockets::Utils.normalize_extension(ext)
   @mime_types[ext] = mime_type
@@ -222,7 +221,7 @@ end
 
 First, the `expire_index!` method is called. This method is defined in `lib/sprockets/environment.rb` and does the following: 
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='90'>
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='87'>
 def expire_index!
   # Clear digest to be recomputed
   @digest = nil
@@ -258,7 +257,7 @@ yield self if block_given?
 
 When `yield` is called, it will evaluate the block it is given using the code specified back in `actionpack/lib/sprockets/railtie.rb`:
 
-<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='53'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='20'>
 app.assets = Sprockets::Environment.new(app.root.to_s) do |env|
   env.logger  = ::Rails.logger
   env.version = ::Rails.env + "-#{config.assets.version}"
@@ -275,7 +274,7 @@ So as we can see here, by default the Sprockets environment will use the same lo
 
 That's the end of the `"sprockets.environment"` initializer now. The next thing the Railtie does is add a hook for when Action View is loaded using these lines:
 
-<div class="example" data-repo='sprockets' data-file='actionpack/lib/sprockets/railtie.rb' data-start='29'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='29'>
 ActiveSupport.on_load(:action_view) do
   include ::Sprockets::Helpers::RailsHelper
 
@@ -289,7 +288,7 @@ The `on_load` method is used to add hooks for certain components used within a R
 
 Finally in the Railtie an `after_initialize` hook is defined. It begins like this:
 
-<div class="example" data-repo='sprockets' data-file='actionpack/lib/sprockets/railtie.rb' data-start='29'>
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='42'>
 config.after_initialize do |app|
   next unless app.assets
   config = app.config
@@ -311,8 +310,135 @@ end
 
 When the Rails application is initialized, The asset directories inside of `vendor/assets`, `lib/assets` and `app/assets` paths will be added to `config.assets.paths`, but only if these directories exist.
 
-The `append_path` object on the `Sprockets::Environment` does the following:
+The `append_path` method on instances of `Sprockets::Environment` is defined in `lib/sprockets/trail.rb` and does the following:
 
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/trail.rb' data-start='38'>
+def append_path(path)
+  expire_index!
+  @trail.append_path(path)
+end
+</div>
+
+This calls the `expire_index` to clear the index, as it is potentially adding new assets, and then calls `append_path` on the `@trail` object, which is an instance of `Hike::Trail`. The `append_path` method for `Hike::Trail` is defined like this:
+
+<div class="example" data-repo='hike' data-file='lib/hike/trail.rb' data-start='67'>
+def append_paths(*paths)
+  self.paths.push(*paths)
+end
+alias_method :append_path, :append_paths
+</div>
+
+The `self.paths` in this case is an array of paths, and so `push` will just add those paths to the end of the array.
+
+The next line in the Sprockets Railtie checks to see if the `config.assets.compress` setting is set to a truthy value. By default, it isn't in the development environment but is in the production environment.
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='48'>
+if config.assets.compress
+  # temporarily hardcode default JS compressor to uglify. Soon, it will work
+  # the same as SCSS, where a default plugin sets the default.
+  unless config.assets.js_compressor == false
+    app.assets.js_compressor = LazyCompressor.new { expand_js_compressor(config.assets.js_compressor || :uglifier) }
+  end
+
+  unless config.assets.css_compressor == false
+    app.assets.css_compressor = LazyCompressor.new { expand_css_compressor(config.assets.css_compressor) }
+  end
+end
+</div>
+
+If the setting is truthy then it will determine if there is a `js_compressor` setting or a `css_compressor` setting. For the `js_compressor` setting, the `expand_js_compressor` method is used, which is defined inside the railtie like this:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='70'>
+def expand_js_compressor(sym)
+  case sym
+  when :closure
+    require 'closure-compiler'
+    Closure::Compiler.new
+  when :uglifier
+    require 'uglifier'
+    Uglifier.new
+  when :yui
+    require 'yui/compressor'
+    YUI::JavaScriptCompressor.new
+  else
+    sym
+  end
+end
+</div>
+
+The `js_compressor` setting takes a symbol which can be one of `:closure`, `:uglifier` or `:yui`, and then will require the required files and return the class used for compression. The gems that provide these files *must* be specified within the `Gemfile` of the application before they can be loaded.
+
+The `cs_compressor` method is similar, except it only takes one value:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='86'>
+def expand_css_compressor(sym)
+  case sym
+  when :yui
+    require 'yui/compressor'
+    YUI::CssCompressor.new
+  else
+    sym
+  end
+end
+</div>
+
+The only currently supported CSS compressor is the YUI compressor. These compressor objects are then passed to `LazyCompressor.new` inside a block. The purpose of this is to provide a way to compress content if a compressor is specified, or otherwise falback to a `Sprockets::NullCompressor` class which just returns the content as-is. We can see the code for this in `actionpack/lib/sprockets/compressors.rb`:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/compressors.rb'>
+module Sprockets
+  class NullCompressor
+    def compress(content)
+      content
+    end
+  end
+
+  class LazyCompressor
+    def initialize(&block)
+      @block = block
+    end
+
+    def compressor
+      @compressor ||= @block.call || NullCompressor.new
+    end
+
+    def compress(content)
+      compressor.compress(content)
+    end
+  end
+end
+</div>
+
+Next up in this `after_initialize` hook, the routes are prepended with a route to the assets using these lines:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='60'>
+app.routes.prepend do
+  mount app.assets => config.assets.prefix
+end
+</div>
+
+The `routes` object here is the same `routes` object normally returned by `Rails.application.routes`, famously used in declaring routes for an application in `config/routes.rb`. The `append` method on this object is a new feature of Rails 3.1 and just like its name implies it will append a set of routes to the beginning of the routing table. This means that the `/assets` route will now be the first route that is matched in the application. The `app.assets` object is the `Sprockets::Environment` object set up before, and the `config.assets.prefix` value defaults to `/assets/`.
+
+Finally in the `after_initialize` block, there's a check to see if Rails is performing caching which does this:
+
+<div class="example" data-repo='rails' data-file='actionpack/lib/sprockets/railtie.rb' data-start='64'>
+if config.action_controller.perform_caching
+  app.assets = app.assets.index
+end
+</div>
+
+The `index` method on `Sprockets::Environment` does this:
+
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='63'>
+def index
+  Index.new(self)
+end
+</div>
+
+The `Index` class's purpose is to provide a cached version for the environment, which makes the calls to the file system much faster as it will be caching the location of the assets, rather than looking them up each time they are requested. Of course, in the `development` environment the `perform_caching` setting is set to `false` and so it's disabled, but in production it will be enabled.
+
+And that's the `Sprockets::Railtie` class covered. This section has described how Sprockets attaches to Rails and provides the beginnings of the asset pipeline. One of the features we saw inside this Railtie was that it included modules into `ActionView::Base`. The purpose of this is to provide overrides for methods such as `javascript_include_tag`, `image_tag` and `stylesheet_link_tag` so that they use the asset pipeline, rather than the default Rails helpers which do not.
+
+Let's take a look at these now.
 
 ### Sprockets Asset Helpers
 
