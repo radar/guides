@@ -228,6 +228,7 @@ def expire_index!
   @digest = nil
   @assets = {}
 end
+</div>
 
 This method ensures that our index is at a pristine state, where the digest has not yet been computed and there have been no assets served.
 
@@ -255,10 +256,62 @@ expire_index!
 yield self if block_given?
 </div>
 
+When `yield` is called, it will evaluate the block it is given using the code specified back in `actionpack/lib/sprockets/railtie.rb`:
 
+<div class="example" data-repo='sprockets' data-file='lib/sprockets/environment.rb' data-start='53'>
+app.assets = Sprockets::Environment.new(app.root.to_s) do |env|
+  env.logger  = ::Rails.logger
+  env.version = ::Rails.env + "-#{config.assets.version}"
 
+  if config.assets.cache_store != false
+    env.cache = ActiveSupport::Cache.lookup_store(config.assets.cache_store) || ::Rails.cache
+  end
+end
+</div>
 
+This block takes the object that is given by `yield` and sets the `logger` to be the `Rails.logger` and the version to be a combination of the Rails environment's name and the `config.assets.version` setting, which is "1.0" by default in `config/application.rb`. Next, it sets up a cache for the assets (only if `config.assets.cache_store` is not exactly `false`), using the value specified in `config.assets.cache_store` or alternatively using the `Rails.cache` settings.
 
+So as we can see here, by default the Sprockets environment will use the same logger and cache as the application itself, but we can configure these if we please.
+
+That's the end of the `"sprockets.environment"` initializer now. The next thing the Railtie does is add a hook for when Action View is loaded using these lines:
+
+<div class="example" data-repo='sprockets' data-file='actionpack/lib/sprockets/railtie.rb' data-start='29'>
+ActiveSupport.on_load(:action_view) do
+  include ::Sprockets::Helpers::RailsHelper
+
+  app.assets.context_class.instance_eval do
+    include ::Sprockets::Helpers::RailsHelper
+  end
+end
+</div>
+
+The `on_load` method is used to add hooks for certain components used within a Rails application. In this usage, when Action View is loaded then the `Sprockets::Helpers::RailsHelper` module is included into `ActionView::Base`. Also inside this block, the environment's `context_class` is referenced (remember, it's a new anonymous class inheriting from `Sprockets::Context`) and the `Sprockets::Helpers::RailsHelper` module is included on that also.
+
+Finally in the Railtie an `after_initialize` hook is defined. It begins like this:
+
+<div class="example" data-repo='sprockets' data-file='actionpack/lib/sprockets/railtie.rb' data-start='29'>
+config.after_initialize do |app|
+  next unless app.assets
+  config = app.config
+
+  config.assets.paths.each { |path| app.assets.append_path(path) }
+</div>
+
+The `after_initialize` hook is skipped if `app.assets` is set to `false`, but by default this is not the case and so let's assume it's not. Next, there's a `config` variable setup so that the code doesn't have to make continual references to `app.config` and can get away with just writing `config` instead. Finally in the above example, the `config.assets.paths` collection is iterated through with each path being used in an `append_path` call on the `app.assets` object, which is the `Sprockets::Environment` object that was set up earlier.
+
+The `config.assets.paths` are set up inside of Rails at `railties/lib/rails/engine.rb` using these lines:
+
+<div class="example" data-repo='rails' data-file='railties/lib/rails/engine.rb' data-start='542'>
+initializer :append_assets_path do |app|
+  app.config.assets.paths.unshift(*paths["vendor/assets"].existent_directories)
+  app.config.assets.paths.unshift(*paths["lib/assets"].existent_directories)
+  app.config.assets.paths.unshift(*paths["app/assets"].existent_directories)
+end
+</div>
+
+When the Rails application is initialized, The asset directories inside of `vendor/assets`, `lib/assets` and `app/assets` paths will be added to `config.assets.paths`, but only if these directories exist.
+
+The `append_path` object on the `Sprockets::Environment` does the following:
 
 
 ### Sprockets Asset Helpers
@@ -741,7 +794,6 @@ def index
   Index.new(root, paths, extensions, aliases)
 end
 </div>
-
 
 ## Rake tasks
 
