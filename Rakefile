@@ -1,11 +1,11 @@
 gem "rdoc"
 require 'rdoc/rdoc'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'fileutils'
 
 $:.unshift "."
 
-Rake::RDocTask.new(:rdoc_spec) do |rd|
+RDoc::Task.new(:rdoc_spec) do |rd|
   spec_file = File.join(ENV["RUBYGEMS_DIR"].to_s, "lib", "rubygems", "specification.rb")
   rd.rdoc_files.include(spec_file)
   rd.template = "jekdoc"
