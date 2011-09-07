@@ -492,7 +492,10 @@ GEM       gem to manage owners for
 
 ### Usage
 
+    # List gem owners
     gem owner
+    # Add foo@example.com as an owner of my_gem
+    gem owner my_gem -a foo@example.com
 
 
 ### Description
