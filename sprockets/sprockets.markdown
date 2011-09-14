@@ -1047,7 +1047,46 @@ This `@trail` instance variable is set up as the first thing in the `initialize`
     def initialize(root = ".")
       @trail = Hike::Trail.new(root)
 
-Where the `root` argument here is the root of the Rails application, exactly the same as `Rails.root` returns. The `find` method itself is defined within the Hike gem like this:
+Where the `root` argument here is the root of the Rails application, exactly the same as `Rails.root` returns. The `initialize` method for `Hike::Trail` is defined within Hike in `lib/hike/trail.rb` like this:
+
+
+
+**hike: lib/hike/trail.rb, 6 lines, beginning line 48**
+    
+    def initialize(root = ".")
+      @root       = Pathname.new(root).expand_path
+      @paths      = Paths.new(@root)
+      @extensions = Extensions.new
+      @aliases    = Hash.new { |h, k| h[k] = Extensions.new }
+    end
+
+The `root` method that is passed in is converted to a `Pathname` object if it isn't one already, and then `expand_path` is called on it so that it can store the absolute path for hiking. 
+
+Next up, new `Paths` object (`@paths`) is created for this root, which is used to track a collection of the paths of where to find files within the `@root`.  
+
+The `@extensions` method is much the same as the `@paths` object, but tracks the extensions which files are being found for. The `@aliases` hash will contain fallbacks for other extensions that are known to Hike. The documentation for the `attr_reader` for this setting explains it quite well:
+
+
+
+**hike: lib/hike/trail.rb, 12 lines, beginning line 31**
+    
+    # `Index#aliases` is a mutable `Hash` mapping an extension to
+    # an `Array` of aliases.
+    #
+    #   trail = Hike::Trail.new
+    #   trail.paths.push "~/Projects/hike/site"
+    #   trail.aliases['.htm']   = 'html'
+    #   trail.aliases['.xhtml'] = 'html'
+    #   trail.aliases['.php']   = 'html'
+    #
+    # Aliases provide a fallback when the primary extension is not
+    # matched. In the example above, a lookup for "foo.html" will
+    # check for the existence of "foo.htm", "foo.xhtml", or "foo.php".
+
+Each one of the `@root`, `@paths`, `@extensions` and `@aliases` methods have `attr_reader`s defined for them. As we saw near the beginning of this guide, the root, paths and extensions are set up during the initialization of the `Sprockets::Environment` class, providing the foundation for being able to find specific assets.
+
+The `find` method on this `Hike::Trail` object is defined like this:
+
 
 
 
@@ -1057,7 +1096,7 @@ Where the `root` argument here is the root of the Rails application, exactly the
       index.find(*args, &amp;block)
     end
 
-Where the `index` method is defined like this:
+The `index` method for Hike works much like the one for sprockets, where the idea was to provide a cached lookup for the files that its found and provide a mechanism for finding files that it hasn't yet found. This method is declared like this:
 
 
 
@@ -1066,6 +1105,118 @@ Where the `index` method is defined like this:
     def index
       Index.new(root, paths, extensions, aliases)
     end
+
+The `root`, `paths`, `extensions` and `aliases` methods are dealt with in the `initialize` method for this `Hike::Index` and frozen:
+
+
+
+
+**hike: lib/hike/index.rb, 17 lines, beginning line 20**
+    
+    def initialize(root, paths, extensions, aliases)
+      @root = root
+    
+      # Freeze is used here so an error is throw if a mutator method
+      # is called on the array. Mutating `@paths`, `@extensions`, or
+      # `@aliases` would have unpredictable results.
+      @paths      = paths.dup.freeze
+      @extensions = extensions.dup.freeze
+      @aliases    = aliases.inject({}) { |h, (k, a)|
+                      h[k] = a.dup.freeze; h
+                   }.freeze
+      @pathnames  = paths.map { |path| Pathname.new(path) }
+    
+      @stats    = {}
+      @entries  = {}
+      @patterns = {}
+    end
+
+The `find` method on this `Index` object begins like this:
+
+
+
+**hike: lib/hike/index.rb, 4 lines, beginning line 52**
+    
+    def find(*logical_paths, &amp;block)
+      if block_given?
+        options = extract_options!(logical_paths)
+        base_path = Pathname.new(options[:base_path] || @root)
+
+The `find` method can be passed an infinite number of arguments, which are defined as the `logical_paths` argument in the method. At the end of these arguments can be an options hash, and that's extracted with the `extract_options!` method, which stores it as `options`. Now, if this `options` hash contains a `:base_path` key, then that will be the `base_path` for this method. If there isn't one, then `@root` will be the `base_path` instead.
+
+In the case of the `resolve` method, there are no options passed in and so this will default to `@root`. Next, this method iterates through each of the `logical_paths` and does this:
+
+
+
+**hike: lib/hike/index.rb, 9 lines, beginning line 57**
+    
+    logical_paths.each do |logical_path|
+      logical_path = Pathname.new(logical_path.sub(/^\//, ''))
+    
+      if relative?(logical_path)
+        find_in_base_path(logical_path, base_path, &amp;block)
+      else
+        find_in_paths(logical_path, &amp;block)
+      end
+    end
+
+The `logical_paths` in the case of "application.css" will be "application.css" and "application/index.css", as defined back in the `resolve` method. Any forward-slashes at the beginning of these paths are stripped and then they are checked for relativeness. If these paths contain either a single dot or a double dot at the beginning of their filenames, they are determined to be relative. It's the `relative?` function defined further down in `lib/hike/index.rb` that determines this:
+
+
+
+**hike: lib/hike/index.rb, 3 lines, beginning line 105**
+    
+    def relative?(logical_path)
+      logical_path.to_s =~ /^\.\.?\//
+    end
+
+The paths that have been given to `find` in this situation are not relative, and so the `else` for this `if` will be referenced, resulting in the `find_in_paths` method being called with the argument of the `logical_path` and the block which is passed to `find` from `resolve`. The `find_in_paths` method is defined like this:
+
+
+
+**hike: lib/hike/index.rb, 6 lines, beginning line 110**
+    
+    def find_in_paths(logical_path, &amp;block)
+      dirname, basename = logical_path.split
+      @pathnames.each do |base_path|
+        match(base_path.join(dirname), basename, &amp;block)
+      end
+    end
+
+By calling `split` on `logical_path` here, the `Pathname` object that is `logical_path` is split into the two parts: the first contains the directories of the pathname, while the `basename` contains just the filename. After this split, the `@pathnames` collection (which contains all the directory paths for our assets) is iterated through, with the `match` method being called for each of the path names.
+
+This `match` method is defined further down in this file and begins like this:
+
+
+
+**hike: lib/hike/index.rb, 6 lines, beginning line 127**
+    
+    def match(dirname, basename)
+      # Potential `entries` syscall
+      matches = entries(dirname)
+    
+      pattern = pattern_for(basename)
+      matches = matches.select { |m| m.to_s =~ pattern }
+
+This method begins by calling the `entries` method which will get a list of "entries" from within the specified directory. It does this with the following code:
+
+
+
+**hike: lib/hike/index.rb, 6 lines, beginning line 78**
+    
+    def entries(path)
+      key = path.to_s
+      @entries[key] ||= Pathname.new(path).entries.reject { |entry| entry.to_s =~ /^\.|~$|^\#.*\#$/ }.sort
+    rescue Errno::ENOENT
+      @entries[key] = []
+    end
+
+In this method, the `path` object, which is a `Pathname` object, is converted into a string and this value is assigned to the `key` local variable. This key is used for the `@entries` Hash. If there has been a lookup performed for this directory before, this value would have been cached inside `@entries[key]`, but because this is the first time, the lookup is performed as normal.
+
+The `path` object is converted into a `Pathname` object just to make extra sure that it well and truly is a `Pathname` and then the `entries` method is called on that. The `entries` method for a `Pathname` will return an array of directories and files for this path. From this array, entries containing dot characters, `~` characters, or those beginning and ending with the pound (#) character are excluded. This is then sorted.
+
+If this directory doesn't exist, then the `Errno::ENOENT` exception will be raised, and Hike will set the entries for this path to be an empty array.
+
 
 ## Rake tasks
 
