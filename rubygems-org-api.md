@@ -239,6 +239,26 @@ Returns an object containing the top 50 downloaded gem versions for today.
       ]
     }
 
+### GET - `/api/v1/downloads/all.(json|xml|yaml)`
+
+Returns an object containing the top 50 downloaded gem versions of all time.
+
+    $ curl https://rubygems.org/api/v1/downloads/all.json
+
+    {
+      "gems": [
+        [
+          # version attributes
+          {
+            'full_name' => 'rake-0.9.2' # more attributes ...
+          },
+          # downloads of all time
+          9001
+        ],
+        # more download/version pairs ...
+      ]
+    }
+
 ### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)`
 
 Returns an object containing the total number of downloads for a paritcular gem
