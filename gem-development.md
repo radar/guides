@@ -88,7 +88,7 @@ When we run `bundle exec rspec spec` again, we'll be told the `Foodie::Food` con
 
 We can then require this file at the top of our spec file by using this line:
 
-    require 'foodie/food'
+    require 'foodie'
     
 When we run our specs with `bundle exec rspec spec` this test will pass:
 
@@ -264,7 +264,7 @@ The `desc` method is the "slight twist" here. The method defined after it become
 
 In the `Foodie::CLI` class we're referencing the `Foodie::Food` class without requiring the file that defines it. Under the `require 'thor'` at the top of this file, put this line to require the file that defines `Foodie::Food`:
 
-    require 'foodie/food'
+    require 'foodie'
     
 When we re-run our features using `bundle exec cucumber features` our first scenario will pass:
 
