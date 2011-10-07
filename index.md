@@ -47,6 +47,11 @@ Learn how to make a gem that interacts with C code.
 
 Great blog posts, tutorials, and other sites to help you out.
 
+[Contributing to RubyGems](/contributing)
+---------------
+
+How you can help make rubygems better.
+
 [Frequently Asked Questions](/faqs)
 ---------------
 
