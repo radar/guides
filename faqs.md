@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frequently Asked Questions
-previous: /resources
+previous: /contributing
 next: /
 ---
 

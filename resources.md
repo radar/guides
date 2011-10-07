@@ -2,7 +2,7 @@
 layout: default
 title: Resources
 previous: /c-extensions
-next: /faqs
+next: /contributing
 ---
 
 A collection of helpful material about RubyGems. Feel free to

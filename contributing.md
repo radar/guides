@@ -1,3 +1,10 @@
+---
+layout: default
+title: Contributing to RubyGems
+previous: /resources
+next: /faqs
+---
+
 # Contributing to RubyGems
 
 If you found a bug that you want to fix or have an idea you'd like to contribute, you can grab your own copy of the source on [github][0]. We use github for both pull requests and [issues][1].
