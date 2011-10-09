@@ -309,8 +309,7 @@ Owner Methods
 
 View all owners of a gem that you own. These users can all push to this gem.
 
-    $ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
-           https://rubygems.org/api/v1/gems/gemcutter/owners.json
+    $ curl -H https://rubygems.org/api/v1/gems/gemcutter/owners.json
 
     [
       {
