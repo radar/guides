@@ -2,7 +2,9 @@
 
 In Rails's directory structure as far back as I can recall, there's always been a `lib` folder. This folder is for files that don't belong in the `app` folder (not controllers, helpers, mailers, models, observers or views), such as modules that are included into other areas of the application. The `lib` directory is for our code that won't 'fit' in the `app` directory.
 
-In Rails 3, this directory was removed from the autoload path which has lead to some frustration amongst people. We'll cover what autoloading does in the second part of this rather short and informative guide.
+You can also see this directory in plugins and engines, as well as in all cool Ruby gems.
+
+In Rails 3, this directory was removed from the autoload path which has lead to some frustration amongst people when their files aren't being automatically loaded. We'll cover what autoloading does in the second part of this rather short and informative guide.
 
 ## Using `lib` correctly
 
@@ -14,7 +16,7 @@ To require this file, we can do this in our application:
 
 Then we've got access to the WildcardSearch module where and when we need it.
 
-## Autoloading
+## Autoloading with Rails
 
 Now with autoloading in Rails, we don't need to even require these files to access the constants defined in them. There's a configuration option called `load_paths` for Rails 3 applications which lives in `config/application.rb`, but is commented out by default. We can uncomment this setting and configure it to specify the `lib` directory:
 
@@ -24,4 +26,10 @@ With this setting specified, we don't need to `require` the files in this direct
 
 So how does this work? Well, Rails will take the constant name such as `WildcardSearch`, convert it to a string, then call `underscore` before searching for this file in all the `autoload_paths` that are specified. If it finds it, then it will then call `require` on this file and thereby define the constant and if it can't find this file then it will raise an `uninitialized constant` error. If the file is named incorrectly (such as `WildCardSearch.rb` instead), then Rails will be unable to find the file it's looking for, which will cause the constant to not be loaded.
 
-NOTE: If you have a lot of code in `lib` that is not required in your application (e.g. tasks) then you should not add it to `autoload_paths` because they are eager loaded when the application starts and may lead to excessive memory usage. Eager loading of all the files in `autoload paths` is done for thread safety as `require` is inherently unsafe.
+Because this file is called `wildcard_search.rb`, it will be required in the search for the `WildcardSearch` constant. If this file doesn't define this constant then you will see this kind of error:
+
+    Expected lib/wildcard_search.rb to define WildcardSearch
+
+In which case this must be corrected so that Rails's autoloading is happy.
+
+If you want to see more information, check out the `ActiveSupport::Autoload` module which provides this functionality in Rails.
