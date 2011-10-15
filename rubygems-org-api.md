@@ -51,7 +51,7 @@ Gem Methods
 
 ### GET - `/api/v1/gems/[GEM NAME].(json|xml|yaml)`
 
-Returns some basic information about the given gem. For example, here's Rails in JSON:
+Returns some basic information about the given gem. See below an example response for the gem "rails" in JSON format:
 
     $ curl https://rubygems.org/api/v1/gems/rails.json
 
@@ -83,7 +83,7 @@ Returns some basic information about the given gem. For example, here's Rails in
       }
     }
 
-or XML:
+or XML format:
 
     $ curl http://rubygems.org/api/v1/gems/rails.xml
 
@@ -307,9 +307,9 @@ Owner Methods
 
 ### GET - `/api/v1/gems/[GEM NAME]/owners.(json|xml|yaml)`
 
-View all owners of a gem that you own. These users can all push to this gem.
+View all owners of a gem. These users can all push to this gem.
 
-    $ curl -H https://rubygems.org/api/v1/gems/gemcutter/owners.json
+    $ curl https://rubygems.org/api/v1/gems/gemcutter/owners.json
 
     [
       {
