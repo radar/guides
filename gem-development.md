@@ -86,7 +86,11 @@ When we run `bundle exec rspec spec` again, we'll be told the `Foodie::Food` con
       end
     end
 
-We can then require this file at the top of our spec file by using this line:
+To load this file, we'll need to add a require line to `lib/foodie.rb` for it:
+
+    require 'foodie/food'
+
+We will also need to require the `lib/foodie.rb` at the top of `spec/spec_helper.rb`:
 
     require 'foodie'
     
