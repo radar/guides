@@ -15,19 +15,19 @@ Also: Sharing is caring.
 To begin to create a gem using Bundler, use the `bundle gem` command like this:
 
     bundle gem foodie
-    
+
 We call our gem `foodie` because this gem is going to do a couple of things around food, such as portraying them as either "Delicious!" or "Gross!". Stay tuned.
-    
+
 This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. The files generated are:
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
- 
+
  * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
- 
+
  * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
- 
+
  * [**foodie.gemspec**](gem-scaffold/foodie/foodie.gemspec): The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
- 
+
  * [**lib/foodie.rb**](gem-scaffold/foodie/lib/foodie.rb): The main file to define our gem's code. This is the file that will be required by Bundler (or any similarly smart system) when our gem is loaded. This file defines a `module` which we can use as a namespace for all our gem's code. It's best practice to put our code in...
  
  * [**lib/foodie**](gem-scaffold/foodie/lib/foodie): here. This folder should contain all the code (classes, etc.) for our gem. The _lib/foodie.rb_ file is there for setting up our gem's environment, whilst all the parts of it go in this folder. If our gem has multiple uses, separating this out so that people can require one class/file at a time can be really helpful.
@@ -43,11 +43,11 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
     s.add_development_dependency "rspec", "~> 2.6"
-    
+
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
 
     Bundler.require(:default, :development)
-    
+
 The benefit of putting this dependency specification inside of _foodie.gemspec_ rather than the _Gemfile_ is that anybody who runs `gem install foodie --dev` will get these development dependencies installed too. This command is used for when people wish to test a gem without having to fork it or clone it from GitHub.
 
 When we run `bundle install`, rspec will be installed for this library and any other library we use with Bundler, but not for the system. This is an important distinction to make: any gem installed by Bundler will not muck about with gems installed by `gem install`. It is effectively a sandboxed environment. It is best practice to use Bundler to manage our gems so that we do not have gem version conflicts.
@@ -57,7 +57,7 @@ By running `bundle install`, Bundler will generate the **extremely important** _
 Additionally in the `bundle install` output, we will see this line:
 
     Using foodie (0.0.1) from source at /path/to/foodie
-    
+
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
 We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_; but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with the following:
@@ -66,7 +66,7 @@ We can write our first test with this framework now in place. For testing, first
       it "broccoli is gross" do
         Foodie::Food.portray("Broccoli").should eql("Gross!")
       end
-      
+
       it "anything else is delicious" do
         Foodie::Food.portray("Not Broccoli").should eql("Delicious!")
       end
@@ -90,10 +90,10 @@ To load this file, we'll need to add a require line to `lib/foodie.rb` for it:
 
     require 'foodie/food'
 
-We will also need to require the `lib/foodie.rb` at the top of `spec/spec_helper.rb`:
+We will also need to require the `lib/foodie.rb` at the top of `spec/foodie_spec.rb`:
 
     require 'foodie'
-    
+
 When we run our specs with `bundle exec rspec spec` this test will pass:
 
     2 example, 0 failures
@@ -109,7 +109,7 @@ We're now going to use Active Support's `pluralize` method by calling it using a
 To use another gem, we must first specify it as a dependency in our _foodie.gemspec_. We can specify the dependency on the `activesupport` gem in _foodie.gemspec_ by adding this line inside the `Gem::Specification` object:
 
     s.add_dependency "activesupport"
-    
+
 If we wanted to specify a particular version we may use this line:
 
     s.add_dependency "activesupport", "3.0.0"
@@ -117,7 +117,7 @@ If we wanted to specify a particular version we may use this line:
 Or specify a version constraint:
 
     s.add_dependency "activesupport", ">= 2.3.8"
-    
+
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
     s.add_dependency "activesupport", "~> 3.0.0"
@@ -136,7 +136,7 @@ Of course when we run this spec with `bundle exec rspec spec` it will fail:
 We can now define this `pluralize` method in _lib/foodie/food.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
 
     require 'active_support/inflector'
-    
+
 Next, we can define the `pluralize` method like this:
 
     def self.pluralize(word)
@@ -147,7 +147,7 @@ When we run `bundle exec rspec spec` our specs will pass:
 
     ...
     3 examples, 0 failures
-    
+
 This brings another checkpoint where it'd be a good idea to commit our efforts so far.
 
 It's great that we're able to call our gem's methods now (all two of them!) and get them to return strings, but everybody knows that the best gems come with command line interfaces (hereafter, "CLI"). You can tell right now just how uncool this gem is because it doesn't have a CLI, right? It needs one. It craves one.
@@ -175,7 +175,7 @@ Our CLI is going to have two methods, which correspond to the two methods which 
       In order to portray or pluralize food
       As a CLI
       I want to be as objective as possible
-  
+
       Scenario: Broccoli is gross
         When I run "foodie portray broccoli"
         Then the output should contain "Gross!"
@@ -183,15 +183,15 @@ Our CLI is going to have two methods, which correspond to the two methods which 
       Scenario: Tomato, or Tomato?
         When I run "foodie pluralize --word Tomato"
         Then the output should contain "Tomatoes"
-        
+
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
 
-The first scenario ensures that we can call a specific task and pass it a single argument which then becomes the part of the text that is output. The second scenario ensures effectively the same thing, but we pass that value in as an option rather than an argument.     
+The first scenario ensures that we can call a specific task and pass it a single argument which then becomes the part of the text that is output. The second scenario ensures effectively the same thing, but we pass that value in as an option rather than an argument.
 
 To run this feature, we use the `cucumber` command, but of course because it's available within the context of our bundle, we use `bundle exec cucumber` like this:
 
     bundle exec cucumber features/
-    
+
 See those yellow things? They're undefined steps:
 
     When /^I run "([^"]*)"$/ do |arg1|
@@ -234,7 +234,7 @@ Our _bin/foodie_ file is empty, which results in this Nothing Travesty. Get rid 
 
 Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
 
- Ok, so it's therefore obvious that the next step is to create this file, but what does it do? 
+ Ok, so it's therefore obvious that the next step is to create this file, but what does it do?
 
 This new _lib/foodie/cli.rb_ file will define the command line interface using another gem called `Thor`. Thor was created by Yehuda Katz (& collaborators) as an alternative to the Rake build tool. Thor provides us with a handy API for defining our CLI, including usage banners and help output. The syntax is very similar to Rake. Additionally, Rails and Bundler both use Thor for their CLI interface as well as their generator base. Yes, Thor even does generators!
 
@@ -298,30 +298,30 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
     4 steps (4 passed)
 
 We can try executing the CLI app by running `bundle exec bin/foodie portray broccoli`.
-    
+
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
     method_options :word => :string, :uppercase => :boolean
     def pluralize
       # accessed as options[:word], options[:uppercase]
     end
-    
+
 In this example, `options[:word]` will return a `String` object, whilst `options[:uppercase]` will return either `true` or `false`, depending on the value it has received.
 
 This introduction should have whet your appetite to learn more about Thor and it's encouraged that you do that now. Check out `Bundler::CLI` for a great example of using Thor as a CLI tool.
 
-With our features and specs all passing now, we're at a good point to commit our code. 
+With our features and specs all passing now, we're at a good point to commit our code.
 
 It was aforementioned that we could use Thor for more than just CLI. That we could use it to create a generator. This is true. We can even create generator*s*, but let's not get too carried away right now and just focus on creating the one.
 
 ## Testing a generator
 
 You saw that pun coming, right? Yeah, pretty obvious.
- 
+
 We're going to mix it up a bit and add a new feature to our gem: a generator for a _recipes_ directory. The idea is that we can run our generator like this:
 
     foodie recipe dinner steak
-    
+
 This will generate a _recipes_ directory at the current location, a _dinner_ directory inside that and then a _steak.txt_ file inside that. This _steak.txt_ file will contain the scaffold for a recipe, such as the ingredients and the instructions.
 
 Thankfully for us, Aruba has ways of testing that a generator generates files and directories. Let's create a new file called _features/generator.feature_ and fill it with this content:
@@ -330,7 +330,7 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
       In order to generate many a thing
       As a CLI newbie
       I want foodie to hold my hand, tightly
-      
+
       Scenario: Recipes
         When I run "foodie recipe dinner steak"
         Then the following files should exist:
@@ -339,13 +339,13 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
           """
           ##### Ingredients #####
           Ingredients for delicious steak go here.
-          
-          
+
+
           ##### Instructions #####
           Tips on how to make delicious steak go here.
           """
-          
-It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon. 
+
+It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon.
 
 When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
 
@@ -354,9 +354,9 @@ When we run this feature we'll be told that there's an undefined step and a fail
       check_file_content(file, content, true)
     end
    
-Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not? 
+Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
 
-## Writing a generator 
+## Writing a generator
 
 Well, because currently we don't have a `recipe` task that does this for us defined in `Foodie::CLI`. We can define a generator class just like we define a CLI class:
 
@@ -364,11 +364,11 @@ Well, because currently we don't have a `recipe` task that does this for us defi
     def recipe(group, name)
       Foodie::Generators::Recipe.start([group, name])
     end
-    
+
 The first argument for this method are the arguments passed to the generator. We will need to require the file for this new class too, which we can do by putting this line at the top of _lib/foodie/cli.rb_:
 
     require 'foodie/generators/recipe'
-    
+
 To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories. Because this is a generator class, we will put it in a new namespace called "generators", making the location of this file _lib/foodie/generators/recipe.rb_:
 
     require 'thor/group'
@@ -376,15 +376,15 @@ To define this class, we inherit from `Thor::Group` rather than `Thor`. We will 
       module Generators
         class Recipe < Thor::Group
           include Thor::Actions
-         
+
           argument :group, :type => :string
           argument :name, :type => :string
         end
       end
     end
-    
+
 By inheriting from `Thor::Group`, we're defining a generator rather than a CLI. When we call `argument`, we are defining arguments for our generator. These are the same arguments in the same order they are passed in from the `recipe` task back in `Foodie::CLI`
-    
+
 To make this generator, ya know, generate stuff we simply define methods in the class. All methods defined in a `Thor::Group` descendant will be run when `start` is called on it. Let's define a `create_group` method inside this class which will create a directory using the name we have passed in.
 
     def create_group
@@ -396,16 +396,16 @@ To put the file in this directory and to save our foodie-friends some typing, we
     def copy_recipe
       template("recipe.txt", "#{group}/#{name}.txt")
     end
-    
+
 If we had any ERB calls in this file, they would be evaluated and the result would be output in the new template file.
 
 It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec bin/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
 
     create  dinner
     Could not find "recipe.txt" in any of your source paths. Please invoke Foodie::Generators::Recipe.source_root(PATH) with the PATH containing your templates. Currently you have no source paths.
-    
+
 The first line tells us that the _dinner_ directory has been created. Nothing too fancy there.
-  
+
 The second line is more exciting though! It's asking us to define the `source_root` method for our generator. That's easy! We can define it as a class method in `Foodie::Generators::Recipe` like this:
 
     def self.source_root
@@ -416,13 +416,13 @@ This tells our generator where to find the template. Now all we need to do is to
 
     ##### Ingredients #####
     Ingredients for delicious <%= name %> go here.
-     
-     
+
+
     ##### Instructions #####
     Tips on how to make delicious <%= name %> go here.
-    
-When we use the `template` method, the template file is treated like an ERB template which is evaluated within the current `binding` which means that it has access to the same methods and variables as the method that calls it. 
-  
+
+When we use the `template` method, the template file is treated like an ERB template which is evaluated within the current `binding` which means that it has access to the same methods and variables as the method that calls it.
+
 And that's all! When we run `bundle exec cucumber features` all our features will be passing!
 
     3 scenarios (3 passed)
@@ -443,9 +443,9 @@ The final step before releasing our gem is to give it a summary and description 
 
 Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.0.1.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
 
-To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org. 
+To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org.
 
-Second, it creates a tag for the current commit reflecting the current version and pushes it to the git remote. It's encouraged that we host the code on GitHub so that others may easily find it. 
+Second, it creates a tag for the current commit reflecting the current version and pushes it to the git remote. It's encouraged that we host the code on GitHub so that others may easily find it.
 
 If this push succeeds then the final step will be the push to Rubygems.org which will now allow other people to download and install the gem.
 
@@ -454,13 +454,13 @@ If we want to release a second version of our gem, we should make our changes an
 If we want to make this process a little easier we could install the "gem-release" gem with:
 
     gem install gem-release
-    
+
 This gem provides several methods for helping with gem development in general, but most helpful is the `gem bump` command which will bump the gem version to the next patch level. This method also takes options to do these things:
 
     gem bump --to minor # bumps to the next minor version
     gem bump --to major # bumps to the next major version
     gem bump --to 1.1.1 # bumps to the specified version
-    
+
 For more information, check out the ["gem-release" GitHub repository homepage](http://github.com/svenfuchs/gem-release).
 
 ## Summary

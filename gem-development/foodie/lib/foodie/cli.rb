@@ -1,5 +1,5 @@
 require 'thor'
-require 'foodie/food'
+require 'foodie'
 
 require 'foodie/generators/recipe'
 
