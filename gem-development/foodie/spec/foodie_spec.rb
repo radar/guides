@@ -1,4 +1,4 @@
-require 'foodie/food'
+require 'foodie'
 
 describe Foodie::Food do
   it "broccoli is gross" do
