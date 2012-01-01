@@ -19,7 +19,9 @@ What each `gem` command does, and how to use it.
   <% if command.arguments != "" %>
 ### Arguments
 
-<%= htmlify(command.arguments) %>
+<% arguments = command.arguments.split("\n") %>
+<% arguments.each do |argument| %><%= argument_list_item(argument) %>
+<% end %>
   <% end %>
 
 ### Usage
@@ -32,3 +34,4 @@ What each `gem` command does, and how to use it.
 <%= htmlify(command.description).gsub(/^  /, "    ") %>
   <% end %>
 <% end %>
+ 

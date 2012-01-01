@@ -44,6 +44,13 @@ task :command_guide do
     end
   end
 
+  def argument_list_item(string)
+    if string =~ /^(\S+)(.*)/
+      string = "*#{$1}* - #{$2}"
+    end
+    htmlify("* #{string}")
+  end
+
   erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
   open 'command-reference.md', 'w' do |io|
     erbio.result binding
