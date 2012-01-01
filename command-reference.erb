@@ -7,8 +7,7 @@ next: /specification-reference
 
 What each `gem` command does, and how to use it.
 
-<% commands.each do |name, command| %>
-* [gem <%= name %>](#gem_<%= name %>)
+<% commands.each do |name, command| %>* [gem <%= name %>](#gem_<%= name %>)
 <% end %>
 
 <% commands.each do |name, command| %>
@@ -28,7 +27,7 @@ What each `gem` command does, and how to use it.
 
     <%= command.usage %>
 
-  <% if command.description != "" %>
+  <% if command.description && command.description != "" %>
 ### Description
 
 <%= htmlify(command.description).gsub(/^  /, "    ") %>

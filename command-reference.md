@@ -7,61 +7,33 @@ next: /specification-reference
 
 What each `gem` command does, and how to use it.
 
-
 * [gem build](#gem_build)
-
 * [gem cert](#gem_cert)
-
 * [gem check](#gem_check)
-
 * [gem cleanup](#gem_cleanup)
-
 * [gem contents](#gem_contents)
-
 * [gem dependency](#gem_dependency)
-
 * [gem environment](#gem_environment)
-
 * [gem fetch](#gem_fetch)
-
 * [gem generate_index](#gem_generate_index)
-
 * [gem help](#gem_help)
-
 * [gem install](#gem_install)
-
 * [gem list](#gem_list)
-
 * [gem lock](#gem_lock)
-
 * [gem outdated](#gem_outdated)
-
 * [gem owner](#gem_owner)
-
 * [gem pristine](#gem_pristine)
-
 * [gem push](#gem_push)
-
 * [gem query](#gem_query)
-
 * [gem rdoc](#gem_rdoc)
-
 * [gem search](#gem_search)
-
 * [gem server](#gem_server)
-
 * [gem sources](#gem_sources)
-
 * [gem specification](#gem_specification)
-
 * [gem stale](#gem_stale)
-
 * [gem uninstall](#gem_uninstall)
-
 * [gem unpack](#gem_unpack)
-
 * [gem update](#gem_update)
-
 * [gem which](#gem_which)
 
 
@@ -83,10 +55,6 @@ Build a gem from a gemspec
     gem build GEMSPEC_FILE
 
   
-### Description
-
-
-  
 
 ## gem cert
 
@@ -99,10 +67,6 @@ Manage RubyGems certificates and signing settings
     gem cert
 
   
-### Description
-
-
-  
 
 ## gem check
 
@@ -113,10 +77,6 @@ Check installed gems
 ### Usage
 
     gem check
-
-  
-### Description
-
 
   
 
@@ -161,10 +121,6 @@ Display the contents of the installed gems
     gem contents GEMNAME [GEMNAME ...]
 
   
-### Description
-
-
-  
 
 ## gem dependency
 
@@ -181,10 +137,6 @@ Show the dependencies of an installed gem
 ### Usage
 
     gem dependency GEMNAME
-
-  
-### Description
-
 
   
 
@@ -266,10 +218,6 @@ Download a gem and place it in the current directory
     gem fetch GEMNAME [GEMNAME ...]
 
   
-### Description
-
-
-  
 
 ## gem generate_index
 
@@ -332,10 +280,6 @@ Provide help on the 'gem' command
 ### Usage
 
     gem help ARGUMENT
-
-  
-### Description
-
 
   
 
@@ -426,10 +370,6 @@ Display gems whose name starts with STRING
     gem list [STRING]
 
   
-### Description
-
-
-  
 
 ## gem lock
 
@@ -491,10 +431,6 @@ Display all gems that need updates
 ### Usage
 
     gem outdated
-
-  
-### Description
-
 
   
 
@@ -587,10 +523,6 @@ Query gem information in local or remote repositories
     gem query
 
   
-### Description
-
-
-  
 
 ## gem rdoc
 
@@ -631,10 +563,6 @@ Display all gems whose name contains STRING
 ### Usage
 
     gem search [STRING]
-
-  
-### Description
-
 
   
 
@@ -680,10 +608,6 @@ Manage the sources and cache file RubyGems uses to search for gems
     gem sources
 
   
-### Description
-
-
-  
 
 ## gem specification
 
@@ -703,10 +627,6 @@ Display gem specification (in yaml)
     gem specification [GEMFILE] [FIELD]
 
   
-### Description
-
-
-  
 
 ## gem stale
 
@@ -717,10 +637,6 @@ List gems along with access times
 ### Usage
 
     gem stale
-
-  
-### Description
-
 
   
 
@@ -741,10 +657,6 @@ Uninstall gems from the local repository
     gem uninstall GEMNAME [GEMNAME ...]
 
   
-### Description
-
-
-  
 
 ## gem unpack
 
@@ -761,10 +673,6 @@ Unpack an installed gem to the current directory
 ### Usage
 
     gem unpack GEMNAME
-
-  
-### Description
-
 
   
 
@@ -785,10 +693,6 @@ Update the named gems (or all installed gems) in the local repository
     gem update GEMNAME [GEMNAME ...]
 
   
-### Description
-
-
-  
 
 ## gem which
 
@@ -805,10 +709,6 @@ Find the location of a library file you can require
 ### Usage
 
     gem which FILE [FILE ...]
-
-  
-### Description
-
 
   
 
