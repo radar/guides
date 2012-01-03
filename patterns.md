@@ -2,7 +2,7 @@
 layout: default
 title: Patterns
 previous: /make-your-own-gem
-next: /command-reference
+next: /specification-reference
 ---
 
 Common practices to make your gem users and other developers' lives easier.
