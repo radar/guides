@@ -65,7 +65,7 @@ along with some tests as well. Tests appear in `test` or `spec`, depending on
 the test framework used. A gem usually has a `Rakefile`, which the
 [rake](http://rake.rubyforge.org/) program uses to help automate running tests,
 generating code, and more. This gem also includes an executable file in the
-`bin` directory, which will loaded onto your `PATH` once installed.
+`bin` directory, which will be loaded onto your `PATH` once installed.
 
 Documentation is usually included in the `README` and inline with the code. When
 you install a gem, documentation is generated automatically for you. Most gems
