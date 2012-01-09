@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RubyGems.org API
-previous: /specification-reference
+previous: /command-reference
 next: /run-your-own-gem-server
 ---
 

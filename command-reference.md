@@ -1,67 +1,39 @@
 ---
 layout: default
 title: Command Reference
-previous: /patterns
-next: /specification-reference
+previous: /specification-reference
+next: /rubygems-org-api
 ---
 
 What each `gem` command does, and how to use it.
 
-
 * [gem build](#gem_build)
-
 * [gem cert](#gem_cert)
-
 * [gem check](#gem_check)
-
 * [gem cleanup](#gem_cleanup)
-
 * [gem contents](#gem_contents)
-
 * [gem dependency](#gem_dependency)
-
 * [gem environment](#gem_environment)
-
 * [gem fetch](#gem_fetch)
-
 * [gem generate_index](#gem_generate_index)
-
 * [gem help](#gem_help)
-
 * [gem install](#gem_install)
-
 * [gem list](#gem_list)
-
 * [gem lock](#gem_lock)
-
 * [gem outdated](#gem_outdated)
-
 * [gem owner](#gem_owner)
-
 * [gem pristine](#gem_pristine)
-
 * [gem push](#gem_push)
-
 * [gem query](#gem_query)
-
 * [gem rdoc](#gem_rdoc)
-
 * [gem search](#gem_search)
-
 * [gem server](#gem_server)
-
 * [gem sources](#gem_sources)
-
 * [gem specification](#gem_specification)
-
 * [gem stale](#gem_stale)
-
 * [gem uninstall](#gem_uninstall)
-
 * [gem unpack](#gem_unpack)
-
 * [gem update](#gem_update)
-
 * [gem which](#gem_which)
 
 
@@ -70,138 +42,127 @@ What each `gem` command does, and how to use it.
 
 Build a gem from a gemspec
 
-
+  
 ### Arguments
 
-GEMSPEC_FILE  gemspec file name to build a gem for
 
+* *GEMSPEC_FILE* -   gemspec file name to build a gem for
+
+  
 
 ### Usage
 
     gem build GEMSPEC_FILE
 
-
-### Description
-
-
-
+  
 
 ## gem cert
 
 Manage RubyGems certificates and signing settings
 
-
+  
 
 ### Usage
 
     gem cert
 
-
-### Description
-
-
-
+  
 
 ## gem check
 
 Check installed gems
 
-
+  
 
 ### Usage
 
     gem check
 
-
-### Description
-
-
-
+  
 
 ## gem cleanup
 
 Clean up old versions of installed gems in the local repository
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to cleanup
 
+* *GEMNAME* -        name of gem to cleanup
+
+  
 
 ### Usage
 
     gem cleanup [GEMNAME ...]
 
-
+  
 ### Description
 
 The cleanup command removes old gems from GEM_HOME.  If an older version is
 installed elsewhere in GEM_PATH the cleanup command won't touch it.
 
-
+  
 
 ## gem contents
 
 Display the contents of the installed gems
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to list contents for
 
+* *GEMNAME* -        name of gem to list contents for
+
+  
 
 ### Usage
 
     gem contents GEMNAME [GEMNAME ...]
 
-
-### Description
-
-
-
+  
 
 ## gem dependency
 
 Show the dependencies of an installed gem
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to show dependencies for
 
+* *GEMNAME* -        name of gem to show dependencies for
+
+  
 
 ### Usage
 
     gem dependency GEMNAME
 
-
-### Description
-
-
-
+  
 
 ## gem environment
 
 Display information about the RubyGems environment
 
-
+  
 ### Arguments
 
-packageversion  display the package version
-gemdir          display the path where gems are installed
-gempath         display path used to search for gems
-version         display the gem format version
-remotesources   display the remote gem servers
-platform        display the supported gem platforms
-&lt;omitted&gt;       display everything
 
+* *packageversion* -   display the package version
+* *gemdir* -           display the path where gems are installed
+* *gempath* -          display path used to search for gems
+* *version* -          display the gem format version
+* *remotesources* -    display the remote gem servers
+* *platform* -         display the supported gem platforms
+* *&lt;omitted&gt;* -        display everything
 
+  
 
 ### Usage
 
     gem environment [arg]
 
-
+  
 ### Description
 
 The RubyGems environment can be controlled through command line arguments,
@@ -238,39 +199,37 @@ If you are packaging RubyGems all of RubyGems' defaults are in
 lib/rubygems/defaults.rb.  You may override these in
 lib/rubygems/defaults/operating_system.rb
 
-
+  
 
 ## gem fetch
 
 Download a gem and place it in the current directory
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to download
 
+* *GEMNAME* -        name of gem to download
+
+  
 
 ### Usage
 
     gem fetch GEMNAME [GEMNAME ...]
 
-
-### Description
-
-
-
+  
 
 ## gem generate_index
 
 Generates the index files for a gem server directory
 
-
+  
 
 ### Usage
 
     gem generate_index
 
-
+  
 ### Description
 
 The generate_index command creates a set of indexes for serving gems
@@ -302,46 +261,45 @@ Marshal::MINOR_VERSION constants.  It is used to ensure compatibility.
 If --rss-host and --rss-gem-host are given an RSS feed will be generated at
 index.rss containing gems released in the last two days.
 
-
+  
 
 ## gem help
 
 Provide help on the 'gem' command
 
-
+  
 ### Arguments
 
-commands      List all 'gem' commands
-examples      Show examples of 'gem' usage
-&lt;command&gt;     Show specific help for &lt;command&gt;
 
+* *commands* -       List all 'gem' commands
+* *examples* -       Show examples of 'gem' usage
+* *&lt;command&gt;* -      Show specific help for &lt;command&gt;
 
+  
 
 ### Usage
 
     gem help ARGUMENT
 
-
-### Description
-
-
-
+  
 
 ## gem install
 
 Install a gem into the local repository
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to install
 
+* *GEMNAME* -        name of gem to install
+
+  
 
 ### Usage
 
     gem install GEMNAME [GEMNAME ...] [options] -- --build-flags
 
-
+  
 ### Description
 
 The install command installs local or remote gem into a gem repository.
@@ -393,44 +351,44 @@ to write the specification by hand.  For example:
     $
 
 
-
+  
 
 ## gem list
 
 Display gems whose name starts with STRING
 
-
+  
 ### Arguments
 
-STRING        start of gem name to look for
 
+* *STRING* -         start of gem name to look for
+
+  
 
 ### Usage
 
     gem list [STRING]
 
-
-### Description
-
-
-
+  
 
 ## gem lock
 
 Generate a lockdown list of gems
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to lock
-VERSION       version of gem to lock
 
+* *GEMNAME* -        name of gem to lock
+* *VERSION* -        version of gem to lock
+
+  
 
 ### Usage
 
     gem lock GEMNAME-VERSION [GEMNAME-VERSION ...]
 
-
+  
 ### Description
 
 The lock command will generate a list of +gem+ statements that will lock down
@@ -462,62 +420,59 @@ Notice that rails 1.0.0 only requires that rake 0.6.2 or better be used.
 Rake-0.7.0.1 is the most recent version installed that satisfies that, so we
 lock it down to the exact version.
 
-
+  
 
 ## gem outdated
 
 Display all gems that need updates
 
-
+  
 
 ### Usage
 
     gem outdated
 
-
-### Description
-
-
-
+  
 
 ## gem owner
 
 Manage gem owners on RubyGems.org.
 
-
+  
 ### Arguments
 
-GEM       gem to manage owners for
 
+* *GEM* -        gem to manage owners for
+
+  
 
 ### Usage
 
-    # List gem owners
     gem owner
-    # Add foo@example.com as an owner of my_gem
-    gem owner my_gem -a foo@example.com
 
-
+  
 ### Description
 
 Manage gem owners on RubyGems.org.
-
+  
 
 ## gem pristine
 
 Restores installed gems to pristine condition from files located in the gem cache
 
-
+  
 ### Arguments
 
-GEMNAME       gem to restore to pristine condition (unless --all)
 
+* *GEMNAME* -        gem to restore to pristine condition (unless --all)
+
+  
 
 ### Usage
 
     gem pristine [args]
 
-
+  
 ### Description
 
 The pristine command compares the installed gems with the contents of the
@@ -533,97 +488,95 @@ revert the gem.
 If --no-extensions is provided pristine will not attempt to restore gems with
 extensions.
 
-
+  
 
 ## gem push
 
 Push a gem up to RubyGems.org
 
-
+  
 ### Arguments
 
-GEM       built gem to push up
 
+* *GEM* -        built gem to push up
+
+  
 
 ### Usage
 
     gem push GEM
 
-
+  
 ### Description
 
 Push a gem up to RubyGems.org
-
+  
 
 ## gem query
 
 Query gem information in local or remote repositories
 
-
+  
 
 ### Usage
 
     gem query
 
-
-### Description
-
-
-
+  
 
 ## gem rdoc
 
 Generates RDoc for pre-installed gems
 
-
+  
 ### Arguments
 
-GEMNAME       gem to generate documentation for (unless --all)
 
+* *GEMNAME* -        gem to generate documentation for (unless --all)
+
+  
 
 ### Usage
 
     gem rdoc [args]
 
-
+  
 ### Description
 
 The rdoc command builds RDoc and RI documentation for installed gems.  Use
 --overwrite to force rebuilding of documentation.
 
-
+  
 
 ## gem search
 
 Display all gems whose name contains STRING
 
-
+  
 ### Arguments
 
-STRING        fragment of gem name to search for
 
+* *STRING* -         fragment of gem name to search for
+
+  
 
 ### Usage
 
     gem search [STRING]
 
-
-### Description
-
-
-
+  
 
 ## gem server
 
 Documentation and gem repository HTTP server
 
-
+  
 
 ### Usage
 
     gem server
 
-
+  
 ### Description
 
 The server command starts up a web server that hosts the RDoc for your
@@ -642,139 +595,121 @@ You can set up a shortcut to gem server documentation using the URL:
     http://localhost:8808/rdoc?q=* - LaunchBar
 
 
-
+  
 
 ## gem sources
 
 Manage the sources and cache file RubyGems uses to search for gems
 
-
+  
 
 ### Usage
 
     gem sources
 
-
-### Description
-
-
-
+  
 
 ## gem specification
 
 Display gem specification (in yaml)
 
-
+  
 ### Arguments
 
-GEMFILE       name of gem to show the gemspec for
-FIELD         name of gemspec field to show
 
+* *GEMFILE* -        name of gem to show the gemspec for
+* *FIELD* -          name of gemspec field to show
 
+  
 
 ### Usage
 
     gem specification [GEMFILE] [FIELD]
 
-
-### Description
-
-
-
+  
 
 ## gem stale
 
 List gems along with access times
 
-
+  
 
 ### Usage
 
     gem stale
 
-
-### Description
-
-
-
+  
 
 ## gem uninstall
 
 Uninstall gems from the local repository
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to uninstall
 
+* *GEMNAME* -        name of gem to uninstall
+
+  
 
 ### Usage
 
     gem uninstall GEMNAME [GEMNAME ...]
 
-
-### Description
-
-
-
+  
 
 ## gem unpack
 
 Unpack an installed gem to the current directory
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to unpack
 
+* *GEMNAME* -        name of gem to unpack
+
+  
 
 ### Usage
 
     gem unpack GEMNAME
 
-
-### Description
-
-
-
+  
 
 ## gem update
 
 Update the named gems (or all installed gems) in the local repository
 
-
+  
 ### Arguments
 
-GEMNAME       name of gem to update
 
+* *GEMNAME* -        name of gem to update
+
+  
 
 ### Usage
 
     gem update GEMNAME [GEMNAME ...]
 
-
-### Description
-
-
-
+  
 
 ## gem which
 
 Find the location of a library file you can require
 
-
+  
 ### Arguments
 
-FILE          name of file to find
 
+* *FILE* -           name of file to find
+
+  
 
 ### Usage
 
     gem which FILE [FILE ...]
 
+  
 
-### Description
-
-
-
-
+ 

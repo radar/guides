@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Specification Reference
-previous: /command-reference
-next: /rubygems-org-api
+previous: /patterns
+next: /command-reference
 ---
 
 {% include big.html %}
