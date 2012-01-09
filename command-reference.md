@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Command Reference
-previous: /specification-reference
-next: /rubygems-org-api
+previous: /patterns
+next: /specification-reference
 ---
 
 What each `gem` command does, and how to use it.
@@ -52,7 +52,7 @@ Build a gem from a gemspec
 
 ### Usage
 
-    gem build GEMSPEC_FILE
+    gem build GEMSPEC_FILE [options]
 
   
 
@@ -64,7 +64,7 @@ Manage RubyGems certificates and signing settings
 
 ### Usage
 
-    gem cert
+    gem cert [options]
 
   
 
@@ -76,7 +76,7 @@ Check installed gems
 
 ### Usage
 
-    gem check
+    gem check [options]
 
   
 
@@ -94,7 +94,7 @@ Clean up old versions of installed gems in the local repository
 
 ### Usage
 
-    gem cleanup [GEMNAME ...]
+    gem cleanup [GEMNAME ...] [options]
 
   
 ### Description
@@ -118,7 +118,7 @@ Display the contents of the installed gems
 
 ### Usage
 
-    gem contents GEMNAME [GEMNAME ...]
+    gem contents GEMNAME [GEMNAME ...] [options]
 
   
 
@@ -136,7 +136,7 @@ Show the dependencies of an installed gem
 
 ### Usage
 
-    gem dependency GEMNAME
+    gem dependency GEMNAME [options]
 
   
 
@@ -160,7 +160,7 @@ Display information about the RubyGems environment
 
 ### Usage
 
-    gem environment [arg]
+    gem environment [arg] [options]
 
   
 ### Description
@@ -215,7 +215,7 @@ Download a gem and place it in the current directory
 
 ### Usage
 
-    gem fetch GEMNAME [GEMNAME ...]
+    gem fetch GEMNAME [GEMNAME ...] [options]
 
   
 
@@ -227,7 +227,7 @@ Generates the index files for a gem server directory
 
 ### Usage
 
-    gem generate_index
+    gem generate_index [options]
 
   
 ### Description
@@ -279,7 +279,7 @@ Provide help on the 'gem' command
 
 ### Usage
 
-    gem help ARGUMENT
+    gem help ARGUMENT [options]
 
   
 
@@ -297,7 +297,7 @@ Install a gem into the local repository
 
 ### Usage
 
-    gem install GEMNAME [GEMNAME ...] [options] -- --build-flags
+    gem install GEMNAME [GEMNAME ...] [options] -- --build-flags [options]
 
   
 ### Description
@@ -367,7 +367,7 @@ Display gems whose name starts with STRING
 
 ### Usage
 
-    gem list [STRING]
+    gem list [STRING] [options]
 
   
 
@@ -386,7 +386,7 @@ Generate a lockdown list of gems
 
 ### Usage
 
-    gem lock GEMNAME-VERSION [GEMNAME-VERSION ...]
+    gem lock GEMNAME-VERSION [GEMNAME-VERSION ...] [options]
 
   
 ### Description
@@ -430,7 +430,7 @@ Display all gems that need updates
 
 ### Usage
 
-    gem outdated
+    gem outdated [options]
 
   
 
@@ -448,7 +448,7 @@ Manage gem owners on RubyGems.org.
 
 ### Usage
 
-    gem owner
+    gem owner [options]
 
   
 ### Description
@@ -470,7 +470,7 @@ Restores installed gems to pristine condition from files located in the gem cach
 
 ### Usage
 
-    gem pristine [args]
+    gem pristine [args] [options]
 
   
 ### Description
@@ -504,7 +504,7 @@ Push a gem up to RubyGems.org
 
 ### Usage
 
-    gem push GEM
+    gem push GEM [options]
 
   
 ### Description
@@ -520,7 +520,7 @@ Query gem information in local or remote repositories
 
 ### Usage
 
-    gem query
+    gem query [options]
 
   
 
@@ -538,7 +538,7 @@ Generates RDoc for pre-installed gems
 
 ### Usage
 
-    gem rdoc [args]
+    gem rdoc [args] [options]
 
   
 ### Description
@@ -562,7 +562,7 @@ Display all gems whose name contains STRING
 
 ### Usage
 
-    gem search [STRING]
+    gem search [STRING] [options]
 
   
 
@@ -574,7 +574,7 @@ Documentation and gem repository HTTP server
 
 ### Usage
 
-    gem server
+    gem server [options]
 
   
 ### Description
@@ -605,7 +605,7 @@ Manage the sources and cache file RubyGems uses to search for gems
 
 ### Usage
 
-    gem sources
+    gem sources [options]
 
   
 
@@ -624,7 +624,7 @@ Display gem specification (in yaml)
 
 ### Usage
 
-    gem specification [GEMFILE] [FIELD]
+    gem specification [GEMFILE] [FIELD] [options]
 
   
 
@@ -636,7 +636,7 @@ List gems along with access times
 
 ### Usage
 
-    gem stale
+    gem stale [options]
 
   
 
@@ -654,7 +654,7 @@ Uninstall gems from the local repository
 
 ### Usage
 
-    gem uninstall GEMNAME [GEMNAME ...]
+    gem uninstall GEMNAME [GEMNAME ...] [options]
 
   
 
@@ -672,7 +672,7 @@ Unpack an installed gem to the current directory
 
 ### Usage
 
-    gem unpack GEMNAME
+    gem unpack GEMNAME [options]
 
   
 
@@ -690,7 +690,7 @@ Update the named gems (or all installed gems) in the local repository
 
 ### Usage
 
-    gem update GEMNAME [GEMNAME ...]
+    gem update GEMNAME [GEMNAME ...] [options]
 
   
 
@@ -708,8 +708,7 @@ Find the location of a library file you can require
 
 ### Usage
 
-    gem which FILE [FILE ...]
+    gem which FILE [FILE ...] [options]
 
   
 
- 

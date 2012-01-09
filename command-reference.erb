@@ -25,7 +25,7 @@ What each `gem` command does, and how to use it.
 
 ### Usage
 
-    <%= command.usage %>
+    <%= command.usage %> [options]
 
   <% if command.description && command.description != "" %>
 ### Description
@@ -33,4 +33,3 @@ What each `gem` command does, and how to use it.
 <%= htmlify(command.description).gsub(/^  /, "    ") %>
   <% end %>
 <% end %>
- 
