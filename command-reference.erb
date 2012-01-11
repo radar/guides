@@ -15,6 +15,12 @@ What each `gem` command does, and how to use it.
 
 <%= htmlify(command.summary) %>
 
+### Usage
+
+    <%= command.usage %> [options]
+
+<%= options_list(command) %>
+
   <% if command.arguments != "" %>
 ### Arguments
 
@@ -23,14 +29,9 @@ What each `gem` command does, and how to use it.
 <% end %>
   <% end %>
 
-### Usage
-
-    <%= command.usage %>
-
   <% if command.description && command.description != "" %>
 ### Description
 
 <%= htmlify(command.description).gsub(/^  /, "    ") %>
   <% end %>
 <% end %>
- 

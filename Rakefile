@@ -51,6 +51,36 @@ task :command_guide do
     htmlify("* #{string}")
   end
 
+  def options_list(command)
+    # Invoke the Ruby options parser by asking for help. Otherwise the options
+    # list in the parser will never be initialized.
+    # TODO: Figure out how to avoid dumping help to stdout when running this rake task
+    command.show_help
+    parser = command.send(:parser)
+    options = ''
+    helplines = parser.summarize
+    helplines.each do |helpline|
+      break if (helpline =~ /Arguments/) || (helpline =~  /Summary/)
+      unless helpline.gsub(/\n/, '').strip == ''
+        # Use zero-width space to prevent "helpful" change of -- to &ndash;
+        helpline = helpline.gsub('--', '-&#8203;-')
+        if helpline =~ /^\s{10,}(.*)/
+          options = options[0..-2] + " #{$1}\n"
+        else
+          if helpline =~ /^(.*)\s{3,}(.*)/
+            helpline = "#{$1} - #{$2}"
+          end
+          if helpline =~ /options/i
+            options += "\n### #{helpline}\n"
+          else
+            options += "* #{helpline}\n"
+          end
+        end
+      end
+    end
+    options
+  end
+
   erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
   open 'command-reference.md', 'w' do |io|
     erbio.result binding
