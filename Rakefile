@@ -37,11 +37,20 @@ task :command_guide do
   end
 
   def htmlify(string)
-    if string
-      string.gsub("<", "&lt;").gsub(">", "&gt;")
-    else
-      ""
+    lines = string.split("\n")
+    html_string = ''
+    lines.each do |line|
+      if line
+        if line =~ /^  /
+          # This will end up in a <pre> block
+          html_string += line
+        else
+          html_string += line.gsub("<", "&lt;").gsub(">", "&gt;")
+        end
+        html_string += "\n"
+      end
     end
+    html_string[0..-2]
   end
 
   def argument_list_item(string)

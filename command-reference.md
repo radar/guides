@@ -165,7 +165,6 @@ Clean up old versions of installed gems in the local repository
 
 The cleanup command removes old gems from GEM_HOME.  If an older version is
 installed elsewhere in GEM_PATH the cleanup command won't touch it.
-
   
 
 ## gem contents
@@ -325,7 +324,6 @@ proxy server.
 If you are packaging RubyGems all of RubyGems' defaults are in
 lib/rubygems/defaults.rb.  You may override these in
 lib/rubygems/defaults/operating_system.rb
-
   
 
 ## gem fetch
@@ -419,14 +417,14 @@ When done, it will generate a set of files like this:
     gems/*.gem                                   # .gem files you want to
                                                  # index
 
-    specs.&lt;version&gt;.gz                           # specs index
-    latest_specs.&lt;version&gt;.gz                    # latest specs index
-    prerelease_specs.&lt;version&gt;.gz                # prerelease specs index
-    quick/Marshal.&lt;version&gt;/&lt;gemname&gt;.gemspec.rz # Marshal quick index file
+    specs.<version>.gz                           # specs index
+    latest_specs.<version>.gz                    # latest specs index
+    prerelease_specs.<version>.gz                # prerelease specs index
+    quick/Marshal.<version>/<gemname>.gemspec.rz # Marshal quick index file
 
     # these files support legacy RubyGems
-    Marshal.&lt;version&gt;
-    Marshal.&lt;version&gt;.Z                          # Marshal full index
+    Marshal.<version>
+    Marshal.<version>.Z                          # Marshal full index
 
 The .Z and .rz extension files are compressed with the inflate algorithm.
 The Marshal version number comes from ruby's Marshal::MAJOR_VERSION and
@@ -434,7 +432,6 @@ Marshal::MINOR_VERSION constants.  It is used to ensure compatibility.
 
 If --rss-host and --rss-gem-host are given an RSS feed will be generated at
 index.rss containing gems released in the last two days.
-
   
 
 ## gem help
@@ -574,7 +571,7 @@ to write the specification by hand.  For example:
     Results logged to /path/to/gems/some_extension_gem-1.0/gem_make.out
     $ [cd /path/to/gems/some_extension_gem-1.0]
     $ [edit files or what-have-you and run make]
-    $ gem spec ../../cache/some_extension_gem-1.0.gem --ruby &gt; \
+    $ gem spec ../../cache/some_extension_gem-1.0.gem --ruby > \
                ../../specifications/some_extension_gem-1.0.gemspec
     $ gem list some_extension_gem
 
@@ -582,8 +579,6 @@ to write the specification by hand.  For example:
 
     some_extension_gem (1.0)
     $
-
-
   
 
 ## gem list
@@ -681,7 +676,7 @@ generated.
 
 Example:
 
-    gemlock rails-1.0.0 &gt; lockdown.rb
+    gemlock rails-1.0.0 > lockdown.rb
 
 will produce in lockdown.rb:
 
@@ -701,7 +696,6 @@ other require statements.
 Notice that rails 1.0.0 only requires that rake 0.6.2 or better be used.
 Rake-0.7.0.1 is the most recent version installed that satisfies that, so we
 lock it down to the exact version.
-
   
 
 ## gem outdated
@@ -836,7 +830,6 @@ revert the gem.
 
 If --no-extensions is provided pristine will not attempt to restore gems with
 extensions.
-
   
 
 ## gem push
@@ -968,7 +961,6 @@ Generates RDoc for pre-installed gems
 
 The rdoc command builds RDoc and RI documentation for installed gems.  Use
 --overwrite to force rebuilding of documentation.
-
   
 
 ## gem search
@@ -1069,8 +1061,6 @@ You can set up a shortcut to gem server documentation using the URL:
 
     http://localhost:8808/rdoc?q=%s - Firefox
     http://localhost:8808/rdoc?q=* - LaunchBar
-
-
   
 
 ## gem sources
