@@ -2,7 +2,7 @@
 layout: default
 title: Frequently Asked Questions
 previous: /contributing
-next: /
+next: /plugins
 ---
 
 The RubyGems development team has gotten a lot of support requests over the

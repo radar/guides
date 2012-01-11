@@ -57,6 +57,11 @@ How you can help make rubygems better.
 
 More of the "why" and "wtf" than "how".
 
+[Plugins](/plugins)
+---------------
+
+Extensions that use the RubyGems plugin API.
+
 Credits
 -------
 
