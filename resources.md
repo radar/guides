@@ -36,3 +36,16 @@ Patterns
 * [Gem Packaging: Best Practices](http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices)
 * [Rubygems Good Practice](http://yehudakatz.com/2009/07/24/rubygems-good-practice/)
 * [Gem Development Best Practices](http://blog.carbonfive.com/2011/01/22/gem-development-best-practices/)
+
+Monitoring
+----------
+
+Tools to watch gems for changes.
+
+* [Gemnasium](https://gemnasium.com/)
+* [gemwhisperer](https://github.com/rubygems/gemwhisperer)
+
+Utilities
+---------
+
+* [gemnasium-parser](https://github.com/laserlemon/gemnasium-parser) - Determine dependencies without evaluating the ruby in gemfiles or gemspecs
