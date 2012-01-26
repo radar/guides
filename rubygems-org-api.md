@@ -304,6 +304,20 @@ Dates values should be specified in the format YYYY-MM-DD.
 <a id="owner"> </a>
 Owner Methods
 -------------
+### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)`
+
+View all gems for a user. This is all the gems a user can push to.
+
+    $ curl https://rubygems.org/api/v1/owners/qrush/gems.json
+
+    [
+      {
+        "name": "factory_girl",
+		...
+      },
+	  ...
+    ]
+
 
 ### GET - `/api/v1/gems/[GEM NAME]/owners.(json|xml|yaml)`
 
