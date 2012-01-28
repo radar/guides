@@ -245,7 +245,7 @@ internal or proprietary code to.
 
 ### [Geminabox](https://github.com/cwninja/geminabox)
 
-Need simple RubyGem hosting? Geminabox can do that! This project provides an
+Need simple RubyGems hosting? Geminabox can do that! This project provides an
 easy to setup way to host RubyGems internally and allow uploading of gems
 without much hassle.
 

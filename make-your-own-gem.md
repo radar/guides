@@ -103,7 +103,7 @@ Of course, our smoke test isn’t over yet: Let’s `require` our gem and use it
 
 Hola now needs to be shared with the rest of the Ruby community. Publishing your
 gem out to RubyGems.org only takes one command, granted you have an account on
-the site. To setup your computer with your rubygems account:
+the site. To setup your computer with your RubyGems account:
 
     $ curl -u qrush https://rubygems.org/api/v1/api_key.yaml >
     ~/.gem/credentials

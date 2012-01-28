@@ -221,7 +221,7 @@ The important note to take home here is to be aware others *will* be using
 your gems, and guard yourself from potential bugs/failures in future releases
 by using `~>` instead of `>=` if at all possible.
 
-### Requiring rubygems
+### Requiring RubyGems
 
 This line...
 
@@ -312,7 +312,7 @@ manages this for you. Code like this shouldn't be necessary:
       $LOAD_PATH.include?(__DIR__) ||
       $LOAD_PATH.include?(File.expand_path(__DIR__))
 
-When rubygems activates a gem, it adds your package’s `lib` folder to the
+When RubyGems activates a gem, it adds your package’s `lib` folder to the
 `$LOAD_PATH` ready to be required normally by another lib or application. Its
 safe to assume you can relative `require` any file in your `lib` folder.
 
