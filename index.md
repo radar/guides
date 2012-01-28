@@ -50,7 +50,7 @@ Great blog posts, tutorials, and other sites to help you out.
 [Contributing to RubyGems](/contributing)
 ---------------
 
-How you can help make rubygems better.
+How you can help make RubyGems and the surrounding ecosystem better.
 
 [Frequently Asked Questions](/faqs)
 ---------------
