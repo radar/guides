@@ -282,6 +282,12 @@ p img {
 p img.top {
   margin-top: 0; }
 
+p.avatars img {
+  float: none;
+  margin: 0 0 12px; }
+
+p.avatars a {
+  text-decoration: none; }
 img {
   margin: 0; }
 
