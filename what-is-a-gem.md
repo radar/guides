@@ -5,7 +5,7 @@ previous: /
 next: /make-your-own-gem
 ---
 
-Learn what a gem can do for your Ruby application, and what's inside of one.
+Learn what a gem can do for your Ruby applications, and what's inside of one.
 
 * [Introduction](#introduction)
 * [Structure of a Gem](#structure)
@@ -28,13 +28,14 @@ and `mswin32` (like [sqlite-ruby](http://rubygems.org/gems/sqlite-ruby/versions/
 
 Gems can be used to extend or modify functionality within a Ruby application.
 Commonly, they're used to split out reusable functionality that others can use
-in their applications as well. Many gems also provide command line utilities
-to help automate tasks and speed up workflows. As of Ruby 1.9.2, RubyGems is
-now included when you install the programming language, so gems are both
-ubiquitous and extremely useful.
+in their applications as well. Some gems also provide command line utilities
+to help automate tasks and speed up your work. As of Ruby 1.9.2, RubyGems is
+included when you install the programming language, so gems are both
+ubiquitous and extremely useful. If you're using an earlier version of Ruby, it's simple
+to install RubyGems as an addon.
 
-For information installing RubyGems, please visit the
-[Downloads](http://rubygems.org/pages/download) page.
+For information on installing or upgrading RubyGems, please visit the
+RubyGems.org [download](http://rubygems.org/pages/download) page.
 
 <a id="structure"> </a>
 Structure of a Gem
@@ -42,9 +43,9 @@ Structure of a Gem
 
 Gems contain three components:
 
-* Code
+* Code (including tests and supporting utilities)
 * Documentation
-* Gemspec
+* gemspec
 
 Each gem follows the same standard structure of code organization:
 
@@ -60,68 +61,71 @@ Each gem follows the same standard structure of code organization:
     |-- Rakefile
     `-- freewill.gemspec
 
-Here, we see the 3 major components: code, in the `lib` directory, hopefully
-along with some tests as well. Tests appear in `test` or `spec`, depending on
-the test framework used. A gem usually has a `Rakefile`, which the
-[rake](http://rake.rubyforge.org/) program uses to help automate running tests,
-generating code, and more. This gem also includes an executable file in the
-`bin` directory, which will be loaded onto your `PATH` once installed.
+Here, you can see the major components of a gem:
 
-Documentation is usually included in the `README` and inline with the code. When
+* The `lib` directory contains the code for the gem
+* The `test` or `spec` directory contains tests, depending on which test framework the developer uses
+* A gem usually has a `Rakefile`, which the
+[rake](http://rake.rubyforge.org/) program uses to automate tests,
+generate code, and perform other tasks.
+* This gem also includes an executable file in the
+`bin` directory, which will be loaded into the user's your `PATH` when the gem is installed.
+* Documentation is usually included in the `README` and inline with the code. When
 you install a gem, documentation is generated automatically for you. Most gems
-include [RDoc](http://rdoc.sourceforge.net/doc/) documentation, but
-[YARD](http://yardoc.org/) docs are also nice as well.
-
-The final piece is the gemspec, which contains information about the gem. The
+include [RDoc](http://rdoc.sourceforge.net/doc/) documentation, but some use
+[YARD](http://yardoc.org/) docs instead.
+* The final piece is the gemspec, which contains information about the gem. The
 gem's files, test information, platform, version number and more are all laid
 out here along with the author's email and name.
+
+[More information on the gemspec file](/specification-reference/)
+
+[Building your own gem](/make-your-own-gem/)
 
 <a id="requiring"> </a>
 Requiring code
 --------------
 
-RubyGems manages your Ruby load path, or how your Ruby code is found
+RubyGems modifies your Ruby load path, which controls how your Ruby code is found
 by the `require` statement. When you `require` a gem, really you’re just placing
 that gem’s `lib` directory onto your `$LOAD_PATH`. Let’s try this out in `irb` and get
-some help from the `pretty_print` library included with Ruby. Passing `-r` to
-`irb` will automatically require a library when loaded.
+some help from the `pretty_print` library included with Ruby.
+
+*Tip: Passing `-r` to
+`irb` will automatically require a library when irb is loaded.*
 
     % irb -rpp
     >> pp $LOAD_PATH
-    [".../lib/ruby/site_ruby/1.8",
+    [".../lib/ruby/site_ruby/1.9.1",
      ".../lib/ruby/site_ruby",
-     ".../lib/ruby/vendor_ruby/1.8",
+     ".../lib/ruby/vendor_ruby/1.9.1",
      ".../lib/ruby/vendor_ruby",
-     ".../lib/ruby/1.8",
+     ".../lib/ruby/1.9.1",
      "."]
 
-By default we have just a few system directories on our load path and the Ruby
-standard libraries. If we were to run `require 'rake'` right now, it would fail,
-because RubyGems isn’t loaded yet.
+By default you have just a few system directories on the load path and the Ruby
+standard libraries.To add the awesome_print directories to the load path, you can require its gem:
 
     % irb -rpp
-    >> require 'rake'
-    LoadError: no such file to load -- rake
-            from (irb):2:in `require'
-            from (irb):2
-    >> require 'rubygems'
+    >> require 'ap'
     => true
-    >> require 'rake'
-    => true
-    >> pp $LOAD_PATH[0..1]
-    [".../gems/rake-0.8.7/bin",
-     ".../gems/rake-0.8.7/lib"]
+    >> pp $LOAD_PATH[0]
+    .../gems/awesome_print-1.0.2/lib"
 
-Once we’ve required rake, then RubyGems automatically drops the `bin` and
-`lib` directories onto the `$LOAD_PATH`. The `bin` directory is used for
-creating executables that use your gem’s code, such as `rake`. These are
-completely optional and you could have multiple per gem if you wanted.
+Note: If you're using Ruby 1.8, you need to `require 'rubygems'` before requiring any gems. This is no longer necessary now that
+RubyGems is installed with Ruby itself.
+
+Once you’ve required rake, then RubyGems automatically drops its
+`lib` directory on to the `$LOAD_PATH`. Some gems also add additional directories,
+such as `bin`, to the load path. These are
+completely optional and you can have many directories added to the load path by
+a single gem.
 
 That’s basically it for what’s in a gem. Drop Ruby code into `lib`, name a
 Ruby file the same as your gem (so for freewill, `freewill.rb`) and it’s loaded
 by RubyGems.
 
-The `lib` directory normally contains only one `.rb` file on the top directory,
+The `lib` directory itself normally contains only one `.rb` file,
 and then another folder with the same name as the gem with more code in it. For
 example:
 
@@ -143,9 +147,9 @@ The Gemspec
 
 Your application, your gem's users, and you 6 months from now need to know who
 wrote a gem, when, and what it does. The gemspec tells you this information and
-is your guide to understanding what a gem contains for you.
+is your guide to understanding what a gem contains.
 
-Here's an example of one. The next tutorial covers [how to make a
+Here's an example of a gemspec file. You can learn more in [how to make a
 gem](/make-your-own-gem).
 
     % cat freewill.gemspec
@@ -162,7 +166,7 @@ gem](/make-your-own-gem).
     end
 
 For more information on the gemspec, please check out the full [Specification
-Reference](http://guides.rubygems.org/specification-reference) which goes over
+Reference](/specification-reference) which goes over
 each metadata field in detail.
 
 Credits
