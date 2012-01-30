@@ -51,15 +51,15 @@ Each gem follows the same standard structure of code organization:
 
     % tree freewill
     freewill/
-    |-- bin/
-    |   `-- freewill
-    |-- lib/
-    |   `-- freewill.rb
-    |-- test/
-    |   `-- test_freewill.rb
-    |-- README
-    |-- Rakefile
-    `-- freewill.gemspec
+    ├── bin/
+    │   └── freewill
+    ├── lib/
+    │   └── freewill.rb
+    ├── test/
+    │   └── test_freewill.rb
+    ├── README
+    ├── Rakefile
+    └── freewill.gemspec
 
 Here, you can see the major components of a gem:
 
@@ -131,15 +131,15 @@ example:
 
     % tree freewill/
     freewill/
-    |-- lib/
-    |   |-- freewill/
-    |   |   |-- core_ext/
-    |   |   |   |-- array.rb
-    |   |   |   `-- string.rb
-    |   |   |-- user.rb
-    |   |   |-- widget.rb
-    |   |   `-- ...
-    |   |-- freewill.rb
+    ├── lib/
+    │   ├── freewill/
+    │   │   ├── core_ext/
+    │   │   │   ├── array.rb
+    │   │   │   └── string.rb
+    │   │   ├── user.rb
+    │   │   ├── widget.rb
+    │   │   └── ...
+    │   ├── freewill.rb
 
 <a id="gemspec"> </a>
 The Gemspec
