@@ -6,9 +6,8 @@ next: /patterns
 ---
 
 From start to finish, learn how to package your Ruby code in a gem.
-This guide has several parts, jump to any here:
 
-* [Intro](#intro)
+* [Introduction](#intro)
 * [Your first gem](#first-gem)
 * [Requiring more files](#more-files)
 * [Adding an executable](#adding-an-executable)
@@ -30,10 +29,9 @@ Your first gem
 --------------
 
 I started with just one Ruby file for my `hola` gem, and the gemspec.
-You'll need a new name for yours (maybe `hola_yourusername`) to publish it. By
-the way, there's some [basic
-recommendations](http://blog.segment7.net/2010/11/15/how-to-name-gems) to follow
-for naming a gem.
+You'll need a new name for yours (maybe `hola_yourusername`) to publish it. Check the Patterns guide for
+[basic recommendations](/patterns/#consistent-naming) to follow
+when naming a gem.
 
     % tree
     .
@@ -46,8 +44,8 @@ to have *one* Ruby file with the *same* name as your gem, since that gets
 loaded when `require 'hola'` is run. That one file is in charge of setting up
 your gem's code and API.
 
-The code inside of `lib/hola.rb` is pretty bare bones, we just want to see some
-output.
+The code inside of `lib/hola.rb` is pretty bare bones. It just makes sure that you
+can see some output from the gem:
 
     % cat lib/hola.rb
     class Hola
@@ -75,13 +73,13 @@ information you see on a gem page
         'http://rubygems.org/gems/hola'
     end
 
-Look familiar? The gemspec is also Ruby, so you could wrap scripts to generate
+Look familiar? The gemspec is also Ruby, so you can wrap scripts to generate
 the file names and bump the version number. There are lots of fields the
-gemspec can contain, to see them all check out the full
+gemspec can contain. To see them all check out the full
 [reference](/specification-reference).
 
-Once we have our gemspec, we can build a gem from it. We can then install it
-locally to test it out.
+After you have created a gemspec, you can build a gem from it. Then you can install
+the generated gem locally to test it out.
 
     % gem build hola.gemspec
     Successfully built RubyGem
@@ -93,30 +91,35 @@ locally to test it out.
     Successfully installed hola-0.0.0
     1 gem installed
 
-Of course, our smoke test isn’t over yet: Let’s `require` our gem and use it!
+Of course, the smoke test isn’t over yet: the final step is to `require` the gem and use it:
 
-    % irb -rubygems
+    % irb
     >> require 'hola'
     => true
     >> Hola.hi
     Hello world!
 
-Hola now needs to be shared with the rest of the Ruby community. Publishing your
-gem out to RubyGems.org only takes one command, granted you have an account on
+> If you're using an earlier Ruby than 1.9.2, you need to start the
+> session with `irb -rubygames` or require the rubygems library after
+> you launch irb.
+
+Now you can share hola to with the rest of the Ruby community. Publishing your
+gem out to RubyGems.org only takes one command, provided that you have an account on
 the site. To setup your computer with your RubyGems account:
 
     $ curl -u qrush https://rubygems.org/api/v1/api_key.yaml >
     ~/.gem/credentials
     Enter host password for user 'qrush':
 
-Once this has been setup, push out the gem:
+Once this has been setup, you can push out the gem:
 
     % gem push hola-0.0.0.gem
     Pushing gem to RubyGems.org...
     Successfully registered gem: hola (0.0.0)
 
-In just a few moments (usually a minute), your gem will be available for
-installation by anyone.
+In just a short time (usually less than a minute), your gem will be available for
+installation by anyone. You can see it [on the RubyGems.org site](https://rubygems.org/gems/hola)
+or grab it from any computer with RubyGems installed:
 
     % gem list -r hola
 
@@ -194,7 +197,7 @@ change much:
       end
     end
 
-But now our `hola.rb` file has some code to load the `Translator`:
+But now the `hola.rb` file has some code to load the `Translator`:
 
     % cat lib/hola.rb
     class Hola
@@ -206,7 +209,7 @@ But now our `hola.rb` file has some code to load the `Translator`:
 
     require 'hola/translator'
 
-Let's try this out. First, fire up `irb`!
+Let's try this out. First, fire up `irb`:
 
     % irb -Ilib -rhola
     irb(main):001:0> Hola.hi(:english)
@@ -215,18 +218,19 @@ Let's try this out. First, fire up `irb`!
     => "hola mundo"
 
 We need to use a strange command line flag here: `-Ilib`. Usually RubyGems
-includes the `lib` directory for us, so end users don't need to worry about
-configuring their load paths. However, if we're running our code outside of
-RubyGems, we have to configure things ourselves. It's possible to manipulate
+includes the `lib` directory for you, so end users don't need to worry about
+configuring their load paths. However, if you're running the code outside of
+RubyGems, you have to configure things yourself. It's possible to manipulate
 the `$LOAD_PATH` from within the code itself, but that's considered an
 anti-pattern in most cases. There are many more anti-patterns (and good patterns!)
 for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
-your gemspec's `files` array before publishing a new gem! For this reason alone,
+your gemspec's `files` array before publishing a new gem! For this reason (among others),
 many developers automate this with [Hoe](http://seattlerb.rubyforge.org/hoe/),
 [Jeweler](https://github.com/technicalpickles/jeweler),
-[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html), or
+[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html),
+[Bundler](http://railscasts.com/episodes/245-new-gem-with-bundler), or
 [just a dynamic gemspec
 ](https://github.com/wycats/newgem-template/blob/master/newgem.gemspec).
 
@@ -239,9 +243,9 @@ line.
 Adding an executable
 --------------------
 
-Gems not only provide libraries of code, but they can also expose one or many
+In addition to providing libraries of Ruby code, gems can also expose one or many
 executable files to your shell's `PATH`. Probably the best known example of
-this is `rake`. Another very useful one is `prettify_json.rb`, which comes
+this is `rake`. Another very useful one is `prettify_json.rb`, included
 with the [JSON](http://rubygems.org/gems/json) gem, which formats JSON in a
 readable manner (and is included with Ruby 1.9). Here's an example:
 
@@ -251,8 +255,9 @@ readable manner (and is included with Ruby 1.9). Here's an example:
       "ip": "24.60.248.134"
     }
 
-Adding executables is a simple process, you just need a file in `bin`, and set
-it in the gemspec. Let's add one for the Hola gem. First let's add the file
+Adding an executable to a gem is a simple process. You just need to place the file in
+your gem's `bin` directory, and then add it to the list of executables
+in the gemspec. Let's add one for the Hola gem. First create the file
 and make it executable:
 
     % mkdir bin
@@ -278,7 +283,7 @@ argument as the language to say hello with. Here's an example of running it:
     % ruby -Ilib ./bin/hola spanish
     hola mundo
 
-Finally, to get Hola's executable included when we push the gem, you'll need
+Finally, to get Hola's executable included when you push the gem, you'll need
 to add it in the gemspec.
 
     % head -4 hola.gemspec
@@ -291,13 +296,16 @@ Push up that new gem, and you'll have your own command line utility published!
 You can add more executables as well in the `bin` directory if you need to,
 there's an `executables` array field on the gemspec.
 
+> Note that you should change the gem's version when pushing up a new release.
+> For more information on gem versioning, see the [Patterns Guide](/patterns/#semantic-versioning)
+
 <a id="writing-tests"> </a>
 Writing tests
 --------------
 
 Testing your gem is extremely important. Not only does it help assure you that
-your code works, but it helps others know your gem does its job. When
-evaluating a gem, Ruby developers tend to place a test suite (or lack thereof)
+your code works, but it helps others know that your gem does its job. When
+evaluating a gem, Ruby developers tend to view a solid test suite (or lack thereof)
 as one of the main reasons for trusting that piece of code.
 
 Gems support adding test files into the package itself so tests can be run
@@ -310,12 +318,12 @@ In short: *TEST YOUR GEM!* Please!
 `Test::Unit` is Ruby's built-in test framework. There are
 [lots](http://www.bootspring.com/2010/09/22/minitest-rubys-test-framework/) of
 [tutorials](https://github.com/seattlerb/minitest/blob/master/README.txt) for
-using it online. There's many other test frameworks available for Ruby as
-well, [RSpec](http://rspec.info/) is a popular choice. At the end of the day,
+using it online. There are many other test frameworks available for Ruby as
+well. [RSpec](http://rspec.info/) is a popular choice. At the end of the day,
 it doesn't matter what you use, just *TEST*!
 
-Let's add some tests to Hola. We've got a few more files now, namely a
-`Rakefile` and a brand new `test` directory.
+Let's add some tests to Hola. This requires adding a few more files, namely a
+`Rakefile` and a brand new `test` directory:
 
     % tree
     .
@@ -330,7 +338,7 @@ Let's add some tests to Hola. We've got a few more files now, namely a
     └── test
         └── test_hola.rb
 
-Our `Rakefile` gives us some simple automation for running tests.
+The `Rakefile` gives you some simple automation for running tests:
 
     % cat Rakefile
     require 'rake/testtask'
@@ -342,8 +350,8 @@ Our `Rakefile` gives us some simple automation for running tests.
     desc "Run tests"
     task :default => :test
 
-Now we can run `rake test` or simply just `rake` to run tests. Woot! Here's
-what my basic test file looks like.
+Now you can run `rake test` or simply just `rake` to run tests. Woot! Here's
+a basic test file for hola:
 
     % cat test/test_hola.rb
     require 'test/unit'
@@ -366,7 +374,7 @@ what my basic test file looks like.
       end
     end
 
-Finally, to run the test:
+Finally, to run the tests:
 
     % rake test
     (in /Users/qrush/Dev/ruby/hola)
@@ -386,7 +394,7 @@ It's green! Well, depending on your shell colors. For more great examples, the b
 Documenting your code
 ---------------------
 
-By default most gems use RDoc to generate docs. There's a lot of
+By default most gems use RDoc to generate docs. There are plenty of
 [great](http://handyrailstips.com/tips/12-documenting-your-application-or-plugin-using-rdoc)
 [tutorials](http://docs.seattlerb.org/rdoc/RDoc/Markup.html) for learning how
 to mark up your code with RDoc. Here's a simple example:
