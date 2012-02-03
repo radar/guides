@@ -7,12 +7,12 @@ next: /run-your-own-gem-server
 
 {% include big.html %}
 
-How to interact with RubyGems.org over HTTP.
+Details on interacting with RubyGems.org over HTTP.
 
-The API is a work in progress, and [can use your
-help!](https://github.com/rubygems/gemcutter) RubyGems itself and the
-[gemcutter gem](https://rubygems.org/gems/gemcutter) uses the API to push gems,
-add owners, and more.
+> NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/gemcutter)
+> RubyGems itself and the
+> [gemcutter gem](https://rubygems.org/gems/gemcutter) use the API to push gems,
+> add owners, and more.
 
 * [Gem Methods](#gem): Query or create gems to be hosted
 * [Gem Version Methods](#gemversion): Query for information about versions of a particular gem
@@ -26,8 +26,8 @@ API Authorization
 -----------------
 
 Some API calls require an Authorization header. To find your API key, click on
-your username when logged in and then click on 'Edit Profile'. An example of
-using the API key:
+your username when logged in to [RubyGems.org](http://rubygems.org) and then click on 'Edit Profile'. Here's an example of
+using an API key:
 
     $ curl -H 'Authorization:YOUR_API_KEY' \
       https://rubygems.org/api/v1/some_api_call.json
@@ -57,30 +57,55 @@ Returns some basic information about the given gem. See below an example respons
 
     {
       "name": "rails",
-      "info": "Rails is a framework for building web-application using CGI, FCGI, mod_ruby,
-               or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or
-               Oracle with eRuby- or Builder-based templates.",
-      "version": "2.3.5",
-      "version_downloads": 2451,
+      "downloads": 7528417,
+      "version": "3.2.1",
+      "version_downloads": 47602,
       "authors": "David Heinemeier Hansson",
-      "downloads": 134451,
+      "info": "Ruby on Rails is a full-stack web framework optimized for programmer
+              happiness and sustainable productivity. It encourages beautiful code
+              by favoring convention over configuration.",
       "project_uri": "http://rubygems.org/gems/rails",
-      "gem_uri": "http://rubygems.org/gems/rails-2.3.5.gem",
-      "homepage_uri": "http://www.rubyonrails.org/",
-      "wiki_uri": "http://wiki.rubyonrails.org/",
-      "documentation_uri": "http://api.rubyonrails.org/",
+      "gem_uri": "http://rubygems.org/gems/rails-3.2.1.gem",
+      "homepage_uri": "http://www.rubyonrails.org",
+      "wiki_uri": "http://wiki.rubyonrails.org",
+      "documentation_uri": "http://api.rubyonrails.org",
       "mailing_list_uri": "http://groups.google.com/group/rubyonrails-talk",
       "source_code_uri": "http://github.com/rails/rails",
-      "bug_tracker_uri": "http://rails.lighthouseapp.com/projects/8994-ruby-on-rails",
+      "bug_tracker_uri": "http://github.com/rails/rails/issues",
       "dependencies": {
+        "development": [],
         "runtime": [
           {
+            "name": "actionmailer",
+            "requirements":"= 3.2.1"
+          },
+          {
+            "name": "actionpack",
+            "requirements": "= 3.2.1"
+          },
+          {
+            "name": "activerecord",
+            "requirements": "= 3.2.1"
+          },
+          {
+            "name": "activeresource",
+            "requirements": "= 3.2.1"
+          },
+          {
             "name": "activesupport",
-            "requirements": ">= 2.3.5"
+            "requirements": "= 3.2.1"
+          },
+          {
+            "name": "bundler",
+            "requirements": "~> 1.0"
+          },
+          {
+            "name": "railties",
+            "requirements": "= 3.2.1"
           }
-        ],
-        "development": [ ]
+        ]
       }
+    }
     }
 
 or XML format:
@@ -89,30 +114,52 @@ or XML format:
 
     <?xml version="1.0" encoding="UTF-8"?>
     <rubygem>
-      <downloads type="integer">223423</downloads>
       <name>rails</name>
-      <info>
-        Rails is a framework for building web-application using CGI, FCGI, mod_ruby, or
-        WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or Oracle
-        with eRuby- or Builder-based templates.
-      </info>
-      <gem-uri>http://rubygems.org/gems/rails-2.3.5.gem</gem-uri>
-      <project-uri>http://rubygems.org/gems/rails</project-uri>
-      <version>2.3.5</version>
+      <downloads type="integer">7528499</downloads>
+      <version>3.2.1</version>
+      <version-downloads type="integer">47633</version-downloads>
       <authors>David Heinemeier Hansson</authors>
-      <version-downloads type="integer">141363</version-downloads>
-      <homepage-uri>http://www.rubyonrails.org/</homepage-uri>
-      <wiki-uri>http://wiki.rubyonrails.org/</wiki-uri>
-      <documentation-uri>http://api.rubyonrails.org/</documentation-uri>
+      <info>Ruby on Rails is a full-stack web framework optimized for programmer happiness and
+        sustainable productivity. It encourages beautiful code by favoring convention over
+        configuration.</info>
+      <project-uri>http://rubygems.org/gems/rails</project-uri>
+      <gem-uri>http://rubygems.org/gems/rails-3.2.1.gem</gem-uri>
+      <homepage-uri>http://www.rubyonrails.org</homepage-uri>
+      <wiki-uri>http://wiki.rubyonrails.org</wiki-uri>
+      <documentation-uri>http://api.rubyonrails.org</documentation-uri>
       <mailing-list-uri>http://groups.google.com/group/rubyonrails-talk</mailing-list-uri>
       <source-code-uri>http://github.com/rails/rails</source-code-uri>
-      <bug-tracker-uri>http://rails.lighthouseapp.com/projects/8994-ruby-on-rails</bug-tracker-uri>
+      <bug-tracker-uri>http://github.com/rails/rails/issues</bug-tracker-uri>
       <dependencies>
         <development type="array"/>
         <runtime type="array">
           <dependency>
+            <name>actionmailer</name>
+            <requirements>= 3.2.1</requirements>
+          </dependency>
+          <dependency>
+            <name>actionpack</name>
+            <requirements>= 3.2.1</requirements>
+          </dependency>
+          <dependency>
+            <name>activerecord</name>
+            <requirements>= 3.2.1</requirements>
+          </dependency>
+          <dependency>
+            <name>activeresource</name>
+            <requirements>= 3.2.1</requirements>
+          </dependency>
+          <dependency>
             <name>activesupport</name>
-            <requirements>&gt;= 2.3.5</requirements>
+            <requirements>= 3.2.1</requirements>
+          </dependency>
+          <dependency>
+            <name>bundler</name>
+            <requirements>~&gt; 1.0</requirements>
+          </dependency>
+          <dependency>
+            <name>railties</name>
+            <requirements>= 3.2.1</requirements>
           </dependency>
         </runtime>
       </dependencies>
@@ -171,7 +218,7 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 
 ### GET - `/api/v1/gems/latest`
 
-Pulls the 50 newest first-version gems added to RubyGems.org. Returns an array of the XML or JSON representation of the gems.
+Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the XML or JSON representation of the gems.
 
     $ curl 'https://rubygems.org/api/v1/gems/latest.json'
 
@@ -216,7 +263,7 @@ Returns an object containing the total number of downloads on RubyGems.
     $ curl https://rubygems.org/api/v1/downloads.json
 
     {
-      "total": 242674788
+      "total": 461672727
     }
 
 ### GET - `/api/v1/downloads/top.(json|xml|yaml)`
@@ -274,7 +321,7 @@ as well as the total number of downloads for the specified version.
 ### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.(json|yaml)`
 
 Returns an object containing the number of downloads by day for a particular
-gem version for 90 days of data.
+gem version over the past 90 days.
 
     $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads.json
 
