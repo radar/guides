@@ -7,33 +7,35 @@ next: /c-extensions
 
 {% include big.html %}
 
-There are times you would like to run your own gem server.  You may want to share gems with colleagues when you are both without internet connectivity.  You may have private code, internal to your organization, that you'd like to distribute and manage as gems without making the source publicly available.
+There are times you would like to run your own gem server.  You may want to share gems with colleagues when you are both without internet connectivity. You may have private code, internal to your organization, that you'd like to distribute and manage as gems without making the source publicly available.
 
-There are a few options to set up a server to host gems from within your organization.  Here, we'll cover the `gem server` command and the [Gem in a box](https://github.com/cwninja/geminabox) project.  Then, we'll discuss how to use these servers as gem sources during development.
+There are a few options to set up a server to host gems from within your organization. This guide covers the `gem server` command and the [Gem in a Box](https://github.com/cwninja/geminabox) project. It also discusses how to use these servers as gem sources during development.
 
 ## Running the built-in gem server
 
-There is a `gem server` command available to any machine running RubyGems, and this is the fastest way to start hosting gems.  Just run the command:
+When you install RubyGems, it adds the `gem server` command ro your system. This is the fastest way to start hosting gems.Just run the command:
 
     gem server
 
-This will serve all your installed gems from your local machine at [http://localhost:8808](http://localhost:8808).  Visiting this in your browser, you'll find that the `gem server` command provides an HTML documentation index.
+This will serve all your installed gems from your local machine at [http://localhost:8808](http://localhost:8808). If you visit this url in your browser, you'll find that the `gem server` command provides an HTML documentation index.
 
-When new gems are added, they are automatically available.
+When you install new gems, they are automatically available through the built-in gem server.
 
 For a complete list of options, run:
 
     gem server --help
 
+Among other options, you can change the port that gems are served on and specify the directories to search for installed gems.
+
 ## Running Gem in a box
 
-If you'd like something more featureful, including the ability to push gems, try out the [Gem in a box](https://github.com/cwninja/geminabox) project.
+For a server with more features, including the ability to push gems, try out the [Gem in a Box](https://github.com/cwninja/geminabox) project.
 
 To get started, install `geminabox`:
 
     [~/dev/geminabox] gem install geminabox
-    Fetching: geminabox-0.2.15.gem (100%)
-    Successfully installed geminabox-0.2.15
+    Fetching: geminabox-0.5.2.gem (100%)
+    Successfully installed geminabox-0.5.2
     1 gem installed
 
 Make a data directory for storing gems:
