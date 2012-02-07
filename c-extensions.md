@@ -20,16 +20,16 @@ like this:
 
     % tree
     .
-    |-- bin
-    |   `-- hola
-    |-- hola.gemspec
-    |-- lib
-    |   |-- hola
-    |   |   `-- translator.rb
-    |   `-- hola.rb
-    |-- Rakefile
-    `-- test
-        `-- test_hola.rb
+    ├── bin
+    │   └── hola
+    ├── hola.gemspec
+    ├── lib
+    │   ├── hola
+    │   │   └── translator.rb
+    │   └── hola.rb
+    ├── Rakefile
+    └── test
+        └── test_hola.rb
 
 Now we'll add in a simple C extension.
 
@@ -42,9 +42,9 @@ extension source files in `ext/hola`. This directory contains two files:
 
     % tree ext
     ext
-    `-- hola
-        |-- extconf.rb
-        `-- hola.c
+    └── hola
+        ├── extconf.rb
+        └── hola.c
 
 Create `extconf.rb`
 -------------------
@@ -60,8 +60,9 @@ a [Makefile](http://en.wikipedia.org/wiki/Makefile) which, in turn, automates
 the process of building the extension. When RubyGems installs a gem, it
 runs the gem's `extconf.rb` and then runs `make` on the resulting
 `Makefile`. The output from make is a [dynamically linked
-library](http://en.wikipedia.org/wiki/Shared_object). Since its extension is
-platform-dependent, try this to find your platform's extension:
+library](http://en.wikipedia.org/wiki/Shared_object). The naming conventions for these
+libraries is platform dependent. You can use this bit of code to find the
+filename extension used on your platform for dynamically linked libraries:
 
     % irb -rrbconfig
     >> RbConfig::CONFIG['DLEXT']"
@@ -106,15 +107,16 @@ are given at the end of this guide.
 Again, the name of the file is important, because it matches the second `hola`
 in the `hola/hola` that we passed to `create_makefile` in `extconf.rb`.
 Similarly, the name of the `Init_hola` function is important, because ruby looks
-for a function with this name when it loads `hola/hola.so`. A [summary of these
-naming rules](#naming) is provided at the end of the guide.
+for a function with this name when it loads `hola/hola.so`. There is a [summary of these
+naming rules](#naming) at the end of the guide.
 
 <a id="tutorial-gemspec"> </a>
 Modify the `gemspec`
 --------------------
 
 For RubyGems to know that a gem contains a C extension, we have to tell it about
-`extconf.rb`, and we have to include the C source files in the `files` list.
+`extconf.rb`, and we have to include the C source files in the `files` list. As
+you should expect, this happens in the gemspec:
 
     % cat hola.gemspec
     Gem::Specification.new do |s|
@@ -128,7 +130,7 @@ For RubyGems to know that a gem contains a C extension, we have to tell it about
       # ... (other stuff) ...
     end
 
-Here we're computing the `files` list dynamically; when we run `gem build`,
+This gemspec computes the `files` list dynamically; when you run `gem build`,
 RubyGems will include all matching files in the gem. RubyGems automatically
 adds the `extensions` and `executables` to the gem, so you don't have to list
 them under `files`.
@@ -138,7 +140,7 @@ Load the extension
 ------------------
 
 The final step is to require the shared object so that ruby will load the
-extension with the rest of the gem. To do this, we simply require `hola/hola` in
+extension with the rest of the gem. To do this, simply require `hola/hola` in
 `lib/hola.rb`:
 
     % cat lib/hola.rb
@@ -147,7 +149,7 @@ extension with the rest of the gem. To do this, we simply require `hola/hola` in
     ... (rest of file unchanged) ...
 
 This works because RubyGems copies the shared object from `ext` to `lib` when
-the gem is installed. It seems a bit like magic, but we can now build and
+the gem is installed. It seems a bit like magic, but now you can build and
 install the gem to see what's going on:
 
     % gem build hola.gemspec
@@ -156,7 +158,7 @@ install the gem to see what's going on:
     Version: 0.0.1
     File: hola-0.0.1.gem
 
-The `gem build` command creates a `.gem` file from the `.gemspec`. It includes
+The `gem build` command creates a `.gem` file from the `.gemspec`. The Gemfile includes
 all of the source files, but it doesn't compile the extension; that happens when
 the gem is installed:
 
@@ -166,34 +168,34 @@ the gem is installed:
     1 gem installed
 
 Where exactly the gem is installed to depends on how ruby is set up. On Linux
-with [rvm](http://beginrescueend.com/), the gem is installed into the following
-directory:
+with [rvm](http://beginrescueend.com/), the gem is installed into a directory
+structure resembling this:
 
     % tree ~/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/
     /home/john/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/
-    |-- bin
-    |   `-- hola
-    |-- ext
-    |   `-- hola
-    |       |-- extconf.rb
-    |       |-- hola.c
-    |       |-- hola.o
-    |       |-- hola.so
-    |       `-- Makefile
-    |-- lib
-    |   |-- hola
-    |   |   |-- hola.so        # <----
-    |   |   `-- translator.rb
-    |   `-- hola.rb
-    `-- test
-        `-- test_hola.rb
+    ├── bin
+    │   └── hola
+    ├── ext
+    │   └── hola
+    │       ├── extconf.rb
+    │       ├── hola.c
+    │       ├── hola.o
+    │       ├── hola.so
+    │       └── Makefile
+    ├── lib
+    │   ├── hola
+    │   │   ├── hola.so        # <----
+    │   │   └── translator.rb
+    │   └── hola.rb
+    └── test
+        └── test_hola.rb
 
-We can see that the `ext/hola` directory contains our `extconf.rb` and `hola.c`
-files. We can also see that the install has generated a Makefile, a `hola.o`
+You can see that the `ext/hola` directory contains the `extconf.rb` and `hola.c`
+files. You can also see that the install has generated a Makefile, a `hola.o`
 object file generated by the compiler, and the finished product, `hola.so`. And
 as mentioned before, notice that `hola.so` has been copied to `lib/hola`.
 
-When we require the gem, RubyGems adds `hola`'s `lib` directory to `$LOAD_PATH`,
+When you require the gem, RubyGems adds `hola`'s `lib` directory to `$LOAD_PATH`,
 which is where `require` looks for files:
 
     % irb -rubygems
@@ -205,14 +207,14 @@ which is where `require` looks for files:
     .
     => nil
 
-Finally, we can call our C extension's `bonjour` method:
+Finally, you can call the C extension's `bonjour` method from ruby code:
 
     ruby-1.8.7-p352 :003 > Hola.bonjour
     => "bonjour!"
 
 The string `"bonjour!"` came from our C extension. Hooray!
 
-Of course, we should also add a test to our test suite:
+Of course, you should also add a test to the test suite:
 
     % cat test/test_hola.rb
     require 'test/unit'
@@ -275,8 +277,7 @@ cross-platform `Rake` tasks see
     desc "Run tests"
     task :default => :test
 
-Now typing `rake` will run the tests after building (or rebuilding) the
-extension, as necessary:
+Now typing `rake` will build (or rebuild) the extension before running the tests, as necessary:
 
     % rake
     (in /home/john/rubygems_hola)
