@@ -2,7 +2,7 @@
 layout: default
 title: Plugins
 previous: /faqs
-next: /
+next: /credits
 ---
 
 As of RubyGems 1.3.2, RubyGems will load plugins installed in gems or $LOAD\_PATH.  Plugins must be named 'rubygems\_plugin' (.rb, .so, etc) and placed at the root of your gem's #require\_path.  Plugins are discovered via Gem::find\_files then loaded.  Take care when implementing a plugin as your plugin file may be loaded multiple times if multiple versions of your gem are installed.

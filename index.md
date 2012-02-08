@@ -62,7 +62,7 @@ More of the "why" and "wtf" than "how".
 
 Extensions that use the RubyGems plugin API.
 
-Credits
+[Credits](/credits)
 -------
 
 This site is [open source](http://github.com/rubygems/guides) and its content is
