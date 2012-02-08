@@ -14,6 +14,7 @@ Tutorials
 * [Making Ruby Gems](http://timelessrepo.com/making-ruby-gems)
 * [Gem Sawyer, Modern Day Ruby Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/)
 * [Gemcutter & Jeweler](http://railscasts.com/episodes/183-gemcutter-jeweler)
+* [MicroGems: five minute RubyGems](http://jeffkreeftmeijer.com/2011/microgems-five-minute-rubygems/) - Gems so small that you can store them in a gist.
 
 Presentations
 -------------
@@ -36,6 +37,18 @@ Patterns
 * [Gem Packaging: Best Practices](http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices)
 * [Rubygems Good Practice](http://yehudakatz.com/2009/07/24/rubygems-good-practice/)
 * [Gem Development Best Practices](http://blog.carbonfive.com/2011/01/22/gem-development-best-practices/)
+
+Creating
+--------
+
+Tools to help build gems.
+
+* [gemerator](https://github.com/rkh/gemerator) - Minimalist tool for generating skeleton gems.
+* [hoe](https://github.com/seattlerb/hoe) - Rake/RubyGems helper.
+* [Jeweler](https://github.com/technicalpickles/jeweler) - Opinionated tool for managing RubyGems projects.
+* [micro-cutter](https://github.com/tjh/micro-cutter) - Tool to build the base files for a MicroGem.
+* [newgem](https://github.com/drnic/newgem) - New gem generator.
+* [RStack](https://github.com/jrun/rstack) - Generator intended for use on private gems.
 
 Monitoring
 ----------
