@@ -14,6 +14,13 @@ frequently pop up.
 * [Why does `require 'some-gem'` fail?](#require-fail)
 * [Why does require return false when loading a file from a gem?](#require-false)
 
+We also answer questions on the [RubyGems Support](http://help.rubygems.org/) site and on IRC
+in #rubygems. Some of the information you can find on the support site includes:
+
+* [Installing gems with no network](http://help.rubygems.org/kb/rubygems/installing-gems-with-no-network)
+* [Why do I get HTTP Response 302 or 301 when installing a gem?](http://help.rubygems.org/kb/rubygems/why-do-i-get-http-response-302-or-301-when-installing-a-gem)
+* [RubyGems Upgrade Issues](http://help.rubygems.org/kb/rubygems/rubygems-upgrade-issues)
+
 <a id="user-install"> </a>
 I installed gems with `--user-install` and their commands are not available
 ---------------------------------------------------------------------------
