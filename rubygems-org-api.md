@@ -19,6 +19,7 @@ Details on interacting with RubyGems.org over HTTP.
 * [Gem Download Methods](#gemdownloads): Query for download statistics
 * [Owner Methods](#owner): Manage owners for gems
 * [Webhook Methods](#webhook): Manage notifications for when gems are pushed
+* [Activity Methods](#activity): Query for information about site-wide activity
 * [Misc Methods](#misc): Various other interactions with the site
 
 <a id="authorization"> </a>
@@ -215,18 +216,6 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
            https://rubygems.org/api/v1/gems/unyank
 
     Successfully unyanked gem: bills (0.0.1)
-
-### GET - `/api/v1/gems/latest`
-
-Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the XML or JSON representation of the gems.
-
-    $ curl 'https://rubygems.org/api/v1/gems/latest.json'
-
-### GET - `/api/v1/gems/just_updated`
-
-Pulls the 50 most recently updated gems. Returns an array of the XML or JSON representation of the gems.
-
-    $ curl 'https://rubygems.org/api/v1/gems/just_updated.json'
 
 <a id="gemversion"> </a>
 Gem Version Methods
@@ -483,6 +472,22 @@ SHA2-hashed concatenation of the gem name, the gem version and your API key.
            https://rubygems.org/api/v1/web_hooks/fire
 
     Successfully deployed webhook for all gems to http://example.com
+
+<a id="activity"> </a>
+Activity Methods
+------------
+
+### GET - `/api/v1/activity/latest`
+
+Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the XML or JSON representation of the gems.
+
+    $ curl 'https://rubygems.org/api/v1/activity/latest.json'
+
+### GET - `/api/v1/activity/just_updated`
+
+Pulls the 50 most recently updated gems. Returns an array of the XML or JSON representation of the gem versions.
+
+    $ curl 'https://rubygems.org/api/v1/activity/just_updated.json'
 
 <a id="misc"> </a>
 Misc Methods
