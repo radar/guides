@@ -110,7 +110,7 @@ Ah, now it can't find the `by_year` method, so now we get to the extending part.
 
 To add these methods to Active Record, we'll use the `extend` method which will add methods from the module to the class, there by *extending* it. Get it? Good. At the bottom of `lib/by_star.rb` we'll add this line:
 
-    ActiveRecord::Base.extend ByStar
+    ActiveRecord::Base.send :extend, ByStar
     
 Now we just need to define the `by_year` method inside the `ByStar` module now. This method should return all objects that are in the given year. For now, we'll just get it to do objects in the current year. Let's define the `by_year` method in the module now:
 
