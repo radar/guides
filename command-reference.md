@@ -50,7 +50,7 @@ Build a gem from a gemspec
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -89,7 +89,7 @@ Manage RubyGems certificates and signing settings
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -118,7 +118,7 @@ Check installed gems
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -145,7 +145,7 @@ Clean up old versions of installed gems in the local repository
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -181,13 +181,13 @@ Display the contents of the installed gems
 *     -v, -&#8203;-version VERSION          - Specify version of gem to contents
 *         -&#8203;-all                      - Contents for all gems
 *     -s, -&#8203;-spec-dir a,b,c           - Search for gems under specific paths
-*     -l, -&#8203;-[no-]lib-only            - Only return files in the Gem's lib_dirs
-*         -&#8203;-[no-]prefix              - Don't include installed path prefix
+*     -l, -&#8203;-\[no-\]lib-only            - Only return files in the Gem's lib_dirs
+*         -&#8203;-\[no-\]prefix              - Don't include installed path prefix
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -217,13 +217,13 @@ Show the dependencies of an installed gem
 
 *     -v, -&#8203;-version VERSION          - Specify version of gem to dependency
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to dependency
-*         -&#8203;-[no-]prerelease          - Allow prerelease versions of a gem
-*   - -R, -&#8203;-[no-]reverse-dependencies  Include reverse dependencies in the output
+*         -&#8203;-\[no-\]prerelease          - Allow prerelease versions of a gem
+*   - -R, -&#8203;-\[no-\]reverse-dependencies  Include reverse dependencies in the output
 *         -&#8203;-pipe                     - Pipe Format (name -&#8203;-version ver)
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -233,12 +233,12 @@ Show the dependencies of an installed gem
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -267,7 +267,7 @@ Display information about the RubyGems environment
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -339,18 +339,18 @@ Download a gem and place it in the current directory
 
 *     -v, -&#8203;-version VERSION          - Specify version of gem to fetch
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to fetch
-*         -&#8203;-[no-]prerelease          - Allow prerelease versions of a gem
+*         -&#8203;-\[no-\]prerelease          - Allow prerelease versions of a gem
 
 ###   Local/Remote Options:
 
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 *         -&#8203;-source URL               - Add URL as a remote source for gems
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -379,8 +379,8 @@ Generates the index files for a gem server directory
 ###   Options:
 
 *     -d, -&#8203;-directory=DIRNAME        - repository base dir containing gems subdir
-*         -&#8203;-[no-]legacy              - Generate Marshal.4.8
-*         -&#8203;-[no-]modern              - Generate indexes for RubyGems newer than 1.2.0
+*         -&#8203;-\[no-\]legacy              - Generate Marshal.4.8
+*         -&#8203;-\[no-\]modern              - Generate indexes for RubyGems newer than 1.2.0
 *         -&#8203;-update                   - Update modern indexes with gems added since the last update
 
 ###   RSS Options:
@@ -392,7 +392,7 @@ Generates the index files for a gem server directory
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -446,7 +446,7 @@ Provide help on the 'gem' command
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -478,26 +478,26 @@ Install a gem into the local repository
 
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to install
 *     -v, -&#8203;-version VERSION          - Specify version of gem to install
-*         -&#8203;-[no-]prerelease          - Allow prerelease versions of a gem to be installed. (Only for listed gems)
+*         -&#8203;-\[no-\]prerelease          - Allow prerelease versions of a gem to be installed. (Only for listed gems)
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Install/Update Options:
 
 *     -i, -&#8203;-install-dir DIR          - Gem repository directory to get installed gems
 *     -n, -&#8203;-bindir DIR               - Directory where binary files are located
-*     -d, -&#8203;-[no-]rdoc                - Generate RDoc documentation for the gem on install
-*         -&#8203;-[no-]ri                  - Generate RI documentation for the gem on install
-*     -E, -&#8203;-[no-]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
-*     -f, -&#8203;-[no-]force               - Force gem to install, bypassing dependency checks
-*     -w, -&#8203;-[no-]wrappers            - Use bin wrappers for executables Not available on dosish platforms
+*     -d, -&#8203;-\[no-\]rdoc                - Generate RDoc documentation for the gem on install
+*         -&#8203;-\[no-\]ri                  - Generate RI documentation for the gem on install
+*     -E, -&#8203;-\[no-\]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
+*     -f, -&#8203;-\[no-\]force               - Force gem to install, bypassing dependency checks
+*     -w, -&#8203;-\[no-\]wrappers            - Use bin wrappers for executables Not available on dosish platforms
 *     -P, -&#8203;-trust-policy POLICY      - Specify gem trust policy
 *         -&#8203;-ignore-dependencies      - Do not install any required dependent gems
 *     -y, -&#8203;-include-dependencies     - Unconditionally install the required dependent gems
-*         -&#8203;-[no-]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18
-*         -&#8203;-[no-]user-install        - Install in user's home directory instead of GEM_HOME.
+*         -&#8203;-\[no-\]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18
+*         -&#8203;-\[no-\]user-install        - Install in user's home directory instead of GEM_HOME.
 *         -&#8203;-development              - Install any additional development dependencies
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 
@@ -509,12 +509,12 @@ Install a gem into the local repository
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -592,16 +592,16 @@ Display gems whose name starts with STRING
 
 ###   Options:
 
-*     -i, -&#8203;-[no-]installed           - Check for installed gem
+*     -i, -&#8203;-\[no-\]installed           - Check for installed gem
 *     -v, -&#8203;-version VERSION          - Specify version of gem to list for use with -&#8203;-installed
-*     -d, -&#8203;-[no-]details             - Display detailed information of gem(s)
-*         -&#8203;-[no-]versions            - Display only gem names
+*     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
+*         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
-*         -&#8203;-[no-]prerelease          - Display prerelease versions
+*         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -611,12 +611,12 @@ Display gems whose name starts with STRING
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -644,12 +644,12 @@ Generate a lockdown list of gems
 
 ###   Options:
 
-*     -s, -&#8203;-[no-]strict              - fail if unable to satisfy a dependency
+*     -s, -&#8203;-\[no-\]strict              - fail if unable to satisfy a dependency
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -713,7 +713,7 @@ Display all gems that need updates
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -723,12 +723,12 @@ Display all gems that need updates
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -756,12 +756,12 @@ Manage gem owners on RubyGems.org.
 
 ###   Local/Remote Options:
 
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -794,13 +794,13 @@ Restores installed gems to pristine condition from files located in the gem cach
 ###   Options:
 
 *         -&#8203;-all                      - Restore all installed gems to pristine condition
-*         -&#8203;-[no-]extensions          - Restore gems with extensions
+*         -&#8203;-\[no-\]extensions          - Restore gems with extensions
 *     -v, -&#8203;-version VERSION          - Specify version of gem to restore to pristine condition
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -848,12 +848,12 @@ Push a gem up to RubyGems.org
 
 ###   Local/Remote Options:
 
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -885,17 +885,17 @@ Query gem information in local or remote repositories
 
 ###   Options:
 
-*     -i, -&#8203;-[no-]installed           - Check for installed gem
+*     -i, -&#8203;-\[no-\]installed           - Check for installed gem
 *     -v, -&#8203;-version VERSION          - Specify version of gem to query for use with -&#8203;-installed
 *     -n, -&#8203;-name-matches REGEXP      - Name of gem(s) to query on matches the provided REGEXP
-*     -d, -&#8203;-[no-]details             - Display detailed information of gem(s)
-*         -&#8203;-[no-]versions            - Display only gem names
+*     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
+*         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
-*         -&#8203;-[no-]prerelease          - Display prerelease versions
+*         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -905,12 +905,12 @@ Query gem information in local or remote repositories
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -933,15 +933,15 @@ Generates RDoc for pre-installed gems
 ###   Options:
 
 *         -&#8203;-all                      - Generate RDoc/RI documentation for all installed gems
-*         -&#8203;-[no-]rdoc                - Generate RDoc HTML
-*         -&#8203;-[no-]ri                  - Generate RI data
-*         -&#8203;-[no-]overwrite           - Overwrite installed documents
+*         -&#8203;-\[no-\]rdoc                - Generate RDoc HTML
+*         -&#8203;-\[no-\]ri                  - Generate RI data
+*         -&#8203;-\[no-\]overwrite           - Overwrite installed documents
 *     -v, -&#8203;-version VERSION          - Specify version of gem to rdoc
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -974,16 +974,16 @@ Display all gems whose name contains STRING
 
 ###   Options:
 
-*     -i, -&#8203;-[no-]installed           - Check for installed gem
+*     -i, -&#8203;-\[no-\]installed           - Check for installed gem
 *     -v, -&#8203;-version VERSION          - Specify version of gem to search for use with -&#8203;-installed
-*     -d, -&#8203;-[no-]details             - Display detailed information of gem(s)
-*         -&#8203;-[no-]versions            - Display only gem names
+*     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
+*         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
-*         -&#8203;-[no-]prerelease          - Display prerelease versions
+*         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -993,12 +993,12 @@ Display all gems whose name contains STRING
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1028,14 +1028,14 @@ Documentation and gem repository HTTP server
 
 *     -p, -&#8203;-port=PORT                - port to listen on
 *     -d, -&#8203;-dir=GEMDIR               - directories from which to serve gems multiple directories may be provided
-*         -&#8203;-[no-]daemon              - run as a daemon
+*         -&#8203;-\[no-\]daemon              - run as a daemon
 *     -b, -&#8203;-bind=HOST,HOST           - addresses to bind
-*     -l, -&#8203;-launch[=COMMAND]         - launches a browser window COMMAND defaults to 'start' on Windows and 'open' on all other platforms
+*     -l, -&#8203;-launch\[=COMMAND\]         - launches a browser window COMMAND defaults to 'start' on Windows and 'open' on all other platforms
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1082,12 +1082,12 @@ Manage the sources and cache file RubyGems uses to search for gems
 
 ###   Local/Remote Options:
 
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1118,7 +1118,7 @@ Display gem specification (in yaml)
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Local/Remote Options:
 
@@ -1128,12 +1128,12 @@ Display gem specification (in yaml)
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1163,7 +1163,7 @@ List gems along with access times
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1185,20 +1185,20 @@ Uninstall gems from the local repository
 
 ###   Options:
 
-*     -a, -&#8203;-[no-]all                 - Uninstall all matching versions
-*     -I, -&#8203;-[no-]ignore-dependencies - Ignore dependency requirements while uninstalling
-*     -x, -&#8203;-[no-]executables         - Uninstall applicable executables without confirmation
+*     -a, -&#8203;-\[no-\]all                 - Uninstall all matching versions
+*     -I, -&#8203;-\[no-\]ignore-dependencies - Ignore dependency requirements while uninstalling
+*     -x, -&#8203;-\[no-\]executables         - Uninstall applicable executables without confirmation
 *     -i, -&#8203;-install-dir DIR          - Directory to uninstall gem from
 *     -n, -&#8203;-bindir DIR               - Directory to remove binaries from
-*         -&#8203;-[no-]user-install        - Uninstall from user's home directory in addition to GEM_HOME.
-*         -&#8203;-[no-]format-executable   - Assume executable names match Ruby's prefix and suffix.
+*         -&#8203;-\[no-\]user-install        - Uninstall from user's home directory in addition to GEM_HOME.
+*         -&#8203;-\[no-\]format-executable   - Assume executable names match Ruby's prefix and suffix.
 *     -v, -&#8203;-version VERSION          - Specify version of gem to uninstall
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to uninstall
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1233,7 +1233,7 @@ Unpack an installed gem to the current directory
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1261,28 +1261,28 @@ Update the named gems (or all installed gems) in the local repository
 
 ###   Options:
 
-*         -&#8203;-system [VERSION]         - Update the RubyGems system software
+*         -&#8203;-system \[VERSION\]         - Update the RubyGems system software
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to update
-*         -&#8203;-[no-]prerelease          - Allow prerelease versions of a gem as update targets
+*         -&#8203;-\[no-\]prerelease          - Allow prerelease versions of a gem as update targets
 
 ###   Deprecated Options:
 
-*     -u, -&#8203;-[no-]update-sources      - Update local source cache
+*     -u, -&#8203;-\[no-\]update-sources      - Update local source cache
 
 ###   Install/Update Options:
 
 *     -i, -&#8203;-install-dir DIR          - Gem repository directory to get installed gems
 *     -n, -&#8203;-bindir DIR               - Directory where binary files are located
-*     -d, -&#8203;-[no-]rdoc                - Generate RDoc documentation for the gem on install
-*         -&#8203;-[no-]ri                  - Generate RI documentation for the gem on install
-*     -E, -&#8203;-[no-]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
-*     -f, -&#8203;-[no-]force               - Force gem to install, bypassing dependency checks
-*     -w, -&#8203;-[no-]wrappers            - Use bin wrappers for executables Not available on dosish platforms
+*     -d, -&#8203;-\[no-\]rdoc                - Generate RDoc documentation for the gem on install
+*         -&#8203;-\[no-\]ri                  - Generate RI documentation for the gem on install
+*     -E, -&#8203;-\[no-\]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
+*     -f, -&#8203;-\[no-\]force               - Force gem to install, bypassing dependency checks
+*     -w, -&#8203;-\[no-\]wrappers            - Use bin wrappers for executables Not available on dosish platforms
 *     -P, -&#8203;-trust-policy POLICY      - Specify gem trust policy
 *         -&#8203;-ignore-dependencies      - Do not install any required dependent gems
 *     -y, -&#8203;-include-dependencies     - Unconditionally install the required dependent gems
-*         -&#8203;-[no-]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18
-*         -&#8203;-[no-]user-install        - Install in user's home directory instead of GEM_HOME.
+*         -&#8203;-\[no-\]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18
+*         -&#8203;-\[no-\]user-install        - Install in user's home directory instead of GEM_HOME.
 *         -&#8203;-development              - Install any additional development dependencies
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 
@@ -1294,12 +1294,12 @@ Update the named gems (or all installed gems) in the local repository
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
 *         -&#8203;-source URL               - Add URL as a remote source for gems
-*     -p, -&#8203;-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations
+*     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
@@ -1327,13 +1327,13 @@ Find the location of a library file you can require
 
 ###   Options:
 
-*     -a, -&#8203;-[no-]all                 - show all matching files
-*     -g, -&#8203;-[no-]gems-first          - search gems before non-gems
+*     -a, -&#8203;-\[no-\]all                 - show all matching files
+*     -g, -&#8203;-\[no-\]gems-first          - search gems before non-gems
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
-*     -V, -&#8203;-[no-]verbose             - Set the verbose level of output
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
 *     -q, -&#8203;-quiet                    - Silence commands
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors

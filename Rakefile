@@ -45,7 +45,9 @@ task :command_guide do
           # This will end up in a <pre> block
           html_string += line
         else
+          puts html_string
           html_string += line.gsub("<", "&lt;").gsub(">", "&gt;")
+          puts html_string
         end
         html_string += "\n"
       end
@@ -72,7 +74,8 @@ task :command_guide do
       break if (helpline =~ /Arguments/) || (helpline =~  /Summary/)
       unless helpline.gsub(/\n/, '').strip == ''
         # Use zero-width space to prevent "helpful" change of -- to &ndash;
-        helpline = helpline.gsub('--', '-&#8203;-')
+        helpline = helpline.gsub('--', '-&#8203;-').gsub('[', '\\[').gsub(']', '\\]')
+
         if helpline =~ /^\s{10,}(.*)/
           options = options[0..-2] + " #{$1}\n"
         else
