@@ -100,7 +100,7 @@ Of course, the smoke test isn’t over yet: the final step is to `require` the g
     Hello world!
 
 > If you're using an earlier Ruby than 1.9.2, you need to start the
-> session with `irb -rubygames` or require the rubygems library after
+> session with `irb -rubygems` or require the rubygems library after
 > you launch irb.
 
 Now you can share hola to with the rest of the Ruby community. Publishing your
