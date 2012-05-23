@@ -69,7 +69,7 @@ Here, you can see the major components of a gem:
 [rake](http://rake.rubyforge.org/) program uses to automate tests,
 generate code, and perform other tasks.
 * This gem also includes an executable file in the
-`bin` directory, which will be loaded into the user's your `PATH` when the gem is installed.
+`bin` directory, which will be loaded into the user's `PATH` when the gem is installed.
 * Documentation is usually included in the `README` and inline with the code. When
 you install a gem, documentation is generated automatically for you. Most gems
 include [RDoc](http://rdoc.sourceforge.net/doc/) documentation, but some use
