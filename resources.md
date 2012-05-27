@@ -51,6 +51,7 @@ Tools to help build gems.
 * [micro-cutter](https://github.com/tjh/micro-cutter) - Tool to build the base files for a MicroGem.
 * [newgem](https://github.com/drnic/newgem) - New gem generator.
 * [RStack](https://github.com/jrun/rstack) - Generator intended for use on private gems.
+* [rubygems-tasks](https://github.com/postmodern/rubygems-tasks) - Rake tasks for building, installing, and releasing Ruby Gems.
 
 Monitoring
 ----------
