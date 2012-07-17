@@ -66,7 +66,7 @@ The main reason behind this is that the file name matches what your users will
 
 Adding new functionality to an existing gem? Use a dash. Some examples include
 [net-http-persistent](https://rubygems.org/gems/net-http-persistent) and
-[autotest-growl](https://rubygems.org/gems/net-http-persistent).
+[autotest-growl](https://rubygems.org/gems/autotest-growl).
 
 Usually this implies that the user will have to `require` into the
 extended gem's directory tree
