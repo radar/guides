@@ -52,6 +52,7 @@ Tools to help build gems.
 * [newgem](https://github.com/drnic/newgem) - New gem generator.
 * [RStack](https://github.com/jrun/rstack) - Generator intended for use on private gems.
 * [rubygems-tasks](https://github.com/postmodern/rubygems-tasks) - Rake tasks for building, installing, and releasing Ruby Gems.
+* [ore](https://github.com/ruby-ore/ore) - Project generator with a variety of templates.
 
 Monitoring
 ----------
