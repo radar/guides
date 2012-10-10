@@ -13,7 +13,7 @@ There are a few options to set up a server to host gems from within your organiz
 
 ## Running the built-in gem server
 
-When you install RubyGems, it adds the `gem server` command ro your system. This is the fastest way to start hosting gems.Just run the command:
+When you install RubyGems, it adds the `gem server` command to your system. This is the fastest way to start hosting gems. Just run the command:
 
     gem server
 
@@ -27,7 +27,7 @@ For a complete list of options, run:
 
 Among other options, you can change the port that gems are served on and specify the directories to search for installed gems.
 
-## Running Gem in a box
+## Running Gem in a Box
 
 For a server with more features, including the ability to push gems, try out the [Gem in a Box](https://github.com/cwninja/geminabox) project.
 
@@ -74,9 +74,9 @@ There is a web interface available on [http://localhost:9292](http://localhost:9
 
 ## Using gems from your server
 
-Whether you use `gem server`, Gem in a box, or another gem server, you can configure RubyGems to use your local or internal source alongside other sources such as [http://rubygems.org](http://rubygems.org).
+Whether you use `gem server`, Gem in a Box, or another gem server, you can configure RubyGems to use your local or internal source alongside other sources such as [http://rubygems.org](http://rubygems.org).
 
-Use the `gem sources` command to add the gem server to your system-wide gem sources.  The following URL is the default for running Gem in a box via `rackup`:
+Use the `gem sources` command to add the gem server to your system-wide gem sources.  The following URL is the default for running Gem in a Box via `rackup`:
 
     gem sources --add http://localhost:9292
 
