@@ -4,7 +4,7 @@ This guide gives an extremely simplified overview of how Rails requests are hand
 
 ## A simple request
 
-Rails operates on top of another gem called Rack. Rack provides a common API for Ruby web applications that use frameworks such as Rails. When a request comes into your server, Rack is the first piece of Ruby code that the request goes to. This request is then handled by rack by passing it through a set of items known as "middleware".
+Rails operates on top of another gem called Rack. Rack provides a common API for Ruby web applications that use frameworks such as Rails. When a request comes into your server, Rack is one of the first pieces of Ruby code that the request goes to. This request is then handled by rack by passing it through a set of items known as "middleware".
 
 Each piece of middleware can modify the request in different ways, adding headers to the response or even returning their own custom responses based on certain conditions. Once a request has passed through the stack of middleware, it then goes to your Rails application.
 
