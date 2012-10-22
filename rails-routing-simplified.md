@@ -17,3 +17,5 @@ end
 ```
 
 This routing code defines a route that responds only to HTTP `GET` requests to `/home`, and gets `HomeController` to serve the request with its `index` action. When you make a request to this action, a new instance of the `HomeController` class is initialized and the `index` method is called. This method should make calls to models (or other data sources), collecting information for your views. Once this method has finished running, then an implicit render takes place, rendering the view template with the same name as the action: `app/views/home/index.html.erb`.
+
+Only instance variables defined within the `index` method of the controller will be available in the `app/views/home/index.html.erb`. Other actions inside the controller will not provide instance variables for this template unless this template is rendered from those actions.
