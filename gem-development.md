@@ -108,19 +108,19 @@ We're now going to use Active Support's `pluralize` method by calling it using a
 
 To use another gem, we must first specify it as a dependency in our _foodie.gemspec_. We can specify the dependency on the `activesupport` gem in _foodie.gemspec_ by adding this line inside the `Gem::Specification` object:
 
-    s.add_dependency "activesupport"
+    gem.add_dependency "activesupport"
 
 If we wanted to specify a particular version we may use this line:
 
-    s.add_dependency "activesupport", "3.0.0"
+    gem.add_dependency "activesupport", "3.0.0"
 
 Or specify a version constraint:
 
-    s.add_dependency "activesupport", ">= 2.3.8"
+    gem.add_dependency "activesupport", ">= 2.3.8"
 
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
-    s.add_dependency "activesupport", "~> 3.0.0"
+    gem.add_dependency "activesupport", "~> 3.0.0"
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
 
@@ -164,8 +164,8 @@ David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing too
 
 We will define new development dependencies in _foodie.gemspec_ now for the Cucumber things:
 
-    s.add_development_dependency "cucumber"
-    s.add_development_dependency "aruba"
+    gem.add_development_dependency "cucumber"
+    gem.add_development_dependency "aruba"
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
@@ -255,7 +255,7 @@ Let's define the _lib/foodie/cli.rb_ file now like this:
     
 The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
 
-    s.add_dependency "thor"
+    gem.add_dependency "thor"
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
