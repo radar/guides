@@ -97,7 +97,7 @@ library itself does not enforce a strict versioning policy, but using an
 your gems.
 
 Suppose you have a 'stack' gem that holds a `Stack` class with both `push` and
-`pop` functionalty. Your `CHANGELOG` with might look like this if you use
+`pop` functionalty. Your `CHANGELOG` might look like this if you use
 semantic versioning:
 
 * **Version 0.0.1**: The initial `Stack` class is released.
