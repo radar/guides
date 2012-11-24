@@ -336,9 +336,9 @@ Wrapping Existing Libraries
 A common reason for writing a C extension is to wrap an existing C or C++
 library. This can be done manually (see this tutorial --
 [part
-1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1)
+1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
 and [part
-2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2)),
+2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2.html)),
 but several tools also exist:
 
 *  [SWIG](http://www.swig.org/), the Simplified Wrapper Interface Generator, is
@@ -365,8 +365,8 @@ References
 
 This guide is based largely on this excellent two-part tutorial:
 
-*   [part 1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1)
-*   [part 2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2)
+*   [part 1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
+*   [part 2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2.html)
 
 The main references for ruby's C API are:
 
