@@ -65,7 +65,7 @@ libraries is platform dependent. You can use this bit of code to find the
 filename extension used on your platform for dynamically linked libraries:
 
     % irb -rrbconfig
-    >> RbConfig::CONFIG['DLEXT']"
+    >> RbConfig::CONFIG['DLEXT']
     # extensions are .bundle on my OS
     => bundle
 
