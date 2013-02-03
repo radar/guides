@@ -62,9 +62,11 @@ Tools to watch gems for changes.
 * [Gemnasium](https://gemnasium.com/) - Parses your GitHub projects to learn what to notify you about. Free for public repos only.
 * [gemwhisperer](https://github.com/rubygems/gemwhisperer)
 
-Hosting
--------
+Hosting and Serving
+-------------------
 
+* [Geminabox](https://github.com/cwninja/geminabox)- Host your own gems, with a rubygems-compatible API.
+* [Gem Mirror](https://github.com/YorickPeterse/gem-mirror) - Run an internal mirror of external gem sources.
 * [Gemfury](http://www.gemfury.com/) - Private cloud-based RubyGems servers. Priced by number of collaborators.
 
 Utilities
