@@ -12,6 +12,11 @@ Unpack the mystery behind what's in a RubyGem.
 
 Start with an idea, end with a distributable package of Ruby code.
 
+[Publishing your gem](/publishing)
+---------------
+
+Start with an idea, end with a distributable package of Ruby code.
+
 [Patterns](/patterns)
 ---------------
 

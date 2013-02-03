@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Patterns
-previous: /make-your-own-gem
+previous: /publishing
 next: /specification-reference
 ---
 
