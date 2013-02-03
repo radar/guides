@@ -19,7 +19,6 @@ These projects are under the wing of the core [RubyGems team](https://github.com
 Ruby's premier packaging system. Bundled with Ruby 1.9+ and available for Ruby 1.8. Any time you run
 `gem` at the command line, you're using this project.
 
-[contributors](http://it.isagit.com/rubygems/rubygems) -
 [issues](http://github.com/rubygems/rubygems/issues) -
 [mailing list](http://rubyforge.org/mailman/listinfo/rubygems-developers)
 
@@ -54,7 +53,6 @@ The Ruby community's gem hosting service. Provides a better API for accessing,
 deploying, and managing gems along with clear and accessible project pages.
 
 [site](http://rubygems.org) -
-[contributors](http://it.isagit.com/rubygems/rubygems.org) -
 [issues](http://github.com/rubygems/rubygems.org/issues) -
 [mailing list](https://groups.google.com/forum/#!forum/gemcutter)
 
@@ -79,7 +77,6 @@ The central home for RubyGems documentation, including tutorials and reference m
 User-contributed guides are more than welcome and encouraged!
 
 [site](http://guides.rubygems.org) -
-[contributors](http://it.isagit.com/rubygems/guides) -
 [issues](http://github.com/rubygems/guides/issues)
 
 <p class="avatars">
@@ -100,7 +97,6 @@ A community effort to document the test results for various gems,
 on various machine architectures.
 
 [site](http://test.rubygems.org/) -
-[contributors](http://it.isagit.com/rubygems/rubygems-test) -
 [issues](https://github.com/rubygems/rubygems-test/issues)
 
 <p class="avatars">
@@ -120,7 +116,6 @@ pushed. Currently powers [m.rubygems.org](http://m.rubygems.org) and
 [@rubygems](http://twitter.com/rubygems).
 
 [site](http://m.rubygems.org/) -
-[contributors](http://it.isagit.com/rubygems/gemwhisperer) -
 [issues](https://github.com/rubygems/gemwhisperer/issues)
 
 <p class="avatars">
@@ -138,7 +133,6 @@ A Ruby implementation of the various API endpoints available on RubyGems.org.
 If you're writing a service in Ruby to interact with gems available to the
 community, check this out!
 
-[contributors](http://it.isagit.com/rubygems/gems) -
 [issues](https://github.com/rubygems/gems/issues)
 
 <p class="avatars">
@@ -152,7 +146,6 @@ community, check this out!
 A souped-up implementation of search on RubyGems.org, using Solr. Still not
 100% done yet, but hopefully will replace the search box on RubyGems.org soon!
 
-[contributors](http://it.isagit.com/rubygems/search) -
 [issues](https://github.com/rubygems/search/issues)
 
 <p class="avatars">
@@ -169,7 +162,6 @@ is going on in the [rubygems-mirror
 wiki](https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0) on how
 to improve it.
 
-[contributors](http://it.isagit.com/rubygems/rubygems-mirror) -
 [issues](https://github.com/rubygems/rubygems-mirror/issues)
 
 <p class="avatars">
@@ -188,7 +180,6 @@ Bundler manages an application's dependencies through its entire life across
 many machines systematically and repeatably.
 
 [site](http://gembundler.com/) -
-[contributors](http://it.isagit.com/carlhuda/bundler) -
 [issues](https://github.com/carlhuda/bundler/issues) -
 [mailing list](https://groups.google.com/forum/#!forum/ruby-bundler)
 
@@ -212,7 +203,6 @@ many machines systematically and repeatably.
 A simple gem sandbox that makes sure your application has the exact gem
 versions you require. It does not perform dependency resolution like Bundler.
 
-[contributors](http://it.isagit.com/jbarnette/isolate) -
 [issues](https://github.com/jbarnette/isolate/issues)
 
 <p class="avatars">
@@ -229,7 +219,6 @@ RubyGems.org links to this site and it uses [RubyGems.org's
 webhooks](http://guides.rubygems.org/rubygems-org-api/#webhook) as well.
 
 [site](http://rubydoc.info) -
-[contributors](http://it.isagit.com/lsegal/rubydoc.info) -
 [issues](https://github.com/lsegal/rubydoc.info/issues) -
 [mailing list](https://groups.google.com/forum/#!forum/yardoc)
 
@@ -248,7 +237,6 @@ Stickler is a great way to run and organize an internal gem server in your
 organization. It helps with mirroring gems and providing a gem source to add
 internal or proprietary code to.
 
-[contributors](http://it.isagit.com/copiousfreetime/stickler) -
 [issues](https://github.com/copiousfreetime/stickler/issues)
 
 <p class="avatars">
@@ -263,7 +251,6 @@ Need simple RubyGems hosting? Geminabox can do that! This project provides an
 easy to setup way to host RubyGems internally and allow uploading of gems
 without much hassle.
 
-[contributors](http://it.isagit.com/cwninja/geminabox) -
 [issues](https://github.com/cwninja/geminabox/issues)
 
 <p class="avatars">
