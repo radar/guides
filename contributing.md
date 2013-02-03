@@ -71,6 +71,20 @@ deploying, and managing gems along with clear and accessible project pages.
   </a>
 </p>
 
+### [RubyGems AWS](https://github.com/rubygems/rubygems-aws)
+
+Chef cookbooks and bootstrap scripts to configure and manage Rubygems.org on AWS.
+Includes Vagrant configuration for local testing.
+
+[issues](http://github.com/rubygems/rubygems-aws/issues)
+
+### [RubyGems Status](https://github.com/rubygems/rubygems-status)
+
+A simple Rails app to show the status of the rubygems.org infrastructure.
+
+[site](http://status.rubygems.org) -
+[issues](http://github.com/rubygems/rubygems-status/issues)
+
 ### [RubyGems Guides](https://github.com/rubygems/guides)
 
 The central home for RubyGems documentation, including tutorials and reference material.
@@ -169,6 +183,13 @@ to improve it.
     <img src="https://secure.gravatar.com/avatar/b19b02a49b433c9e2e6e6c43785d2bfb?s=32" title="James Tucker">
   </a>
 </p>
+
+### [RubyGems Verification](https://github.com/rubygems/rubygems-verification)
+
+A collection of tools and data used for verifying the integrity of gems on rubygems.org based on checksums
+collected by third parties.
+
+[issues](http://github.com/rubygems/rubygems-verification/issues)
 
 ## Ecosystem Projects
 
