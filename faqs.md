@@ -52,6 +52,10 @@ you can't. You are responsible for knowing the source of the gems that you are
 using. In a setting where security is critical, you should only use known-good
 gems, and possibly perform your own security audit on the gem code.
 
+The Ruby community is discussing ways to make gem code more secure in the future,
+using some public-key infrastructure. To see the progress of this discussion, visit the
+[rubygems-trust](https://github.com/rubygems-trust) organization on GitHub.
+
 <a id="require-fail"> </a>
 Why does `require 'some-gem'` fail?
 -----------------------------------
