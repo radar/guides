@@ -278,7 +278,7 @@ folder name as your gem's name, for example `lib/foo/cgi.rb`.
 ### Requiring files relative to each other
 
 Gems should not have to use `__FILE__` to bring in other Ruby files in your
-gem. Code this like this is surprisingly common in gems:
+gem. Code like this is surprisingly common in gems:
 
     require File.join(
               File.dirname(__FILE__),
