@@ -175,6 +175,12 @@ site. Returns an array of the XML or JSON representation of gems that match.
 
     $ curl 'https://rubygems.org/api/v1/search.xml?query=cucumber'
 
+The results are paginated so the API call will return only the first 30 matched
+gems. To get subsequent results, use the page query parameter until an empty
+reponse is received.
+
+    $ curl 'https://rubygems.org/api/v1/search.json?query=cucumber&page=2'
+
 ### GET - `/api/v1/gems.(json|xml|yaml)`
 
 List all gems that you own. Returns an array of the XML or JSON representation
