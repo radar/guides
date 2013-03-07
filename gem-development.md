@@ -255,7 +255,7 @@ Let's define the _lib/foodie/cli.rb_ file now like this:
     
 The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
 
-    s.add_dependency "thor"
+    s.add_dependency "thor", "~> 0.17.0"
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
