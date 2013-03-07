@@ -17,6 +17,7 @@ Tutorials
 * [MicroGems: five minute RubyGems](http://jeffkreeftmeijer.com/2011/microgems-five-minute-rubygems/) - Gems so small that you can store them in a gist.
 * [Let's Write a Gem: Part 1](http://rakeroutes.com/blog/lets-write-a-gem-part-one/) and [Part 2](http://rakeroutes.com/blog/lets-write-a-gem-part-two/)
 * [Polishing Rubies](http://intridea.com/blog/tag/polishing%20rubies)
+* [A Practical Guide to Using Signed Ruby Gems - Part 1: Bundler](http://blog.meldium.com/home/2013/3/3/signed-rubygems-part)
 
 Presentations
 -------------
@@ -60,6 +61,7 @@ Monitoring
 Tools to watch gems for changes.
 
 * [Gemnasium](https://gemnasium.com/) - Parses your GitHub projects to learn what to notify you about. Free for public repos only.
+* [Gemnasium gem](https://github.com/gemnasium/gemnasium-gem) - Allows you to use Gemnasium without granting it access to private repos.
 * [gemwhisperer](https://github.com/rubygems/gemwhisperer)
 
 Hosting and Serving
