@@ -177,11 +177,11 @@ Our CLI is going to have two methods, which correspond to the two methods which 
       I want to be as objective as possible
 
       Scenario: Broccoli is gross
-        When I run "foodie portray broccoli"
+        When I run `foodie portray broccoli`
         Then the output should contain "Gross!"
 
       Scenario: Tomato, or Tomato?
-        When I run "foodie pluralize --word Tomato"
+        When I run `foodie pluralize --word Tomato`
         Then the output should contain "Tomatoes"
 
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
