@@ -194,11 +194,11 @@ To run this feature, we use the `cucumber` command, but of course because it's a
 
 See those yellow things? They're undefined steps:
 
-    When /^I run "([^"]*)"$/ do |arg1|
+    When(/^I run "(.*?)"$/) do |arg1|
       pending # express the regexp above with the code you wish you had
     end
 
-    Then /^the output should contain "([^"]*)"$/ do |arg1|
+    Then(/^the output should contain "(.*?)"$/) do |arg1|
       pending # express the regexp above with the code you wish you had
     end
     
