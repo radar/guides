@@ -164,8 +164,8 @@ David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing too
 
 We will define new development dependencies in _foodie.gemspec_ now for the Cucumber things:
 
-    s.add_development_dependency "cucumber"
-    s.add_development_dependency "aruba"
+    s.add_development_dependency "cucumber", "~> 1.2.2"
+    s.add_development_dependency "aruba", "~> 0.5.1"
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
@@ -177,11 +177,11 @@ Our CLI is going to have two methods, which correspond to the two methods which 
       I want to be as objective as possible
 
       Scenario: Broccoli is gross
-        When I run "foodie portray broccoli"
+        When I run `foodie portray broccoli`
         Then the output should contain "Gross!"
 
       Scenario: Tomato, or Tomato?
-        When I run "foodie pluralize --word Tomato"
+        When I run `foodie pluralize --word Tomato`
         Then the output should contain "Tomatoes"
 
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
@@ -194,11 +194,11 @@ To run this feature, we use the `cucumber` command, but of course because it's a
 
 See those yellow things? They're undefined steps:
 
-    When /^I run "([^"]*)"$/ do |arg1|
+    When(/^I run "(.*?)"$/) do |arg1|
       pending # express the regexp above with the code you wish you had
     end
 
-    Then /^the output should contain "([^"]*)"$/ do |arg1|
+    Then(/^the output should contain "(.*?)"$/) do |arg1|
       pending # express the regexp above with the code you wish you had
     end
     
@@ -255,7 +255,7 @@ Let's define the _lib/foodie/cli.rb_ file now like this:
     
 The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
 
-    s.add_dependency "thor"
+    s.add_dependency "thor", "~> 0.17.0"
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
@@ -335,7 +335,7 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
         When I run "foodie recipe dinner steak"
         Then the following files should exist:
           | dinner/steak.txt |
-        Then the file "dinner/steak.txt" should contain:
+        Then the file "dinner/steak.txt" should contain exactly:
           """
           ##### Ingredients #####
           Ingredients for delicious steak go here.
@@ -347,14 +347,7 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
 
 It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon.
 
-When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
-
-
-    Then /^the file "([^"]*)" should contain:$/ do |file, content|
-      check_file_content(file, content, true)
-    end
-   
-Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
+When we run this feature we'll be told that there is a failing scenario; It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
 
 ## Writing a generator
 

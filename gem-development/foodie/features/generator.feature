@@ -7,7 +7,7 @@ Feature: Generating things
     When I run "foodie recipe dinner steak"
     Then the following files should exist:
       | dinner/steak.txt |
-    Then the file "dinner/steak.txt" should contain:
+    Then the file "dinner/steak.txt" should contain exactly:
       """
       ##### Ingredients #####
       Ingredients for delicious steak go here.
