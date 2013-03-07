@@ -24,7 +24,6 @@ end
 desc "generate specification guide"
 task :spec_guide => [:rdoc_spec, :move_spec, :clean]
 
-
 desc "generate command guide"
 task :command_guide do
   require 'rubygems/command_manager'
