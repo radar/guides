@@ -164,8 +164,8 @@ David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing too
 
 We will define new development dependencies in _foodie.gemspec_ now for the Cucumber things:
 
-    s.add_development_dependency "cucumber"
-    s.add_development_dependency "aruba"
+    s.add_development_dependency "cucumber", "~> 1.2.2"
+    s.add_development_dependency "aruba", "~> 0.5.1"
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
