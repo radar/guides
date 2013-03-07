@@ -335,7 +335,7 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
         When I run "foodie recipe dinner steak"
         Then the following files should exist:
           | dinner/steak.txt |
-        Then the file "dinner/steak.txt" should contain:
+        Then the file "dinner/steak.txt" should contain exactly:
           """
           ##### Ingredients #####
           Ingredients for delicious steak go here.
@@ -347,14 +347,7 @@ Thankfully for us, Aruba has ways of testing that a generator generates files an
 
 It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon.
 
-When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
-
-
-    Then /^the file "([^"]*)" should contain:$/ do |file, content|
-      check_file_content(file, content, true)
-    end
-   
-Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
+When we run this feature we'll be told that there is a failing scenario; It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
 
 ## Writing a generator
 
