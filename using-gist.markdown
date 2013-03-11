@@ -12,7 +12,7 @@ a new Git repository just for your Gist. When the Gist is edited, a new commit
 is created and Gist provides a little navigation menu on the left hand-side of
 a page which lets people view the different versions of your Gist.
 
-![A gist](/radar/guides/raw/master/using-gist/a-gist.png)
+![A gist](/using-gist/a-gist.png)
 
 Because the Gists are git repositories, we have the ability to clone them just
 like normal Git repositories using either the public or private URL. If we use
@@ -43,7 +43,7 @@ To get started we'll type http://gist.github.com into our browser's URL bar and
 press enter. BLAMMO. We're now at the place where Gists are born. At this page,
 we're presented with a screen that mostly contains a Gist box itself:
 
-![A new Gist](/radar/guides/raw/master/using-gist/new-gist.png)
+![A new Gist](/using-gist/new-gist.png)
 
 Right up the top we've got a box that lets us put a description. This can be
 helpful to let people know what this Gist is about.  Underneath this, there's a
@@ -76,7 +76,7 @@ so we'll be careful who we share our precious(ssss) Gists with.
 In this case, we'll create a public Gist, generating a Gist that is ever so
 pretty.
 
-![Our first Gist](/radar/guides/raw/master/using-gist/first-gist.png)
+![Our first Gist](/using-gist/first-gist.png)
 
 Because we've named the file "test.rb", Gist knows that this is a Ruby file and
 highlights it accordingly. If we didn't name this file, we could have used the
@@ -92,9 +92,9 @@ Now that we've got our very own Gist, we can do with it as we please, such as
 editing it. Let's press the "edit" button to be taken to a screen similar to
 the "new gist" screen.
 
-![The edit button](/radar/guides/raw/master/using-gist/edit-gist.png)
+![The edit button](/using-gist/edit-gist.png)
 
-![The edit screen](/radar/guides/raw/master/using-gist/2-edit-gist.png)
+![The edit screen](/using-gist/2-edit-gist.png)
 
 On this screen, we've got a couple of things we can do. We can change the name
 of the file which could mean that the syntax highlighting changes for our Gist,
@@ -106,8 +106,7 @@ Let's add a new file. This seems to be the concept that people have the most
 difficulty with, so hopefully this informative diagram clearly points out where
 the "Add another file..." link is.
 
-![Add another
-file](/radar/guides/raw/master/using-gist/add-another-file-gist.png)
+![Add another file](/using-gist/add-another-file-gist.png)
 
 By pressing this link, we're given another Gist box! Two for the price of one!
 PHWOAR. In this new Gist box we can enter a completely different filename and
@@ -122,7 +121,7 @@ different content. Content, like this:
 This time, let's select "Ruby" from the "Language" select box and see what
 happens when we press "Update Gist".
 
-![DOTS HAVE BEEN THROWN](/radar/guides/raw/master/using-gist/dots-gist.png)
+![DOTS HAVE BEEN THROWN](/using-gist/dots-gist.png)
 
 ZOMG. Two Ruby files! In one Gist! Amazing!
 
@@ -135,4 +134,4 @@ Gist is a super-powerful-and-awesome service. Use it, and use it properly.
 Please please please please please please please do not put additional code
 afterwards in a comment. That is what the edit button is for.
 
-![The edit button](/radar/guides/raw/master/using-gist/edit-gist.png)
+![The edit button](/using-gist/edit-gist.png)
