@@ -395,8 +395,7 @@ Documenting your code
 ---------------------
 
 By default most gems use RDoc to generate docs. There are plenty of
-[great](http://handyrailstips.com/tips/12-documenting-your-application-or-plugin-using-rdoc)
-[tutorials](http://docs.seattlerb.org/rdoc/RDoc/Markup.html) for learning how
+[great tutorials](http://docs.seattlerb.org/rdoc/RDoc/Markup.html) for learning how
 to mark up your code with RDoc. Here's a simple example:
 
     # The main Hola driver
