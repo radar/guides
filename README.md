@@ -18,7 +18,7 @@ I discovered the `bundle gem` command whilst skimming the [CHANGELOG for Bundler
 
 Whilst writing and researching all these things _can_ be frustrating at some points, I do it because of the high I get when I figure something out.
 
-If you'd like to help out, please buy a copy of [Rails 3 in Action](http://manning.com/bigg2). This puts money in my pocket which I can then use to put food on my table which I put in my mouth to power my brain and fingers to write more guides and books.
+If you'd like to help out, please buy a copy of [Rails 4 in Action](http://manning.com/bigg2). This puts money in my pocket which I can then use to put food on my table which I put in my mouth to power my brain and fingers to write more guides and books.
 
 ## Helper-outerers
 
