@@ -189,7 +189,7 @@ change much:
 
       def hi
         case @language
-        when :spanish
+        when "spanish"
           "hola mundo"
         else
           "hello world"
