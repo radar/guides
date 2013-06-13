@@ -103,7 +103,7 @@ Of course, the smoke test isn’t over yet: the final step is to `require` the g
 > session with `irb -rubygems` or require the rubygems library after
 > you launch irb.
 
-Now you can share hola to with the rest of the Ruby community. Publishing your
+Now you can share hola with the rest of the Ruby community. Publishing your
 gem out to RubyGems.org only takes one command, provided that you have an account on
 the site. To setup your computer with your RubyGems account:
 
