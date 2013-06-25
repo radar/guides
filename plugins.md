@@ -25,6 +25,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [rubygems-openpgp](#rubygemsopenpgp)
 * [rubygems-sandbox](#rubygemssandbox)
 * [rubygems_snapshot](#rubygemssnapshot)
+* [rubygems-tasks](#rubygemstasks)
 
 <a id="gembrowse"> </a>
 ## gem-browse
@@ -157,3 +158,10 @@ Manages command-line gem tools and dependencies with a `gem  sandbox` command. T
 [https://github.com/rogerleite/rubygems_snapshot](https://github.com/rogerleite/rubygems_snapshot)
 
 Adds `gem snapshot` to create exports of all your current gems into a single file that you can import later.
+
+<a id="rubygemstasks"> </a>
+## rubygems-tasks
+
+[https://github.com/postmodern/rubygems-tasks](https://github.com/postmodern/rubygems-tasks#readme)
+
+rubygems-tasks provides agnostic and unobtrusive Rake tasks for building, installing and releasing Ruby Gems.
