@@ -8,8 +8,8 @@ next: /command-reference
 {% include big.html %}
 
 
-<p>The <a href="Specification.html">Specification</a> class contains the
-metadata for a <a href="../Gem.html">Gem</a>.  Typically defined in a
+<p>The <b>Specification</b> class contains the
+metadata for a <b>Gem</b>.  Typically defined in a
 .gemspec file or a Rakefile, and looks like this:</p>
 
 <pre>Gem::Specification.new do |s|
@@ -222,8 +222,7 @@ this gem.</p>
 <a id="author="> </a>
 ## author=
 
-<p>Singular writer for <a
-href="Specification.html#method-i-authors">authors</a></p>
+<p>Singular writer for <b>authors</b></p>
 
 <p>Usage:</p>
 
