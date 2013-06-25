@@ -77,3 +77,4 @@ Utilities
 ---------
 
 * [gemnasium-parser](https://github.com/laserlemon/gemnasium-parser) - Determine dependencies without evaluating the ruby in gemfiles or gemspecs
+* [Gemrat](https://github.com/DruRly/gemrat) - Add the latest version of a gem to your Gemfile from the command line.
