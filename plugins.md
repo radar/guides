@@ -22,6 +22,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [PushSafety](#pushsafety)
 * [rbenv-rehash](#rbenvrehash)
 * [rubygems-desc](#rubygemsdesc)
+* [rubygems-openpgp](#rubygemsopenpgp)
 * [rubygems-sandbox](#rubygemssandbox)
 * [rubygems_snapshot](#rubygemssnapshot)
 
@@ -130,6 +131,18 @@ Automatically runs `rbenv rehash` after installing or uninstalling gems.
 [https://github.com/chad/rubygems-desc](https://github.com/chad/rubygems-desc)
 
 Adds `gem desc` to describe a gem by name.
+
+<a id="rubygemsopenpgp"> </a>
+## rubygems-openpgp
+
+[https://github.com/grant-olson/rubygems-openpgp](https://github.com/grant-olson/rubygems-openpgp)
+
+Adds commands and flags to allow OpenPGP signing of gems.
+
+- `gem sign foo.gem` to sign a gem.
+- `gem verify foo.gem --trust` to verify a gem.
+- `gem build foo.gemspec --sign` to sign at build time.
+- `gem install foo --verify --trust` to verify on install.
 
 <a id="rubygemssandbox"> </a>
 ## rubygems-sandbox
