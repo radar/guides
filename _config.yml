@@ -1,4 +1,3 @@
-auto: true
 permalink: "pretty"
 exclude:
 - README.md
