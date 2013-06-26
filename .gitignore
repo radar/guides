@@ -3,3 +3,4 @@ _site
 *.DS_Store
 .sass-cache/
 .rvmrc
+html/
