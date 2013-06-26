@@ -1,4 +1,5 @@
 gem "rdoc"
+
 require 'rdoc/rdoc'
 require 'rdoc/task'
 require 'fileutils'
@@ -6,13 +7,25 @@ require 'fileutils'
 $:.unshift "."
 
 RDoc::Task.new(:rdoc_spec) do |rd|
+
+  begin
+    puts <<-NO_RUBYGEMS_DIR
+    The Rubygems rdocs are required to build the spec guide.
+
+    Install or clone it from GitHub, then:
+    RUBYGEMS_DIR=/path/to/rubygems/source rake spec_guide --trace
+    NO_RUBYGEMS_DIR
+
+    exit
+  end unless ENV['RUBYGEMS_DIR']
+
   spec_file = File.join(ENV["RUBYGEMS_DIR"].to_s, "lib", "rubygems", "specification.rb")
   rd.rdoc_files.include(spec_file)
   rd.template = "jekdoc"
 end
 
 desc "move spec guide into the right place"
-task :move_spec do
+task :move_spec => [:rdoc_spec] do
   FileUtils.mv "html/Gem/Specification.html", "specification-reference.md"
 end
 
