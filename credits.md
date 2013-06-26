@@ -22,6 +22,7 @@ These people have donated time to creating and improving the RubyGems Guides sit
 * [Evgene Dzhelyov](https://github.com/edzhelyov)
 * [Mike Gunderloy](https://github.com/ffmike)
 * [Gabriel Horner](https://github.com/cldwalker)
+* [Richard Michael](https://github.com/richardkmichael)
 * [John Lees-Miller](https://github.com/jdleesmiller)
 * [Mark McSpadden](https://github.com/markmcspadden)
 * [Erik Michaels-Ober](https://github.com/sferik)
