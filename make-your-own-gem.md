@@ -73,6 +73,12 @@ information you see on a gem page
         'http://rubygems.org/gems/hola'
     end
 
+> The description member can be much longer than you see in this example. If it
+> starts with '==' then the description will be run through
+> [RDoc's markup formatter](http://rdoc.rubyforge.org/RDoc/Markup.html) for display on
+> the RubyGems web site. Be aware though that other consumers of the data might not
+> understand this markup.
+
 Look familiar? The gemspec is also Ruby, so you can wrap scripts to generate
 the file names and bump the version number. There are lots of fields the
 gemspec can contain. To see them all check out the full
