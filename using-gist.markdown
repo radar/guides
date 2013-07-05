@@ -46,18 +46,14 @@ we're presented with a screen that mostly contains a Gist box itself:
 ![A new Gist](/using-gist/new-gist.png)
 
 Right up the top we've got a box that lets us put a description. This can be
-helpful to let people know what this Gist is about.  Underneath this, there's a
+helpful to let people know what this Gist is about or what's going on in the Gist.  Underneath this, there's a
 box that says "name this file..." which is very, very special. We can type
 anything we like into this and it's a great way to give meaning to the content
 that we're able to put there. By typing a name there such as "test.rb", Gist
 will know (by magic!) that this file is a Ruby file! What does this mean? Well,
 wait and see what happens when we create the content!
 
-The box directly underneath the "name this file..." box is a description for
-your Gist. This is especially handy for explaining what's going on in the Gist.
-We'll leave this blank for now.
-
-The *gigantic box* underneath these is for our code. In this box, we place our
+The *gigantic box* directly underneath the "name this file..." box is for our code. In this box, we place our
 code and only our code goes in this box. Our code is this:
 
     class Hello 
