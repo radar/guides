@@ -150,7 +150,7 @@ this gem.
     class Hola
       def self.hi(language = "english")
         translator = Translator.new(language)
-        puts translator.hi
+        translator.hi
       end
     end
 
@@ -207,7 +207,7 @@ But now the `hola.rb` file has some code to load the `Translator`:
 
     % cat lib/hola.rb
     class Hola
-      def self.hi(language = :english)
+      def self.hi(language = "english")
         translator = Translator.new(language)
         translator.hi
       end
@@ -218,9 +218,9 @@ But now the `hola.rb` file has some code to load the `Translator`:
 Let's try this out. First, fire up `irb`:
 
     % irb -Ilib -rhola
-    irb(main):001:0> Hola.hi(:english)
+    irb(main):001:0> Hola.hi("english")
     => "hello world"
-    irb(main):002:0> Hola.hi(:spanish)
+    irb(main):002:0> Hola.hi("spanish")
     => "hola mundo"
 
 We need to use a strange command line flag here: `-Ilib`. Usually RubyGems
