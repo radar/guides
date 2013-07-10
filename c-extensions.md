@@ -168,7 +168,7 @@ the gem is installed:
     1 gem installed
 
 Where exactly the gem is installed to depends on how ruby is set up. On Linux
-with [rvm](http://beginrescueend.com/), the gem is installed into a directory
+with [rvm](http://rvm.io/), the gem is installed into a directory
 structure resembling this:
 
     % tree ~/.rvm/gems/ruby-1.8.7-p352/gems/hola-0.0.1/
