@@ -220,6 +220,18 @@ But now the `hola.rb` file has some code to load the `Translator`:
 
     require 'hola/translator'
 
+> Gotcha:
+> For newly created folder/file, do not forget to add one entry in hola.gemspec file, as shown-
+
+    % cat hola.gemspec
+    Gem::Specification.new do |s|
+    ...
+    s.files       = ["lib/hola.rb", "lib/hola/translator.rb"]
+    ...
+    end
+ 
+> without the above change, new folder would not be included into the installed gem.
+
 Let's try this out. First, fire up `irb`:
 
     % irb -Ilib -rhola
