@@ -117,6 +117,11 @@ the site. To setup your computer with your RubyGems account:
     ~/.gem/credentials
     Enter host password for user 'qrush':
 
+> If you're having problems with curl, OpenSSL, or certificates, you might want to
+> simply try entering the above URL in your browser's address bar.  Your browser will
+> ask you to login to RubyGems.org.  Enter your username and password.  Your browser
+> will now try to download the file api_key.yaml.  Save it in ~/.gem and call it 'credentials'
+
 Once this has been setup, you can push out the gem:
 
     % gem push hola-0.0.0.gem
