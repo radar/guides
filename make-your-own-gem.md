@@ -111,7 +111,7 @@ Of course, the smoke test isn’t over yet: the final step is to `require` the g
 
 Now you can share hola with the rest of the Ruby community. Publishing your
 gem out to RubyGems.org only takes one command, provided that you have an account on
-the site. To setup your computer with your RubyGems account:
+the site. To set up your computer with your RubyGems account:
 
     $ curl -u qrush https://rubygems.org/api/v1/api_key.yaml >
     ~/.gem/credentials
@@ -122,7 +122,7 @@ the site. To setup your computer with your RubyGems account:
 > ask you to login to RubyGems.org.  Enter your username and password.  Your browser
 > will now try to download the file api_key.yaml.  Save it in ~/.gem and call it 'credentials'
 
-Once this has been setup, you can push out the gem:
+Once this has been set up, you can push out the gem:
 
     % gem push hola-0.0.0.gem
     Pushing gem to RubyGems.org...
@@ -220,8 +220,7 @@ But now the `hola.rb` file has some code to load the `Translator`:
 
     require 'hola/translator'
 
-> Gotcha:
-> For newly created folder/file, do not forget to add one entry in hola.gemspec file, as shown-
+You also need to add the newly created file and folder to the `hola.gemspec` file:
 
     % cat hola.gemspec
     Gem::Specification.new do |s|
@@ -229,8 +228,8 @@ But now the `hola.rb` file has some code to load the `Translator`:
     s.files       = ["lib/hola.rb", "lib/hola/translator.rb"]
     ...
     end
- 
-> without the above change, new folder would not be included into the installed gem.
+
+Without this change, the installed gem wouldn't include the new file.
 
 Let's try this out. First, fire up `irb`:
 
