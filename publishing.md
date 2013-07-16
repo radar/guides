@@ -60,17 +60,18 @@ of tools such as Isolate or Bundler.
 To begin, you'll need to create an account on RubyGems.org. Visit the [sign up](https://rubygems.org/users/new)
 page and supply an email address that you control, a handle (username) and a password.
 
-After creating the account, use the handle and password you supplied to retrieve your API key from the
-RubyGems.org server. For example, if your handle is 'squidbot':
+After creating the account, use your email and password when pushing the gem.
+(RubyGems saves the credentials in ~/.gem/credentials for you so you only need
+to log in once.)
 
-    $ curl -u squidbot https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials
-    Enter host password for user 'squidbot':
-
-This will retrieve your API key and save it to your `~/.gem/credentials` file. Installing this key file is
-what allows the gem push command to work, associating any pushed gems with your RubyGems.org account. To
-publish version 0.1.0 of a new gem named 'squid-utils':
+To publish version 0.1.0 of a new gem named 'squid-utils':
 
     $ gem push squid-utils-0.1.0.gem
+    Enter your RubyGems.org credentials.
+    Don't have an account yet? Create one at https://rubygems.org/sign_up
+       Email:   gem_author@example
+    Password:
+    Signed in.
     Pushing gem to RubyGems.org...
     Successfully registered gem: squid-utils (0.1.0)
 
