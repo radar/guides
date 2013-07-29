@@ -12,6 +12,11 @@ Unpack the mystery behind what's in a RubyGem.
 
 Start with an idea, end with a distributable package of Ruby code.
 
+[Name your gem](/name-your-gem)
+---------------
+
+Our recommendation on the use of "_" and "-" in your gem's name.
+
 [Publishing your gem](/publishing)
 ---------------
 

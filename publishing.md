@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Publishing your gem
-previous: /make-your-own-gem
+previous: /name-your-gem
 next: /patterns
 ---
 
