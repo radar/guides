@@ -15,8 +15,8 @@ Use underscores
 * [ruby_parser](https://rubygems.org/gems/ruby_parser)
 
 This matches the file the user will require and makes it easier for the user to
-start using your gem.  `gem install my_gem` will be loaded by `require
-'my_gem'`.
+start using your gem.  `gem install my_gem` will be loaded by
+`require 'my_gem'`.
 
 Use dashes for extensions
 -------------------------
