@@ -31,6 +31,16 @@ bit it becomes a slash as well, making it easier for the user to know what to
 require.  `gem install net-http-persistent` becomes
 `require 'net/http/persistent'`
 
+Mix underscores and dashes appropriately
+----------------------------------------
+
+The main goal of these recommendations are to give your user some clue about
+how to require the files in the gem.  For example,
+[net-http-digest_auth](https://rubygems.org/gems/net-http-digest_auth) adds
+[HTTP digest authentication](http://tools.ietf.org/html/rfc2617) to net/http.
+The user will `require 'net/http/digest_auth'` to use the extension
+(in class Net::HTTP::DigestAuth).  This follows both of the rules above.
+
 Don't use UPPERCASE letters
 ---------------------------
 
@@ -43,6 +53,6 @@ necessary.
 Credits
 -------
 
-This guide originally appeared as [How to Name
+This guide was expanded from [How to Name
 Gems](http://blog.segment7.net/2010/11/15/how-to-name-gems) by Eric Hodel.
 
