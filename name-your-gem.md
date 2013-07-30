@@ -5,41 +5,44 @@ previous: /make-your-own-gem
 next: /publishing
 ---
 
-Here is our recommendation on how to name gems:
+Here are some examples of our recommendations for naming gems:
 
-Use underscores
----------------
+Gem name               | Require statement                | Main class or module
+---------------------- | -------------------------------- | -----------------------
+`fancy_require`        | `require 'fancy_require'`        | `FancyRequire`
+`ruby_parser`          | `require 'ruby_parser'`          | `RubyParser`
+`net-http-persistent`  | `require 'net/http/persistent'`  | `Net::HTTP::Persistent`
+`rdoc-data`            | `require 'rdoc/data'`            | `RDoc::Data`
+`autotest-growl`       | `require 'autotest/growl'`       | `Autotest::Growl`
+`net-http-digest_auth` | `require 'net/http/digest_auth'` | `Net::HTTP::DigestAuth`
 
-* [fancy_require](https://rubygems.org/gems/fancy_require)
-* [newrelic_rpm](https://rubygems.org/gems/newrelic_rpm)
-* [ruby_parser](https://rubygems.org/gems/ruby_parser)
+The main goal of these recommendations is to give the user some clue about
+how to require the files in your gem. Following these conventions also lets
+Bundler require your gem with no extra configuration.
 
-This matches the file the user will require and makes it easier for the user to
-start using your gem.  `gem install my_gem` will be loaded by
-`require 'my_gem'`.
+Use underscores for multiple words
+----------------------------------
+
+If a class or module has multiple words, use underscores to separate them. This
+matches the file the user will require, making it easier for the user to start
+using your gem.
 
 Use dashes for extensions
 -------------------------
 
-* [net-http-persistent](https://rubygems.org/gems/net-http-persistent)
-* [rdoc-data](https://rubygems.org/gems/rdoc-data)
-* [autotest-growl](https://rubygems.org/gems/autotest-growl)
-
-If you're adding functionality to another gem use a dash.  The dash is
-different-enough from an underscore to be noticeable.  If you tilt the dash a
-bit it becomes a slash as well, making it easier for the user to know what to
-require.  `gem install net-http-persistent` becomes
-`require 'net/http/persistent'`
+If you're adding functionality to another gem, use a dash. This usually
+corresponds to a `/` in the require statement (and therefore your gem's
+directory structure) and a `::` in the name of your main class or module.
 
 Mix underscores and dashes appropriately
 ----------------------------------------
 
-The main goal of these recommendations are to give your user some clue about
-how to require the files in the gem.  For example,
-[net-http-digest_auth](https://rubygems.org/gems/net-http-digest_auth) adds
-[HTTP digest authentication](http://tools.ietf.org/html/rfc2617) to net/http.
+If your class or module has multiple words and you're also adding functionality
+to another gem, follow both of the rules above. For example,
+[`net-http-digest_auth`](https://rubygems.org/gems/net-http-digest_auth) adds
+[HTTP digest authentication](http://tools.ietf.org/html/rfc2617) to `net/http`.
 The user will `require 'net/http/digest_auth'` to use the extension
-(in class Net::HTTP::DigestAuth).  This follows both of the rules above.
+(in class `Net::HTTP::DigestAuth`).
 
 Don't use UPPERCASE letters
 ---------------------------
