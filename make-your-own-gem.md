@@ -71,6 +71,7 @@ information you see on a gem page
       s.files       = ["lib/hola.rb"]
       s.homepage    =
         'http://rubygems.org/gems/hola'
+      s.license       = 'MIT'
     end
 
 > The description member can be much longer than you see in this example. If it
