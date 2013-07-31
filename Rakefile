@@ -46,7 +46,9 @@ task :command_guide do
   names    = Gem::CommandManager.instance.command_names
   commands = {}
   names.each do |name|
-    commands[name] = Gem::CommandManager.instance[name]
+    command = Gem::CommandManager.instance[name]
+    command.options[:help] = ''
+    commands[name] = command
   end
 
   def htmlify(string)
