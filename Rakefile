@@ -106,7 +106,11 @@ task :command_guide do
     options
   end
 
-  erbio = RDoc::ERBIO.new File.read("command-reference.erb"), nil, nil
+  filename = "command-reference.erb"
+
+  erbio = RDoc::ERBIO.new File.read(filename), nil, nil
+  erbio.filename = filename
+
   open 'command-reference.md', 'w' do |io|
     erbio.result binding
   end
