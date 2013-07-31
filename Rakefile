@@ -6,19 +6,28 @@ require 'fileutils'
 
 $:.unshift "."
 
-RDoc::Task.new(:rdoc_spec) do |rd|
+ENV['RUBYGEMS_DIR'] ||= File.expand_path '../../rubygems', __FILE__
 
-  begin
-    puts <<-NO_RUBYGEMS_DIR
-    The Rubygems rdocs are required to build the spec guide.
+task :RUBYGEMS_DIR_exists do
+  message = <<-NO_RUBYGEMS_DIR
+The Rubygems rdocs are required to build the spec guide.
 
-    Install or clone it from GitHub, then:
+Install or clone it from GitHub, then:
+
     RUBYGEMS_DIR=/path/to/rubygems/source rake spec_guide --trace
-    NO_RUBYGEMS_DIR
 
-    exit
-  end unless ENV['RUBYGEMS_DIR']
+The RUBYGEMS_DIR is assumed to exist at:
 
+    #{ENV['RUBYGEMS_DIR']}
+  NO_RUBYGEMS_DIR
+
+  abort message unless File.exist? ENV['RUBYGEMS_DIR']
+end
+
+# RUBYGEMS_DIR should be checked first
+task rdoc_spec: %w[RUBYGEMS_DIR_exists]
+
+RDoc::Task.new(:rdoc_spec) do |rd|
   spec_file = File.join(ENV["RUBYGEMS_DIR"].to_s, "lib", "rubygems", "specification.rb")
   rd.rdoc_files.include(spec_file)
   rd.template = "jekdoc"
@@ -117,3 +126,29 @@ task :command_guide do
     erbio.result binding
   end
 end
+
+desc "serve documentation on http://localhost:4000"
+task :server do
+  pids = [
+    spawn('jekyll', '--server', '4000'),
+    spawn('scss', '--watch', 'stylesheets:stylesheets'),
+  ]
+
+  trap "INT" do
+    Process.kill "INT", *pids
+    exit 1
+  end
+
+  trap "TERM" do
+    Process.kill "TERM", *pids
+    exit 1
+  end
+
+  pids.each do |pid|
+    Process.waitpid pid
+  end
+end
+
+desc 'build documentation and display it on http://localhost:4000'
+task default: %w[spec_guide command_guide server]
+
