@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Name your gem
-previous: /make-your-own-gem
+previous: /gems-with-extensions
 next: /publishing
 ---
 

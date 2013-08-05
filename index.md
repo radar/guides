@@ -12,6 +12,11 @@ Unpack the mystery behind what's in a RubyGem.
 
 Start with an idea, end with a distributable package of Ruby code.
 
+[Gems with Extensions](/gems-with-extensions)
+----------------------
+
+Creating a gem that includes an extension that is built at install time.
+
 [Name your gem](/name-your-gem)
 ---------------
 

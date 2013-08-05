@@ -2,7 +2,7 @@
 layout: default
 title: Make your own gem
 previous: /what-is-a-gem
-next: /name-your-gem
+next: /gems-with-extensions
 ---
 
 From start to finish, learn how to package your Ruby code in a gem.
