@@ -32,12 +32,10 @@ If you are going to support multiple languages, such as C and Java extensions,
 you should put the C-specific ruby files under the ext/ directory as well in a
 `lib/` directory.
 
-```
-Rakefile
-ext/my_malloc/extconf.rb               # extension configuration
-ext/my_malloc/my_malloc.c              # extension source
-lib/my_malloc.rb                       # generic features
-```
+    Rakefile
+    ext/my_malloc/extconf.rb               # extension configuration
+    ext/my_malloc/my_malloc.c              # extension source
+    lib/my_malloc.rb                       # generic features
 
 When the extension is built the files in `ext/my_malloc/lib/` will be installed
 into the `lib/` directory for you.
@@ -52,14 +50,12 @@ these are missing.
 
 Here is an extconf.rb that checks for `malloc()` and `free()`:
 
-```
-require 'mkmf'
+    require "mkmf"
 
-abort 'missing malloc()' unless have_func 'malloc'
-abort 'missing free()'   unless have_func 'free'
+    abort "missing malloc()" unless have_func "malloc"
+    abort "missing free()"   unless have_func "free"
 
-create_makefile 'my_malloc/my_malloc'
-```
+    create_makefile "my_malloc/my_malloc"
 
 See the [mkmf documentation][mkmf.rb] and [README.EXT][README.EXT] for further
 information about creating an extconf.rb
@@ -68,7 +64,83 @@ C Extension
 -----------
 
 The C extension that wraps `malloc()` and `free()` goes in
-`ext/my_malloc/my_malloc.c`.  This extension is simple with just a few parts:
+`ext/my_malloc/my_malloc.c`.  Here's the listing:
+
+    #include <ruby.h>
+
+    struct my_malloc {
+	size_t size;
+	void *ptr;
+    };
+
+    static void
+    my_malloc_free(void *p) {
+	struct my_malloc *ptr = p;
+
+	if (ptr->size > 0)
+	    free(ptr->ptr);
+    }
+
+    static VALUE
+    my_malloc_alloc(VALUE klass) {
+	VALUE obj;
+	struct my_malloc *ptr;
+
+	obj = Data_Make_Struct(klass, struct my_malloc, NULL, my_malloc_free, ptr);
+
+	ptr->size = 0;
+	ptr->ptr  = NULL;
+
+	return obj;
+    }
+
+    static VALUE
+    my_malloc_init(VALUE self, VALUE size) {
+	struct my_malloc *ptr;
+	size_t requested = NUM2SIZET(size);
+
+	if (0 == requested)
+	    rb_raise(rb_eArgError, "unable to allocate 0 bytes");
+
+	Data_Get_Struct(self, struct my_malloc, ptr);
+
+	ptr->ptr = malloc(requested);
+
+	if (NULL == ptr->ptr)
+	    rb_raise(rb_eNoMemError, "unable to allocate %ld bytes", requested);
+
+	ptr->size = requested;
+
+	return self;
+    }
+
+    static VALUE
+    my_malloc_release(VALUE self) {
+	struct my_malloc *ptr;
+
+	Data_Get_Struct(self, struct my_malloc, ptr);
+
+	if (0 == ptr->size)
+	    return self;
+
+	ptr->size = 0;
+	free(ptr->ptr);
+
+	return self;
+    }
+
+    void
+    Init_my_malloc(void) {
+	VALUE cMyMalloc;
+
+	cMyMalloc = rb_const_get(rb_cObject, rb_intern("MyMalloc"));
+
+	rb_define_alloc_func(cMyMalloc, my_malloc_alloc);
+	rb_define_method(cMyMalloc, "initialize", my_malloc_init, 1);
+	rb_define_method(cMyMalloc, "free", my_malloc_release, 0);
+    }
+
+This extension is simple with just a few parts:
 
 * `struct my_malloc` to hold the allocated memory
 * `my_malloc_free()` to free the allocated memory after garbage collection
@@ -77,97 +149,19 @@ The C extension that wraps `malloc()` and `free()` goes in
 * `my_malloc_release()` to free memory from ruby
 * `Init_my_malloc()` to register the functions in the `MyMalloc` class.
 
-```
-#include <ruby.h>
-
-struct my_malloc {
-    size_t size;
-    void *ptr;
-};
-
-static void
-my_malloc_free(void *p) {
-    struct my_malloc *ptr = p;
-
-    if (ptr->size > 0)
-	free(ptr->ptr);
-}
-
-static VALUE
-my_malloc_alloc(VALUE klass) {
-    VALUE obj;
-    struct my_malloc *ptr;
-
-    obj = Data_Make_Struct(klass, struct my_malloc, NULL, my_malloc_free, ptr);
-
-    ptr->size = 0;
-    ptr->ptr  = NULL;
-
-    return obj;
-}
-
-static VALUE
-my_malloc_init(VALUE self, VALUE size) {
-    struct my_malloc *ptr;
-    size_t requested = NUM2SIZET(size);
-
-    if (0 == requested)
-	rb_raise(rb_eArgError, "unable to allocate 0 bytes");
-
-    Data_Get_Struct(self, struct my_malloc, ptr);
-
-    ptr->ptr = malloc(requested);
-
-    if (NULL == ptr->ptr)
-	rb_raise(rb_eNoMemError, "unable to allocate %ld bytes", requested);
-
-    ptr->size = requested;
-
-    return self;
-}
-
-static VALUE
-my_malloc_release(VALUE self) {
-    struct my_malloc *ptr;
-
-    Data_Get_Struct(self, struct my_malloc, ptr);
-
-    if (0 == ptr->size)
-	return self;
-
-    ptr->size = 0;
-    free(ptr->ptr);
-
-    return self;
-}
-
-void
-Init_my_malloc(void) {
-    VALUE cMyMalloc;
-
-    cMyMalloc = rb_const_get(rb_cObject, rb_intern("MyMalloc"));
-
-    rb_define_alloc_func(cMyMalloc, my_malloc_alloc);
-    rb_define_method(cMyMalloc, "initialize", my_malloc_init, 1);
-    rb_define_method(cMyMalloc, "free", my_malloc_release, 0);
-}
-```
-
 You can test building the extension as follows:
 
-```
-$ cd ext/my_malloc
-$ ruby extconf.rb
-checking for malloc()... yes
-checking for free()... yes
-creating Makefile
-$ make
-compiling my_malloc.c
-linking shared-object my_malloc.bundle
-$ cd ../..
-$ ruby -Ilib:ext -r my_malloc -e 'p MyMalloc.new(5).free'
-#<MyMalloc:0x007fed838addb0>
-```
+    $ cd ext/my_malloc
+    $ ruby extconf.rb
+    checking for malloc()... yes
+    checking for free()... yes
+    creating Makefile
+    $ make
+    compiling my_malloc.c
+    linking shared-object my_malloc.bundle
+    $ cd ../..
+    $ ruby -Ilib:ext -r my_malloc -e "p MyMalloc.new(5).free"
+    #<MyMalloc:0x007fed838addb0>
 
 But this will get tedious after a while.  Let's automate it!
 
@@ -180,13 +174,11 @@ Java extensions in the same project (nokogiri uses it this way).
 
 Adding rake-compiler is very simple:
 
-```
-require 'rake/extensiontask'
+    require "rake/extensiontask"
 
-Rake::ExtensionTask.new 'my_malloc' do |ext|
-  ext.lib_dir = 'lib/my_malloc'
-end
-```
+    Rake::ExtensionTask.new "my_malloc" do |ext|
+      ext.lib_dir = "lib/my_malloc"
+    end
 
 Now you can build the extension with `rake compile` and hook the compile task
 into other tasks (such as tests).
@@ -197,15 +189,13 @@ file.  This allows you to write the parts that are best suited to ruby in ruby.
 
 For example:
 
-```
-class MyMalloc
+    class MyMalloc
 
-  VERSION = '1.0'
+      VERSION = "1.0"
 
-end
+    end
 
-require 'my_malloc/my_malloc'
-```
+    require "my_malloc/my_malloc"
 
 Setting the `lib_dir` also allows you to build a gem that contains pre-built
 extensions for multiple versions of ruby.  (An extension for Ruby 1.9.3 cannot
@@ -218,13 +208,11 @@ Gem specification
 The final step to building the gem is adding the extconf.rb to the extensions
 list in the gemspec:
 
-```
-Gem::Specification.new 'my_malloc', '1.0' do |s|
-  # [...]
+    Gem::Specification.new "my_malloc", "1.0" do |s|
+      # [...]
 
-  s.extensions = %w[ext/my_malloc/extconf.rb]
-end
-```
+      s.extensions = %w[ext/my_malloc/extconf.rb]
+    end
 
 Now you can build and release the gem!
 
