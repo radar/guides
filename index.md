@@ -52,11 +52,6 @@ Interact with publicly available gems over HTTP.
 
 Need to serve gems locally or for your organization? Go here.
 
-[C Extensions](/c-extensions)
----------------
-
-Learn how to make a gem that interacts with C code.
-
 [Resources](/resources)
 ---------------
 

@@ -2,7 +2,7 @@
 layout: default
 title: Run your own gem server
 previous: /rubygems-org-api
-next: /c-extensions
+next: /resources
 ---
 
 {% include big.html %}

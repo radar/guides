@@ -3,6 +3,7 @@ layout: default
 title: Gems with Extensions
 previous: /make-your-own-gem
 next: /name-your-gem
+alias: /c-extensions
 ---
 
 Many gems use extensions to wrap libraries that are written in C with a ruby
@@ -241,10 +242,16 @@ a gem with the name `<name>`:
 Further Reading
 ---------------
 
-* [README.EXT][README.EXT] describes in greater detail how to build extensions in ruby
-* [MakeMakefile][mkmf.rb] contains documentation for mkmf.rb, the library extconf.rb uses to detect ruby and C library features
-* [rake-compiler][rake-compiler] integrates building C and Java extensions into your Rakefile in a smooth manner.
-* [Writing C extensions part 1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
+* [my_malloc](https://github.com/rubygems/guides/tree/my_malloc) contains the
+  source for this extension with some additional comments.
+* [README.EXT][README.EXT] describes in greater detail how to build extensions
+  in ruby
+* [MakeMakefile][mkmf.rb] contains documentation for mkmf.rb, the library
+  extconf.rb uses to detect ruby and C library features
+* [rake-compiler][rake-compiler] integrates building C and Java extensions into
+  your Rakefile in a smooth manner.
+* [Writing C extensions part
+  1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
   and [part 2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2.html))
   by Aaron Patterson
 * Interfaces to C libraries can be written using ruby and
