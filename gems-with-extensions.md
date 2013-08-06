@@ -48,7 +48,8 @@ extconf.rb must check for the necessary functions, macros and shared libraries
 your extension depends upon.  The extconf.rb must exit with an error if any of
 these are missing.
 
-Here is an extconf.rb that checks for `malloc()` and `free()`:
+Here is an extconf.rb that checks for `malloc()` and `free()` and creates a
+Makefile that will install the built extension at `lib/my_malloc/my_malloc.so`:
 
     require "mkmf"
 
@@ -58,7 +59,8 @@ Here is an extconf.rb that checks for `malloc()` and `free()`:
     create_makefile "my_malloc/my_malloc"
 
 See the [mkmf documentation][mkmf.rb] and [README.EXT][README.EXT] for further
-information about creating an extconf.rb
+information about creating an extconf.rb and for documentation on these
+methods.
 
 C Extension
 -----------
@@ -216,13 +218,40 @@ list in the gemspec:
 
 Now you can build and release the gem!
 
+Extension Naming
+----------------
+
+To avoid unintended interactions between gems, it's a good idea for each gem to
+keep all of its files in a single directory.  Here are the recommendations for
+a gem with the name `<name>`:
+
+1. `ext/<name>` is the directory that contains the source files and
+   `extconf.rb`
+1. `ext/<name>/<name>.c` is the main source file (there may be others)
+1. `ext/<name>/<name>.c` contains a function `Init_<name>`.  (The name
+   following `Init_` function must exactly match the name of the extension for
+   it to be loadable by require.)
+1. `ext/<name>/extconf.rb` calls `create_makefile('<name>/<name>')` only when
+   the all the pieces needed to compile the extension are present.
+1. The gemspec sets `extensions = ['ext/<name>/extconf.rb']` and includes any
+   of the necessary extension source files in the `files` list.
+1. `lib/<name>.rb` contains `require '<name>/<name>'` which loads the C
+   extension
+
 Further Reading
 ---------------
 
 * [README.EXT][README.EXT] describes in greater detail how to build extensions in ruby
 * [MakeMakefile][mkmf.rb] contains documentation for mkmf.rb, the library extconf.rb uses to detect ruby and C library features
 * [rake-compiler][rake-compiler] integrates building C and Java extensions into your Rakefile in a smooth manner.
+* [Writing C extensions part 1](http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
+  and [part 2](http://tenderlovemaking.com/2010/12/11/writing-ruby-c-extensions-part-2.html))
+  by Aaron Patterson
+* Interfaces to C libraries can be written using ruby and
+  [fiddle](http://ruby-doc.org/stdlib-2.0/libdoc/fiddle/rdoc/Fiddle.html) (part
+  of the standard library) or [ruby-ffi](http://github.com/ffi/ffi)
 
 [README.EXT]: https://github.com/ruby/ruby/blob/trunk/README.EXT
 [mkmf.rb]: http://ruby-doc.org/stdlib-2.0/libdoc/mkmf/rdoc/MakeMakefile.html
 [rake-compiler]: https://github.com/luislavena/rake-compiler
+
