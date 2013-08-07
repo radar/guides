@@ -42,11 +42,15 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
-    s.add_development_dependency "rspec", "~> 2.6"
+```ruby
+s.add_development_dependency "rspec", "~> 2.6"
+```
 
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
 
-    Bundler.require(:default, :development)
+```ruby
+Bundler.require(:default, :development)
+```
 
 The benefit of putting this dependency specification inside of _foodie.gemspec_ rather than the _Gemfile_ is that anybody who runs `gem install foodie --dev` will get these development dependencies installed too. This command is used for when people wish to test a gem without having to fork it or clone it from GitHub.
 
@@ -62,37 +66,45 @@ Bundler detects our gem, loads the gemspec and bundles our gem just like every o
 
 We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_; but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with the following:
 
-    describe Foodie::Food do
-      it "broccoli is gross" do
-        Foodie::Food.portray("Broccoli").should eql("Gross!")
-      end
+```ruby
+describe Foodie::Food do
+  it "broccoli is gross" do
+    Foodie::Food.portray("Broccoli").should eql("Gross!")
+  end
 
-      it "anything else is delicious" do
-        Foodie::Food.portray("Not Broccoli").should eql("Delicious!")
+  it "anything else is delicious" do
+    Foodie::Food.portray("Not Broccoli").should eql("Delicious!")
+  end
+end
+```
+
+When we run `bundle exec rspec spec` again, we'll be told the `Foodie::Food` constant doesn't exist. This is true, and we should define it in `lib/foodie/food.rb` like this:
+
+```
+module Foodie
+  class Food
+    def self.portray(food)
+      if food.downcase == "broccoli"
+        "Gross!"
+      else
+        "Delicious!"
       end
     end
-
-When we run `bundle exec rspec spec` again, we'll be told the `Foodie::Food` constant doesn't exist. This is true, and we should define it in _lib/foodie/food.rb_ like this:
-
-    module Foodie
-      class Food
-        def self.portray(food)
-          if food.downcase == "broccoli"
-            "Gross!"
-          else
-            "Delicious!"
-          end
-        end
-      end
-    end
+  end
+end
+```
 
 To load this file, we'll need to add a require line to `lib/foodie.rb` for it:
 
-    require 'foodie/food'
+```ruby
+require 'foodie/food'
+```
 
 We will also need to require the `lib/foodie.rb` at the top of `spec/foodie_spec.rb`:
 
-    require 'foodie'
+```ruby
+require 'foodie'
+```
 
 When we run our specs with `bundle exec rspec spec` this test will pass:
 
@@ -108,25 +120,35 @@ We're now going to use Active Support's `pluralize` method by calling it using a
 
 To use another gem, we must first specify it as a dependency in our _foodie.gemspec_. We can specify the dependency on the `activesupport` gem in _foodie.gemspec_ by adding this line inside the `Gem::Specification` object:
 
-    s.add_dependency "activesupport"
+```ruby
+s.add_dependency "activesupport"
+```
 
 If we wanted to specify a particular version we may use this line:
 
-    s.add_dependency "activesupport", "3.0.0"
+```ruby
+s.add_dependency "activesupport", "4.0.0"
+```
 
 Or specify a version constraint:
 
-    s.add_dependency "activesupport", ">= 2.3.8"
+```ruby
+s.add_dependency "activesupport", ">= 4.0.0"
+```
 
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
-    s.add_dependency "activesupport", "~> 3.0.0"
+```ruby
+s.add_dependency "activesupport", "~> 4.0.0"
+```
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
 
-    it "pluralizes a word" do
-      Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
-    end
+```ruby
+it "pluralizes a word" do
+  Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
+end
+```
 
 Of course when we run this spec with `bundle exec rspec spec` it will fail:
 
@@ -135,17 +157,20 @@ Of course when we run this spec with `bundle exec rspec spec` it will fail:
 
 We can now define this `pluralize` method in _lib/foodie/food.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
 
-    require 'active_support/inflector'
+```ruby
+require 'active_support/inflector'
+```
 
 Next, we can define the `pluralize` method like this:
 
-    def self.pluralize(word)
-      word.pluralize
-    end
+```ruby
+def self.pluralize(word)
+  word.pluralize
+end
+```
 
 When we run `bundle exec rspec spec` our specs will pass:
 
-    ...
     3 examples, 0 failures
 
 This brings another checkpoint where it'd be a good idea to commit our efforts so far.
@@ -164,25 +189,29 @@ David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing too
 
 We will define new development dependencies in _foodie.gemspec_ now for the Cucumber things:
 
-    s.add_development_dependency "cucumber"
-    s.add_development_dependency "aruba"
+```ruby
+s.add_development_dependency "cucumber"
+s.add_development_dependency "aruba"
+```
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
 
 Our CLI is going to have two methods, which correspond to the two methods which we have defined in `Foodie::Food`. We will now create a _features_ directory where we will make sweet, sweet love to Aruba to write tests for our CLI. In this directory we'll create a new file called _features/food.feature_ and fill it with this juicy code:
 
-    Feature: Food
-      In order to portray or pluralize food
-      As a CLI
-      I want to be as objective as possible
+```cucumber
+Feature: Food
+  In order to portray or pluralize food
+  As a CLI
+  I want to be as objective as possible
 
-      Scenario: Broccoli is gross
-        When I run "foodie portray broccoli"
-        Then the output should contain "Gross!"
+  Scenario: Broccoli is gross
+    When I run "foodie portray broccoli"
+    Then the output should contain "Gross!"
 
-      Scenario: Tomato, or Tomato?
-        When I run "foodie pluralize --word Tomato"
-        Then the output should contain "Tomatoes"
+  Scenario: Tomato, or Tomato?
+    When I run "foodie pluralize --word Tomato"
+    Then the output should contain "Tomatoes"
+```
 
 These scenarios test the CLI our gem will provide. In the `When I run` steps, the first word inside the quotes is the name of our executable, the second is the task name, and any further text is arguments or options. Yes, it *is* testing what appears to be the same thing as our specs. How very observant of you. Gold star! But it's testing it through a CLI, which makes it *supremely awesome*. Contrived examples are _in_ this year.
 
@@ -194,6 +223,7 @@ To run this feature, we use the `cucumber` command, but of course because it's a
 
 See those yellow things? They're undefined steps:
 
+
     When /^I run "([^"]*)"$/ do |arg1|
       pending # express the regexp above with the code you wish you had
     end
@@ -204,7 +234,9 @@ See those yellow things? They're undefined steps:
     
 We can define them by requiring Aruba. In Cucumber, all _.rb_ files in the _features/support_ directory are automatically required. To prove this to ourselves, we can add a _features/support/setup.rb_ file (create the _support_ directory first) and put in this single line:
 
-    require 'aruba/cucumber'
+```ruby
+require 'aruba/cucumber'
+```
    
 This loads the Cucumber steps provided by Aruba which are the same steps our Cucumber features need to be awesome.
    
@@ -214,8 +246,10 @@ We have to re-run `bundle exec cucumber features`, just to see what happens next
    
 OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _bin_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
 
-    #!/usr/bin/env ruby
-    print "nothing."
+```bash
+#!/usr/bin/env ruby
+print "nothing."
+```
     
 If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error. Hey, speaking of running, we should `chmod` this file to be an executable from our terminal:
 
@@ -228,10 +262,11 @@ Alright so we've got the executable file, now what? If we re-run our features we
      
 Our _bin/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
 
-    require 'foodie/cli'
-    Foodie::CLI.start
+```ruby
+require 'foodie/cli'
+Foodie::CLI.start
+```
     
-
 Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do?
@@ -244,7 +279,7 @@ For now we'll just look at how we can craft a CLI using Thor and then afterwards
 
 To make this CLI work we're going to need to create a `Foodie::CLI` class and define a `start` method on it. Or you know, there's probably a gem out there for us to use. Like [Thor](http://github.com/wycats/thor). Named after the badass lightning god from Norse mythology, this gem is definitely on the fast-track to being just as badass. This gem is what we'll be using to build our CLI interface and then later on the generator (if you behave, remember?).
 
-Let's define the _lib/foodie/cli.rb_ file now like this:
+Let's define the `lib/foodie/cli.rb` file now like this:
 
     require 'thor'
     module Foodie
@@ -253,9 +288,11 @@ Let's define the _lib/foodie/cli.rb_ file now like this:
       end
     end
     
-The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous _add\_dependency_:
+The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
 
-    s.add_dependency "thor"
+```ruby
+s.add_dependency "thor"
+```
     
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
@@ -265,16 +302,20 @@ To install this new dependency, we use `bundle install`. When we run `bundle exe
     
 Thor tasks are defined as plain ol' methods, but with a slight twist. To define the `portray` task in our `Foodie::CLI` class we will write this inside the `Foodie::CLI` class:
 
-    desc "portray ITEM", "Determines if a piece of food is gross or delicious"
-    def portray(name)
-      puts Foodie::Food.portray(name)
-    end
+```ruby
+desc "portray ITEM", "Determines if a piece of food is gross or delicious"
+def portray(name)
+  puts Foodie::Food.portray(name)
+end
+```
     
 The `desc` method is the "slight twist" here. The method defined after it becomes a task with the given description. The first argument for `desc` is the usage instructions for the task whilst the second is the short description of what that task accomplishes. The `portray` method is defined with a single argument, which will be the first argument passed to this task on the command line. Inside the `portray` method we call `Foodie::Food.portray` and pass it this argument.
 
 In the `Foodie::CLI` class we're referencing the `Foodie::Food` class without requiring the file that defines it. Under the `require 'thor'` at the top of this file, put this line to require the file that defines `Foodie::Food`:
 
-    require 'foodie'
+```ruby
+require 'foodie'
+```
     
 When we re-run our features using `bundle exec cucumber features` our first scenario will pass:
 
@@ -284,11 +325,13 @@ When we re-run our features using `bundle exec cucumber features` our first scen
 The second is still failing because we haven't defined the `pluralize` task. This time rather than defining a task that takes an argument, we'll define a task that reads in the value from an option passed to the task. To define the `pluralize` task we use this code in `Foodie::CLI`:
 
 
-    desc "pluralize", "Pluralizes a word"
-    method_option :word, :aliases => "-w"
-    def pluralize
-      puts Foodie::Food.pluralize(options[:word])
-    end
+```ruby
+desc "pluralize", "Pluralizes a word"
+method_option :word, :aliases => "-w"
+def pluralize
+  puts Foodie::Food.pluralize(options[:word])
+end
+```
 
 Here there's the new `method_option` method we use which defines, well, a method option. It takes a hash which indicates the details of an option how they should be returned to our task. Check out the Thor README for a full list of valid types. We can also define aliases for this method using the `:aliases` option passed to `method_option`. Inside the task we reference the value of the options through the `options` hash and we use `Foodie::Food.pluralize` to pluralize a word.
 
@@ -301,10 +344,12 @@ We can try executing the CLI app by running `bundle exec bin/foodie portray broc
 
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
-    method_options :word => :string, :uppercase => :boolean
-    def pluralize
-      # accessed as options[:word], options[:uppercase]
-    end
+```ruby
+method_options :word => :string, :uppercase => :boolean
+def pluralize
+  # accessed as options[:word], options[:uppercase]
+end
+```
 
 In this example, `options[:word]` will return a `String` object, whilst `options[:uppercase]` will return either `true` or `false`, depending on the value it has received.
 
@@ -324,35 +369,40 @@ We're going to mix it up a bit and add a new feature to our gem: a generator for
 
 This will generate a _recipes_ directory at the current location, a _dinner_ directory inside that and then a _steak.txt_ file inside that. This _steak.txt_ file will contain the scaffold for a recipe, such as the ingredients and the instructions.
 
-Thankfully for us, Aruba has ways of testing that a generator generates files and directories. Let's create a new file called _features/generator.feature_ and fill it with this content:
-
-    Feature: Generating things
-      In order to generate many a thing
-      As a CLI newbie
-      I want foodie to hold my hand, tightly
-
-      Scenario: Recipes
-        When I run "foodie recipe dinner steak"
-        Then the following files should exist:
-          | dinner/steak.txt |
-        Then the file "dinner/steak.txt" should contain:
-          """
-          ##### Ingredients #####
-          Ingredients for delicious steak go here.
+Thankfully for us, Aruba has ways of testing that a generator generates files and directories. Let's create a new file called `features/generator.feature` and fill it with this content:
 
 
-          ##### Instructions #####
-          Tips on how to make delicious steak go here.
-          """
+```cucumber
+Feature: Generating things
+  In order to generate many a thing
+  As a CLI newbie
+  I want foodie to hold my hand, tightly
+
+  Scenario: Recipes
+    When I run "foodie recipe dinner steak"
+    Then the following files should exist:
+      | dinner/steak.txt |
+    Then the file "dinner/steak.txt" should contain:
+      """
+      ##### Ingredients #####
+      Ingredients for delicious steak go here.
+
+
+      ##### Instructions #####
+      Tips on how to make delicious steak go here.
+      """
+```
 
 It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon.
 
 When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
 
 
-    Then /^the file "([^"]*)" should contain:$/ do |file, content|
-      check_file_content(file, content, true)
-    end
+```cucumber
+Then /^the file "([^"]*)" should contain:$/ do |file, content|
+  check_file_content(file, content, true)
+end
+```
    
 Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
 
@@ -360,42 +410,52 @@ Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file
 
 Well, because currently we don't have a `recipe` task that does this for us defined in `Foodie::CLI`. We can define a generator class just like we define a CLI class:
 
-    desc "recipe", "Generates a recipe scaffold"
-    def recipe(group, name)
-      Foodie::Generators::Recipe.start([group, name])
-    end
+```ruby
+desc "recipe", "Generates a recipe scaffold"
+def recipe(group, name)
+  Foodie::Generators::Recipe.start([group, name])
+end
+```
 
 The first argument for this method are the arguments passed to the generator. We will need to require the file for this new class too, which we can do by putting this line at the top of _lib/foodie/cli.rb_:
 
-    require 'foodie/generators/recipe'
+```ruby
+require 'foodie/generators/recipe'
+```
 
 To define this class, we inherit from `Thor::Group` rather than `Thor`. We will also need to include the `Thor::Actions` module to define helper methods for our generator which include the likes of those able to create files and directories. Because this is a generator class, we will put it in a new namespace called "generators", making the location of this file _lib/foodie/generators/recipe.rb_:
 
-    require 'thor/group'
-    module Foodie
-      module Generators
-        class Recipe < Thor::Group
-          include Thor::Actions
+```ruby
+require 'thor/group'
+module Foodie
+  module Generators
+    class Recipe < Thor::Group
+      include Thor::Actions
 
-          argument :group, :type => :string
-          argument :name, :type => :string
-        end
-      end
+      argument :group, :type => :string
+      argument :name, :type => :string
     end
+  end
+end
+```
 
 By inheriting from `Thor::Group`, we're defining a generator rather than a CLI. When we call `argument`, we are defining arguments for our generator. These are the same arguments in the same order they are passed in from the `recipe` task back in `Foodie::CLI`
 
 To make this generator, ya know, generate stuff we simply define methods in the class. All methods defined in a `Thor::Group` descendant will be run when `start` is called on it. Let's define a `create_group` method inside this class which will create a directory using the name we have passed in.
 
-    def create_group
-      empty_directory(group)
-    end
+```ruby
+def create_group
+  empty_directory(group)
+end
+```
 
 To put the file in this directory and to save our foodie-friends some typing, we will use the `template` method. This will copy over a file from a pre-defined source location and evaluate it as if it were an ERB template. We will define a `copy_recipe` method to do this now:
 
-    def copy_recipe
-      template("recipe.txt", "#{group}/#{name}.txt")
-    end
+```ruby
+def copy_recipe
+  template("recipe.txt", "#{group}/#{name}.txt")
+end
+```
 
 If we had any ERB calls in this file, they would be evaluated and the result would be output in the new template file.
 
@@ -408,9 +468,11 @@ The first line tells us that the _dinner_ directory has been created. Nothing to
 
 The second line is more exciting though! It's asking us to define the `source_root` method for our generator. That's easy! We can define it as a class method in `Foodie::Generators::Recipe` like this:
 
-    def self.source_root
-      File.dirname(__FILE__) + "/recipe"
-    end
+```ruby
+def self.source_root
+  File.dirname(__FILE__) + "/recipe"
+end
+```
 
 This tells our generator where to find the template. Now all we need to do is to create the template, which we can put at _lib/foodie/generators/recipe/recipe.txt_:
 
