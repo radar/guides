@@ -146,6 +146,61 @@ If you uninstall a dependency of a gem RubyGems will ask you for confirmation.
     ERROR:  While executing gem ... (Gem::DependencyRemovalException)
         Uninstallation aborted due to dependent gem(s)
 
+<a id="requiring"> </a>
+Requiring code
+--------------
+
+RubyGems modifies your Ruby load path, which controls how your Ruby code is
+found by the `require` statement. When you `require` a gem, really you're just
+placing that gem's `lib` directory onto your `$LOAD_PATH`. Let's try this out
+in `irb` and get some help from the `pretty_print` library included with Ruby.
+
+*Tip: Passing `-r` to
+`irb` will automatically require a library when irb is loaded.*
+
+    % irb -rpp
+    >> pp $LOAD_PATH
+    [".../lib/ruby/site_ruby/1.9.1",
+     ".../lib/ruby/site_ruby",
+     ".../lib/ruby/vendor_ruby/1.9.1",
+     ".../lib/ruby/vendor_ruby",
+     ".../lib/ruby/1.9.1",
+     "."]
+
+By default you have just a few system directories on the load path and the Ruby
+standard libraries.  To add the awesome_print directories to the load path,
+you can require one of its files:
+
+    % irb -rpp
+    >> require 'ap'
+    => true
+    >> pp $LOAD_PATH.first
+    ".../gems/awesome_print-1.0.2/lib"
+
+Note:  For Ruby 1.8 you must `require 'rubygems'` before requiring any gems.
+
+Once you've required `ap`, RubyGems automatically places its
+`lib` directory on the `$LOAD_PATH`.
+
+That's basically it for what's in a gem.  Drop Ruby code into `lib`, name a
+Ruby file the same as your gem (for the gem "freewill" the file should be
+`freewill.rb`, see also [name your gem](/name-your-gem)) and it's loadable by
+RubyGems.
+
+The `lib` directory itself normally contains only one `.rb` file and a
+directory with the same name as the gem which contains the rest of the files.
+
+For example:
+
+    % tree freewill/
+    freewill/
+    └── lib/
+        ├── freewill/
+        │   ├── user.rb
+        │   ├── widget.rb
+        │   └── ...
+        └── freewill.rb
+
 <a id="structure"> </a>
 Structure of a Gem
 ------------------
@@ -203,61 +258,6 @@ Here, you can see the major components of a gem:
 [More information on the gemspec file](/specification-reference/)
 
 [Building your own gem](/make-your-own-gem/)
-
-<a id="requiring"> </a>
-Requiring code
---------------
-
-RubyGems modifies your Ruby load path, which controls how your Ruby code is
-found by the `require` statement. When you `require` a gem, really you're just
-placing that gem's `lib` directory onto your `$LOAD_PATH`. Let's try this out
-in `irb` and get some help from the `pretty_print` library included with Ruby.
-
-*Tip: Passing `-r` to
-`irb` will automatically require a library when irb is loaded.*
-
-    % irb -rpp
-    >> pp $LOAD_PATH
-    [".../lib/ruby/site_ruby/1.9.1",
-     ".../lib/ruby/site_ruby",
-     ".../lib/ruby/vendor_ruby/1.9.1",
-     ".../lib/ruby/vendor_ruby",
-     ".../lib/ruby/1.9.1",
-     "."]
-
-By default you have just a few system directories on the load path and the Ruby
-standard libraries.  To add the awesome_print directories to the load path,
-you can require one of its files:
-
-    % irb -rpp
-    >> require 'ap'
-    => true
-    >> pp $LOAD_PATH.first
-    ".../gems/awesome_print-1.0.2/lib"
-
-Note:  For Ruby 1.8 you must `require 'rubygems'` before requiring any gems.
-
-Once you've required `ap`, RubyGems automatically places its
-`lib` directory on the `$LOAD_PATH`.
-
-That's basically it for what's in a gem.  Drop Ruby code into `lib`, name a
-Ruby file the same as your gem (for the gem "freewill" the file should be
-`freewill.rb`, see also [name your gem](/name-your-gem)) and it's loadable by
-RubyGems.
-
-The `lib` directory itself normally contains only one `.rb` file and a
-directory with the same name as the gem which contains the rest of the files.
-
-For example:
-
-    % tree freewill/
-    freewill/
-    └── lib/
-        ├── freewill/
-        │   ├── user.rb
-        │   ├── widget.rb
-        │   └── ...
-        └── freewill.rb
 
 <a id="gemspec"> </a>
 The Gemspec
