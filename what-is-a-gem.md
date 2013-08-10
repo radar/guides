@@ -8,6 +8,8 @@ next: /make-your-own-gem
 Learn what a gem can do for your Ruby applications, and what's inside of one.
 
 * [Introduction](#introduction)
+* [Finding Gems](#finding)
+* [Installing Gems](#installing)
 * [Structure of a Gem](#structure)
 * [Requiring code](#requiring)
 * [The Gemspec](#gemspec)
@@ -29,6 +31,120 @@ Gems can be used to extend or modify functionality within a Ruby application.
 Commonly they're used to split out reusable functionality that others can use
 in their applications or libraries.  Some gems also provide command line
 utilities to help automate tasks and speed up your work.
+
+<a id="finding"> </a>
+Finding Gems
+------------
+
+The search command lets you find remote gems by name.  You can use regular
+expression characters in your query:
+
+    $ gem search ^rails
+
+    *** REMOTE GEMS ***
+
+    rails (4.0.0)
+    rails-3-settings (0.1.1)
+    rails-action-args (0.1.1)
+    rails-admin (0.0.0)
+    rails-ajax (0.2.0.20130731)
+    [...]
+
+If you see a gem you want more information on you can add the details option.
+You'll want to do this with a small number of gems, though, as listing gems
+with details requires downloading more files:
+
+    $ gem search ^rails$ -d
+
+    *** REMOTE GEMS ***
+
+    rails (4.0.0)
+        Author: David Heinemeier Hansson
+        Homepage: http://www.rubyonrails.org
+
+        Full-stack web application framework.
+
+You can also search for gems on rubygems.org such as [this search for
+rake](https://rubygems.org/search?utf8=✓&query=rake)
+
+<a id="installing"> </a>
+Installing Gems
+---------------
+
+The install command downloads and installs the gem and any necessary
+dependencies then builds documentation for the installed gems.
+
+    $ gem install drip
+    Fetching: rbtree-0.4.1.gem (100%)
+    Building native extensions.  This could take a while...
+    Successfully installed rbtree-0.4.1
+    Fetching: drip-0.0.2.gem (100%)
+    Successfully installed drip-0.0.2
+    Parsing documentation for rbtree-0.4.1
+    Installing ri documentation for rbtree-0.4.1
+    Parsing documentation for drip-0.0.2
+    Installing ri documentation for drip-0.0.2
+    Done installing documentation for rbtree, drip after 0 seconds
+    2 gems installed
+
+You can list your locally installed gems:
+
+    $ gem list
+
+    *** LOCAL GEMS ***
+
+    bigdecimal (1.2.0)
+    drip (0.0.2)
+    io-console (0.4.2)
+    json (1.7.7)
+    minitest (4.3.2)
+    psych (2.0.0)
+    rake (0.9.6)
+    rbtree (0.4.1)
+    rdoc (4.0.0)
+    test-unit (2.0.0.0)
+
+(Ruby ships with some gems by default, bigdecimal, io-console, json, minitest,
+psych, rake, rdoc, test-unit for ruby 2.0.0).
+
+You can view the documentation for your installed gems with `ri`:
+
+    $ ri RBTree
+    RBTree < MultiRBTree
+
+    (from gem rbtree-0.4.0)
+    -------------------------------------------
+    A sorted associative collection that cannot
+    contain duplicate keys. RBTree is a
+    subclass of MultiRBTree.
+    -------------------------------------------
+
+You can view the documentation for your installed gems in your browser with
+the server command:
+
+    $ gem server
+    Server started at http://0.0.0.0:8808
+    Server started at http://[::]:8808
+
+You can access the documentation at `http://localhost:8808`
+
+You can uninstall gems with the uninstall command.
+
+    $ gem uninstall drip
+    Successfully uninstalled drip-0.0.2
+
+If you uninstall a dependency of a gem RubyGems will ask you for confirmation.
+
+    $ gem uninstall rbtree
+
+    You have requested to uninstall the gem:
+    	rbtree-0.4.1
+
+    drip-0.0.2 depends on rbtree (>= 0)
+    If you remove this gem, these dependencies will not be met.
+    Continue with Uninstall? [yN]  n
+    ERROR:  While executing gem ... (Gem::DependencyRemovalException)
+        Uninstallation aborted due to dependent gem(s)
 
 <a id="structure"> </a>
 Structure of a Gem
