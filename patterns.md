@@ -43,41 +43,11 @@ can easily jump in and call `require 'hola'` with no problems.
 
 ### Naming your gem
 
-Naming your gem is important. Before you pick a name for your gem, please do a
-quick search on [RubyGems.org](http://rubygems.org) or
-[GitHub](http://github.com/search) to see if someone else has taken it. Every
-published gem must have a unique name. There are also [some
-guidelines](http://blog.segment7.net/2010/11/15/how-to-name-gems) to selecting
-a good gem name, paraphrased below.
-
-### Use underscores for spaces
-
-This is a typical Ruby convention. For example, if a class name is
-`BufferedLogger`, the file for it is usually `buffered_logger.rb`. Some
-examples of gems that follow this pattern include [newrelic_rpm](http://rubygems.org/gems/newrelic_rpm)
-and [factory_girl](http://rubygems.org/gems/factory_girl).
-
-The main reason behind this is that the file name matches what your users will
-`require` along with the name. For example, `gem install my_gem` will match
-`require 'my_gem'`.
-
-### Use dashes for extensions
-
-Adding new functionality to an existing gem? Use a dash. Some examples include
-[net-http-persistent](https://rubygems.org/gems/net-http-persistent) and
-[autotest-growl](https://rubygems.org/gems/autotest-growl).
-
-Usually this implies that the user will have to `require` into the
-extended gem's directory tree
-as well. For example, `gem install net-http-persistent` becomes `require
-'net/http/persistent'`.
-
-### Don't use UPPERCASE
-
-Gems with uppercase names cause problems for gem users on OSX and Windows, which use
-case-insensitive filesystems. Plus, when installing gems it's confusing. Do I
-run `gem install Hola` or `gem install hola` ? The best practice is to use all lowercase
-when naming gems.
+Naming your gem is important.  Before you pick a name for your gem, do a
+quick search on [RubyGems.org](http://rubygems.org) and
+[GitHub](http://github.com/search) to see if someone else has taken it.  Every
+published gem must have a unique name.  Be sure to read our [naming
+recommendations](/name-your-gem) when you've found a name you like.
 
 Semantic versioning
 -------------------
