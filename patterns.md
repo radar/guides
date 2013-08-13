@@ -7,13 +7,12 @@ next: /specification-reference
 
 Common practices to make your gem users' and other developers' lives easier.
 
-* [Consistent naming](#consistent-naming)
-* [Semantic versioning](#semantic-versioning)
-* [Declaring dependencies](#declaring-dependencies)
-* [Loading code](#loading-code)
-* [Prerelease gems](#prerelease-gems)
+* [Consistent naming](#consistent_naming)
+* [Semantic versioning](#semantic_versioning)
+* [Declaring dependencies](#declaring_dependencies)
+* [Loading code](#loading_code)
+* [Prerelease gems](#prerelease_gems)
 
-<a id="consistent-naming"> </a>
 Consistent naming
 -----------------
 
@@ -80,7 +79,6 @@ case-insensitive filesystems. Plus, when installing gems it's confusing. Do I
 run `gem install Hola` or `gem install hola` ? The best practice is to use all lowercase
 when naming gems.
 
-<a id="semantic-versioning"> </a>
 Semantic versioning
 -------------------
 
@@ -117,7 +115,6 @@ Semantic versioning boils down to:
 * **MAJOR** `x.0.0` level changes for backwards *incompatible* API changes, such
   as changes that will break existing users code if they update
 
-<a id="declaring-dependencies"> </a>
 Declaring dependencies
 ----------------------
 
@@ -240,7 +237,6 @@ For more information please check out [Ryan
 Tomayko's](http://tomayko.com/writings/require-rubygems-antipattern) original
 post about the subject.
 
-<a id="loading-code"> </a>
 Loading code
 ------------
 
@@ -320,7 +316,6 @@ When RubyGems activates a gem, it adds your package’s `lib` folder to the
 `$LOAD_PATH` ready to be required normally by another lib or application. Its
 safe to assume you can relative `require` any file in your `lib` folder.
 
-<a id="prerelease-gems"> </a>
 Prerelease gems
 ---------------
 
