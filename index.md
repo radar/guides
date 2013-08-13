@@ -2,6 +2,11 @@
 layout: home
 ---
 
+[RubyGems Basics](/rubygems-basics)
+-----------------------------------
+
+Use of common RubyGems commands
+
 [What is a gem?](/what-is-a-gem)
 --------------------------------
 

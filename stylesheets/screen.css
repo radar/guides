@@ -233,7 +233,6 @@ hr.space {
 
   h2, h3 {
     page-break-after: avoid; } }
-
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold; }
@@ -282,12 +281,6 @@ p img {
 p img.top {
   margin-top: 0; }
 
-p.avatars img {
-  float: none;
-  margin: 0 0 12px; }
-
-p.avatars a {
-  text-decoration: none; }
 img {
   margin: 0; }
 
@@ -667,6 +660,11 @@ body.home {
           color: #AAA; }
         #head-wrapper #homepage-top #chapters p a:hover {
           color: #AD141E; }
+      #head-wrapper #homepage-top #chapters p.introduction {
+        margin-bottom: 1.5em;
+        line-height: 1.3em;
+        width: 70%;
+        color: #CCC; }
 
 #container {
   margin: 0 auto;
