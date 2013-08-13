@@ -59,31 +59,34 @@ it can be really strange (Knuth’s TeX project had version numbers: 3,
 3.1, 3.14, 3.141, 3.1415; each successive version added another digit to PI).
 
 The RubyGems team urges gem developers to follow the
-[Semantic Versioning](http://semver.org) standard for their gem's versions. The RubyGems
-library itself does not enforce a strict versioning policy, but using an
-"irrational" policy will only be a disservice to those in the community who use
-your gems.
+[Semantic Versioning](http://semver.org) standard for their gem's versions. The
+RubyGems library itself does not enforce a strict versioning policy, but using
+an "irrational" policy will only be a disservice to those in the community who
+use your gems.
 
 Suppose you have a 'stack' gem that holds a `Stack` class with both `push` and
 `pop` functionalty. Your `CHANGELOG` might look like this if you use
 semantic versioning:
 
 * **Version 0.0.1**: The initial `Stack` class is released.
-* **Version 0.0.2**: Switched to a linked list implementation because it is cooler.
+* **Version 0.0.2**: Switched to a linked list implementation because it is
+  cooler.
 * **Version 0.1.0**: Added a `depth` method.
-* **Version 1.0.0**: Added `top` and made `pop` return `nil` (`pop` used to return the old top item).
-* **Version 1.1.0**: `push` now returns the value pushed (it used it return `nil`).
+* **Version 1.0.0**: Added `top` and made `pop` return `nil` (`pop` used to
+  return the old top item).
+* **Version 1.1.0**: `push` now returns the value pushed (it used it return
+  `nil`).
 * **Version 1.1.1**: Fixed a bug in the linked list implementation.
 * **Version 1.1.2**: Fixed a bug introduced in the last fix.
 
 Semantic versioning boils down to:
 
-* **PATCH** `0.0.x` level changes for implementation level detail changes, such as
-  small bug fixes
-* **MINOR** `0.x.0` level changes for any backwards compatible API changes, such as
-  new functionality/features
-* **MAJOR** `x.0.0` level changes for backwards *incompatible* API changes, such
-  as changes that will break existing users code if they update
+* **PATCH** `0.0.x` level changes for implementation level detail changes, such
+  as small bug fixes
+* **MINOR** `0.x.0` level changes for any backwards compatible API changes,
+  such as new functionality/features
+* **MAJOR** `x.0.0` level changes for backwards *incompatible* API changes,
+  such as changes that will break existing users code if they update
 
 Declaring dependencies
 ----------------------
@@ -99,13 +102,13 @@ Runtime dependencies are what your gem needs to work (such as
 [activesupport](http://rubygems.org/gems/activesupport)).
 
 Development dependencies are useful for when someone wants to make
-modifications to your gem. When you specify development dependencies, another developer can run
-`gem install --dev your_gem` and RubyGems will grab both sets of dependencies
-(runtime and development). Typical development dependencies include test frameworks
-and build systems
+modifications to your gem. When you specify development dependencies, another
+developer can run `gem install --dev your_gem` and RubyGems will grab both sets
+of dependencies (runtime and development). Typical development dependencies
+include test frameworks and build systems
 
-Setting dependencies in your gemspec is easy. Just use `add_runtime_dependency` and
-`add_development_dependency`:
+Setting dependencies in your gemspec is easy. Just use `add_runtime_dependency`
+and `add_development_dependency`:
 
     Gem::Specification.new do |s|
       s.name = "hola"
@@ -123,16 +126,16 @@ specific version of a gem:
     gem "extlib", ">= 1.0.8"
     require "extlib"
 
-It's reasonable for applications that consume gems to use this (though they could
-also use a tool like [Bundler](http://gembundler.com)). Gems themselves **should
-not** do this. They should instead use dependencies in the gemspec so RubyGems
-can handle loading the dependency instead of the user.
+It's reasonable for applications that consume gems to use this (though they
+could also use a tool like [Bundler](http://gembundler.com)). Gems themselves
+**should not** do this. They should instead use dependencies in the gemspec so
+RubyGems can handle loading the dependency instead of the user.
 
 ### Pessimistic version constraint
 
-If your gem properly follows [semantic versioning](http://semver.org) with its versioning
-scheme, then other Ruby developers can take advantage of this when choosing a
-version constaint to lock down your gem in their app.
+If your gem properly follows [semantic versioning](http://semver.org) with its
+versioning scheme, then other Ruby developers can take advantage of this when
+choosing a version constaint to lock down your gem in their app.
 
 Let's say the following releases of a gem exist:
 
@@ -141,7 +144,8 @@ Let's say the following releases of a gem exist:
 * **Version 2.2.1** — Removed some bugs
 * **Version 2.2.2** — Streamlined your code
 * **Version 2.3.0** — More new features (but still backwards compatible).
-* **Version 3.0.0** — Reworked the interface. Code written to verion 2.x might not work.
+* **Version 3.0.0** — Reworked the interface. Code written to verion 2.x might
+  not work.
 
 Someone who wants to use your gem has determined that version 2.2.0 works with
 their software, but version 2.1.0 doesn’t have a feature they need. Adding a
@@ -294,9 +298,9 @@ testing or "edge" releases before a big gem release. RubyGems supports the
 concept of "prerelease" versions, which could be betas, alphas,
 or anything else that isn't worthy of a real gem release yet.
 
-Taking advantage of this is easy. All you need is one or more letters in the gem version.
-For example, here's what a prerelease gemspec's `version` field might look
-like:
+Taking advantage of this is easy. All you need is one or more letters in the
+gem version.  For example, here's what a prerelease gemspec's `version` field
+might look like:
 
     Gem::Specification.new do |s|
       s.name = "hola"
@@ -324,4 +328,3 @@ Several sources were used for content for this guide:
 
 * [Rubygems Good Practice](http://yehudakatz.com/2009/07/24/rubygems-good-practice/)
 * [Gem Packaging: Best Practices](http://weblog.rubyonrails.org/2009/9/1/gem-packaging-best-practices)
-* [How to Name Gems](http://blog.segment7.net/2010/11/15/how-to-name-gems)
