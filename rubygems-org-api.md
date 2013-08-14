@@ -14,15 +14,17 @@ Details on interacting with RubyGems.org over HTTP.
 > [gemcutter gem](https://rubygems.org/gems/gemcutter) use the API to push gems,
 > add owners, and more.
 
-* [Gem Methods](#gem): Query or create gems to be hosted
-* [Gem Version Methods](#gemversion): Query for information about versions of a particular gem
-* [Gem Download Methods](#gemdownloads): Query for download statistics
-* [Owner Methods](#owner): Manage owners for gems
-* [Webhook Methods](#webhook): Manage notifications for when gems are pushed
-* [Activity Methods](#activity): Query for information about site-wide activity
-* [Misc Methods](#misc): Various other interactions with the site
+* [Gem Methods](#gem_methods): Query or create gems to be hosted
+* [Gem Version Methods](#gem_version_methods): Query for information about
+  versions of a particular gem
+* [Gem Download Methods](#gem_download_methods): Query for download statistics
+* [Owner Methods](#owner_methods): Manage owners for gems
+* [Webhook Methods](#webhook_methods): Manage notifications for when gems are
+  pushed
+* [Activity Methods](#activity_methods): Query for information about site-wide
+  activity
+* [Misc Methods](#misc_methods): Various other interactions with the site
 
-<a id="authorization"> </a>
 API Authorization
 -----------------
 
@@ -33,7 +35,6 @@ using an API key:
     $ curl -H 'Authorization:YOUR_API_KEY' \
       https://rubygems.org/api/v1/some_api_call.json
 
-<a id="library"> </a>
 Ruby Library
 ------------
 
@@ -46,7 +47,6 @@ examples in the README. You can install the library with the command:
 
     gem install gems
 
-<a id="gem"> </a>
 Gem Methods
 -----------
 
@@ -223,7 +223,6 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 
     Successfully unyanked gem: bills (0.0.1)
 
-<a id="gemversion"> </a>
 Gem Version Methods
 -------------------
 
@@ -247,7 +246,6 @@ Returns an array of gem version details like the below:
        }
     ]
 
-<a id="gemdownloads"> </a>
 Gem Download Methods
 --------------------
 
@@ -343,7 +341,6 @@ Dates values should be specified in the format YYYY-MM-DD.
       "2011-11-05":0
     }
 
-<a id="owner"> </a>
 Owner Methods
 -------------
 ### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)`
@@ -396,7 +393,6 @@ Remove a user's permission to manage a RubyGem you own.
 
     Owner removed successfully.
 
-<a id="webhook"> </a>
 WebHook Methods
 ---------------
 
@@ -479,7 +475,6 @@ SHA2-hashed concatenation of the gem name, the gem version and your API key.
 
     Successfully deployed webhook for all gems to http://example.com
 
-<a id="activity"> </a>
 Activity Methods
 ------------
 
@@ -495,7 +490,6 @@ Pulls the 50 most recently updated gems. Returns an array of the XML or JSON rep
 
     $ curl 'https://rubygems.org/api/v1/activity/just_updated.json'
 
-<a id="misc"> </a>
 Misc Methods
 ------------
 
