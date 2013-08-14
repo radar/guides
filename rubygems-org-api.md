@@ -14,6 +14,7 @@ Details on interacting with RubyGems.org over HTTP.
 > [gemcutter gem](https://rubygems.org/gems/gemcutter) use the API to push gems,
 > add owners, and more.
 
+* [API Authorization](#api_authorization): How to authenticate with RubyGems.org
 * [Gem Methods](#gem_methods): Query or create gems to be hosted
 * [Gem Version Methods](#gem_version_methods): Query for information about
   versions of a particular gem
