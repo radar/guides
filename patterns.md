@@ -105,7 +105,7 @@ Development dependencies are useful for when someone wants to make
 modifications to your gem. When you specify development dependencies, another
 developer can run `gem install --dev your_gem` and RubyGems will grab both sets
 of dependencies (runtime and development). Typical development dependencies
-include test frameworks and build systems
+include test frameworks and build systems.
 
 Setting dependencies in your gemspec is easy. Just use `add_runtime_dependency`
 and `add_development_dependency`:
@@ -135,7 +135,7 @@ RubyGems can handle loading the dependency instead of the user.
 
 If your gem properly follows [semantic versioning](http://semver.org) with its
 versioning scheme, then other Ruby developers can take advantage of this when
-choosing a version constaint to lock down your gem in their app.
+choosing a version constraint to lock down your gem in their application.
 
 Let's say the following releases of a gem exist:
 
@@ -148,7 +148,7 @@ Let's say the following releases of a gem exist:
   not work.
 
 Someone who wants to use your gem has determined that version 2.2.0 works with
-their software, but version 2.1.0 doesn’t have a feature they need. Adding a
+their software, but version 2.1.0 doesn't have a feature they need. Adding a
 dependency in a gem (or a `Gemfile` from Bundler) might look like:
 
     # gemspec
@@ -159,11 +159,11 @@ dependency in a gem (or a `Gemfile` from Bundler) might look like:
     gem 'library', '>= 2.2.0'
 
 This is an "optimistic" version constraint. It's saying that all changes from
-2.x on *will* work with my software, but this is usually not the case (see
-version 3.0.0!)
+2.x on *will* work with my software, but for version 3.0.0 this will not be
+true.
 
-The alternative here is to be "pessimistic". This explictly excludes the version
-that might break your code.
+The alternative here is to be "pessimistic". This explicitly excludes the
+version that might break your code.
 
     # gemspec
     spec.add_runtime_dependency 'library',
@@ -186,7 +186,7 @@ Notice that we dropped the `PATCH` level of the version number. Had we said
 `~> 2.2.0`, that would have been equivalent to `['>= 2.2.0', '< 2.3.0']`.
 
 The important note to take home here is to be aware others *will* be using
-your gems, and guard yourself from potential bugs/failures in future releases
+your gems, so guard yourself from potential bugs/failures in future releases
 by using `~>` instead of `>=` if at all possible.
 
 > If you're dealing with a lot of gem dependencies in your application, we
@@ -203,7 +203,7 @@ This line...
     require 'rubygems'
 
 ...should not be necessary in your gem code, since RubyGems is loaded
-already when a gem is required. Not having `require 'rubygems'` in your code
+already when a gem is required.  Not having `require 'rubygems'` in your code
 means that the gem can be easily used without needing the RubyGems client to
 run.
 
@@ -236,10 +236,11 @@ For example, let's say we have a `foo` gem with the following structure:
         └── set.rb
 
 This might seem harmless since your custom `erb` and `set` files are within
-your gem, but actually anyone who requires this gem will not be able to bring
-in the [ERB](http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html) or
+your gem.  However, this is not harmless, anyone who requires this gem will not
+be able to bring in the
+[ERB](http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html) or
 [Set](http://www.ruby-doc.org/stdlib/libdoc/set/rdoc/classes/Set.html) classes
-provided by Ruby's stdlib.
+provided by Ruby's standard library.
 
 The best way to get around this is to keep files in a different directory
 under `lib`. The usual convention is to be consistent and put them in the same
@@ -254,7 +255,7 @@ gem. Code like this is surprisingly common in gems:
               File.dirname(__FILE__),
               "foo", "bar")
 
-    # or
+Or:
 
     require File.expand_path(File.join(
               File.dirname(__FILE__),
@@ -264,21 +265,25 @@ The fix is simple, just require the file relative to the load path:
 
     require 'foo/bar'
 
+Or use require_relative:
+
+    require_relative 'foo/bar'
+
 The [make your own gem](/make-your-own-gem) guide has a great example of this
-behavior in practice, with a running test suite. The code for that gem is [on
-GitHub](http://github.com/qrush/hola) as well.
+behavior in practice, including a working test suite. The code for that gem is
+[on GitHub](http://github.com/qrush/hola) as well.
 
 ### Mangling the load path
 
-Gems should not need to change the `$LOAD_PATH` variable. RubyGems itself
-manages this for you. Code like this shouldn't be necessary:
+Gems should not change the `$LOAD_PATH` variable.  RubyGems manages this for
+you.  Code like this should not be necessary:
 
     lp = File.expand_path(File.dirname(__FILE__))
     unless $LOAD_PATH.include?(lp)
       $LOAD_PATH.unshift(lp)
     end
 
-    # or
+Or:
 
     __DIR__ = File.dirname(__FILE__)
 
@@ -286,17 +291,17 @@ manages this for you. Code like this shouldn't be necessary:
       $LOAD_PATH.include?(__DIR__) ||
       $LOAD_PATH.include?(File.expand_path(__DIR__))
 
-When RubyGems activates a gem, it adds your package’s `lib` folder to the
-`$LOAD_PATH` ready to be required normally by another lib or application. Its
-safe to assume you can relative `require` any file in your `lib` folder.
+When RubyGems activates a gem, it adds your package's `lib` folder to the
+`$LOAD_PATH` ready to be required normally by another lib or application.  It
+is safe to assume you can then `require` any file in your `lib` folder.
 
 Prerelease gems
 ---------------
 
-Many gem developers have versions of their gem ready to go out for
-testing or "edge" releases before a big gem release. RubyGems supports the
-concept of "prerelease" versions, which could be betas, alphas,
-or anything else that isn't worthy of a real gem release yet.
+Many gem developers have versions of their gem ready to go out for testing or
+"edge" releases before a big gem release. RubyGems supports the concept of
+"prerelease" versions, which could be betas, alphas, or anything else that
+isn't ready as a regular release.
 
 Taking advantage of this is easy. All you need is one or more letters in the
 gem version.  For example, here's what a prerelease gemspec's `version` field
