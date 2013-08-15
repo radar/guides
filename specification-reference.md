@@ -7,6 +7,43 @@ next: /command-reference
 
 {% include big.html %}
 
+
+<p>The <a href="Specification.html">Specification</a> class contains the
+information for a Gem.  Typically defined in a .gemspec file or a Rakefile,
+and looks like this:</p>
+
+<pre class="ruby"><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-string">&#39;example&#39;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">version</span>     = <span class="ruby-string">&#39;0.1.0&#39;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">summary</span>     = <span class="ruby-string">&quot;This is an example!&quot;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">description</span> = <span class="ruby-string">&quot;Much longer explanation of the example!&quot;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">authors</span>     = [<span class="ruby-string">&quot;Ruby Coder&quot;</span>]
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">email</span>       = <span class="ruby-string">&#39;rubycoder@example.com&#39;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">files</span>       = [<span class="ruby-string">&quot;lib/example.rb&quot;</span>]
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">homepage</span>    = <span class="ruby-string">&#39;https://rubygems.org/gems/example&#39;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Starting in RubyGems 1.9.0, a <a
+href="Specification.html">Specification</a> can hold arbitrary metadata.
+This metadata is accessed via <a
+href="Specification.html#attribute-i-metadata">#metadata</a> and has the
+following restrictions:</p>
+<ul><li>
+<p>Must be a Hash object</p>
+</li><li>
+<p>All keys and values must be Strings</p>
+</li><li>
+<p>Keys can be a maximum of 128 bytes and values can be a maximum of 1024
+bytes</p>
+</li><li>
+<p>All strings must be UTF8, no binary data is allowed</p>
+</li></ul>
+
+<p>For example, to add metadata for the location of a bugtracker:</p>
+
+<pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">metadata</span> = { <span class="ruby-string">&quot;bugtracker&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://somewhere.com/blah&quot;</span> }
+</pre>
 <p>The <b>Specification</b> class contains the information for a <b>Gem</b>.  Typically
 defined in a .gemspec file or a Rakefile, and looks like this:</p>
 
@@ -146,21 +183,22 @@ other non-files cause an error.</p>
 <p>This is usually Gem::Platform::RUBY or Gem::Platform::CURRENT.</p>
 
 <p>Most gems contain pure Ruby code; they should simply leave the default
-value in place. Some gems contain C (or other) code to be compiled into a
-Ruby “extension”. The should leave the default value in place unless their
-code will only compile on a certain type of system. Some gems consist of
-pre-compiled code (“binary gems”). It’s especially important that they set
-the platform attribute appropriately. A shortcut is to set the platform to
-Gem::Platform::CURRENT, which will cause the gem builder to set the
-platform to the appropriate value for the system on which the build is
+value in place.  Some gems contain C (or other) code to be compiled into a
+Ruby “extension”.  The should leave the default value in place unless their
+code will only compile on a certain type of system.  Some gems consist of
+pre-compiled code (“binary gems”).  It&#39;s especially important that they
+set the platform attribute appropriately.  A shortcut is to set the
+platform to Gem::Platform::CURRENT, which will cause the gem builder to set
+the platform to the appropriate value for the system on which the build is
 being performed.</p>
 
 <p>If this attribute is set to a non-default value, it will be included in the
-filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
+filename of the gem when it is built such as:
+nokogiri-1.6.0-x86-mingw32.gem</p>
 
 <p>Usage:</p>
 
-<pre>spec.platform = Gem::Platform::Win32</pre>    
+<pre>spec.platform = Gem::Platform.local</pre>    
 
 <a id="require_paths"> </a>
 ## require_paths
@@ -168,13 +206,16 @@ filename of the gem when it is built, e.g. fxruby-1.2.0-win32.gem.</p>
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
 activated.</p>
 
+<p>If you have an extension you do not need to add
+<code>&quot;ext&quot;</code> to the require path, the extension build
+process will copy the extension files into “lib” for you.</p>
+
+<p>The default value is <code>&quot;lib&quot;</code></p>
+
 <p>Usage:</p>
 
 <pre># If all library files are in the root directory...
-spec.require_path = &#39;.&#39;
-
-# If you have &#39;lib&#39; and &#39;ext&#39; directories...
-spec.require_paths &lt;&lt; &#39;ext&#39;</pre>    
+spec.require_path = &#39;.&#39;</pre>    
 
 <a id="rubygems_version"> </a>
 ## rubygems_version
@@ -188,7 +229,8 @@ spec.require_paths &lt;&lt; &#39;ext&#39;</pre>
 
 <p>A short summary of this gem&#39;s description.  Displayed in `gem list -d`.</p>
 
-<p>The description should be more detailed than the summary.</p>
+<p>The <a href="Specification.html#attribute-i-description">description</a>
+should be more detailed than the summary.</p>
 
 <p>Usage:</p>
 
@@ -237,7 +279,8 @@ activated when a gem is required.</p>
 <a id="author="> </a>
 ## author=
 
-<p>Singular writer for authors</p>
+<p>Singular writer for <a
+href="Specification.html#method-i-authors">authors</a></p>
 
 <p>Usage:</p>
 
@@ -284,7 +327,7 @@ EOF</pre>
 <a id="email"> </a>
 ## email
 
-<p>A contact email for this gem</p>
+<p>A contact email address (or addresses) for this gem</p>
 
 <p>Usage:</p>
 
@@ -316,7 +359,9 @@ whatever) code to be compiled on the user’s machine.</p>
 
 <p>Usage:</p>
 
-<pre>spec.extensions &lt;&lt; &#39;ext/rmagic/extconf.rb&#39;</pre>    
+<pre>spec.extensions &lt;&lt; &#39;ext/rmagic/extconf.rb&#39;</pre>
+
+<p>See Gem::Ext::Builder for information about writing extensions for gems.</p>    
 
 <a id="extra_rdoc_files"> </a>
 ## extra_rdoc_files
@@ -350,6 +395,9 @@ a more complete set of documentation.</p>
 
 <p>This should just be the name of your license. The full text of the license
 should be inside of the gem when you build it.</p>
+
+<p>You can set multiple licenses with <a
+href="Specification.html#method-i-licenses-3D">licenses=</a></p>
 
 <p>Usage:</p>
 
@@ -402,21 +450,26 @@ data that could be useful to other consumers.</p>
 <a id="required_ruby_version="> </a>
 ## required_ruby_version=
 
-<p>The version of ruby required by this gem</p>
+<p>The version of Ruby required by this gem.  The ruby version can be
+specified to the patch-level:</p>
+
+<pre>$ ruby -v -e &#39;p Gem.ruby_version&#39;
+ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.4.0]
+#&lt;Gem::Version &quot;2.0.0.247&quot;&gt;</pre>
 
 <p>Usage:</p>
 
-<pre># If it will work with 1.8.6 or greater...
+<pre># This gem will work with 1.8.6 or greater...
 spec.required_ruby_version = &#39;&gt;= 1.8.6&#39;
 
-# Hopefully by now:
-spec.required_ruby_version = &#39;&gt;= 1.9.2&#39;</pre>    
+# Only with ruby 2.0.x
+spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>    
 
 <a id="requirements"> </a>
 ## requirements
 
 <p>Lists the external (to RubyGems) requirements that must be met for this gem
-to work. It’s simply information for the user.</p>
+to work.  It&#39;s simply information for the user.</p>
 
 <p>Usage:</p>
 
@@ -431,8 +484,8 @@ spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>
 <a id="test_files="> </a>
 ## test_files=
 
-<p>A collection of unit test files. They will be loaded as unit tests when the
-user requests a gem to be unit tested.</p>
+<p>A collection of unit test files.  They will be loaded as unit tests when
+the user requests a gem to be unit tested.</p>
 
 <p>Usage:</p>
 

@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.0.2.
+This reference was automatically generated from RubyGems version 2.0.7.
 
 * [gem build](#gem_build)
 * [gem cert](#gem_cert)
@@ -864,13 +864,13 @@ Restores installed gems to pristine condition from files located in the gem cach
 
 ### Usage
 
-    gem pristine [args] [options]
+    gem pristine [GEMNAME ...] [options]
 
 
 ###   Options:
 
 *         -&#8203;-all                      - Restore all installed gems to pristine condition
-*         -&#8203;-\[no-\]extensions          - Restore gems with extensions
+*         -&#8203;-\[no-\]extensions          - Restore gems with extensions in addition to regular gems
 *         -&#8203;-only-executables         - Only restore executables
 *     -v, -&#8203;-version VERSION          - Specify version of gem to restore to pristine condition
 
@@ -895,18 +895,18 @@ Restores installed gems to pristine condition from files located in the gem cach
   
 ### Description
 
-The pristine command compares the installed gems with the contents of the
-cached gem and restores any files that don't match the cached gem's copy.
+The pristine command compares an installed gem with the contents of its
+cached .gem file and restores any files that don't match the cached .gem's
+copy.
 
-If you have made modifications to your installed gems, the pristine command
-will revert them.  After all the gem's files have been checked all bin stubs
-for the gem are regenerated.
+If you have made modifications to an installed gem, the pristine command
+will revert them.  All extensions are rebuilt and all bin stubs for the gem
+are regenerated after checking for modifications.
 
-If the cached gem cannot be found, you will need to use `gem install` to
-revert the gem.
+If the cached gem cannot be found it will be downloaded.
 
-If --no-extensions is provided pristine will not attempt to restore gems with
-extensions.
+If --no-extensions is provided pristine will not attempt to restore a gem
+with an extension.
   
 
 ## gem push
@@ -1088,7 +1088,7 @@ Display all gems whose name contains STRING
 ### Arguments
 
 
-* *STRING* -         start of gem name to look for
+* *STRING* -         fragment of gem name to search for
 
   
 
@@ -1193,7 +1193,7 @@ Display gem specification (in yaml)
 *         -&#8203;-\[no-\]prerelease          - Allow prerelease versions of a gem
 *         -&#8203;-all                      - Output specifications for all versions of the gem
 *         -&#8203;-ruby                     - Output ruby format
-*         -&#8203;-yaml                     - Output RUBY format
+*         -&#8203;-yaml                     - Output YAML format
 *         -&#8203;-marshal                  - Output Marshal format
 
 ###   Deprecated Options:
