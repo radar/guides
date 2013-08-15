@@ -185,6 +185,15 @@ RubyGems provides a shortcut for this, commonly known as the
 Notice that we dropped the `PATCH` level of the version number. Had we said
 `~> 2.2.0`, that would have been equivalent to `['>= 2.2.0', '< 2.3.0']`.
 
+If you want to allow use of newer backwards-compatible versions but need a
+specific bug fix you can use a compound requirement:
+
+    # gemspec
+    spec.add_runtime_dependency 'library', '~> 2.2', '>= 2.2.1'
+
+    # bundler
+    gem 'library', '~> 2.2', '>= 2.2.1'
+
 The important note to take home here is to be aware others *will* be using
 your gems, so guard yourself from potential bugs/failures in future releases
 by using `~>` instead of `>=` if at all possible.
