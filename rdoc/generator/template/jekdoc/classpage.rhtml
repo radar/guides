@@ -8,34 +8,6 @@ next: /command-reference
 {% include big.html %}
 
 <%= klass.description %>
-<p>The <b>Specification</b> class contains the information for a <b>Gem</b>.  Typically
-defined in a .gemspec file or a Rakefile, and looks like this:</p>
-
-<pre>Gem::Specification.new do |s|
-  s.name        = 'example'
-  s.version     = '0.1.0'
-  s.summary     = &quot;This is an example!&quot;
-  s.description = &quot;Much longer explanation of the example!&quot;
-  s.authors     = [&quot;Ruby Coder&quot;]
-  s.email       = 'rubycoder@example.com'
-  s.files       = [&quot;lib/example.rb&quot;]
-  s.homepage    = 'https://rubygems.org/gems/example'
-end</pre>
-
-<p>Starting in RubyGems 1.9.0, a Specification can hold arbitrary
-metadata. This metadata is accessed via Specification#metadata
-and has the following restrictions:</p>
-
-<ul>
-<li>Must be a Hash object</li>
-<li>All keys and values must be Strings</li>
-<li>Keys can be a maximum of 128 bytes and values can be a maximum of 1024 bytes</li>
-<li>All strings must be UTF8, no binary data is allowed</li>
-</ul>
-
-<p>For example, to add metadata for the location of a bugtracker:</p>
-
-<pre>s.metadata = { &quot;bugtracker&quot; => &quot;http://somewhere.com/blah&quot; }</pre>
 
 <%
   sections = {}
