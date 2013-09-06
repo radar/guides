@@ -7,7 +7,11 @@ next: /command-reference
 
 {% include big.html %}
 
-<%= klass.description %>
+<% description = klass.description
+   description.gsub! %r%<a\shref=(["'])Specification\.html#.*?\1>(.*?)</a>%m, '\2'
+   description.gsub! %r%<a\shref=(["'])Specification\.html\1>Specification</a>%,
+     'Specification' %>
+<%= description %>
 
 <%
   sections = {}
@@ -46,8 +50,11 @@ next: /command-reference
 
 <a id="<%= name %>"> </a>
 ## <%= name %>
-
-<%= method.description.strip %>
+<% description = method.description.strip
+   description.gsub! %r%<a\shref=(["'])Specification\.html#.*?\1>(.*?)</a>%m, '\2'
+   description.gsub! %r%<a\shref=(["'])Specification\.html\1>Specification</a>%,
+                     'Specification' %>
+<%= description %>
     <% end %>
 <% end %>
 
