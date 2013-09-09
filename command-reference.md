@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.0.7.
+This reference was automatically generated from RubyGems version 2.1.0.
 
 * [gem build](#gem_build)
 * [gem cert](#gem_cert)
@@ -73,6 +73,23 @@ Build a gem from a gemspec
 
   
 
+  
+### Description
+
+The build command allows you to create a gem from a ruby gemspec.
+
+The best way to build a gem is to use a Rakefile and the Gem::PackageTask
+which ships with RubyGems.
+
+The gemspec can either be created by hand or extracted from an existing gem
+with gem spec:
+
+    $ gem unpack my_gem-1.0.gem
+    Unpacked gem: '.../my_gem-1.0'
+    $ gem spec my_gem-1.0.gem --ruby > my_gem-1.0/my_gem-1.0.gemspec
+    $ cd my_gem-1.0
+    [edit gem contents]
+    $ gem build my_gem-1.0.gemspec
   
 
 ## gem cert
@@ -181,10 +198,15 @@ Check a gem repository for added or missing files
   
 
   
+### Description
+
+The check command can list and repair problems with installed gems and
+specifications and will clean up gems that have been partially uninstalled.
+  
 
 ## gem cleanup
 
-Clean up old versions of installed gems in the local repository
+Clean up old versions of installed gems
 
 ### Usage
 
@@ -193,7 +215,7 @@ Clean up old versions of installed gems in the local repository
 
 ###   Options:
 
-*   - -d, -&#8203;-dryrun
+*     -n, -d, -&#8203;-dryrun               - Do not uninstall gems
 
 ###   Common Options:
 
@@ -216,11 +238,11 @@ Clean up old versions of installed gems in the local repository
   
 ### Description
 
-The cleanup command removes old gems from GEM_HOME.  If an older version is
-installed elsewhere in GEM_PATH the cleanup command won't touch it.
+The cleanup command removes old versions of gems from GEM_HOME that are not
+required to meet a dependency.  If a gem is installed elsewhere in GEM_PATH
+the cleanup command won't delete it.
 
-Older gems that are required to satisify the dependencies of gems
-are not removed.
+If no gems are named all gems in GEM_HOME are cleaned.
   
 
 ## gem contents
@@ -258,6 +280,12 @@ Display the contents of the installed gems
 
   
 
+  
+### Description
+
+The contents command lists the files in an installed gem.  The listing can
+be given as full file names, file names without the installed directory
+prefix or only the files that are requireable.
   
 
 ## gem dependency
@@ -310,6 +338,15 @@ Show the dependencies of an installed gem
   
 
   
+### Description
+
+The dependency commands lists which other gems a given gem depends on.  For
+local gems only the reverse dependencies can be shown (which gems depend on
+the named gem).
+
+The dependency list can be displayed in a format suitable for piping for
+use with other commands.
+  
 
 ## gem environment
 
@@ -346,6 +383,9 @@ Display information about the RubyGems environment
 
   
 ### Description
+
+The environment command lets you query rubygems for its configuration for
+use in shell scripts or as a debugging aid.
 
 The RubyGems environment can be controlled through command line arguments,
 gemrc files, environment variables and built-in defaults.
@@ -427,6 +467,14 @@ Download a gem and place it in the current directory
 
   
 
+  
+### Description
+
+The fetch command fetches gem files that can be stored for later use or
+unpacked to examine their contents.
+
+See the build command help for an example of unpacking a gem, modifying it,
+then repackaging it.
   
 
 ## gem generate_index
@@ -552,6 +600,7 @@ Install a gem into the local repository
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 *         -&#8203;-minimal-deps             - Don't upgrade any dependencies that already meet version requirements
 *     -g, -&#8203;-file FILE                - Read from a gem dependencies API file and install the listed gems
+*         -&#8203;-default                  - Add the gem's full specification to specifications/default and extract only its bin
 
 ###   Local/Remote Options:
 
@@ -635,7 +684,7 @@ to write the specification by hand.  For example:
 
 ## gem list
 
-Display gems whose name starts with STRING
+Display local gems whose name starts with STRING
 
 ### Usage
 
@@ -684,6 +733,15 @@ Display gems whose name starts with STRING
 
   
 
+  
+### Description
+
+The list command is used to view the gems you have installed locally.
+
+The --details option displays additional details including the summary, the
+homepage, the author, the locations of different versions of the gem.
+
+To search for remote gems use the search command.
   
 
 ## gem lock
@@ -773,6 +831,10 @@ Mirror all gem files (requires rubygems-mirror)
   
 
   
+### Description
+
+The mirror command has been moved to the rubygems-mirror gem.
+  
 
 ## gem outdated
 
@@ -814,10 +876,17 @@ Display all gems that need updates
   
 
   
+### Description
+
+The outdated command lists gems you way wish to upgrade to a newer version.
+
+You can check for dependency mismatches using the dependency command and
+update the gems with the update or install commands.
+  
 
 ## gem owner
 
-Manage gem owners on RubyGems.org.
+Manage gem owners of a gem on the push server
 
 ### Usage
 
@@ -829,6 +898,7 @@ Manage gem owners on RubyGems.org.
 *     -k, -&#8203;-key KEYNAME              - Use the given API key from ~/.gem/credentials
 *     -a, -&#8203;-add EMAIL                - Add an owner
 *     -r, -&#8203;-remove EMAIL             - Remove an owner
+*         -&#8203;-host HOST                - Use another gemcutter-compatible host
 
 ###   Local/Remote Options:
 
@@ -855,7 +925,12 @@ Manage gem owners on RubyGems.org.
   
 ### Description
 
-Manage gem owners on RubyGems.org.
+The owner command lets you add and remove owners of a gem on a push
+server (the default is https://rubygems.org).
+
+The owner of a gem has the permission to push new versions, yank existing
+versions or edit the HTML page of the gem.  Be careful of who you give push
+permission to.
   
 
 ## gem pristine
@@ -872,6 +947,7 @@ Restores installed gems to pristine condition from files located in the gem cach
 *         -&#8203;-all                      - Restore all installed gems to pristine condition
 *         -&#8203;-\[no-\]extensions          - Restore gems with extensions in addition to regular gems
 *         -&#8203;-only-executables         - Only restore executables
+*     -E, -&#8203;-\[no-\]env-shebang         - Rewrite executables with a shebang of /usr/bin/env
 *     -v, -&#8203;-version VERSION          - Specify version of gem to restore to pristine condition
 
 ###   Common Options:
@@ -911,7 +987,7 @@ with an extension.
 
 ## gem push
 
-Push a gem up to RubyGems.org
+Push a gem up to the gem server
 
 ### Usage
 
@@ -948,7 +1024,11 @@ Push a gem up to RubyGems.org
   
 ### Description
 
-Push a gem up to RubyGems.org
+The push command uploads a gem to the push server (the default is
+https://rubygems.org) and adds it to the index.
+
+The gem can be removed from the index (but only the index) using the yank
+command.  For further discussion see the help for the yank command.
   
 
 ## gem query
@@ -998,6 +1078,13 @@ Query gem information in local or remote repositories
   
 
   
+### Description
+
+The query command is the basis for the list and search commands.
+
+You should really use the list and search commands instead.  This command
+is too hard to use.
+  
 
 ## gem rdoc
 
@@ -1037,13 +1124,17 @@ Generates RDoc for pre-installed gems
   
 ### Description
 
-The rdoc command builds RDoc and RI documentation for installed gems.  Use
---overwrite to force rebuilding of documentation.
+The rdoc command builds documentation for installed gems.  By default
+only documentation is built using rdoc, but additional types of
+documentation may be built through rubygems plugins and the
+Gem.post_installs hook.
+
+Use --overwrite to force rebuilding of documentation.
   
 
 ## gem search
 
-Display all gems whose name contains STRING
+Display remote gems whose name contains STRING
 
 ### Usage
 
@@ -1092,6 +1183,17 @@ Display all gems whose name contains STRING
 
   
 
+  
+### Description
+
+The search command displays remote gems whose name contains the given
+string.
+
+The --details option displays additional details from the gem but will
+take a little longer to complete as it must download the information
+individually from the index.
+
+To list local gems use the list command.
   
 
 ## gem server
@@ -1176,6 +1278,50 @@ Manage the sources and cache file RubyGems uses to search for gems
   
 
   
+### Description
+
+RubyGems fetches gems from the sources you have configured (stored in your
+~/.gemrc).
+
+The default source is https://rubygems.org, but you may have older sources
+configured.  This guide will help you update your sources or configure
+yourself to use your own gem server.
+
+Without any arguments the sources lists your currently configured sources:
+
+    $ gem sources
+    *** CURRENT SOURCES ***
+
+    https://rubygems.org
+
+This may list multiple sources or non-rubygems sources.  You probably
+configured them before or have an old `~/.gemrc`.  If you have sources you
+do not recognize you should remove them.
+
+RubyGems has been configured to serve gems via the following URLs through
+its history:
+
+* http://gems.rubyforge.org (RubyGems 1.3.6 and earlier)
+* http://rubygems.org       (RubyGems 1.3.7 through 1.8.25)
+* https://rubygems.org      (RubyGems 2.0.1 and newer)
+
+Since all of these sources point to the same set of gems you only need one
+of them in your list.  https://rubygems.org is recommended as it brings the
+protections of an SSL connection to gem downloads.
+
+To add a source use the --add argument:
+
+      $ gem sources --add https://rubygems.org
+      https://rubygems.org added to sources
+
+RubyGems will check to see if gems can be installed from the source given
+before it is added.
+
+To remove a source use the --remove argument:
+
+      $ gem sources --remove http://rubygems.org
+      http://rubygems.org removed from sources
+  
 
 ## gem specification
 
@@ -1230,6 +1376,19 @@ Display gem specification (in yaml)
   
 
   
+### Description
+
+The specification command allows you to extract the specification from
+a gem for examination.
+
+The specification can be output in YAML, ruby or Marshal formats.
+
+Specific fields in the specification can be extracted in YAML format:
+
+    $ gem spec rake summary
+    --- Ruby based make-like utility.
+    ...
+  
 
 ## gem stale
 
@@ -1253,6 +1412,14 @@ List gems along with access times
   
 
   
+### Description
+
+The stale command lists the latest access time for all the files in your
+installed gems.
+
+You can use this command to discover gems and gem versions you are no
+longer using.
+  
 
 ## gem uninstall
 
@@ -1274,6 +1441,7 @@ Uninstall gems from the local repository
 *         -&#8203;-\[no-\]user-install        - Uninstall from user's home directory in addition to GEM_HOME.
 *         -&#8203;-\[no-\]format-executable   - Assume executable names match Ruby's prefix and suffix.
 *         -&#8203;-\[no-\]force               - Uninstall all versions of the named gems ignoring dependencies
+*         -&#8203;-\[no-\]abort-on-dependent  - Prevent uninstalling gems that are depended on by other gems.
 *     -v, -&#8203;-version VERSION          - Specify version of gem to uninstall
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to uninstall
 
@@ -1295,6 +1463,14 @@ Uninstall gems from the local repository
 
   
 
+  
+### Description
+
+The uninstall command removes a previously installed gem.
+
+RubyGems will ask for confirmation if you are attempting to uninstall a gem
+that is a dependency of an existing gem.  You can use the
+--ignore-dependencies option to skip this check.
   
 
 ## gem unpack
@@ -1330,6 +1506,22 @@ Unpack an installed gem to the current directory
 
   
 
+  
+### Description
+
+The unpack command allows you to examine the contents of a gem or modify
+them to help diagnose a bug.
+
+You can add the contents of the unpacked gem to the load path using the
+RUBYLIB environment variable or -I:
+
+    $ gem unpack my_gem
+    Unpacked gem: '.../my_gem-1.0'
+    [edit my_gem-1.0/lib/my_gem.rb]
+    $ ruby -Imy_gem-1.0/lib -S other_program
+
+You can repackage an unpacked gem using the build command.  See the build
+command help for an example.
   
 
 ## gem update
@@ -1400,6 +1592,13 @@ Update installed gems to the latest version
   
 
   
+### Description
+
+The update command will update your gems to the latest version.
+
+The update comamnd does not remove the previous version.  Use the cleanup
+command to remove old versions.
+  
 
 ## gem which
 
@@ -1434,10 +1633,19 @@ Find the location of a library file you can require
   
 
   
+### Description
+
+The which command is like the shell which command and shows you where
+the file you wish to require lives.
+
+You can use the which command to help determine why you are requiring a
+version you did not expect or to look at the content of a file you are
+requiring to see why it does not behave as you expect.
+  
 
 ## gem yank
 
-Remove a specific gem version release from RubyGems.org
+Remove a pushed gem from the index
 
 ### Usage
 
@@ -1472,6 +1680,18 @@ Remove a specific gem version release from RubyGems.org
   
 ### Description
 
-Remove a specific gem version release from RubyGems.org
+The yank command removes a gem you pushed to a server from the server's
+index.
+
+Note that if you push a gem to rubygems.org the yank command does not
+prevent other people from downloading the gem via the download link.
+
+Once you have pushed a gem several downloads will happen automatically
+via the webhooks.  If you accidentally pushed passwords or other sensitive
+data you will need to change them immediately and yank your gem.
+
+If you are yanking a gem due to intellectual property reasons contact
+http://help.rubygems.org for permanant removal.  Be sure to mention this
+as the reason for the removal request.
   
 

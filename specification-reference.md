@@ -8,9 +8,10 @@ next: /command-reference
 {% include big.html %}
 
 
-<p>The <a href="Specification.html">Specification</a> class contains the
-information for a Gem.  Typically defined in a .gemspec file or a Rakefile,
-and looks like this:</p>
+
+<p>The Specification class contains the
+information for a <a href="../Gem.html">Gem</a>.  Typically defined in a
+.gemspec file or a Rakefile, and looks like this:</p>
 
 <pre class="ruby"><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-string">&#39;example&#39;</span>
@@ -24,10 +25,8 @@ and looks like this:</p>
 <span class="ruby-keyword">end</span>
 </pre>
 
-<p>Starting in RubyGems 1.9.0, a <a
-href="Specification.html">Specification</a> can hold arbitrary metadata.
-This metadata is accessed via <a
-href="Specification.html#attribute-i-metadata">#metadata</a> and has the
+<p>Starting in RubyGems 2.0, a Specification
+can hold arbitrary metadata. This metadata is accessed via #metadata and has the
 following restrictions:</p>
 <ul><li>
 <p>Must be a Hash object</p>
@@ -44,34 +43,6 @@ bytes</p>
 
 <pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">metadata</span> = { <span class="ruby-string">&quot;bugtracker&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://somewhere.com/blah&quot;</span> }
 </pre>
-<p>The <b>Specification</b> class contains the information for a <b>Gem</b>.  Typically
-defined in a .gemspec file or a Rakefile, and looks like this:</p>
-
-<pre>Gem::Specification.new do |s|
-  s.name        = 'example'
-  s.version     = '0.1.0'
-  s.summary     = &quot;This is an example!&quot;
-  s.description = &quot;Much longer explanation of the example!&quot;
-  s.authors     = [&quot;Ruby Coder&quot;]
-  s.email       = 'rubycoder@example.com'
-  s.files       = [&quot;lib/example.rb&quot;]
-  s.homepage    = 'https://rubygems.org/gems/example'
-end</pre>
-
-<p>Starting in RubyGems 1.9.0, a Specification can hold arbitrary
-metadata. This metadata is accessed via Specification#metadata
-and has the following restrictions:</p>
-
-<ul>
-<li>Must be a Hash object</li>
-<li>All keys and values must be Strings</li>
-<li>Keys can be a maximum of 128 bytes and values can be a maximum of 1024 bytes</li>
-<li>All strings must be UTF8, no binary data is allowed</li>
-</ul>
-
-<p>For example, to add metadata for the location of a bugtracker:</p>
-
-<pre>s.metadata = { &quot;bugtracker&quot; => &quot;http://somewhere.com/blah&quot; }</pre>
 
 
 
@@ -229,7 +200,7 @@ spec.require_path = &#39;.&#39;</pre>
 
 <p>A short summary of this gem&#39;s description.  Displayed in `gem list -d`.</p>
 
-<p>The <a href="Specification.html#attribute-i-description">description</a>
+<p>The description
 should be more detailed than the summary.</p>
 
 <p>Usage:</p>
@@ -279,8 +250,7 @@ activated when a gem is required.</p>
 <a id="author="> </a>
 ## author=
 
-<p>Singular writer for <a
-href="Specification.html#method-i-authors">authors</a></p>
+<p>Singular writer for authors</p>
 
 <p>Usage:</p>
 
@@ -341,7 +311,7 @@ spec.email = [&#39;jack@example.com&#39;, &#39;jill@example.com&#39;]</pre>
 
 <p>For example, the rake gem has rake as an executable. You don’t specify the
 full path (as in bin/rake); all application-style files are expected to be
-found in bindir.  These files must be executable ruby files.  Files that
+found in bindir.  These files must be executable Ruby files.  Files that
 use bash or other interpreters will not work.</p>
 
 <p>Usage:</p>
@@ -396,8 +366,7 @@ a more complete set of documentation.</p>
 <p>This should just be the name of your license. The full text of the license
 should be inside of the gem when you build it.</p>
 
-<p>You can set multiple licenses with <a
-href="Specification.html#method-i-licenses-3D">licenses=</a></p>
+<p>You can set multiple licenses with licenses=</p>
 
 <p>Usage:</p>
 
