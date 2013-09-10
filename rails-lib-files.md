@@ -18,18 +18,52 @@ Then we've got access to the WildcardSearch module where and when we need it.
 
 ## Autoloading with Rails
 
-Now with autoloading in Rails, we don't need to even require these files to access the constants defined in them. There's a configuration option called `load_paths` for Rails 3 applications which lives in `config/application.rb`, but is commented out by default. We can uncomment this setting and configure it to specify the `lib` directory:
+Don't. Maxim Chernyak has a good write up about `lib` and `app` eager loading:
 
-    config.autoload_paths += %W(#{config.root}/lib)
+### If you add a dir directly under app/
 
-With this setting specified, we don't need to `require` the files in this directory any more, but rather we can simply reference the constants they define and then Rails will require them if it can't find the constants. We can even specify more than one additional path to `autoload_paths` if we choose. ZOMG!
+Do nothing. All files in this dir are eager loaded in production and lazy loaded in development by default.
 
-So how does this work? Well, Rails will take the constant name such as `WildcardSearch`, convert it to a string, then call `underscore` before searching for this file in all the `autoload_paths` that are specified. If it finds it, then it will then call `require` on this file and thereby define the constant and if it can't find this file then it will raise an `uninitialized constant` error. If the file is named incorrectly (such as `WildCardSearch.rb` instead), then Rails will be unable to find the file it's looking for, which will cause the constant to not be loaded.
+### If you add a dir under app/something/
 
-Because this file is called `wildcard_search.rb`, it will be required in the search for the `WildcardSearch` constant. If this file doesn't define this constant then you will see this kind of error:
+(e.g. app/models/concerns/, app/models/products/)
 
-    Expected lib/wildcard_search.rb to define WildcardSearch
+Ask: do I want to namespace modules and classes inside my new dir?
+For example in app/models/products/ you would need to wrap your class in `module Products`.
 
-In which case this must be corrected so that Rails's autoloading is happy.
+If the answer is yes, do nothing. It will just work.
 
-If you want to see more information, check out the `ActiveSupport::Autoload` module which provides this functionality in Rails.
+If the answer is no, add `config.autoload_paths += %W( #{config.root}/app/models/products )` to your application.rb.
+
+In either case, everything will be eager loaded in production.
+
+### If you add code in your lib/ directory
+
+#### Option 1
+
+If you put something in the lib/ dir, what you are saying is: "I wrote this library, and I want to depend on it where I decide." This means that if you use your library in a rake task, but not in a rails app, you just `require` it in your rake task. If you need this library to always be loaded for your rails app, you `require` it in an initializer. If you need this library for some of your models or controllers, you `require` it in those files, and since everything under your `app/` dir is already auto- and eager- loaded as needed, your library will only be "pulled-in" if something that requires it from `app/` or rake, or your custom script, actually gets loaded.
+
+#### Option 2 (bad)
+
+Another option is to add your whole lib dir into `autoload_paths`: `config.autoload_paths += %W( #{config.root}/lib )`. This means you shouldn't explicitly require your lib anywhere. As soon as you hit the namespace of your dir in other classes, rails will require it. The problem with this is that in Rails 3 if you just add something to your autoload paths it won't get eager loaded in production. You would need to add it to `eager_load_paths` instead, which causes a different problem (see below). And in ruby 1.9 autoload is not threadsafe. You probably want eager loading in production. Requiring your lib explicitly, like in option 1, is akin to eager loading it, which is threadsafe.
+
+#### Option 3 (meh)
+
+All the different things under your lib dir should be placed into their own directories, and those directories should be individually added to `eager_load_paths`.
+
+```
+config.eager_load_paths += %W(
+  #{config.root}/lib/my_lib1
+  #{config.root}/lib/my_lib2
+)
+```
+
+This means that you can't just throw files into your lib dir. If you have `my_lib1.rb`, you must put it under `my_lib1/my_lib1.rb` and `my_lib1` should be added to eager load paths. This means that if you have more files in `my_lib1`, you should create a dir `my_lib1/my_lib1/extra.rb`. This is a bit annoying.
+
+#### So why not just add lib/ into `eager_load_paths`?
+
+If you add lib/ into `eager_load_paths`, everything will work great. Your files will be autoloaded in development, and eager-loaded in production. Except the problem is that `eager_load_paths` use globbing like `lib/**/*.rb`, meaning that everything in your lib dir will try to get loaded. Your tasks, your generators, everything. This is not what you want.
+
+#### Organizing lib
+
+Regardless of which option you pick (option 1, hint hint), in your lib/ dir you should structure your code as if you structure a gem. If you need more than 1 file, you could for example add a same-named directory where everything is properly namespaced, and let your 1 file relatively require files in that directory.
