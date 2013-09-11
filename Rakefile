@@ -49,7 +49,8 @@ task :spec_guide => [:rdoc_spec, :move_spec, :clean]
 desc "generate command guide"
 task :command_guide => %w[command-reference.md]
 
-command_reference_files = Rake::FileList.new(*%w[
+command_reference_files = Rake::FileList.new(*%W[
+  #{__FILE__}
   ../rubygems/lib/rubygems.rb
   ../rubygems/lib/rubygems/command_manager.rb
   ../rubygems/lib/rubygems/commands/*.rb
