@@ -51,6 +51,7 @@ task :command_guide => %w[command-reference.md]
 
 command_reference_files = Rake::FileList.new(*%W[
   #{__FILE__}
+  command-reference.erb
   ../rubygems/lib/rubygems.rb
   ../rubygems/lib/rubygems/command_manager.rb
   ../rubygems/lib/rubygems/commands/*.rb
