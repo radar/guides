@@ -31,6 +31,7 @@ RDoc::Task.new(:rdoc_spec) do |rd|
   spec_file = File.join(ENV["RUBYGEMS_DIR"].to_s, "lib", "rubygems", "specification.rb")
   rd.rdoc_files.include(spec_file)
   rd.template = "jekdoc"
+  rd.options << '--quiet'
 end
 
 desc "move spec guide into the right place"
