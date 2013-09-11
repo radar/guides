@@ -4,7 +4,7 @@ require 'rdoc/rdoc'
 require 'rdoc/task'
 require 'fileutils'
 
-$:.unshift "."
+$:.unshift '.', '../rubygems/lib'
 
 ENV['RUBYGEMS_DIR'] ||= File.expand_path '../../rubygems', __FILE__
 
@@ -49,7 +49,13 @@ task :spec_guide => [:rdoc_spec, :move_spec, :clean]
 desc "generate command guide"
 task :command_guide => %w[command-reference.md]
 
-file 'command-reference.md' do
+command_reference_files = Rake::FileList.new(*%w[
+  ../rubygems/lib/rubygems.rb
+  ../rubygems/lib/rubygems/command_manager.rb
+  ../rubygems/lib/rubygems/commands/*.rb
+])
+
+file 'command-reference.md' => command_reference_files do
   require 'rubygems/command_manager'
   require 'rdoc/erbio'
 
