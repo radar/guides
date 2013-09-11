@@ -54,14 +54,15 @@ desc "generate command guide"
 task :command_guide => %w[command-reference.md]
 
 command_reference_files = Rake::FileList.new(*%W[
-  #{__FILE__}
+  Rakefile
   command-reference.erb
-  ../rubygems/lib/rubygems.rb
-  ../rubygems/lib/rubygems/command_manager.rb
-  ../rubygems/lib/rubygems/commands/*.rb
+  #{ENV['RUBYGEMS_DIR']}/lib/rubygems.rb
+  #{ENV['RUBYGEMS_DIR']}/lib/rubygems/command_manager.rb
+  #{ENV['RUBYGEMS_DIR']}/lib/rubygems/commands/*.rb
 ])
 
-file 'command-reference.md' => command_reference_files do
+file 'command-reference.md' =>
+     %w[RUBYGEMS_DIR_exists] + command_reference_files do
   require 'rubygems/command_manager'
   require 'rdoc/erbio'
 
