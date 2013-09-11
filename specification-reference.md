@@ -10,8 +10,8 @@ next: /command-reference
 
 
 <p>The Specification class contains the
-information for a <a href="../Gem.html">Gem</a>.  Typically defined in a
-.gemspec file or a Rakefile, and looks like this:</p>
+information for a Gem.  Typically defined in a .gemspec file or a Rakefile,
+and looks like this:</p>
 
 <pre class="ruby"><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-string">&#39;example&#39;</span>
