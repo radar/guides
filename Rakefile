@@ -47,7 +47,9 @@ desc "generate specification guide"
 task :spec_guide => [:rdoc_spec, :move_spec, :clean]
 
 desc "generate command guide"
-task :command_guide do
+task :command_guide => %w[command-reference.md]
+
+file 'command-reference.md' do
   require 'rubygems/command_manager'
   require 'rdoc/erbio'
 
