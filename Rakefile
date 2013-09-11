@@ -34,8 +34,12 @@ RDoc::Task.new(:rdoc_spec) do |rd|
 end
 
 desc "move spec guide into the right place"
-task :move_spec => [:rdoc_spec] do
-  FileUtils.mv "html/Gem/Specification.html", "specification-reference.md"
+task :move_spec => %w[specification-reference.md]
+
+file 'html/Gem/Specification.html' => %w[rdoc_spec]
+
+file 'specification-reference.md' => %w[html/Gem/Specification.html] do
+  cp 'html/Gem/Specification.html', 'specification-reference.md'
 end
 
 desc "clean up after rdoc"
