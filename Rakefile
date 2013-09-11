@@ -78,9 +78,7 @@ file 'command-reference.md' => command_reference_files do
           # This will end up in a <pre> block
           html_string += line
         else
-          puts html_string
           html_string += line.gsub("<", "&lt;").gsub(">", "&gt;")
-          puts html_string
         end
         html_string += "\n"
       end
@@ -96,10 +94,13 @@ file 'command-reference.md' => command_reference_files do
   end
 
   def options_list(command)
-    # Invoke the Ruby options parser by asking for help. Otherwise the options
-    # list in the parser will never be initialized.
-    # TODO: Figure out how to avoid dumping help to stdout when running this rake task
-    command.show_help
+    ui = Gem::SilentUI.new
+    Gem::DefaultUserInteraction.use_ui ui do
+      # Invoke the Ruby options parser by asking for help. Otherwise the
+      # options list in the parser will never be initialized.
+      command.show_help
+    end
+
     parser = command.send(:parser)
     options = ''
     helplines = parser.summarize
