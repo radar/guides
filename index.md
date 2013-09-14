@@ -47,6 +47,11 @@ Learn about the data in each gem package and how you can configure it.
 
 In depth coverage of each `gem` command.
 
+[RubyGems API](http://rubygems.rubyforge.org/rubygems-update)
+---------------
+
+The API documentation for the RubyGems library.
+
 [RubyGems.org API](/rubygems-org-api)
 ---------------
 
