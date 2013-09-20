@@ -11,6 +11,7 @@ Ways to share your gem code with other users.
 * [Sharing Source Code](#sharing_source_code)
 * [Serving Your Own Gems](#serving_your_own_gems)
 * [Publishing to RubyGems.org](#publishing_to_rubygemsorg)
+* [Push Permissions on RubyGems.org](#push_permissions_on_rubygemsorg)
 * [Gem Security](#gem_security)
 
 Introduction
@@ -84,6 +85,13 @@ To publish version 0.1.0 of a new gem named 'squid-utils':
 
 Congratulations! Your new gem is now ready for any ruby user in the world to
 install!
+
+Push Permissions on RubyGems.org
+--------------------------------
+
+If you have multiple maintainers for your gem you can give your fellow
+maintainers permission to push the gem to rubygems.org through the [gem
+owner command](/command-reference/#gem_owner).
 
 Gem Security
 ------------
