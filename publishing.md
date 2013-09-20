@@ -7,13 +7,12 @@ next: /patterns
 
 Ways to share your gem code with other users.
 
-* [Introduction](#intro)
-* [Sharing Source Code](#sharing-source)
-* [Serving Your Own Gems](#serving)
-* [Publishing to RubyGems.org](#rubygems-org)
-* [Gem Security](#gem-security)
+* [Introduction](#introduction)
+* [Sharing Source Code](#sharing_source_code)
+* [Serving Your Own Gems](#serving_your_own_gems)
+* [Publishing to RubyGems.org](#publishing_to_rubygemsorg)
+* [Gem Security](#gem_security)
 
-<a id="intro"> </a>
 Introduction
 ------------
 
@@ -22,7 +21,6 @@ While it is perfectly reasonable to create private gems solely to organize the c
 private projects, it's more common to build gems so that they can be used by multiple projects.
 This guide discusses the various ways that you can share your gem with the world.
 
-<a id="sharing-source"> </a>
 Sharing Source Code
 -------------------
 
@@ -39,7 +37,6 @@ line in your Gemfile:
 > Installing a gem directly from a git repository is a feature of Bundler, not a feature
 > of RubyGems. Gems installed this way will not show up when you run `gem list`.
 
-<a id="serving"> </a>
 Serving Your Own Gems
 ---------------------
 
@@ -49,7 +46,6 @@ use a commercial service such as [Gemfury](http://www.gemfury.com/).
 
 See the [Resources](/resources) guide for an up-to-date listing of options for private gem servers.
 
-<a id="rubygems-org"> </a>
 Publishing to RubyGems.org
 --------------------------
 
@@ -77,7 +73,6 @@ To publish version 0.1.0 of a new gem named 'squid-utils':
 
 Congratulations! Your new gem is now ready for any ruby user in the world to install!
 
-<a id="gem-security"> </a>
 Gem Security
 ------------
 
