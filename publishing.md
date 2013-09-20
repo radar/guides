@@ -48,6 +48,10 @@ surrounding a gem, then you'll want to set up a private gem server. You can
 [set up your own gem server](/run-your-own-gem-server) or use a commercial
 service such as [Gemfury](http://www.gemfury.com/).
 
+RubyGems 2.2.0 and newer support the `allowed_push_host` metadata value to
+restrict gem pushes to a single host.  If you are publishing private gems you
+should set this value to prevent accidental pushes to rubygems.org
+
 See the [Resources](/resources) guide for an up-to-date listing of options for
 private gem servers.
 
