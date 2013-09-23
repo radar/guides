@@ -51,7 +51,12 @@ service such as [Gemfury](http://www.gemfury.com/).
 
 RubyGems 2.2.0 and newer support the `allowed_push_host` metadata value to
 restrict gem pushes to a single host.  If you are publishing private gems you
-should set this value to prevent accidental pushes to rubygems.org
+should set this value to prevent accidental pushes to rubygems.org:
+
+    Gem::Specification.new 'my_gem', '1.0' do |s|
+      # ...
+      s.metadata['allowed_push_host'] = 'https://gems.my-company.example'
+    end
 
 See the [Resources](/resources) guide for an up-to-date listing of options for
 private gem servers.
