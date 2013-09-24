@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.1.4.
+This reference was automatically generated from RubyGems version 2.1.5.
 
 * [gem build](#gem_build)
 * [gem cert](#gem_cert)
