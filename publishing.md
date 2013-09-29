@@ -30,7 +30,7 @@ The simplest way (from the author's perspective) to share a gem for other
 developers' use is to distribute it in source code form. If you place the full
 source code for your gem on a public git repository (often, though not always,
 this means sharing it via [GitHub](https://github.com)), then other users can
-install it with [Bundler's git functionality](http://gembundler.com/git.html).
+install it with [Bundler's git functionality](http://bundler.io/git.html).
 
 For example, you can install the latest code for the wicked_pdf gem in a
 project by including this line in your Gemfile:

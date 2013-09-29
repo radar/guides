@@ -127,7 +127,7 @@ specific version of a gem:
     require "extlib"
 
 It's reasonable for applications that consume gems to use this (though they
-could also use a tool like [Bundler](http://gembundler.com)). Gems themselves
+could also use a tool like [Bundler](http://bundler.io)). Gems themselves
 **should not** do this. They should instead use dependencies in the gemspec so
 RubyGems can handle loading the dependency instead of the user.
 
@@ -199,7 +199,7 @@ your gems, so guard yourself from potential bugs/failures in future releases
 by using `~>` instead of `>=` if at all possible.
 
 > If you're dealing with a lot of gem dependencies in your application, we
-> recommend that you take a look into [Bundler](http://gembundler.com) or
+> recommend that you take a look into [Bundler](http://bundler.io) or
 > [Isolate](http://github.com/jbarnette/isolate) which do a great job of
 > managing a complex version manifest for many gems.
 
