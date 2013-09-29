@@ -22,7 +22,7 @@ Introduction
 Creating and publishing your own gem is simple thanks to the tools baked right
 into RubyGems. Let’s make a simple “hello world” gem, and feel free to
 play along at home! The code for the gem we're going to make here is up
-[on GitHub](http://github.com/qrush/hola).
+[on GitHub](https://github.com/qrush/hola).
 
 <a id="first-gem"> </a>
 Your first gem

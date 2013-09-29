@@ -22,7 +22,7 @@ Consistent naming
 ### File names
 
 Be consistent with how your gem files in `lib` and `bin` are named. The
-[hola](http://github.com/qrush/hola) gem from the [make your own
+[hola](https://github.com/qrush/hola) gem from the [make your own
 gem](/make-your-own-gem) guide is a great example:
 
     % tree
@@ -45,7 +45,7 @@ can easily jump in and call `require 'hola'` with no problems.
 
 Naming your gem is important.  Before you pick a name for your gem, do a
 quick search on [RubyGems.org](http://rubygems.org) and
-[GitHub](http://github.com/search) to see if someone else has taken it.  Every
+[GitHub](https://github.com/search) to see if someone else has taken it.  Every
 published gem must have a unique name.  Be sure to read our [naming
 recommendations](/name-your-gem) when you've found a name you like.
 
@@ -200,7 +200,7 @@ by using `~>` instead of `>=` if at all possible.
 
 > If you're dealing with a lot of gem dependencies in your application, we
 > recommend that you take a look into [Bundler](http://bundler.io) or
-> [Isolate](http://github.com/jbarnette/isolate) which do a great job of
+> [Isolate](https://github.com/jbarnette/isolate) which do a great job of
 > managing a complex version manifest for many gems.
 
 ### Requiring RubyGems
@@ -280,7 +280,7 @@ Or use require_relative:
 
 The [make your own gem](/make-your-own-gem) guide has a great example of this
 behavior in practice, including a working test suite. The code for that gem is
-[on GitHub](http://github.com/qrush/hola) as well.
+[on GitHub](https://github.com/qrush/hola) as well.
 
 ### Mangling the load path
 
