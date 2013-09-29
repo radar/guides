@@ -195,13 +195,13 @@ collected by third parties.
 
 These projects are outside of the RubyGems core, but work closely with RubyGems to improve the gem experience for everyone.
 
-### [Bundler](https://github.com/carlhuda/bundler)
+### [Bundler](https://github.com/bundler/bundler)
 
 Bundler manages an application's dependencies through its entire life across
 many machines systematically and repeatably.
 
 [site](http://bundler.io) -
-[issues](https://github.com/carlhuda/bundler/issues) -
+[issues](https://github.com/bundler/bundler/issues) -
 [mailing list](https://groups.google.com/forum/#!forum/ruby-bundler)
 
 <p class="avatars">
