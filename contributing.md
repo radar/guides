@@ -200,7 +200,7 @@ These projects are outside of the RubyGems core, but work closely with RubyGems 
 Bundler manages an application's dependencies through its entire life across
 many machines systematically and repeatably.
 
-[site](http://gembundler.com/) -
+[site](http://bundler.io) -
 [issues](https://github.com/carlhuda/bundler/issues) -
 [mailing list](https://groups.google.com/forum/#!forum/ruby-bundler)
 
