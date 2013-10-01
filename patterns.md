@@ -144,7 +144,7 @@ Let's say the following releases of a gem exist:
 * **Version 2.2.1** — Removed some bugs
 * **Version 2.2.2** — Streamlined your code
 * **Version 2.3.0** — More new features (but still backwards compatible).
-* **Version 3.0.0** — Reworked the interface. Code written to verion 2.x might
+* **Version 3.0.0** — Reworked the interface. Code written to version 2.x might
   not work.
 
 Someone who wants to use your gem has determined that version 2.2.0 works with
