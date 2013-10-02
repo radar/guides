@@ -115,7 +115,8 @@ gem out to RubyGems.org only takes one command, provided that you have an accoun
 the site. To setup your computer with your RubyGems account:
 
     $ curl -u qrush https://rubygems.org/api/v1/api_key.yaml >
-    ~/.gem/credentials
+    ~/.gem/credentials; chmod 0600 ~/.gem/credentials
+
     Enter host password for user 'qrush':
 
 > If you're having problems with curl, OpenSSL, or certificates, you might want to
@@ -230,7 +231,7 @@ But now the `hola.rb` file has some code to load the `Translator`:
     s.files       = ["lib/hola.rb", "lib/hola/translator.rb"]
     ...
     end
- 
+
 > without the above change, new folder would not be included into the installed gem.
 
 Let's try this out. First, fire up `irb`:
