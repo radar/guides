@@ -30,7 +30,7 @@ example we'll use "my_malloc" for the name.
 
 Some extensions will be partially written in C and partially written in ruby.
 If you are going to support multiple languages, such as C and Java extensions,
-you should put the C-specific ruby files under the ext/ directory as well in a
+you should put the C-specific ruby files under the `ext/` directory as well in a
 `lib/` directory.
 
     Rakefile
