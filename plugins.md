@@ -16,6 +16,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [gem-man](#gemman)
 * [gem-nice-install](#gemniceinstall)
 * [gem-orphan](#gemorphan)
+* [gem-patch](#gempatch)
 * [gem-toolbox](#gemtoolbox)
 * [graph](#graph)
 * [maven-gem](#mavengem)
@@ -83,6 +84,14 @@ hopefully will be extended.
 [https://github.com/sakuro/gem-orphan](https://github.com/sakuro/gem-orphan)
 
 Adds a `gem orphan` command that finds and lists  gems on which no other gems are depending.
+
+<a id="gempatch"> </a>
+## gem-patch
+
+[https://github.com/strzibny/gem-patch](https://github.com/strzibny/gem-patch)
+
+Adds `gem patch` command, which enables you to apply patches directly on `.gem` files.
+Supports both RubyGems 1.8 and RubyGems 2.0.
 
 <a id="gemtoolbox"> </a>
 ## gem-toolbox
