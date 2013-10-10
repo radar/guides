@@ -256,7 +256,7 @@ Further Reading
   by Aaron Patterson
 * Interfaces to C libraries can be written using ruby and
   [fiddle](http://ruby-doc.org/stdlib-2.0/libdoc/fiddle/rdoc/Fiddle.html) (part
-  of the standard library) or [ruby-ffi](http://github.com/ffi/ffi)
+  of the standard library) or [ruby-ffi](https://github.com/ffi/ffi)
 
 [README.EXT]: https://github.com/ruby/ruby/blob/trunk/README.EXT
 [mkmf.rb]: http://ruby-doc.org/stdlib-2.0/libdoc/mkmf/rdoc/MakeMakefile.html

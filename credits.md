@@ -5,7 +5,7 @@ previous: /plugins
 next: /
 ---
 
-This site is [open source](http://github.com/rubygems/guides) and its content is
+This site is [open source](https://github.com/rubygems/guides) and its content is
 [Creative Commons](https://github.com/rubygems/guides/blob/gh-pages/CC-LICENSE)
 licensed.
 
