@@ -14,7 +14,9 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [gem_info](#geminfo)
 * [gem-init](#geminit)
 * [gem-man](#gemman)
+* [gem-nice-install](#gemniceinstall)
 * [gem-orphan](#gemorphan)
+* [gem-patch](#gempatch)
 * [gem-toolbox](#gemtoolbox)
 * [graph](#graph)
 * [maven-gem](#mavengem)
@@ -67,12 +69,29 @@ Adds `gem init` to create a barebones gem.
 
 The `gem man` command lets you view a gem's man page.
 
+<a id="gemniceinstall"> </a>
+## gem-nice-install
+
+[https://github.com/voxik/gem-nice-install](https://github.com/voxik/gem-nice-install)
+
+Tries to install system dependencies needed to install your gems with binary extensions
+using standard `gem install` command. This currently works only for Fedora, but
+hopefully will be extended.
+
 <a id="gemorphan"> </a>
 ## gem-orphan
 
 [https://github.com/sakuro/gem-orphan](https://github.com/sakuro/gem-orphan)
 
 Adds a `gem orphan` command that finds and lists  gems on which no other gems are depending.
+
+<a id="gempatch"> </a>
+## gem-patch
+
+[https://github.com/strzibny/gem-patch](https://github.com/strzibny/gem-patch)
+
+Adds `gem patch` command, which enables you to apply patches directly on `.gem` files.
+Supports both RubyGems 1.8 and RubyGems 2.0.
 
 <a id="gemtoolbox"> </a>
 ## gem-toolbox
