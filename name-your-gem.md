@@ -20,6 +20,11 @@ The main goal of these recommendations is to give the user some clue about
 how to require the files in your gem. Following these conventions also lets
 Bundler require your gem with no extra configuration.
 
+If you publish a gem on [rubygems.org](rubygems.org) it may be removed if the
+name is objectionable, violates intellectual property or the contents of the
+gem meet these criteria.  You can report such a gem at
+[http://help.rubygems.org](help.rubygems.org).
+
 Use underscores for multiple words
 ----------------------------------
 
