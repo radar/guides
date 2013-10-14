@@ -26,23 +26,9 @@ and looks like this:</p>
 </pre>
 
 <p>Starting in RubyGems 2.0, a Specification
-can hold arbitrary metadata. This metadata is accessed via #metadata and has the
-following restrictions:</p>
-<ul><li>
-<p>Must be a Hash object</p>
-</li><li>
-<p>All keys and values must be Strings</p>
-</li><li>
-<p>Keys can be a maximum of 128 bytes and values can be a maximum of 1024
-bytes</p>
-</li><li>
-<p>All strings must be UTF8, no binary data is allowed</p>
-</li></ul>
-
-<p>For example, to add metadata for the location of a bugtracker:</p>
-
-<pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">metadata</span> = { <span class="ruby-string">&quot;bugtracker&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;http://somewhere.com/blah&quot;</span> }
-</pre>
+can hold arbitrary metadata.  See metadata for
+restrictions on the format and size of metadata items you may add to a
+specification.</p>
 
 
 
@@ -176,6 +162,8 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
 activated.</p>
+
+<p>See also require_paths</p>
 
 <p>If you have an extension you do not need to add
 <code>&quot;ext&quot;</code> to the require path, the extension build
@@ -366,6 +354,10 @@ a more complete set of documentation.</p>
 <p>This should just be the name of your license. The full text of the license
 should be inside of the gem when you build it.</p>
 
+<p>See <a
+href="http://opensource.org/licenses/alphabetical">opensource.org/licenses/alphabetical</a>
+for a list of licenses and their abbreviations (or short names).</p>
+
 <p>You can set multiple licenses with licenses=</p>
 
 <p>Usage:</p>
@@ -382,6 +374,9 @@ should be inside of the gem when you build it.</p>
 <p>This should just be the name of your license. The full text of the license
 should be inside of the gem when you build it.</p>
 
+<p>See license= for more
+discussion</p>
+
 <p>Usage:</p>
 
 <pre>spec.licenses = [&#39;MIT&#39;, &#39;GPL-2&#39;]</pre>    
@@ -391,10 +386,26 @@ should be inside of the gem when you build it.</p>
 
 <p>:attr_accessor: metadata</p>
 
-<p>Arbitrary metadata for this gem. An instance of Hash.</p>
+<p>The metadata holds extra data for this gem that may be useful to other
+consumers and is settable by gem authors without requiring an update to the
+rubygems software.</p>
 
-<p>metadata is simply a Symbol =&gt; String association that contains arbitary
-data that could be useful to other consumers.</p>    
+<p>Metadata items have the following restrictions:</p>
+<ul><li>
+<p>The metadata must be a Hash object</p>
+</li><li>
+<p>All keys and values must be Strings</p>
+</li><li>
+<p>Keys can be a maximum of 128 bytes and values can be a maximum of 1024
+bytes</p>
+</li><li>
+<p>All strings must be UTF-8, no binary data is allowed</p>
+</li></ul>
+
+<p>To add metadata for the location of a issue tracker:</p>
+
+<pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">metadata</span> = { <span class="ruby-string">&quot;issue_tracker&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;https://example/issues&quot;</span> }
+</pre>    
 
 <a id="post_install_message"> </a>
 ## post_install_message
