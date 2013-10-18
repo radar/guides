@@ -78,6 +78,21 @@ Includes Vagrant configuration for local testing.
 
 [issues](https://github.com/rubygems/rubygems-aws/issues)
 
+<p class="avatars">
+  <a href="https://github.com/skottler">
+    <img src="https://secure.gravatar.com/avatar/ee9182ab4e45d446dfa05c20c341371f?s=32" title="Sam Kottler">
+  </a>
+  <a href="https://github.com/dwradcliffe">
+    <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe">
+  </a>
+  <a href="https://github.com/vertis">
+    <img src="https://secure.gravatar.com/avatar/b2a9e57c2a8ed757833b4c787b6c51d5?s=32" title="Luke Chadwick">
+  </a>
+  <a href="https://github.com/evanphx">
+    <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix">
+  </a>
+</p>
+
 ### [RubyGems Status](https://github.com/rubygems/rubygems-status)
 
 A simple Rails app to show the status of the rubygems.org infrastructure.
