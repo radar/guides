@@ -274,8 +274,7 @@ p.last {
   margin-bottom: 0; }
 
 p img {
-  float: left;
-  margin: 1.5em 1.5em 1.5em 0;
+  margin: 1em 1em 1em 0;
   padding: 0; }
 
 /* Use this if the image is at the top of the <p>. */
@@ -309,6 +308,9 @@ a:hover {
 a:active,
 a:focus {
   color: #1a4882; }
+
+.avatars a:link {
+  text-decoration: none; }
 
 blockquote {
   border-left: 4px solid #d1d1d1;
