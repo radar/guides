@@ -1,0 +1,5 @@
+language: ruby
+script: "bundle exec jekyll build"
+notifications:
+  email:
+  - drbrain@segment7.net

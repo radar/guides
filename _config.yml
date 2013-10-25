@@ -1,4 +1,7 @@
-permalink: "pretty"
+---
 exclude:
 - README.md
 - CNAME
+- vendor
+permalink: "pretty"
+safe: true
