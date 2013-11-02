@@ -2,7 +2,7 @@
 
 Bundler is a tool created by Carl Lerche, Yehuda Katz, André Arko and various superb contributors for managing Rubygems dependencies in Ruby libraries. Bundler 1.0 was released around the same time as Rails 3 and it's the Rails project where Bundler is probably most well-known usage occurs. But remember, Bundler isn't just for Rails!
 
-Did you know that you can use Bundler for not only gem dependency management but also for writing our own gems? It's really easy to do this and Bundler provides a couple of things to help you along this path. 
+Did you know that you can use Bundler for not only gem dependency management but also for writing our own gems? It's really easy to do this and Bundler provides a couple of things to help you along this path.
 
 ## But first, why?
 
@@ -22,23 +22,23 @@ This command creates a [scaffold directory](gem-scaffold/foodie)  for our new ge
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
 
- * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling _Bundler::GemHelper.install\_tasks_. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
+ * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling `Bundler::GemHelper.install\_tasks`. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
 
  * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
 
  * [**foodie.gemspec**](gem-scaffold/foodie/foodie.gemspec): The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
 
  * [**lib/foodie.rb**](gem-scaffold/foodie/lib/foodie.rb): The main file to define our gem's code. This is the file that will be required by Bundler (or any similarly smart system) when our gem is loaded. This file defines a `module` which we can use as a namespace for all our gem's code. It's best practice to put our code in...
- 
+
  * [**lib/foodie**](gem-scaffold/foodie/lib/foodie): here. This folder should contain all the code (classes, etc.) for our gem. The _lib/foodie.rb_ file is there for setting up our gem's environment, whilst all the parts of it go in this folder. If our gem has multiple uses, separating this out so that people can require one class/file at a time can be really helpful.
- 
+
  * [**lib/foodie/version.rb**](gem-scaffold/foodie/lib/foodie/version.rb): Defines a `Foodie` module and in it, a `VERSION` constant. This file is loaded by the _foodie.gemspec_ to specify a version for the gem specification. When we release a new version of the gem we will increment a part of this version number to indicate to Rubygems that we're releasing a new version.
- 
+
 There's our base and our layout, now get developing!
 
 ## Testing our gem
 
-For this guide, we're going to use RSpec to test our gem. We write tests to ensure that everything goes according to plan and to prevent future-us from building a time machine to come back and kick our asses. 
+For this guide, we're going to use RSpec to test our gem. We write tests to ensure that everything goes according to plan and to prevent future-us from building a time machine to come back and kick our asses.
 
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
@@ -64,7 +64,7 @@ Additionally in the `bundle install` output, we will see this line:
 
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
-We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_; but this is a simple gem, so we won't. Let's call this new file _spec/foodie_spec.rb_ and fill it with the following:
+We can write our first test with this framework now in place. For testing, first we create a folder called _spec_ to put our tests in (`mkdir spec`).  We then create a new RSpec file for every class we want to test at the root of the _spec_ directory. If we had multiple facets to our gem, we would group them underneath a directory such as _spec/facet_; but this is a simple gem, so we won't. Let's call this new file `spec/foodie_spec.rb` and fill it with the following:
 
 ```ruby
 describe Foodie::Food do
@@ -231,26 +231,26 @@ See those yellow things? They're undefined steps:
     Then /^the output should contain "([^"]*)"$/ do |arg1|
       pending # express the regexp above with the code you wish you had
     end
-    
+
 We can define them by requiring Aruba. In Cucumber, all _.rb_ files in the _features/support_ directory are automatically required. To prove this to ourselves, we can add a _features/support/setup.rb_ file (create the _support_ directory first) and put in this single line:
 
 ```ruby
 require 'aruba/cucumber'
 ```
-   
+
 This loads the Cucumber steps provided by Aruba which are the same steps our Cucumber features need to be awesome.
-   
+
 We have to re-run `bundle exec cucumber features`, just to see what happens next. We see red. Red like the blood incessantly seeping from the walls. It contains this cryptic message:
 
     sh: foodie: command not found
-   
+
 OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _bin_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
 
 ```bash
 #!/usr/bin/env ruby
 print "nothing."
 ```
-    
+
 If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error. Hey, speaking of running, we should `chmod` this file to be an executable from our terminal:
 
     chmod +x bin/foodie
@@ -258,15 +258,15 @@ If this file was completely empty, we would run into a non-friendly `Errno::ENOE
 Alright so we've got the executable file, now what? If we re-run our features we get *nothing* for the output. Nothing! Literally!
 
     got: "nothing."
-    
-     
+
+
 Our _bin/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
 
 ```ruby
 require 'foodie/cli'
 Foodie::CLI.start
 ```
-    
+
 Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do?
@@ -284,22 +284,22 @@ Let's define the `lib/foodie/cli.rb` file now like this:
     require 'thor'
     module Foodie
       class CLI < Thor
-    
+
       end
     end
-    
+
 The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
 
 ```ruby
 s.add_dependency "thor"
 ```
-    
+
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
 
     Could not find task "portray"
     ...
     Could not find task "pluralize"
-    
+
 Thor tasks are defined as plain ol' methods, but with a slight twist. To define the `portray` task in our `Foodie::CLI` class we will write this inside the `Foodie::CLI` class:
 
 ```ruby
@@ -308,7 +308,7 @@ def portray(name)
   puts Foodie::Food.portray(name)
 end
 ```
-    
+
 The `desc` method is the "slight twist" here. The method defined after it becomes a task with the given description. The first argument for `desc` is the usage instructions for the task whilst the second is the short description of what that task accomplishes. The `portray` method is defined with a single argument, which will be the first argument passed to this task on the command line. Inside the `portray` method we call `Foodie::Food.portray` and pass it this argument.
 
 In the `Foodie::CLI` class we're referencing the `Foodie::Food` class without requiring the file that defines it. Under the `require 'thor'` at the top of this file, put this line to require the file that defines `Foodie::Food`:
@@ -316,7 +316,7 @@ In the `Foodie::CLI` class we're referencing the `Foodie::Food` class without re
 ```ruby
 require 'foodie'
 ```
-    
+
 When we re-run our features using `bundle exec cucumber features` our first scenario will pass:
 
     2 scenarios (1 failed, 1 passed)
@@ -395,16 +395,7 @@ Feature: Generating things
 
 It's important to note that the word after "delicious" both times is "steak", which is *very* delicious. It's also the last argument we pass in to the command that we run, and therefore should be a dynamic variable in our template. We'll see how to do this soon.
 
-When we run this feature we'll be told that there's an undefined step and a failing scenario; we'll look at the undefined step first. Aruba currently doesn't have a step itself defined for multi-line file content matching, so we will define one ourselves inside _features/step\_definitions/aruba\_ext\_steps.rb_ using Aruba's own helpers:
-
-
-```cucumber
-Then /^the file "([^"]*)" should contain:$/ do |file, content|
-  check_file_content(file, content, true)
-end
-```
-   
-Now for our failure. It's saying that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
+When we run this feature we'll be told that it cannot find the _dinner/steak.txt_ file that we asked the generator to do. Why not?
 
 ## Writing a generator
 
