@@ -15,10 +15,10 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = "foodie"
 
   s.add_development_dependency "bundler", ">= 1.0.0"
-  s.add_development_dependency "rspec", "~> 2.0.0.beta.22"
+  s.add_development_dependency "rspec", "~> 2.6"
   s.add_development_dependency "cucumber"
   s.add_development_dependency "aruba"
-  
+
   s.add_dependency "activesupport"
   s.add_dependency "thor"
 
