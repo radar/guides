@@ -112,7 +112,7 @@ gems](http://docs.rubygems.org/read/chapter/21) since version 0.8.11. This
 signing works by using the `gem cert` command to create a key pair, and then
 packaging signing data inside the gem itself. The `gem install` command
 optionally lets you set a security policy, and you can verify the signing key
-for a gem before you install it. 
+for a gem before you install it.
 
 However, this method of securing gems is not widely used. It requires a number
 of manual steps on the part of the developer, and there is no well-established
