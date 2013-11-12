@@ -21,6 +21,7 @@ Tutorials
 * [Basic RubyGem Development](http://tech.pro/tutorial/1226/basic-rubygem-development) and [Intermediate RubyGem Development](http://tech.pro/tutorial/1277/intermediate-rubygem-development)
 * [How to make a Rubygem](http://www.alexedwards.net/blog/how-to-make-a-rubygem) and [How to make a Rubygem: Part Two](http://www.alexedwards.net/blog/how-to-make-a-rubygem-part-two)
 * [Crafting Gems](http://railsconftutorials.com/2013/sessions/crafting_gems.html) - A tutorial from RailsConf 2013.
+* [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
 
 Presentations
 -------------
