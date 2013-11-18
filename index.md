@@ -32,6 +32,11 @@ Our recommendation on the use of "_" and "-" in your gem's name.
 
 Start with an idea, end with a distributable package of Ruby code.
 
+[Security Practices](/security)
+---------------
+
+How to build and install cryptographically signed gems-- and other security concerns.
+
 [Patterns](/patterns)
 ---------------
 

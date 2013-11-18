@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Patterns
-previous: /publishing
+previous: /security
 next: /specification-reference
 ---
 

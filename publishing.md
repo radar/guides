@@ -2,7 +2,7 @@
 layout: default
 title: Publishing your gem
 previous: /name-your-gem
-next: /patterns
+next: /security
 ---
 
 Ways to share your gem code with other users.
@@ -101,26 +101,4 @@ owner command](/command-reference/#gem_owner).
 Gem Security
 ------------
 
-Installing a gem allows that gem's code to run in the context of your
-application. Clearly this has security implications: installing a malicious gem
-on a server could ultimately result in that server being completely penetrated
-by the gem's author. Because of this, the security of gem code is a topic of
-active discussion within the Ruby community.
-
-RubyGems has had the ability to [cryptographically sign
-gems](http://docs.rubygems.org/read/chapter/21) since version 0.8.11. This
-signing works by using the `gem cert` command to create a key pair, and then
-packaging signing data inside the gem itself. The `gem install` command
-optionally lets you set a security policy, and you can verify the signing key
-for a gem before you install it.
-
-However, this method of securing gems is not widely used. It requires a number
-of manual steps on the part of the developer, and there is no well-established
-chain of trust for gem signing keys. Discussion of new signing models using
-X509 or OpenPGP is going on in the [rubygems-trust
-wiki](https://github.com/rubygems-trust/rubygems.org/wiki/_pages) and
-in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve (or
-replace) the signing system so that it is easy for authors and transparent for
-users.
-
-See the [Resources](/resources) page for more information about gem signing.
+See [Security](/Security) page.
