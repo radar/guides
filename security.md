@@ -5,13 +5,14 @@ previous: /publishing
 next: /patterns
 ---
 
-Security practices when
+Security practices are being actively discussed. Check back often.
 
 * [General](#general)
 * [Using Gems](#using_gems)
 * [Building Gems](#building_gems)
 
-## General
+General
+-------
 
 Installing a gem allows that gem's code to run in the context of your
 application. Clearly this has security implications: installing a malicious gem
@@ -35,17 +36,20 @@ in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve (or
 replace) the signing system so that it is easy for authors and transparent for
 users.
 
-## Using Gems
+Using Gems
+-------
 
-* Install with a security profile.
-  * All dependent gems must be signed and verified: `gem install gemname -P HighSecurity`
-  * All signed dependent gems must be verified: `gem install gemname -P MediumSecurity`
-  * With [bundler, use the `--trust-policy` flag](http://blog.meldium.com/home/2013/3/3/signed-rubygems-part), e.g. `bundle --trust-policy MediumSecurity`
-* Risks of being pwned, as described by [Benjamin Smith](http://lanyrd.com/profile/benjamin_smith/)
+* Install with a trust policy.
+  * `gem install gemname -P HighSecurity`: All dependent gems must be signed and verified.
+  * `gem install gemname -P MediumSecurity`: All signed dependent gems must be verified.
+  * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only recognizes
+    the long `--trust-policy` flag, not the short `-P`.
+* Risks of being pwned, as described by [Benjamin Smith's Hacking with Gems talk](http://lanyrd.com/2013/rulu/scgxzr/)
 
-## Building Gems
+Building Gems
+-------
 
-* gem cert
+* `gem cert`
   * [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
 * openpgp signing with [rubygems-openpgp](https://github.com/grant-olson/rubygems-openpgp)
   * For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841/README.md#security)
@@ -55,12 +59,10 @@ Credits
 
 Several sources were used for content for this guide:
 
-* Links
-
-- [Signing rubygems - Pasteable instructions](http://developer.zendesk.com/blog/2013/02/03/signing-gems/)
-- [Twitter gem gemspec](https://github.com/sferik/twitter/blob/master/twitter.gemspec)
-- [RubyGems Trust Model](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](http://goo.gl/ybFIO), [publishing guide](http://guides.rubygems.org/publishing/)
-- [Let’s figure out a way to start signing RubyGems](http://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
-- [A Practical Guide to Using Signed Ruby Gems - Part 3: Signing your Own](http://blog.meldium.com/home/2013/3/6/signing-gems-how-to)
-- Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
-- Also see the [Resources](/resources) page.
+* [Signing rubygems - Pasteable instructions](http://developer.zendesk.com/blog/2013/02/03/signing-gems/)
+* [Twitter gem gemspec](https://github.com/sferik/twitter/blob/master/twitter.gemspec)
+* [RubyGems Trust Model](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](http://goo.gl/ybFIO), [publishing guide](http://guides.rubygems.org/publishing/)
+* [Let’s figure out a way to start signing RubyGems](http://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
+* [A Practical Guide to Using Signed Ruby Gems - Part 3: Signing your Own](http://blog.meldium.com/home/2013/3/6/signing-gems-how-to)
+* Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
+* Also see the [Resources](/resources) page.
