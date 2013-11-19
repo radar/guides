@@ -11,7 +11,8 @@ Security practices when
 * [Using Gems](#using_gems)
 * [Building Gems](#building_gems)
 
-## General
+General
+-------
 
 Installing a gem allows that gem's code to run in the context of your
 application. Clearly this has security implications: installing a malicious gem
@@ -35,7 +36,8 @@ in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve (or
 replace) the signing system so that it is easy for authors and transparent for
 users.
 
-## Using Gems
+Using Gems
+-------
 
 * Install with a security profile.
   * All dependent gems must be signed and verified: `gem install gemname -P HighSecurity`
@@ -43,7 +45,8 @@ users.
   * With [bundler, use the `--trust-policy` flag](http://blog.meldium.com/home/2013/3/3/signed-rubygems-part), e.g. `bundle --trust-policy MediumSecurity`
 * Risks of being pwned, as described by [Benjamin Smith](http://lanyrd.com/profile/benjamin_smith/)
 
-## Building Gems
+Building Gems
+-------
 
 * gem cert
   * [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
