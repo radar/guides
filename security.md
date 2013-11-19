@@ -5,7 +5,7 @@ previous: /publishing
 next: /patterns
 ---
 
-Security practices when
+Security practices are being actively discussed. Check back often.
 
 * [General](#general)
 * [Using Gems](#using_gems)
