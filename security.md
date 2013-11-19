@@ -39,16 +39,17 @@ users.
 Using Gems
 -------
 
-* Install with a security profile.
-  * All dependent gems must be signed and verified: `gem install gemname -P HighSecurity`
-  * All signed dependent gems must be verified: `gem install gemname -P MediumSecurity`
-  * With [bundler, use the `--trust-policy` flag](http://blog.meldium.com/home/2013/3/3/signed-rubygems-part), e.g. `bundle --trust-policy MediumSecurity`
-* Risks of being pwned, as described by [Benjamin Smith](http://lanyrd.com/profile/benjamin_smith/)
+* Install with a trust policy.
+  * `gem install gemname -P HighSecurity`: All dependent gems must be signed and verified.
+  * `gem install gemname -P MediumSecurity`: All signed dependent gems must be verified.
+  * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only recognizes
+    the long `--trust-policy` flag, not the short `-P`.
+* Risks of being pwned, as described by [Benjamin Smith's Hacking with Gems talk](http://lanyrd.com/2013/rulu/scgxzr/)
 
 Building Gems
 -------
 
-* gem cert
+* `gem cert`
   * [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
 * openpgp signing with [rubygems-openpgp](https://github.com/grant-olson/rubygems-openpgp)
   * For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841/README.md#security)
