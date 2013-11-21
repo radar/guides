@@ -28,10 +28,11 @@ optionally lets you set a security policy, and you can verify the signing key
 for a gem before you install it.
 
 However, this method of securing gems is not widely used. It requires a number
-of manual steps on the part of the developer, and there is no well-established
-chain of trust for gem signing keys. Discussion of new signing models using
-X509 or OpenPGP is going on in the [rubygems-trust
-wiki](https://github.com/rubygems-trust/rubygems.org/wiki/_pages) and
+of [manual steps on the part of the developer](#building_gems), and there is no
+well-established chain of trust for gem signing keys.  Discussion of new signing models such as
+X509 and OpenPGP is going on in the [rubygems-trust
+wiki](https://github.com/rubygems-trust/rubygems.org/wiki/_pages), the
+[RubyGems-Developers list](https://groups.google.com/d/msg/rubygems-developers/lnnGTlfsuYo/TLDcJ2RPSDoJ) and
 in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve (or
 replace) the signing system so that it is easy for authors and transparent for
 users.
