@@ -41,10 +41,14 @@ Using Gems
 -------
 
 Install with a trust policy.
+
   * `gem install gemname -P HighSecurity`: All dependent gems must be signed and verified.
+
   * `gem install gemname -P MediumSecurity`: All signed dependent gems must be verified.
+
   * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only recognizes
     the long `--trust-policy` flag, not the short `-P`.
+
   * *Caveat*: Gem certificates are trusted globally, such that adding a cert.pem for one gem automatically trusts
     all gems signed by that cert.
 
