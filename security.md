@@ -49,19 +49,122 @@ Using Gems
 Building Gems
 -------
 
-* Official: `gem cert`
+### Official: `gem cert`
 
-  * [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
+To build:
 
-* Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
+1) Create self-signed gem cert
 
-    * For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841/README.md#security)
+    cd ~/.ssh
+    gem cert --build your@email.com
+    chmod 600 gem-p*
+
+- use the email address you specify in your gemspecs
+
+2) Configure gemspec with cert
+
+Add cert public key to your repository
+
+    cd /path/to/your/gem
+    mkdir certs
+    cp ~/.ssh/gem-public_cert.pem certs/yourhandle.pem
+    git add certs/yourhandle.pem
+
+Add cert paths to your gemspec
+
+    s.cert_chain  = ['certs/yourhandle.pem']
+    s.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
+
+3) Add your own cert to your approved list, just like anyone else
+
+    gem cert --add certs/yourhandle.pem
+
+4) Build gem and test that you can install it
+
+    gem build gemname.gemspec
+    gem install gemname-version.gem -P HighSecurity
+    # or -P MediumSecurity if your gem depends on unsigned gems
+
+5) Example text for installation documentation
+
+> MetricFu is cryptographically signed. To be sure the gem you install hasn't been tampered with:
+>
+> Add my public key (if you haven't already) as a trusted certificate
+>
+> `gem cert --add <(curl -Ls https://raw.github.com/metricfu/metric_fu/master/certs/bf4.pem)`
+>
+> `gem install metric_fu -P MediumSecurity`
+>
+> The MediumSecurity trust profile will verify signed gems, but allow the installation of unsigned dependencies.
+>
+> This is necessary because not all of MetricFu's dependencies are signed, so we cannot use HighSecurity.
+
+-------
+
+### Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
+
+Required setup [rubygems-openpgpg-ca trust](https://github.com/grant-olson/rubygems-openpgp-ca.org/blob/master/public/blog/the-complete-guide-to-signing-the-certificate-authority-keys.html) authority:
+
+Assumes you've already generated a signing key with `gpg --gen-key`
+
+    $ gpg --keyserver pool.sks-keyservers.net --recv-keys 0xFDBA50FB
+    $ gpg --fingerprint --list-key 0xFDBA50FB
+    $ gpg --edit-key 0xFDBA50FB
+    gpg> tlsign
+      2 # Trust Fully
+      2 # Trust Fully
+      # hit enter for no domain
+      y # Really sign
+      # enter your gpg-key's password
+    gpg> quit
+      y # save changes
+    # Test
+    $ gpg --keyserver pool.sks-keyservers.net --recv-keys 0x6094090A
+    $ gpg --delete-key 0xE3B5806F
+    $ gem install openpgp_signed_hola --trust --get-key
+
+
+To build:
+
+    gem install rubygems-openpgp
+    gem build gemname.gemspec --sign
+    # or
+    gem sign pkg/gemname-version.gem
+
+To install:
+
+    The public key 3649F444 registered to "Yorick Peterse" using Email address yorickpeterse@gmail.com
+    $ gem install rubygems-openpgp
+    $ gem install ruby-lint --trust --get-key # trust implies verify
+    # or
+    $ gpg --recv-keys 3649F444
+    $ gem install ruby-lint --verify --trust
+
+------
+
+### Alternative: Include checksum of released gems in your repository
+
+For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841f604398f40ba3a40777d68c03a543b/task/checksum.rake).
+
+To build:
+
+    require 'digest/sha2'
+    gem_path = 'pkg/ruby-lint-0.9.1.gem'
+    checksum = Digest::SHA512.new.hexdigest(File.read(gem_path))
+    checksum_path = 'checksum/ruby-lint-0.9.1.gem.sha512'
+    File.open(checksum_path, 'w' ) {|f| f.write(checksum) }
+
+To verify:
+
+    gem fetch ruby-lint -v 0.9.1
+    ruby -rdigest/sha2 -e "puts Digest::SHA512.new.hexdigest(File.read('ruby-lint-0.9.1.gem'))
 
 Credits
 -------
 
 Several sources were used for content for this guide:
 
+* [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
 * [Signing rubygems - Pasteable instructions](http://developer.zendesk.com/blog/2013/02/03/signing-gems/)
 * [Twitter gem gemspec](https://github.com/sferik/twitter/blob/master/twitter.gemspec)
 * [RubyGems Trust Model Overview](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](http://goo.gl/ybFIO)
