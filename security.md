@@ -39,21 +39,25 @@ users.
 Using Gems
 -------
 
-* Install with a trust policy.
+Install with a trust policy.
   * `gem install gemname -P HighSecurity`: All dependent gems must be signed and verified.
   * `gem install gemname -P MediumSecurity`: All signed dependent gems must be verified.
   * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only recognizes
     the long `--trust-policy` flag, not the short `-P`.
-  * Caveat: Gem certificates are trusted globally, such that adding a cert.pem for one gem automatically trusts
+  * *Caveat*: Gem certificates are trusted globally, such that adding a cert.pem for one gem automatically trusts
     all gems signed by that cert.
-* Risks of being pwned, as described by [Benjamin Smith's Hacking with Gems talk](http://lanyrd.com/2013/rulu/scgxzr/)
+
+Verify the checksum, if available
+
+    gem fetch gemname -v version
+    ruby -rdigest/sha2 -e "puts Digest::SHA512.new.hexdigest(File.read('gemname-version.gem'))
+
+Know the risks of being pwned, as described by [Benjamin Smith's Hacking with Gems talk](http://lanyrd.com/2013/rulu/scgxzr/)
 
 Building Gems
 -------
 
-### Official: `gem cert`
-
-To build:
+### Sign with: `gem cert`
 
 1) Create self-signed gem cert
 
@@ -105,47 +109,19 @@ Add cert paths to your gemspec
 
 ### Include checksum of released gems in your repository
 
-For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841f604398f40ba3a40777d68c03a543b/task/checksum.rake).
-
-To build:
-
     require 'digest/sha2'
-    gem_path = 'pkg/ruby-lint-0.9.1.gem'
-    checksum = Digest::SHA512.new.hexdigest(File.read(gem_path))
-    checksum_path = 'checksum/ruby-lint-0.9.1.gem.sha512'
+    built_gem_path = 'pkg/gemname-version.gem'
+    checksum = Digest::SHA512.new.hexdigest(File.read(built_gem_path))
+    checksum_path = 'checksum/gemname-version.gem.sha512'
     File.open(checksum_path, 'w' ) {|f| f.write(checksum) }
-
-To verify:
-
-    gem fetch ruby-lint -v 0.9.1
-    ruby -rdigest/sha2 -e "puts Digest::SHA512.new.hexdigest(File.read('ruby-lint-0.9.1.gem'))
+    # add and commit 'checksum_path'
 
 -------
 
-### Not Recommended: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
-About: [Video](https://vimeo.com/59297058), [Slides](https://docs.google.com/a/grant-olson.net/viewer?a=v&pid=sites&srcid=Z3JhbnQtb2xzb24ubmV0fGdyYW50LXMtc3R1ZmZ8Z3g6MTg5MWZkNjU3ZGEyZDY5Yg)
+### Not Recommended: OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
 
-OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
-Especially, [do not use the rubygems-openpgpg certificate authority.](https://github.com/grant-olson/rubygems-openpgp/issues/34#issuecomment-29006704)
-
-Here's how to use for an individual's signed gem.
-
-Assumes you've already generated a signing key with `gpg --gen-key`
-
-To build:
-
-    $ gem install rubygems-openpgp
-    $ gem build gemname.gemspec --sign
-    # or
-    $ gem sign pkg/gemname-version.gem
-
-To [install](https://github.com/grant-olson/stackdriver-ruby/blob/505d928/README.md#software-verification):
-
-    The public key 3649F444 registered to "Yorick Peterse" using Email address yorickpeterse@gmail.com
-    $ gem install rubygems-openpgp
-    $ gpg --recv-keys 3649F444
-    $ gpg --lsign 3649F444          # Trust this key. You verified it yourself, right?
-    $ gem install ruby-lint --trust # Trust includes verification
+For details, see discussion [with Grant Olson](https://github.com/grant-olson/rubygems-openpgp/issues/34#issuecomment-29016709) and
+[Yorick Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).
 
 Credits
 -------
