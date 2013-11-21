@@ -101,6 +101,25 @@ Add cert paths to your gemspec
 
 -------
 
+### Include checksum of released gems in your repository
+
+For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841f604398f40ba3a40777d68c03a543b/task/checksum.rake).
+
+To build:
+
+    require 'digest/sha2'
+    gem_path = 'pkg/ruby-lint-0.9.1.gem'
+    checksum = Digest::SHA512.new.hexdigest(File.read(gem_path))
+    checksum_path = 'checksum/ruby-lint-0.9.1.gem.sha512'
+    File.open(checksum_path, 'w' ) {|f| f.write(checksum) }
+
+To verify:
+
+    gem fetch ruby-lint -v 0.9.1
+    ruby -rdigest/sha2 -e "puts Digest::SHA512.new.hexdigest(File.read('ruby-lint-0.9.1.gem'))
+
+-------
+
 ### Not Recommended: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
 About: [Video](https://vimeo.com/59297058), [Slides](https://docs.google.com/a/grant-olson.net/viewer?a=v&pid=sites&srcid=Z3JhbnQtb2xzb24ubmV0fGdyYW50LXMtc3R1ZmZ8Z3g6MTg5MWZkNjU3ZGEyZDY5Yg)
 
@@ -125,25 +144,6 @@ To [install](https://github.com/grant-olson/stackdriver-ruby/blob/505d928/README
     $ gpg --recv-keys 3649F444
     $ gpg --lsign 3649F444          # Trust this key. You verified it yourself, right?
     $ gem install ruby-lint --trust # Trust includes verification
-
-------
-
-### Alternative: Include checksum of released gems in your repository
-
-For example, see the [ruby-lint gem](https://github.com/YorickPeterse/ruby-lint/blob/0858d8f841f604398f40ba3a40777d68c03a543b/task/checksum.rake).
-
-To build:
-
-    require 'digest/sha2'
-    gem_path = 'pkg/ruby-lint-0.9.1.gem'
-    checksum = Digest::SHA512.new.hexdigest(File.read(gem_path))
-    checksum_path = 'checksum/ruby-lint-0.9.1.gem.sha512'
-    File.open(checksum_path, 'w' ) {|f| f.write(checksum) }
-
-To verify:
-
-    gem fetch ruby-lint -v 0.9.1
-    ruby -rdigest/sha2 -e "puts Digest::SHA512.new.hexdigest(File.read('ruby-lint-0.9.1.gem'))
 
 Credits
 -------
