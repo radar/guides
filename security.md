@@ -101,46 +101,30 @@ Add cert paths to your gemspec
 
 -------
 
-### Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
-
+### Not Recommended: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
 About: [Video](https://vimeo.com/59297058), [Slides](https://docs.google.com/a/grant-olson.net/viewer?a=v&pid=sites&srcid=Z3JhbnQtb2xzb24ubmV0fGdyYW50LXMtc3R1ZmZ8Z3g6MTg5MWZkNjU3ZGEyZDY5Yg)
 
-Required setup [rubygems-openpgpg-ca trust](https://desolate-spire-6189.herokuapp.com/blog/the-complete-guide-to-verifying-gems-with-rubygems-openpgp.html) authority:
+OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
+Especially, [do not use the rubygems-openpgpg certificate authority.](https://github.com/grant-olson/rubygems-openpgp/issues/34#issuecomment-29006704)
+
+Here's how to use for an individual's signed gem.
 
 Assumes you've already generated a signing key with `gpg --gen-key`
 
-    $ gpg --keyserver pool.sks-keyservers.net --recv-keys 0xFDBA50FB
-    $ gpg --fingerprint --list-key 0xFDBA50FB
-    $ gpg --edit-key 0xFDBA50FB
-    gpg> tlsign
-      2 # Trust Fully
-      2 # Trust Fully
-      # hit enter for no domain
-      y # Really sign
-      # enter your gpg-key's password
-    gpg> quit
-      y # save changes
-    # Test
-    $ gpg --keyserver pool.sks-keyservers.net --recv-keys 0x6094090A
-    $ gpg --delete-key 0xE3B5806F
-    $ gem install openpgp_signed_hola --trust --get-key
-
-
 To build:
 
-    gem install rubygems-openpgp
-    gem build gemname.gemspec --sign
+    $ gem install rubygems-openpgp
+    $ gem build gemname.gemspec --sign
     # or
-    gem sign pkg/gemname-version.gem
+    $ gem sign pkg/gemname-version.gem
 
-To install:
+To [install](https://github.com/grant-olson/stackdriver-ruby/blob/505d928/README.md#software-verification):
 
     The public key 3649F444 registered to "Yorick Peterse" using Email address yorickpeterse@gmail.com
     $ gem install rubygems-openpgp
-    $ gem install ruby-lint --trust --get-key # trust implies verify
-    # or
     $ gpg --recv-keys 3649F444
-    $ gem install ruby-lint --verify --trust
+    $ gpg --lsign 3649F444          # Trust this key. You verified it yourself, right?
+    $ gem install ruby-lint --trust # Trust includes verification
 
 ------
 
