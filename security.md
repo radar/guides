@@ -103,7 +103,9 @@ Add cert paths to your gemspec
 
 ### Alternative: [Rubygems OpenPGP signing](https://web.archive.org/web/20130914152133/http://www.rubygems-openpgp-ca.org/), [gem](https://github.com/grant-olson/rubygems-openpgp)
 
-Required setup [rubygems-openpgpg-ca trust](https://github.com/grant-olson/rubygems-openpgp-ca.org/blob/master/public/blog/the-complete-guide-to-signing-the-certificate-authority-keys.html) authority:
+About: [Video](https://vimeo.com/59297058), [Slides](https://docs.google.com/a/grant-olson.net/viewer?a=v&pid=sites&srcid=Z3JhbnQtb2xzb24ubmV0fGdyYW50LXMtc3R1ZmZ8Z3g6MTg5MWZkNjU3ZGEyZDY5Yg)
+
+Required setup [rubygems-openpgpg-ca trust](https://desolate-spire-6189.herokuapp.com/blog/the-complete-guide-to-verifying-gems-with-rubygems-openpgp.html) authority:
 
 Assumes you've already generated a signing key with `gpg --gen-key`
 
