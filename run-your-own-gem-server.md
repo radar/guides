@@ -47,9 +47,6 @@ the [Gem in a Box](https://github.com/cwninja/geminabox) project.
 To get started, install `geminabox`:
 
     [~/dev/geminabox] gem install geminabox
-    Fetching: geminabox-0.5.2.gem (100%)
-    Successfully installed geminabox-0.5.2
-    1 gem installed
 
 Make a data directory for storing gems:
 
@@ -62,7 +59,7 @@ Include the following in a `config.ru` file:
     require "geminabox"
 
     Geminabox.data = "./data"
-    run Geminabox
+    run Geminabox::Server
 
 And run the server:
 
