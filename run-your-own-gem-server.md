@@ -14,7 +14,7 @@ distribute and manage as gems without making the source publicly available.
 
 There are a few options to set up a server to host gems from within your
 organization. This guide covers the `gem server` command and the [Gem in a
-Box](https://github.com/cwninja/geminabox) project. It also discusses how to
+Box](https://github.com/geminabox/geminabox) project. It also discusses how to
 use these servers as gem sources during development.
 
 ## Running the built-in gem server
@@ -42,7 +42,7 @@ specify the directories to search for installed gems.
 ## Running Gem in a Box
 
 For a server with more features, including the ability to push gems, try out
-the [Gem in a Box](https://github.com/cwninja/geminabox) project.
+the [Gem in a Box](https://github.com/geminabox/geminabox) project.
 
 To get started, install `geminabox`:
 
@@ -83,7 +83,7 @@ this, you'll be prompted for the location of your gem server.
 
 There is a web interface available on
 [http://localhost:9292](http://localhost:9292) as well.  For more information,
-read the [Gem in a box](https://github.com/cwninja/geminabox) README.
+read the [Gem in a box](https://github.com/geminabox/geminabox) README.
 
 ## Using gems from your server
 
