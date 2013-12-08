@@ -101,4 +101,4 @@ owner command](/command-reference/#gem_owner).
 Gem Security
 ------------
 
-See [Security](/Security) page.
+See [Security](/security) page.
