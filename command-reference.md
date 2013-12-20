@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.1.11.
+This reference was automatically generated from RubyGems version 2.2.0.rc.1.
 
 * [gem build](#gem_build)
 * [gem cert](#gem_cert)
@@ -599,8 +599,10 @@ Install a gem into the local repository
 *         -&#8203;-development-all          - Install development dependencies for all gems (including dev deps themselves)
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 *         -&#8203;-minimal-deps             - Don't upgrade any dependencies that already meet version requirements
-*     -g, -&#8203;-file FILE                - Read from a gem dependencies API file and install the listed gems
+*     -g, -&#8203;-file \[FILE\]              - Read from a gem dependencies API file and install the listed gems
+*         -&#8203;-without GROUPS           - Omit the named groups (comma separated) when installing from a gem dependencies file
 *         -&#8203;-default                  - Add the gem's full specification to specifications/default and extract only its bin
+*         -&#8203;-explain                  - Rather than install the gems, indicate which would be installed
 
 ###   Local/Remote Options:
 
@@ -688,7 +690,7 @@ Display local gems whose name starts with STRING
 
 ### Usage
 
-    gem list [STRING] [options]
+    gem list [STRING ...] [options]
 
 
 ###   Options:
@@ -878,7 +880,7 @@ Display all gems that need updates
   
 ### Description
 
-The outdated command lists gems you way wish to upgrade to a newer version.
+The outdated command lists gems you may wish to upgrade to a newer version.
 
 You can check for dependency mismatches using the dependency command and
 update the gems with the update or install commands.
@@ -983,6 +985,9 @@ If the cached gem cannot be found it will be downloaded.
 
 If --no-extensions is provided pristine will not attempt to restore a gem
 with an extension.
+
+If --extensions is given (but not --all or gem names) only gems with
+extensions will be restored.
   
 
 ## gem push

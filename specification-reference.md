@@ -16,6 +16,7 @@ and looks like this:</p>
 <pre class="ruby"><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span>        = <span class="ruby-string">&#39;example&#39;</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">version</span>     = <span class="ruby-string">&#39;0.1.0&#39;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">licenses</span>    = [<span class="ruby-string">&#39;MIT&#39;</span>]
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">summary</span>     = <span class="ruby-string">&quot;This is an example!&quot;</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">description</span> = <span class="ruby-string">&quot;Much longer explanation of the example!&quot;</span>
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">authors</span>     = [<span class="ruby-string">&quot;Ruby Coder&quot;</span>]
@@ -48,6 +49,12 @@ specification.</p>
     
 * [version](#version)
     
+## Recommended gemspec attributes
+    
+* [license=](#license=)
+    
+* [licenses=](#licenses=)
+    
 ## Optional gemspec attributes
     
 * [add_development_dependency](#add_development_dependency)
@@ -73,10 +80,6 @@ specification.</p>
 * [extra_rdoc_files](#extra_rdoc_files)
     
 * [homepage](#homepage)
-    
-* [license=](#license=)
-    
-* [licenses=](#licenses=)
     
 * [metadata](#metadata)
     
@@ -163,6 +166,8 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
 activated.</p>
 
+<p>See also require_paths</p>
+
 <p>If you have an extension you do not need to add
 <code>&quot;ext&quot;</code> to the require path, the extension build
 process will copy the extension files into “lib” for you.</p>
@@ -205,6 +210,53 @@ a letter in it, such as <code>1.0.0.pre</code>.</p>
 <p>Usage:</p>
 
 <pre>spec.version = &#39;0.4.1&#39;</pre>    
+
+# Recommended gemspec attributes
+
+    
+
+<a id="license="> </a>
+## license=
+
+<p>The license for this gem.</p>
+
+<p>The license must be a short name, no more than 64 characters.</p>
+
+<p>This should just be the name of your license. The full text of the license
+should be inside of the gem when you build it.</p>
+
+<p>See <a
+href="http://opensource.org/licenses/alphabetical">opensource.org/licenses/alphabetical</a>
+for a list of licenses and their abbreviations (or short names).  GitHub
+also provides a license picker at <a
+href="http://choosealicense.com">choosealicense.com</a>/</p>
+
+<pre>According to copyright law, not having an OSI-approved open source license
+means you have no rights to use the code for any purpose-- in other words,
+&quot;all rights reserved&quot;.</pre>
+
+<p>You can set multiple licenses with licenses=</p>
+
+<p>Usage:</p>
+
+<pre>spec.license = &#39;MIT&#39;</pre>    
+
+<a id="licenses="> </a>
+## licenses=
+
+<p>The license(s) for the library.</p>
+
+<p>Each license must be a short name, no more than 64 characters.</p>
+
+<p>This should just be the name of your license. The full text of the license
+should be inside of the gem when you build it.</p>
+
+<p>See license= for more
+discussion</p>
+
+<p>Usage:</p>
+
+<pre>spec.licenses = [&#39;MIT&#39;, &#39;GPL-2&#39;]</pre>    
 
 # Optional gemspec attributes
 
@@ -341,43 +393,6 @@ a more complete set of documentation.</p>
 <p>Usage:</p>
 
 <pre>spec.homepage = &#39;http://rake.rubyforge.org&#39;</pre>    
-
-<a id="license="> </a>
-## license=
-
-<p>The license for this gem.</p>
-
-<p>The license must be a short name, no more than 64 characters.</p>
-
-<p>This should just be the name of your license. The full text of the license
-should be inside of the gem when you build it.</p>
-
-<p>See <a
-href="http://opensource.org/licenses/alphabetical">opensource.org/licenses/alphabetical</a>
-for a list of licenses and their abbreviations (or short names).</p>
-
-<p>You can set multiple licenses with licenses=</p>
-
-<p>Usage:</p>
-
-<pre>spec.license = &#39;MIT&#39;</pre>    
-
-<a id="licenses="> </a>
-## licenses=
-
-<p>The license(s) for the library.</p>
-
-<p>Each license must be a short name, no more than 64 characters.</p>
-
-<p>This should just be the name of your license. The full text of the license
-should be inside of the gem when you build it.</p>
-
-<p>See license= for more
-discussion</p>
-
-<p>Usage:</p>
-
-<pre>spec.licenses = [&#39;MIT&#39;, &#39;GPL-2&#39;]</pre>    
 
 <a id="metadata"> </a>
 ## metadata
