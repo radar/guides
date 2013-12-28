@@ -30,12 +30,12 @@ By using
 
 Let's go through what this command actually generates. It operates by a 4-part process, generating slightly different things at each step.
 
-For the first step, this command obviously needs to generate a directory to contain the engine in, and it does. This directory is called _for\_them_, the name that we gave our engine. The first step is setting up the skeleton for our engine to become a gem. By making this engine a gem, we can easily distribute it by uploading it to rubygems.org or rubyforge.org. This step generates the following files:
+For the first step, this command obviously needs to generate a directory to contain the engine in, and it does. This directory is called *for_them*, the name that we gave our engine. The first step is setting up the skeleton for our engine to become a gem. By making this engine a gem, we can easily distribute it by uploading it to rubygems.org or rubyforge.org. This step generates the following files:
 
-* _for\_them.gemspec_: (in the future, plainly referenced as "the _gemspec_") Contains a `Gem::Specification` for this engine, setting up things such as the name of the gem, its current version and any of its dependencies for either "real-world" operation or development.
+* *for_them.gemspec*: (in the future, plainly referenced as "the _gemspec_") Contains a `Gem::Specification` for this engine, setting up things such as the name of the gem, its current version and any of its dependencies for either "real-world" operation or development.
 * _Gemfile_: Configuration file for Bundler. Configures "http://rubygems.org" to be the source for all gems and then determines what gems the engine depends on by looking them up from the _gemspec_.
-* _lib/for\_them.rb_: Defines a module for our gem called `ForThem` and nothing else. This is the base module where our engine class will be namespaced in.
-* _MIT\_LICENSE_: An MIT License file for the gem which is useful if we choose to release it under the MIT License.
+* *lib/for_them.rb*: Defines a module for our gem called `ForThem` and nothing else. This is the base module where our engine class will be namespaced in.
+* *MIT_LICENSE*: An MIT License file for the gem which is useful if we choose to release it under the MIT License.
 * _README.rdoc_: Tells anybody who reads it that the "project rocks and uses the MIT-LICENSE". We can use this to tell users how to install or use our engine.
 * _spec/dummy_: A very basic Rails application which we can use to test our engine.
     
