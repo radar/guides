@@ -260,46 +260,6 @@ Returns an object containing the total number of downloads on RubyGems.
       "total": 461672727
     }
 
-### GET - `/api/v1/downloads/top.(json|xml|yaml)`
-
-Returns an object containing the top 50 downloaded gem versions for today.
-
-    $ curl https://rubygems.org/api/v1/downloads/top.json
-
-    {
-      "gems": [
-        [
-          # version attributes
-          {
-            'full_name' => 'mime-types-1.16' # more attributes ...
-          },
-          # downloads today
-          2806
-        ],
-        # more download/version pairs ...
-      ]
-    }
-
-### GET - `/api/v1/downloads/all.(json|xml|yaml)`
-
-Returns an object containing the top 50 downloaded gem versions of all time.
-
-    $ curl https://rubygems.org/api/v1/downloads/all.json
-
-    {
-      "gems": [
-        [
-          # version attributes
-          {
-            'full_name' => 'rake-0.9.2' # more attributes ...
-          },
-          # downloads of all time
-          9001
-        ],
-        # more download/version pairs ...
-      ]
-    }
-
 ### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)`
 
 Returns an object containing the total number of downloads for a paritcular gem
@@ -310,36 +270,6 @@ as well as the total number of downloads for the specified version.
     {
       "version_downloads": 3142,
       "total_downloads": 3142
-    }
-
-### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads.(json|yaml)`
-
-Returns an object containing the number of downloads by day for a particular
-gem version over the past 90 days.
-
-    $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads.json
-
-    {
-      "2010-11-30":0,
-      "2010-12-01":0,
-      "2010-12-02":0,
-      ...
-    }
-
-### GET - `/api/v1/versions/[GEM NAME]-[GEM VERSION]/downloads/search.(json|yaml)?from=[START DATE]&to=[END DATE]`
-
-Returns an object containing the number of downloads by day for a particular
-gem version between a date range, specified by the parameters `from` and `to`.
-Dates values should be specified in the format YYYY-MM-DD.
-
-    $ curl https://rubygems.org/api/v1/versions/coulda-0.6.3/downloads/search.json?from=2011-11-01&to=2011-11-05
-
-    {
-      "2011-11-01":0,
-      "2011-11-02":0,
-      "2011-11-03":0,
-      "2011-11-04":0,
-      "2011-11-05":0
     }
 
 Owner Methods
