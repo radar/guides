@@ -265,7 +265,7 @@ discussion</p>
 <a id="add_development_dependency"> </a>
 ## add_development_dependency
 
-<p>Adds a development dependency named <code>gem</code> with
+<p>Adds a development dependency named <code>example</code> with
 <code>requirements</code> to this gem.</p>
 
 <p>Usage:</p>
@@ -278,7 +278,7 @@ activated when a gem is required.</p>
 <a id="add_runtime_dependency"> </a>
 ## add_runtime_dependency
 
-<p>Adds a runtime dependency named <code>gem</code> with
+<p>Adds a runtime dependency named <code>example</code> with
 <code>requirements</code> to this gem.</p>
 
 <p>Usage:</p>
