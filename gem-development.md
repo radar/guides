@@ -142,7 +142,7 @@ However, relying on a version simply greater than the latest-at-the-time is a su
 s.add_dependency "activesupport", "~> 4.0.0"
 ```
 
-When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
+When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food_spec.rb_ now inside our `describe Foodie::Food` block:
 
 ```ruby
 it "pluralizes a word" do
