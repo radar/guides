@@ -203,6 +203,15 @@ by using `~>` instead of `>=` if at all possible.
 > [Isolate](https://github.com/jbarnette/isolate) which do a great job of
 > managing a complex version manifest for many gems.
 
+If you want to allow prereleases and regular releases use a compound
+requirement:
+
+    # gemspec
+    spec.add_runtime_dependency 'library', '>= 2.0.0.a', '< 3'
+
+Using `~>` with prerelease versions will restrict you to prerelease versions
+only.
+
 ### Requiring RubyGems
 
 Summary: don't.
