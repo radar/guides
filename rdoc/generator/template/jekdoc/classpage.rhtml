@@ -46,10 +46,22 @@ next: /command-reference
 
 # <%= section.title %>
 
-    <% methods.sort_by(&:first).each do |name, method| %>
+<% methods.sort_by(&:first).each do |name, method|
+   params =
+     if method.params then
+       params = method.params.delete '()'
+
+       if params.empty? then
+         ''
+       else
+         params = params.split(',').map { |param| "`#{param.strip}`" }.join ', '
+         "(#{params})"
+       end
+     end
+%>
 
 <a id="<%= name %>"> </a>
-## <%= name %>
+## <%= name %><%= params %>
 <% description = method.description.strip
    description.gsub! %r%<a\shref=(["'])Specification\.html#.*?\1>(.*?)</a>%m, '\2'
    description.gsub! %r%<a\shref=(["'])Specification\.html\1>Specification</a>%,
