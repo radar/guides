@@ -35,6 +35,10 @@ specification.</p>
 
 ## Required gemspec attributes
     
+* [author=](#author=)
+    
+* [authors=](#authors=)
+    
 * [files](#files)
     
 * [name](#name)
@@ -60,10 +64,6 @@ specification.</p>
 * [add_development_dependency](#add_development_dependency)
     
 * [add_runtime_dependency](#add_runtime_dependency)
-    
-* [author=](#author=)
-    
-* [authors=](#authors=)
     
 * [bindir](#bindir)
     
@@ -99,7 +99,25 @@ specification.</p>
 
 # Required gemspec attributes
 
-    
+
+
+<a id="author="> </a>
+## author=(`o`)
+
+<p>Singular writer for authors</p>
+
+<p>Usage:</p>
+
+<pre>spec.author = &#39;John Jones&#39;</pre>    
+
+<a id="authors="> </a>
+## authors=(`value`)
+
+<p>Sets the list of authors, ensuring it is an array.</p>
+
+<p>Usage:</p>
+
+<pre>spec.authors = [&#39;John Jones&#39;, &#39;Mary Smith&#39;]</pre>    
 
 <a id="files"> </a>
 ## files
@@ -136,7 +154,7 @@ other non-files cause an error.</p>
 <pre>spec.name = &#39;rake&#39;</pre>    
 
 <a id="platform="> </a>
-## platform=
+## platform=(`platform`)
 
 <p>The platform this gem runs on.</p>
 
@@ -213,10 +231,10 @@ a letter in it, such as <code>1.0.0.pre</code>.</p>
 
 # Recommended gemspec attributes
 
-    
+
 
 <a id="license="> </a>
-## license=
+## license=(`o`)
 
 <p>The license for this gem.</p>
 
@@ -242,7 +260,7 @@ means you have no rights to use the code for any purpose-- in other words,
 <pre>spec.license = &#39;MIT&#39;</pre>    
 
 <a id="licenses="> </a>
-## licenses=
+## licenses=(`licenses`)
 
 <p>The license(s) for the library.</p>
 
@@ -260,12 +278,12 @@ discussion</p>
 
 # Optional gemspec attributes
 
-    
+
 
 <a id="add_development_dependency"> </a>
-## add_development_dependency
+## add_development_dependency(`gem`, `*requirements`)
 
-<p>Adds a development dependency named <code>example</code> with
+<p>Adds a development dependency named <code>gem</code> with
 <code>requirements</code> to this gem.</p>
 
 <p>Usage:</p>
@@ -276,32 +294,14 @@ discussion</p>
 activated when a gem is required.</p>    
 
 <a id="add_runtime_dependency"> </a>
-## add_runtime_dependency
+## add_runtime_dependency(`gem`, `*requirements`)
 
-<p>Adds a runtime dependency named <code>example</code> with
+<p>Adds a runtime dependency named <code>gem</code> with
 <code>requirements</code> to this gem.</p>
 
 <p>Usage:</p>
 
 <pre>spec.add_runtime_dependency &#39;example&#39;, &#39;~&gt; 1.1&#39;, &#39;&gt;= 1.1.4&#39;</pre>    
-
-<a id="author="> </a>
-## author=
-
-<p>Singular writer for authors</p>
-
-<p>Usage:</p>
-
-<pre>spec.author = &#39;John Jones&#39;</pre>    
-
-<a id="authors="> </a>
-## authors=
-
-<p>Sets the list of authors, ensuring it is an array.</p>
-
-<p>Usage:</p>
-
-<pre>spec.authors = [&#39;John Jones&#39;, &#39;Mary Smith&#39;]</pre>    
 
 <a id="bindir"> </a>
 ## bindir
@@ -441,7 +441,7 @@ bytes</p>
   &#39;--line-numbers&#39;</pre>    
 
 <a id="required_ruby_version="> </a>
-## required_ruby_version=
+## required_ruby_version=(`req`)
 
 <p>The version of Ruby required by this gem.  The ruby version can be
 specified to the patch-level:</p>
@@ -475,7 +475,7 @@ spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>
 <p>The key used to sign this gem.  See Gem::Security for details.</p>    
 
 <a id="test_files="> </a>
-## test_files=
+## test_files=(`files`)
 
 <p>A collection of unit test files.  They will be loaded as unit tests when
 the user requests a gem to be unit tested.</p>
