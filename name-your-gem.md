@@ -20,10 +20,13 @@ The main goal of these recommendations is to give the user some clue about
 how to require the files in your gem. Following these conventions also lets
 Bundler require your gem with no extra configuration.
 
-If you publish a gem on [rubygems.org](http://rubygems.org) it may be removed
-if the name is objectionable, violates intellectual property or the contents
-of the gem meet these criteria.  You can report such a gem at
-[http://help.rubygems.org](http://help.rubygems.org).
+If you publish a gem on [rubygems.org][rubygems] it may be removed if the name
+is objectionable, violates intellectual property or the contents of the gem
+meet these criteria.  You can report such a gem on the
+[RubyGems Support][rubygems-support] site.
+
+[rubygems]: http://rubygems.org
+[rubygems-support]: http://help.rubygems.org
 
 Use underscores for multiple words
 ----------------------------------
@@ -44,10 +47,13 @@ Mix underscores and dashes appropriately
 
 If your class or module has multiple words and you're also adding functionality
 to another gem, follow both of the rules above. For example,
-[`net-http-digest_auth`](https://rubygems.org/gems/net-http-digest_auth) adds
-[HTTP digest authentication](http://tools.ietf.org/html/rfc2617) to `net/http`.
+[`net-http-digest_auth`][digest-gem] adds
+[HTTP digest authentication][digest-standard] to `net/http`.
 The user will `require 'net/http/digest_auth'` to use the extension
 (in class `Net::HTTP::DigestAuth`).
+
+[digest-gem]: https://rubygems.org/gems/net-http-digest_auth
+[digest-standard]: http://tools.ietf.org/html/rfc2617
 
 Don't use UPPERCASE letters
 ---------------------------
@@ -61,6 +67,6 @@ necessary.
 Credits
 -------
 
-This guide was expanded from [How to Name
-Gems](http://blog.segment7.net/2010/11/15/how-to-name-gems) by Eric Hodel.
+This guide was expanded from [How to Name Gems][how-to-name-gems] by Eric Hodel.
 
+[how-to-name-gems]: http://blog.segment7.net/2010/11/15/how-to-name-gems
