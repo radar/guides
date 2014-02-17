@@ -22,7 +22,7 @@ This command creates a [scaffold directory](gem-scaffold/foodie)  for our new ge
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
 
- * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling `Bundler::GemHelper.install\_tasks`. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
+ * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling `Bundler::GemHelper.install_tasks`. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
 
  * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
 
@@ -142,7 +142,7 @@ However, relying on a version simply greater than the latest-at-the-time is a su
 s.add_dependency "activesupport", "~> 4.0.0"
 ```
 
-When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to _spec/food\_spec.rb_ now inside our `describe Foodie::Food` block:
+When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to *spec/food_spec.rb* now inside our `describe Foodie::Food` block:
 
 ```ruby
 it "pluralizes a word" do
