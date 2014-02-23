@@ -89,6 +89,8 @@ specification.</p>
     
 * [required_ruby_version=](#required_ruby_version=)
     
+* [required_rubygems_version=](#required_rubygems_version=)
+    
 * [requirements](#requirements)
     
 * [signing_key](#signing_key)
@@ -457,6 +459,11 @@ spec.required_ruby_version = &#39;&gt;= 1.8.6&#39;
 
 # Only with ruby 2.0.x
 spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>    
+
+<a id="required_rubygems_version="> </a>
+## required_rubygems_version=(`req`)
+
+<p>The RubyGems version required by this gem.</p>
 
 <a id="requirements"> </a>
 ## requirements
