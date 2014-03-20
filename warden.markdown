@@ -32,6 +32,14 @@ configured like this inside `config/application.rb`:
 ```ruby
 config.middleware.use Warden::Manager do |manager|
   manager.default_strategies :password
+  
+  manager.serialize_into_session do |user|
+    user.id
+  end
+
+  manager.serialize_from_session do |id|
+    User.find(id)
+  end
 end
 ```
 
@@ -39,8 +47,11 @@ Warden uses a thing called *strategies* for authentication. They're like
 *battle plans* for authentication. In this situation, Warden's told that it
 should use the `password` strategy, which is also defined inside
 `config/application.rb`, but would probably be better placed into
-`config/initializers/warden/strategies/password.rb`... anyway. This strategy is
-defined like this:
+`config/initializers/warden/strategies/password.rb`... anyway. More about the strategy later on.
+
+The rest of the code in this block is all to do with the serialization of the user. Warden needs to remember the User, but it can't go and save the *whole damn User object* into the session, because that might cause the session to overflow and we definitely don't want that. To avoid that, all we save to the session is the ID of the user. When we want our User back, we just call `User.find`. Wow, isn't that cool?
+
+Now, back to the *strategic strategy*. This strategy is defined like this:
 
 ```ruby
 Warden::Strategies.add(:password) do
