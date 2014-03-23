@@ -72,11 +72,67 @@ So there's the two parts to it that matter crucially: we've defined the
 "pretty please use the password strategy whenever you feel like authenticating
 a user". Cool.
 
+The `authenticate` method in the `User` model goes like this:
+
+```ruby
+  def self.authenticate(username, password)
+    user = find_by(:username => username)
+    user.authenticate(password) if user
+  end
+```
+
+We could go ahead and define the `authenticate` method ourselves, or we could rely on the tried-and-true `has_secure_password`-provided methods. Call this truly magnificient method underneath the `class` definition:
+
+```ruby
+class User < ActiveRecord::Base
+  has_secure_password
+```
+
+Now users have secure passwords. Isn't that magical? These wonderful security features are provided by the `bcrypt` (or `bcrypt-ruby`, I can never remember which) gem, so don't forget to add that to your Gemfile:
+
+```ruby
+gem 'bcrypt'
+# OR
+gem 'bcrypt-ruby'
+```
+
+ A small caveat here: you'll need to add a `password_digest` field to the `users` table:
+
+```bash
+rails g migration add_password_digest_to_users password_digest:string
+```
+
+This field is where the passwords will be securely stored to. They won't be in a format that anyone could (probably) read, so that's great. 
+
+Don't forget to run this migration or else there will be BIG TROUBLE!
+
+```
+rake db:migrate
+```
+
 ## more code
 
 So then you have a login form at `app/views/login/new.html.erb` inside this
-application which contains a `username` and `password` field. Simple enough.
-This form posts to `/login`, and if you look in `config/routes.rb` you'll see
+application which contains a `username` and `password` field. Simple enough. 
+This form posts to `/login`. After it does this, users who have the right credentials should be signed in.
+
+The form probably looks like this:
+
+```ruby
+  <%= form_tag '/login' do %>
+    <p>
+      <%= label_tag "username" %><br>
+      <%= text_field_tag "username" %>
+    </p>
+
+    <p>
+      <%= label_tag "password" %><br>
+      <%= password_field_tag "password" %>
+    </p>
+  <% end %>
+```
+
+ and if you look in `config/routes.rb` you'll see
 the route is defined like this: 
 
 ```ruby
@@ -125,6 +181,19 @@ What will happen then is that if it's successful, `env['warden'].authenticate`
 will return the newly authenticated-and-signed-in `User` object which will mean
 then that the controller will render "success". If it isn't successful, then it
 will render "failure".
+
+Before you can actually log in as a user, it's going to be extremely necessary to create a user, which youcan do in `rails console`:
+
+```ruby
+User.create(
+  :email => "you@example.com",
+  :password => "password",
+  :password_confirmation => "password"
+)
+```
+
+Remember that old `has_secure_password` call in our User model? Well, that'll take those `password` and `password_confirmation` parameters, confirm that they're indeed the same thing and then if they are, it will hash the password using the functions provided by the `bcrypt` gem, which `has_secure_password` depends on.
+
 
 ### Fin.
 
