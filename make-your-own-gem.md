@@ -75,7 +75,7 @@ information you see on a gem page
     end
 
 > The description member can be much longer than you see in this example. If it
-> starts with '==' then the description will be run through
+> matches `/^== [A-Z]/` then the description will be run through
 > [RDoc's markup formatter](http://rdoc.rubyforge.org/RDoc/Markup.html) for display on
 > the RubyGems web site. Be aware though that other consumers of the data might not
 > understand this markup.
