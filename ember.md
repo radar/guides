@@ -62,10 +62,15 @@ If we look at our `app/assets/javascripts` directory now, we'll have two version
 window.Blorgh = Ember.Application.create()
 ```
 
-This file requires *almost* everything that we need for Ember. It's actually missing a require for jquery, which we can just simply add at the top. In this guide I'm not going to use Ember Data because the API that the application provides does not comply with Ember Data's standards, so we will remove that line. The end result will be a file that looks like:
+This file requires *almost* everything that we need for Ember. It's actually missing a require for jquery and jquery_ujs, which we can just simply add at the top.
+
+*In this guide I'm not going to use Ember Data because the API that the application provides does not comply with Ember Data's standards, and because of that, implementing a proper Ember Data interface is tough. A later section of this guide will cover how to do that. For now, let's just grasp the initial Ember concepts.*
+
+The end result will be a file that looks like:
 
 ```coffee
 #= require jquery
+#= require jquery_ujs
 #= require handlebars
 #= require ember
 #= require_self
