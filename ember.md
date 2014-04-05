@@ -2,6 +2,8 @@
 
 *Thanks to Robin Ward who has a lot of great Ember content on [his blog](http://eviltrout.com). Some of his posts, such as [Ember without Ember Data](http://eviltrout.com/2013/03/23/ember-without-data.html) have inspired this guide*.
 
+*Also thanks to Rob Yurkowski, Ivan Vanderbyl and Miles Starkenburg for some early-on proof-reading*
+
 If at any point you want to see the completed Ember code for this guide, [view the ember branch on blorgh](https://github.com/radar/blorgh/tree/ember)
 
 Ember.js [claims](https://www.youtube.com/watch?v=jScLjUlLTLI) to be the only real JavaScript framework, as apposed to over a thousand other Javascript libraries. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
@@ -231,12 +233,17 @@ Blorgh.Post.reopenClass
   findAll: ->
     posts = Em.A()
     $.getJSON('/api/posts').then (data) ->
-      $.each data.posts, (post) ->
-        posts.pushObject(data)
-    posts
+      Ember.run () ->
+        posts.pushObjects(data.posts)
+        posts
 ```
 
-This code defines a simple Ember.Array object, which is the type of object that needs to be returned with the `model` call in `Blorgh.IndexRoute`. After defining that array, the code then makes a request to `/api/posts` which will query our API. Our API will dutifully return all the posts, and then the rest of the code in this function iterates through all of those posts and adds them to array. The final line in the method returns the list of posts.
+This code defines a simple Ember.Array object, which is the type of object that needs to be returned with the `model` call in `Blorgh.IndexRoute`. After defining that array, the code then makes a request to `/api/posts` using `$.getJSON`.
+
+
+which will query our API for the posts and our API will dutifully return all the posts. Once that's done, we call `Ember.run`.
+
+`Ember.run` is fairly interesting. What this will do is will define a function to be run within the next run-loop. If we were creating 5 posts by making 5 async requests to `/api/posts`, this would *normally* require 5 re-draws of the page. By using `Ember.run`, we queue up all of these and the next time Ember's run loop happens, all 5 elements will be redrawn at the same time.
 
 When we refresh the page, we'll no longer see an error. Instead, at the very bottom of the console output, we'll see this:
 
@@ -297,7 +304,7 @@ We can define this route in `app/assets/javascripts/router.js.coffee` by using t
 
 ```
 Blorgh.Router.map ()->
-  @resource 'post', path: '/posts/:post_id'
+  @resource 'post', path: '/posts/:id'
 ```
 
 The `resource` function defines a new route for our Ember app. When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
@@ -325,7 +332,8 @@ We saw an error just like this when we were implementing our `findAll` function 
 Blorgh.Post.reopenClass
   find: (id) ->
     $.getJSON("/api/posts/#{id}").then (post) ->
-      post
+      Ember.run () ->
+        Blorgh.Post.create(post)
 ```
 
 Refreshing the page will now show us just the one post.
@@ -389,20 +397,25 @@ For this route to do anything, we will need to create a template at `app/assets/
 
 In this template we're using a couple of Ember's helpers to display the fields for the form; `input` and `textarea`. At the bottom we're using `action` which will add an onClick event to the 'Save Post' button in our form and will trigger the `save` action.
 
-Actions in Ember are, just like in Rails, defined within controllers. The controller for this template is being automatically inferred by Ember to be `Blorgh.PostsNewController`, but we now want to define some custom actions on it. Therefore we will define this controller for ourselves at `app/assets/javascripts/controllers/posts/new.js.coffee`.
+The `input` and `textarea` fields here do not have `title` and `text` quoted because we want these to be bound to the model for this route. This binding will mean that when we perform the save action, our code will already know about these parameters.
+
+Actions in Ember are defined within the corresponding routes. The route for this template is being automatically inferred by Ember to be `Blorgh.PostsNewRoute`, but we now want to define some custom actions on it. Therefore we will define this route for ourselves at `app/assets/javascripts/routes/posts/new.js.coffee`.
 
 ```coffee
-Blorgh.PostsNewController = Ember.ObjectController.extend
-  content: Blorgh.Post.create({})
+Blorgh.PostsNewRoute = Ember.Route.extend
+  model: ->
+    Blorgh.Post.create({})
 
   actions:
     save: ->
-      this.content.save()
+      route = this
+      this.currentModel.save().then (model) ->
+        route.transitionTo('post', model)
 ```
 
-In the controller, we set up some `content` for the template. When we go to save the information from our form in the `save` action, the `content` object will have the values from the form automatically.
+In the route, we give it a `model` for the template. When we go to save the information from our form in the `save` action, the `model` object will have the values from the form automatically thanks to Ember's automatic binding.
 
-Defining the `save` action in this controller is as simple as defining it within the `actions` of the controller as a new function which simply calls `save` on the `Blorgh.Post` object that our form works with.
+Defining the `save` action in this route is as simple as defining it within the `actions` of the routes as a new function which calls `save` on the `Blorgh.Post` model that our form works with. When the save is successful, we transition to the `post` route with our new model.
 
 If we refresh this page and attempt to create a new post, we'll see this error:
 
@@ -416,10 +429,135 @@ This is happening because our `Blorgh.Post` model does not have this method. Let
 Blorgh.Post = Ember.Object.extend
   save: ->
     $.post "api/posts",
-      post: {
+      post:
         title: this.title
         text: this.text
-      }
+    .then (response) ->
+      Ember.run () ->
+        Blorgh.Post.create(response)
 ```
 
-We're adding this method inside of extend because we're now working on a single object of `Blorgh.Post` instead of the class. The functions defined within `reopenClass` are non-specific to an object.
+We're adding this function inside of extend because we're now working on a single object of `Blorgh.Post` instead of the class. The functions defined within `reopenClass` are non-specific to an object.
+
+The `save` function makes a `POST` request to `/api/posts` and sends through the information from the model. The `.then` call at the end determines what to do in case of a *successful* request, and all we want is to return a new `Blorgh.Post` object based on the response back from the server. This object will be passed back to our route, which will then transition to the right post.
+
+Let's see if this works now by refreshing the page and entering something into the title and text fields, then submitting the form. We should see that post's information come up on the screen immediately:
+
+![New Ember Post](/ember/ember_new_post.png)
+
+## Editing a post
+
+Now that we've got the `index`, `show`, `new` and `create` parts of the `post` resource complete, the next step is to add the ability to edit an existing post. Lucky for us, most of the pieces that we need are already in place: we have a model that will find the post and a form that we can re-use. There's not much else that we need to add other than an 'Edit' link somewhere.
+
+The appropriate somewhere would be in the post template, at `app/assets/javascripts/templates/post.hbs`:
+
+```hbs
+<h2>{{title}}</h2>
+<div>
+  {{#link-to 'posts.edit' this}}Edit{{/link-to}}
+</div>
+{{text}}
+```
+
+This `link-to` is using a new route called `posts.edit`, which we should now define within `app/assets/javascripts/router.js`
+
+```coffee
+Blorgh.Router.map ()->
+  @resource 'post', path: '/posts/:id'
+  @resource 'posts.new', path:'/posts/new'
+  @resource 'posts.edit', path: '/posts/:id/edit'
+```
+
+After defining the route, the next step is to create a template which we can do in `app/assets/javascripts/templates/posts/edit.hbs`.
+
+```hbs
+<h2>Editing Post {{title}}</h2>
+{{ partial 'posts/form' }}
+```
+
+Within this template, we're using another Ember helper: `partial`. This will render a Handlebars template in that place, just like partial rendering works within Rails. Let's create this partial by taking out most of the content in `app/assets/javascripts/templates/posts/new.hbs` and turning it into this:
+
+```hbs
+<h2>New Post</h2>
+{{ partial 'posts/form' }}
+```
+
+To define the partial, we need to create a new template at `app/assets/javascripts/templates/posts/_form.hbs`:
+
+```hbs
+<form>
+  <p class='input-group'>
+    <label for='title'>Title</label><br>
+    {{input value=title class="form-control input-lg" size="50"}}
+  </p>
+  <p class='input-group'>
+    <label for='text'>Text</label><br>
+    {{textarea value=text class="form-control input-lg" size="50" rows="10" cols="100"}}
+  </p>
+  <input type='button' value='Save Post' class='btn btn-primary' {{action 'save' this}}>
+</form>
+```
+
+This partial template will now be used by both the new form and the edit form.
+
+Let's refresh the page and click "Edit" for that post that we just created. We should see be on the edit route now, but the form is blank, which is no good!
+
+![Ember Blank Edit Post](/ember/ember_blank_edit_post.png)
+
+This is happening because we have not told the route what model to load. Let's define this route now within `app/assets/javascripts/routes/posts/edit.js.coffee`:
+
+```coffee
+Blorgh.PostsEditRoute = Ember.Route.extend
+  model: (params) ->
+    Blorgh.Post.find(params.id)
+
+  actions:
+    save: ->
+      route = this
+      this.currentModel.save().then (model) ->
+        route.transitionTo('post', model)
+```
+
+The `model` function at the top of this route takes one argument which are the parameters that come in from the router. We use the `find` function from `Blorgh.Post` to find our record.
+
+The `save` function in this route is the same as it was in `PostsNewRoute`, we just call `save()` on the current model and transition back to the post route.
+
+We're going to need to edit the `save` function from `Blorgh.Post` to act differently when the object that it's working on has an `id`. If we attempt to save this form now, it will just create another post with the title and text from the form. Let's fix this up now:
+
+```coffee
+save: ->
+  if this.id
+    @update()
+  else
+    @create()
+
+update:
+  $.ajax "api/posts/#{@id}"
+    type: 'PUT'
+    data:
+      post:
+        title: this.title
+        text: this.text
+  .then (response) ->
+    Ember.run () ->
+      Blorgh.Post.create(response)
+
+create:
+  $.post "api/posts",
+    post:
+      title: this.title
+      text: this.text
+  .then (response) ->
+    Ember.run () ->
+      Blorgh.Post.create(response)
+```
+
+Depending on whether or not the object being saved, the `update` or `create` functions will be called.
+
+If we refresh the page again and edit the post title, we'll see that it's updating live at the top of the page. This is because the `{{title}}` within the `edit` template is bound to the same `title` value within the form. Updating one will automatically update the other.
+
+If we change the title of the post and hit "Save", we should now see the new title.
+
+![Ember Post Update](/ember/ember_post_update.png)
+
+Now we've completed adding the `edit` and `update` functionality to our posts resource. All that's left to do is to add a `destroy` and then we've completed all the actions for this resource.
