@@ -2,6 +2,8 @@
 
 *Thanks to Robin Ward who has a lot of great Ember content on [his blog](http://eviltrout.com). Some of his posts, such as [Ember without Ember Data](http://eviltrout.com/2013/03/23/ember-without-data.html) have inspired this guide*.
 
+If at any point you want to see the completed Ember code for this guide, [view the ember branch on blorgh](https://github.com/radar/blorgh/tree/ember)
+
 Ember.js [claims](https://www.youtube.com/watch?v=jScLjUlLTLI) to be the only real JavaScript framework, as apposed to over a thousand other Javascript libraries. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
 
 Rather than go through all the other information about it that you can find out all over the web, let's just go ahead and get started with Ember. What we're going to do is to turn a very, very basic Rails blogging application called "blorgh" into one that uses Ember.
