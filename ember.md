@@ -2,7 +2,7 @@
 
 *Thanks to Robin Ward who has a lot of great Ember content on [his blog](http://eviltrout.com). Some of his posts, such as [Ember without Ember Data](http://eviltrout.com/2013/03/23/ember-without-data.html) have inspired this guide*.
 
-EmberJS is one of approximately a thousand JavaScript frameworks that are available. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
+Ember.js [claims](https://www.youtube.com/watch?v=jScLjUlLTLI) to be the only real JavaScript framework, as apposed to over a thousand other Javascript libraries. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
 
 Rather than go through all the other information about it that you can find out all over the web, let's just go ahead and get started with Ember. What we're going to do is to turn a very, very basic Rails blogging application called "blorgh" into one that uses Ember.
 
@@ -109,18 +109,12 @@ If you *are* seeing this, then make sure you've required the correct JavaScript 
 
 If you *aren't* seeing this, then you've correctly setup the Ember app and we can proceed.
 
-The first thing we're going to do is to provide an outlet for Ember to put its content. Let's open `app/views/layouts/application.html.erb` and replace this line:
+The first thing we're going to do is to provide an outlet for Ember to put its content. This is achieved by providing an `application` template in `app/assets/templates/application.hbs`:
 
 ```erb
-<%= yield %>
-```
-
-With these lines:
-
-```erb
-<script type='text/x-handlebars'>
+<div class="container">
 {{outlet}}
-</script>
+</div>
 ```
 
 This defines the application template for Ember. Ember will be rendering all
