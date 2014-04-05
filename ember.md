@@ -231,11 +231,13 @@ Blorgh.Post.reopenClass
     posts = Em.A()
     $.getJSON('/api/posts').then (data) ->
       $.each data.posts, (post) ->
-        posts.pushObject(data)
+        posts.pushObject(post)
+        
     posts
 ```
 
 This code defines a simple Ember.Array object, which is the type of object that needs to be returned with the `model` call in `Blorgh.IndexRoute`. After defining that array, the code then makes a request to `/api/posts` which will query our API. Our API will dutifully return all the posts, and then the rest of the code in this function iterates through all of those posts and adds them to array. The final line in the method returns the list of posts.
+
 
 When we refresh the page, we'll no longer see an error. Instead, at the very bottom of the console output, we'll see this:
 
