@@ -16,6 +16,8 @@ What this application has at the moment are a `Post` and `Comment` model and if 
 
 This application also has an API, which can be accessed at routes like `/api/posts`, `/api/posts/1/comments`. It's this API that we'll be talking to in order to get the information that we need to make Ember happy.
 
+(*In case you're wondering: the API has been on-purpose made to be not directly compatible with Ember Data. I think more APIs than not would fit this category, and therefore a guide showing how to adapt to an API that doesn't fit the conventions, like Spree's API, that Ember Data requires is better than a guide showing you how to use Ember Data. YMMV.*)
+
 ## Installing Ember
 
 To install Ember into this application, we'll need to install the `ember-rails` and `ember-source` gems, which we can do by adding these lines to our `Gemfile`:
@@ -323,3 +325,99 @@ Blorgh.Post.reopenClass
     $.getJSON("/api/posts/#{id}").then (post) ->
       post
 ```
+
+Refreshing the page will now show us just the one post.
+
+![Ember Post](/ember/ember_post.png)
+
+We haven't needed to define a `Blorgh.PostRoute` object for this route because Ember has done that for us, and *better still* it's assumed that we want the `model` function in that to do a `find` call on `Blorgh.Post`. That's pretty cool.
+
+Let's make the "My Blog" link within the application template link back to the homepage so we can quickly switch between these two pages.
+
+```hbs
+<h1>{{#link-to 'index'}}My blog{{/link-to}}</h1>
+<p>Read all about it!</p>
+{{outlet}}
+```
+
+Let's refresh the page and make sure this link works. It should show the list of posts again:
+
+![Ember Posts](/ember/ember_posts.png)
+
+We now have two of the normal seven actions down: showing a list of a resource and showing an individual item from that resource.
+
+## Creating a new post
+
+Let's work on adding another two actions: showing a form to create a new post and actually creating that new post.
+
+To begin with, we're going to need a link to create a new post on our listing of posts, which we can do using another `link-to` inside of `app/assets/templates/index.hbs`:
+
+```hbs
+<h1>Posts</h1>
+
+{{#link-to 'posts.new'}}New Post{{/link-to}}
+{{#each}}
+  <h2>{{#link-to 'post' this}}{{title}}{{/link-to}}</h2>
+  {{text}}
+{{/each}}
+```
+
+We're using a new route here called `posts.new`. Just like with the `post` route, we will need to define this in `app/assets/router.js.coffee`
+
+Blorgh.Router.map ()->
+  @resource 'post', path: '/posts/:post_id'
+  @resource 'posts.new', path:'/post/new'
+
+For this route to do anything, we will need to create a template at `app/assets/javascripts/templates/posts/new.hbs`:
+
+```hbs
+<h2>New Post</h2>
+<form>
+  <p class='input-group'>
+    <label for='title'>Title</label><br>
+    {{input value=title class="form-control input-lg" size="50"}}
+  </p>
+  <p class='input-group'>
+    <label for='text'>Text</label><br>
+    {{textarea value=text class="form-control input-lg" size="50" rows="10" cols="100"}}
+  </p>
+  <input type='button' value='Save Post' class='btn btn-primary' {{action 'save' this}}>
+</form>
+```
+
+In this template we're using a couple of Ember's helpers to display the fields for the form; `input` and `textarea`. At the bottom we're using `action` which will add an onClick event to the 'Save Post' button in our form and will trigger the `save` action.
+
+Actions in Ember are, just like in Rails, defined within controllers. The controller for this template is being automatically inferred by Ember to be `Blorgh.PostsNewController`, but we now want to define some custom actions on it. Therefore we will define this controller for ourselves at `app/assets/javascripts/controllers/posts/new.js.coffee`.
+
+```coffee
+Blorgh.PostsNewController = Ember.ObjectController.extend
+  content: Blorgh.Post.create({})
+
+  actions:
+    save: ->
+      this.content.save()
+```
+
+In the controller, we set up some `content` for the template. When we go to save the information from our form in the `save` action, the `content` object will have the values from the form automatically.
+
+Defining the `save` action in this controller is as simple as defining it within the `actions` of the controller as a new function which simply calls `save` on the `Blorgh.Post` object that our form works with.
+
+If we refresh this page and attempt to create a new post, we'll see this error:
+
+```
+Uncaught TypeError: Object [object Object] has no method 'save'
+```
+
+This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets:
+
+```coffee
+Blorgh.Post = Ember.Object.extend
+  save: ->
+    $.post "api/posts",
+      post: {
+        title: this.title
+        text: this.text
+      }
+```
+
+We're adding this method inside of extend because we're now working on a single object of `Blorgh.Post` instead of the class. The functions defined within `reopenClass` are non-specific to an object.
