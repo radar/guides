@@ -230,8 +230,7 @@ Blorgh.Post.reopenClass
   findAll: ->
     posts = Em.A()
     $.getJSON('/api/posts').then (data) ->
-      $.each data.posts, (post) ->
-        posts.pushObject(post)
+      posts.pushObjects(data.posts)
         
     posts
 ```
