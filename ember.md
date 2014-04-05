@@ -561,3 +561,7 @@ If we change the title of the post and hit "Save", we should now see the new tit
 ![Ember Post Update](/ember/ember_post_update.png)
 
 Now we've completed adding the `edit` and `update` functionality to our posts resource. All that's left to do is to add a `destroy` and then we've completed all the actions for this resource.
+
+TODO: Implement delete action
+TODO: Add comments to posts
+TODO(?): Use Ember Data: https://github.com/emberjs/data/blob/v1.0.0-beta.6/packages/ember-data/lib/system/adapter.js
