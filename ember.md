@@ -111,14 +111,39 @@ If you *aren't* seeing this, then you've correctly setup the Ember app and we ca
 
 The first thing we're going to do is to provide an outlet for Ember to put its content. This is achieved by providing an `application` template in `app/assets/templates/application.hbs`:
 
-```erb
-<div class="container">
+```hbs
+<h1>My blog</h1>
+<p>Read all about it!</p>
 {{outlet}}
-</div>
 ```
 
-This defines the application template for Ember. Ember will be rendering all
-of its content into this area.
+With this template now defined, we can clear out everything within the `body` tag within `app/views/layouts/application.html.erb` leaving just this:
+
+```erb
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blorgh</title>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+</body>
+</html>
+```
+
+Ember will now be responsible for rendering everything within our application.
+
+This new template defines the application template for Ember. Ember will be rendering all of its content into this area. By default, Ember will put this template within the `body` tag of our application. If we didn't want it there, we can set the `rootElement` option for our application:
+
+```coffee
+window.Blorgh = Ember.Application.create(
+  rootElement: '#someOtherContainer'
+)
+```
+
+For now, we'll leave it with the default behaviour of putting it within the `body` tag.
 
 So what's the next step after this? Well, Ember doesn't really provide any
 hints itself. However, there's some debug settings that we can set that will
@@ -133,7 +158,11 @@ window.Blorgh = Ember.Application.create
   LOG_VIEW_LOOKUPS: true
 ```
 
-These will show us a lot more information in our console, which will tell us what Ember's doing during a request. If we refresh the page now, we'll see this on our console:
+These will show us a lot more information in our console, which will tell us what Ember's doing during a request.
+
+(*Future versions of Ember will also have a `LOG_RESOLVER` option, which gives us even more information. My [issue](https://github.com/emberjs/ember.js/issues/4654) posted about that resulted in [a PR](https://github.com/emberjs/ember.js/issues/4655) to add this option in. This option is extremely useful for tracking down the correct names of things in more complicated apps.*)
+
+If we refresh the page now, we'll see this on our console:
 
 ![Ember Transitions](/ember/ember_transitions.png)
 
@@ -183,7 +212,13 @@ While Ember infers routes, it does not infer models. Therefore we must define th
 Blorgh.Post = Ember.Object.extend({})
 ```
 
-We need to define the `findAll` function on `Blorgh.Post` so that `Blorgh.IndexRoute` can happily collect its data. It's going to act very similar to a class method within a Ruby class, and so to do that, we need to call `reopenClass` and define our function:
+This method defines a very basic Ember class that acts as a base for all of our Post object methods, (eventually) including `findAll`. At this point if we refresh the page, we'll see this error:
+
+```
+var m = meta(this), proto = m...<omitted>... } has no method 'findAll'
+```
+
+This error is happening because we've defined `Blorgh.Post`, but haven't defined the `findAll` method. We need to define the `findAll` function on `Blorgh.Post` so that `Blorgh.IndexRoute` can happily collect its data. It's going to act very similar to a class method within a Ruby class, and so to do that, we need to call `reopenClass` and define our function:
 
 ```coffee
 Blorgh.Post = Ember.Object.extend({})
@@ -221,3 +256,70 @@ In this new code, we're iterating through the array returned by `Blorgh.IndexRou
 When we refresh this page, we'll see the posts now displaying with the power of Ember:
 
 ![Ember Posts](/ember/ember_posts.png)
+
+## Retrospective #1: Posts displaying
+
+Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findall()`, and finally displays that within the one and only template in our application.
+
+## Viewing a single post
+
+While it's all fine and dandy that we can see a list of posts, sometimes we just want to hone-in on a single post. Let's work on adding this feature to our application as our next step.
+
+The first part of this will be to turn the post's title into a link which will take us to the page that will show a single blog post. We can do this using the `link-to` helper that Ember provides:
+
+```hbs
+<h1>Posts</h1>
+
+{{#each}}
+  <h2>{{#link-to 'post' this}}{{title}}{{/link-to}}</h2>
+  {{text}}
+{{/each}}
+```
+
+If we refresh the page now, it will show nothing on the page because Ember's now showing an error:
+
+```
+Uncaught Error: Assertion Failed:
+  The attempt to link-to route 'post' failed (also tried 'posts.show.index').
+  The router did not find 'posts.show' in its possible routes:
+  'loading',
+  'error',
+  'index'
+```
+
+Ember is complaining here that there is no route for `posts.show`, which is true. Ember creates the `index`, `error` and `loading` routes itself, but will not assume any routes past that.
+
+We can define this route in `app/assets/javascripts/router.js.coffee` by using this code:
+
+```
+Blorgh.Router.map ()->
+  @resource 'post', path: '/posts/:post_id'
+```
+
+The `resource` function defines a new route for our Ember app. When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
+
+```
+Could not find "post" template or view. Nothing will be rendered Object {fullName: "template:post"}
+```
+
+Let's create this new template within `app/assets/templates/post.hbs`:
+
+```coffee
+<h2>{{title}}</h2>
+{{text}}
+```
+
+When we refresh this page, we'll again see nothing on the page. This is because there's another error in our code, and one that maybe we wouldn't expect:
+
+```
+var m = meta(this), proto = m...<omitted>... } has no method 'find'
+```
+
+We saw an error just like this when we were implementing our `findAll` function for the `Blorgh.Post` model. What Ember has done here is that it's assumed that we want to use the `Blorgh.Post` model just based on the name of the resource that we defined in `router.js.coffee`. It has assumed correctly, and so we should define this new function within `app/assets/javascripts/models/post.js.coffee`
+
+```coffee
+Blorgh.Post.reopenClass
+  find: (id) ->
+    $.getJSON("/api/posts/#{id}").then (post) ->
+      post
+```
