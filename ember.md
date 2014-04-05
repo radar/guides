@@ -74,6 +74,7 @@ window.Blorgh = Ember.Application.create()
 This file now requires jQuery, Handlebars, Ember, itself and then finally `blorgh`. The `blorgh` file that it's pointing at is `app/assets/javascripts/blorgh.js` which contains this:
 
 ```coffee
+#= require ./store
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
