@@ -38,7 +38,7 @@ Next, we need to set up the Ember structure for this application, which we can d
 This creates a couple of sub-directories within `app/assets/javascripts`:
 
 * `models`: These are the objects which will talk with our API to retrieve data from it.
-* `controllers`: Used for decorating the models with display logic. Similar concept to helpers within Rails.
+* `controllers`: Used for decorating the models with display logic. Similar concept to decorators within Rails.
 * `views`: A place to put complicated view logic.
 * `components`: Reusable pieces of the application.
 * `routes`: Code that tells Ember what to do when a specific route is requested.
