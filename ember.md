@@ -2,7 +2,7 @@
 
 *Thanks to Robin Ward who has a lot of great Ember content on [his blog](http://eviltrout.com). Some of his posts, such as [Ember without Ember Data](http://eviltrout.com/2013/03/23/ember-without-data.html) have inspired this guide*.
 
-Ember.js [claims](https://www.youtube.com/watch?v=jScLjUlLTLI) to be the only real JavaScript framework, as apposed to over a thousand other Javascript libraries. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
+Ember.js [claims](https://www.youtube.com/watch?v=jScLjUlLTLI) to be the only real JavaScript framework, as opposed to over a thousand other Javascript libraries. The [website for EmberJS](http://emberjs.com) calls Ember "a framework for creating **ambitious** web applications." That's quite a claim to make! Ember is extremely opinionated (just like Rails!), and so a lot of the hard decisions have already been made, which is great.
 
 Rather than go through all the other information about it that you can find out all over the web, let's just go ahead and get started with Ember. What we're going to do is to turn a very, very basic Rails blogging application called "blorgh" into one that uses Ember.
 
@@ -22,8 +22,10 @@ This application also has an API, which can be accessed at routes like `/api/pos
 
 To install Ember into this application, we'll need to install the `ember-rails` and `ember-source` gems, which we can do by adding these lines to our `Gemfile`:
 
-    gem 'ember-rails'
-    gem 'ember-source', '1.4.0'
+```ruby
+gem 'ember-rails'
+gem 'ember-source', '1.4.0'
+```
 
 Then we can run `bundle install` to install these gems.
 
@@ -153,7 +155,7 @@ give us some hints as to what to do. These are mentioned in the [Understanding E
 
 Let's open `app/assets/javascripts/application.js.coffee` and set the `LOG_TRANSITIONS`, `LOG_TRANSITIONS_INTERNAL`, `LOG_VIEW_LOOKUPS` settings:
 
-```cofeee
+```coffee
 window.Blorgh = Ember.Application.create
   LOG_TRANSITIONS: true
   LOG_TRANSITIONS_INTERNAL: true
@@ -293,7 +295,7 @@ Ember is complaining here that there is no route for `posts.show`, which is true
 
 We can define this route in `app/assets/javascripts/router.js.coffee` by using this code:
 
-```
+```coffee
 Blorgh.Router.map ()->
   @resource 'post', path: '/posts/:post_id'
 ```
@@ -306,7 +308,7 @@ Could not find "post" template or view. Nothing will be rendered Object {fullNam
 
 Let's create this new template within `app/assets/templates/post.hbs`:
 
-```coffee
+```hbs
 <h2>{{title}}</h2>
 {{text}}
 ```
@@ -364,9 +366,11 @@ To begin with, we're going to need a link to create a new post on our listing of
 
 We're using a new route here called `posts.new`. Just like with the `post` route, we will need to define this in `app/assets/router.js.coffee`
 
+```coffee
 Blorgh.Router.map ()->
   @resource 'post', path: '/posts/:post_id'
   @resource 'posts.new', path:'/post/new'
+```
 
 For this route to do anything, we will need to create a template at `app/assets/javascripts/templates/posts/new.hbs`:
 
@@ -408,7 +412,7 @@ If we refresh this page and attempt to create a new post, we'll see this error:
 Uncaught TypeError: Object [object Object] has no method 'save'
 ```
 
-This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets:
+This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets`:
 
 ```coffee
 Blorgh.Post = Ember.Object.extend
