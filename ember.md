@@ -111,7 +111,7 @@ If you *are* seeing this, then make sure you've required the correct JavaScript 
 
 If you *aren't* seeing this, then you've correctly setup the Ember app and we can proceed.
 
-The first thing we're going to do is to provide an outlet for Ember to put its content. This is achieved by providing an `application` template in `app/assets/templates/application.hbs`:
+The first thing we're going to do is to provide an outlet for Ember to put its content. This is achieved by providing an `application` template in `app/assets/javascripts/templates/application.hbs`:
 
 ```hbs
 <h1>My blog</h1>
