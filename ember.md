@@ -45,8 +45,8 @@ This creates a couple of sub-directories within `app/assets/javascripts`:
 * `views`: A place to put complicated view logic.
 * `components`: Reusable pieces of the application.
 * `routes`: Code that tells Ember what to do when a specific route is requested.
-* `templates`: Handlebar templates which are responsible for displaying the information from the models.
-* `helpers`: A place to define Handlebar helpers for your templates.
+* `templates`: Handlebars templates which are responsible for displaying the information from the models.
+* `helpers`: A place to define Handlebars helpers for your templates.
 
 You'll see how all these pieces tie together throughout this tutorial, so don't worry if you don't grok it just yet.
 
@@ -278,7 +278,7 @@ When we refresh this page, we'll see the posts now displaying with the power of 
 
 ## Retrospective #1: Posts displaying
 
-Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findall()`, and finally displays that within the one and only template in our application.
+Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findAll()`, and finally displays that within the one and only template in our application.
 
 ## Viewing a single post
 
@@ -405,9 +405,9 @@ For this route to do anything, we will need to create a template at `app/assets/
 </form>
 ```
 
-In this template we're using a couple of Ember's helpers to display the fields for the form; `input` and `textarea`. At the bottom we're using `action` which will add an onClick event to the 'Save Post' button in our form and will trigger the `save` action.
+In this template we're using a couple of Ember's helpers to display the fields for the form: `input` and `textarea`. At the bottom we're using `action` which will add an onClick event to the 'Save Post' button in our form and will trigger the `save` action.
 
-The `input` and `textarea` fields here do not have `title` and `text` quoted because we want these to be bound to the model for this route. This binding will mean that when we perform the save action, our code will already know about these parameters.
+The `input` and `textarea` fields here do not have `title` and `text` quoted because we want these to be bound to the model for this route. This binding will mean that when we perform the `save` action, our code will already know about these parameters.
 
 Actions in Ember are defined within the corresponding routes. The route for this template is being automatically inferred by Ember to be `Blorgh.PostsNewRoute`, but we now want to define some custom actions on it. Therefore we will define this route for ourselves at `app/assets/javascripts/routes/posts/new.js.coffee`.
 
@@ -447,7 +447,7 @@ Blorgh.Post = Ember.Object.extend
         Blorgh.Post.create(response)
 ```
 
-We're adding this function inside of extend because we're now working on a single object of `Blorgh.Post` instead of the class. The functions defined within `reopenClass` are non-specific to an object.
+We're adding this function inside of `extend` because we're now working on a single object of `Blorgh.Post` instead of the class. The functions defined within `reopenClass` are non-specific to an object.
 
 The `save` function makes a `POST` request to `/api/posts` and sends through the information from the model. The `.then` call at the end determines what to do in case of a *successful* request, and all we want is to return a new `Blorgh.Post` object based on the response back from the server. This object will be passed back to our route, which will then transition to the right post.
 
@@ -573,5 +573,7 @@ If we change the title of the post and hit "Save", we should now see the new tit
 Now we've completed adding the `edit` and `update` functionality to our posts resource. All that's left to do is to add a `destroy` and then we've completed all the actions for this resource.
 
 TODO: Implement delete action
+
 TODO: Add comments to posts
+
 TODO(?): Use Ember Data: https://github.com/emberjs/data/blob/v1.0.0-beta.6/packages/ember-data/lib/system/adapter.js
