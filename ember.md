@@ -309,7 +309,7 @@ We can define this route in `app/assets/javascripts/router.js.coffee` by using t
 
 ```
 Blorgh.Router.map ()->
-  @resource 'post', path: '/posts/:id'
+  @resource 'post', path: '/posts/:post_id'
 ```
 
 The `resource` function defines a new route for our Ember app. When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
