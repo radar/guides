@@ -569,9 +569,38 @@ If we change the title of the post and hit "Save", we should now see the new tit
 
 ![Ember Post Update](/ember/ember_post_update.png)
 
-Now we've completed adding the `edit` and `update` functionality to our posts resource. All that's left to do is to add a `destroy` and then we've completed all the actions for this resource.
+Now we've completed adding the `edit` and `update` functionality to our posts resource. All that's left to do is to add a `destroy` and then we've completed all the actions for this resource. To destroy a post will not require a view, and therefore rather than using a `link-to` like we would in Rails, we can use an `action` in the `post` template instead. Let's open `app/assets/javascripts/templates/post.hbs` and add a link to destroy a post:
 
-TODO: Implement delete action
+```hbs
+<h2>{{title}}</h2>
+<div>
+  {{#link-to 'posts.edit' this}}Edit{{/link-to}} |
+  <a {{action='destroy'}}>Destroy</a>
+</div>
+{{text}}
+```
+
+We will need to implement this action on the controller instead of the route for this template, which would be `Blorgh.PostController`, which we will need to define in `app/assets/javascripts/controllers/post.js.coffee`:
+
+```coffee
+Blorgh.PostController = Ember.ObjectController.extend
+  actions:
+    destroy: ->
+      if confirm('Are you sure you want to delete this post?')
+        this.content.destroy()
+```
+
+In the controller, we can reference the current model instance with `this.content` rather than `this.currentModel`. We first ask for confirmation of the deletion of this post and if it's confirmed then we call `destroy` on it which should trigger the destruction of this post.
+
+Let's implement the `destroy` function in `app/javascripts/models/post.js.coffee` like this:
+
+```coffee
+  destroy: ->
+    $.ajax "api/posts/#{@id}",
+      type: 'DELETE'
+```
+
+When we refresh the post's page, we should see the 'destroy' link now. When we click it, we'll be asked if we are sure if we want to delete this post. If we click "OK", then the post will be deleted and we'll be sent back home.
 
 ## Ember Data
 
