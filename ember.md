@@ -315,7 +315,9 @@ Blorgh.Router.map ()->
   @resource 'post', path: '/posts/:post_id'
 ```
 
-The `resource` function defines a new route for our Ember app. When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
+The `resource` function defines a new route for our Ember app. We're using `:post_id` (instead of `:id`) here as Ember will infer from that that we want to load from the `Post` model in our app. 
+
+When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
 
 ```
 Could not find "post" template or view. Nothing will be rendered Object {fullName: "template:post"}
@@ -473,9 +475,9 @@ This `link-to` is using a new route called `posts.edit`, which we should now def
 
 ```coffee
 Blorgh.Router.map ()->
-  @resource 'post', path: '/posts/:id'
+  @resource 'post', path: '/posts/:post_id'
   @resource 'posts.new', path:'/posts/new'
-  @resource 'posts.edit', path: '/posts/:id/edit'
+  @resource 'posts.edit', path: '/posts/:post_id/edit'
 ```
 
 After defining the route, the next step is to create a template which we can do in `app/assets/javascripts/templates/posts/edit.hbs`.
@@ -518,9 +520,6 @@ This is happening because we have not told the route what model to load. Let's d
 
 ```coffee
 Blorgh.PostsEditRoute = Ember.Route.extend
-  model: (params) ->
-    Blorgh.Post.find(params.id)
-
   actions:
     save: ->
       route = this
@@ -528,9 +527,9 @@ Blorgh.PostsEditRoute = Ember.Route.extend
         route.transitionTo('post', model)
 ```
 
-The `model` function at the top of this route takes one argument which are the parameters that come in from the router. We use the `find` function from `Blorgh.Post` to find our record.
+Unlike the `PostsNewRoute`, we don't need to define a `model` function here. The reason for that is because Ember will infer that we want to look up on the `Post` route automatically because our route is defined as `/posts/:post_id/edit`, with the `:post_id` part being how the inferrence is happening.
 
-The `save` function in this route is the same as it was in `PostsNewRoute`, we just call `save()` on the current model and transition back to the post route.
+The `save` action in this route is the same as it was in `PostsNewRoute`, we just call `save()` on the current model and transition back to the post route.
 
 We're going to need to edit the `save` function from `Blorgh.Post` to act differently when the object that it's working on has an `id`. If we attempt to save this form now, it will just create another post with the title and text from the form. Let's fix this up now:
 
