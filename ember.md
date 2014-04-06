@@ -21,7 +21,7 @@ What this application has at the moment are a `Post` and `Comment` model and if 
 
 This application also has an API, which can be accessed at routes like `/api/posts`, `/api/posts/1/comments`. It's this API that we'll be talking to in order to get the information that we need to make Ember happy.
 
-(*In case you're wondering: the API has been on-purpose made to be not directly compatible with Ember Data. I think more APIs than not would fit this category, and therefore a guide showing how to adapt to an API that doesn't fit the conventions, like Spree's API, that Ember Data requires is better than a guide showing you how to use Ember Data. YMMV.*)
+(*In case you're wondering: the API has been on-purpose made to be not directly compatible with the `RESTAdapter` provided by Ember Data. While it is possible to build your own Adapter, I personally think it's better if you learn the structure of an Ember app first, then apply an Ember Data adapter retrospectively. That's what I'll be doing in this guide after we build the post resource actions.*)
 
 ## Installing Ember
 
