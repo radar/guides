@@ -278,7 +278,7 @@ When we refresh this page, we'll see the posts now displaying with the power of 
 
 ## Retrospective #1: Posts displaying
 
-Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findAll()`, and finally displays that within the one and only template in our application.
+Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/javscripts/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findAll()`, and finally displays that within the one and only template in our application.
 
 ## Viewing a single post
 
@@ -323,7 +323,7 @@ When we refresh our app again, we will now be able to click on a post's link and
 Could not find "post" template or view. Nothing will be rendered Object {fullName: "template:post"}
 ```
 
-Let's create this new template within `app/assets/templates/post.hbs`:
+Let's create this new template within `app/assets/javascripts/templates/post.hbs`:
 
 ```hbs
 <h2>{{title}}</h2>
@@ -370,7 +370,7 @@ We now have two of the normal seven actions down: showing a list of a resource a
 
 Let's work on adding another two actions: showing a form to create a new post and actually creating that new post.
 
-To begin with, we're going to need a link to create a new post on our listing of posts, which we can do using another `link-to` inside of `app/assets/templates/index.hbs`:
+To begin with, we're going to need a link to create a new post on our listing of posts, which we can do using another `link-to` inside of `app/assets/javscripts/templates/index.hbs`:
 
 ```hbs
 <h1>Posts</h1>
