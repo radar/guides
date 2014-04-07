@@ -573,6 +573,52 @@ Now we've completed adding the `edit` and `update` functionality to our posts re
 
 TODO: Implement delete action
 
+## Ember Data
+
+Now that we have all of these actions in place, our `Blorgh.Post` model has become the largest piece of code in our Ember app. We wrote all that code ourselves so that we could learn how all the pieces of Ember fit together. Designing models like we have is not the best practice in the Ember community. The best practice is to use another piece of Ember called Ember Data.
+
+Ember Data provides some adapters and serializers that make working with APIs easier. Without Ember Data, we would need to write the same old boilerplate code for our models and that would be no fun, so let's go ahead now and replace the code in our model with something more conventional.
+
+To begin with, we're going to need to add a require for `ember-data` to our `app/assets/javascripts/application.js.coffee` line, directly under the require for `ember`:
+
+```coffee
+#= require jquery
+#= require jquery_ujs
+#= require handlebars
+#= require ember
+#= require ember-data
+#= require_self
+#= require blorgh
+```
+
+For Ember Data to work properly, our Ember application needs an adapter so that it can talk with our API. We can define one of these now in a new file called `app/assets/javascripts/store.js.coffee`:
+
+```coffee
+  Backend.ApplicationAdapter = DS.ActiveModelAdapter.extend
+    namespace: 'api'
+```
+
+We're extending from `ActiveModelAdapter` here because our API closely matches the API expected by Ember's `ActiveModelAdapter`. It doesn't *quite* match -- as we'll see a little later -- but it's close enough. Inside this new adapter we define a `namespace` which Ember will scope all requests to, so instead of looking for posts at `/posts`, it will look for them at `/api/posts` instead.
+
+To begin using this adapter, let's delete the `app/assets/javascripts/models/post.js.coffee` file's content and start anew.
+
+```coffee
+Blorgh.Post = DS.Model.extend
+  title: DS.attr('string')
+  text: DS.attr('string')
+```
+
+To define a model that uses `Blorgh.ApplicationAdapter`, all we need to do is extend `DS.Model` and define the attributes that we care about, in this case `title` and `text` are all we care about in a post. We define them like this so that Ember Data loads them from the result.
+
+
+
+
+
+
+
+
+
+
 TODO: Add comments to posts
 
 TODO(?): Use Ember Data: https://github.com/emberjs/data/blob/v1.0.0-beta.6/packages/ember-data/lib/system/adapter.js
