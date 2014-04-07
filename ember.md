@@ -315,7 +315,7 @@ Blorgh.Router.map ()->
   @resource 'post', path: '/posts/:post_id'
 ```
 
-The `resource` function defines a new route for our Ember app. We're using `:post_id` (instead of `:id`) here as Ember will infer from that that we want to load from the `Post` model in our app. 
+The `resource` function defines a new route for our Ember app. We're using `:post_id` (instead of `:id`) here as Ember will infer from that that we want to load from the `Post` model in our app.
 
 When we refresh our app again, we will now be able to click on a post's link and go to that post's page. That doesn't currently display anything and the console again will tell us why:
 
@@ -540,9 +540,9 @@ save: ->
   else
     @create()
 
-update:
-  $.ajax "api/posts/#{@id}"
-    type: 'PUT'
+update: ->
+  $.ajax "api/posts/#{@id}",
+    type: 'PUT',
     data:
       post:
         title: this.title
@@ -551,7 +551,7 @@ update:
     Ember.run () ->
       Blorgh.Post.create(response)
 
-create:
+create: ->
   $.post "api/posts",
     post:
       title: this.title
