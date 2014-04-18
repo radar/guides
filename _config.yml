@@ -5,3 +5,4 @@ exclude:
 - vendor
 permalink: "pretty"
 safe: true
+markdown: kramdown
