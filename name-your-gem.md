@@ -69,4 +69,4 @@ Credits
 
 This guide was expanded from [How to Name Gems][how-to-name-gems] by Eric Hodel.
 
-[how-to-name-gems]: http://blog.segment7.net/2010/11/15/how-to-name-gems
+[how-to-name-gems]: https://web.archive.org/web/20130821183311/http://blog.segment7.net/2010/11/15/how-to-name-gems
