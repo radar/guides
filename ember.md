@@ -422,7 +422,7 @@ Blorgh.PostsNewRoute = Ember.Route.extend
     save: ->
       route = this
       this.currentModel.save().then (model) ->
-        route.transitionToRoute('post', model)
+        route.transitionTo('post', model)
 ```
 
 In the route, we give it a `model` for the template. When we go to save the information from our form in the `save` action, the `model` object will have the values from the form automatically thanks to Ember's automatic binding.
