@@ -387,7 +387,7 @@ We're using a new route here called `posts.new`. Just like with the `post` route
 ```coffee
 Blorgh.Router.map ()->
   @resource 'post', path: '/posts/:post_id'
-  @resource 'posts.new', path:'/post/new'
+  @resource 'posts.new', path: '/posts/new'
 ```
 
 For this route to do anything, we will need to create a template at `app/assets/javascripts/templates/posts/new.hbs`:
