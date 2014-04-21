@@ -83,7 +83,22 @@ The end result will be a file that looks like:
 window.Blorgh = Ember.Application.create()
 ```
 
-This file now requires jQuery, Handlebars, Ember, itself and then finally `blorgh`. The `blorgh` file that it's pointing at is `app/assets/javascripts/blorgh.js` which contains this:
+This file now requires jQuery, Handlebars, Ember, itself and then finally `blorgh`. The `blorgh` file that it's pointing at is `app/assets/javascripts/blorgh.js.coffee` which contains this:
+
+```coffee
+#= require ./store
+#= require_tree ./models
+#= require_tree ./controllers
+#= require_tree ./views
+#= require_tree ./helpers
+#= require_tree ./components
+#= require_tree ./templates
+#= require_tree ./routes
+#= require ./router
+#= require_self
+```
+
+The `store` file here will set up an Ember Data store, but since we're not going to be using that we can remove that line. 
 
 ```coffee
 #= require_tree ./models
@@ -97,7 +112,7 @@ This file now requires jQuery, Handlebars, Ember, itself and then finally `blorg
 #= require_self
 ```
 
-The `store` file here will set up an Ember Data store, but since we're not going to be using that we can remove that line. The rest of the file includes all the other parts of our application: the models, controllers, views, helpers, components, templates, routes and the all-important router. The router is what's going to tell our Ember app what to do, extremely similar to what `config/routes.rb` does in Rails apps.
+The rest of the file includes all the other parts of our application: the models, controllers, views, helpers, components, templates, routes and the all-important router. The router is what's going to tell our Ember app what to do, extremely similar to what `config/routes.rb` does in Rails apps.
 
 ## Starting our Ember app
 
