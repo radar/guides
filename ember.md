@@ -405,7 +405,7 @@ For this route to do anything, we will need to create a template at `app/assets/
   </p>
   <p class='input-group'>
     <label for='text'>Text</label><br>
-    {{textarea value=text class="form-control input-lg" size="50" rows="10" cols="100"}}
+    {{textarea value=text class="form-control input-lg" rows="10" cols="100"}}
   </p>
   <input type='button' value='Save Post' class='btn btn-primary' {{action 'save' this}}>
 </form>
