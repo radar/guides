@@ -259,6 +259,10 @@ When we refresh the page, we'll no longer see an error. Instead, at the very bot
 XHR finished loading: "http://localhost:3000/api/posts".
 ```
 
+If you didn't see the output mentioned above, You might have XHR request logging turned off. From Chrome's console's settings, `Log XMLHttpRequests` should be ticked.
+
+![Log XMLHttpRequests](/ember/chrome_console_xhr_settings.png)
+
 This is a great indicator that shows that our Ember app is making a request to fetch all the posts. With all the posts being fetched, the next step is to display them. We can take care of this within the index template, over at `app/assets/javascripts/templates/index.hbs`:
 
 ```hbs
