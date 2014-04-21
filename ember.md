@@ -439,7 +439,7 @@ If we refresh this page and attempt to create a new post, we'll see this error:
 Uncaught TypeError: Object [object Object] has no method 'save'
 ```
 
-This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets`:
+This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets/javascripts/models/post.js.coffee`:
 
 ```coffee
 Blorgh.Post = Ember.Object.extend
