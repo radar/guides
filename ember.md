@@ -259,6 +259,10 @@ When we refresh the page, we'll no longer see an error. Instead, at the very bot
 XHR finished loading: "http://localhost:3000/api/posts".
 ```
 
+If you didn't see the output mentioned above, You might have XHR request logging turned off. From Chrome's console's settings, `Log XMLHttpRequests` should be ticked.
+
+![Log XMLHttpRequests](/ember/chrome_console_xhr_settings.png)
+
 This is a great indicator that shows that our Ember app is making a request to fetch all the posts. With all the posts being fetched, the next step is to display them. We can take care of this within the index template, over at `app/assets/javascripts/templates/index.hbs`:
 
 ```hbs
@@ -401,7 +405,7 @@ For this route to do anything, we will need to create a template at `app/assets/
   </p>
   <p class='input-group'>
     <label for='text'>Text</label><br>
-    {{textarea value=text class="form-control input-lg" size="50" rows="10" cols="100"}}
+    {{textarea value=text class="form-control input-lg" rows="10" cols="100"}}
   </p>
   <input type='button' value='Save Post' class='btn btn-primary' {{action 'save' this}}>
 </form>
@@ -422,7 +426,7 @@ Blorgh.PostsNewRoute = Ember.Route.extend
     save: ->
       route = this
       this.currentModel.save().then (model) ->
-        route.transitionToRoute('post', model)
+        route.transitionTo('post', model)
 ```
 
 In the route, we give it a `model` for the template. When we go to save the information from our form in the `save` action, the `model` object will have the values from the form automatically thanks to Ember's automatic binding.
@@ -435,7 +439,7 @@ If we refresh this page and attempt to create a new post, we'll see this error:
 Uncaught TypeError: Object [object Object] has no method 'save'
 ```
 
-This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets`:
+This is happening because our `Blorgh.Post` model does not have this method. Let's add that now in `app/assets/javascripts/models/post.js.coffee`:
 
 ```coffee
 Blorgh.Post = Ember.Object.extend
