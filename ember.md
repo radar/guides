@@ -575,7 +575,7 @@ Now we've completed adding the `edit` and `update` functionality to our posts re
 <h2>{{title}}</h2>
 <div>
   {{#link-to 'posts.edit' this}}Edit{{/link-to}} |
-  <a {{action='destroy'}}>Destroy</a>
+  <a {{action=destroy}}>Destroy</a>
 </div>
 {{text}}
 ```
