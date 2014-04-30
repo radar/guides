@@ -297,7 +297,7 @@ When we refresh this page, we'll see the posts now displaying with the power of 
 
 ## Retrospective #1: Posts displaying
 
-Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/javscripts/templates/index.js.coffee`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findAll()`, and finally displays that within the one and only template in our application.
+Our code is so far pretty simple. We've got an Ember application defined within `app/assets/application.js.coffee`, a model within `app/assets/models/post.js.coffee`, a route within `app/assets/routes/index.js.coffee` and a template at `app/assets/javscripts/templates/index.hbs`. Ember is automatically routing to the index route, which is handled with `Blorgh.IndexRoute`. `Blorgh.IndexRoute` collects the information it needs from `Blorgh.Post.findAll()`, and finally displays that within the one and only template in our application.
 
 ## Viewing a single post
 
