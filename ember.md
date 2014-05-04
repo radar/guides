@@ -1,0 +1,1 @@
+[This guide has moved to EmberBites.com](http://emberbites.com/1-adding-ember-to-a-rails-app/)
