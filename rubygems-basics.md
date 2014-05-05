@@ -15,14 +15,14 @@ time (if you need to use Ruby 1.9) visit the
 If you want to see how to require files from a gem, skip ahead to [What is a
 gem](/what-is-a-gem)
 
-* [Finding Gems](#finding_gems)
-* [Installing Gems](#installing_gems)
-* [Requiring Code](#requiring_code)
-* [Listing Installed Gems](#listing_installed_gems)
-* [Uninstalling Gems](#uninstalling_gems)
-* [Viewing Documentation](#viewing_documentation)
-* [Fetching and Unpacking Gems](#fetching_and_unpacking_gems)
-* [Further Reading](#further_reading)
+* [Finding Gems](#finding-gems)
+* [Installing Gems](#installing-gems)
+* [Requiring Code](#requiring-code)
+* [Listing Installed Gems](#listing-installed-gems)
+* [Uninstalling Gems](#uninstalling-gems)
+* [Viewing Documentation](#viewing-documentation)
+* [Fetching and Unpacking Gems](#fetching-and-unpacking-gems)
+* [Further Reading](#further-reading)
 
 Finding Gems
 ------------

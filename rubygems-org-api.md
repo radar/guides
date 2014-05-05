@@ -14,17 +14,17 @@ Details on interacting with RubyGems.org over HTTP.
 > [gemcutter gem](https://rubygems.org/gems/gemcutter) use the API to push gems,
 > add owners, and more.
 
-* [API Authorization](#api_authorization): How to authenticate with RubyGems.org
-* [Gem Methods](#gem_methods): Query or create gems to be hosted
-* [Gem Version Methods](#gem_version_methods): Query for information about
+* [API Authorization](#api-authorization): How to authenticate with RubyGems.org
+* [Gem Methods](#gem-methods): Query or create gems to be hosted
+* [Gem Version Methods](#gem-version-methods): Query for information about
   versions of a particular gem
-* [Gem Download Methods](#gem_download_methods): Query for download statistics
-* [Owner Methods](#owner_methods): Manage owners for gems
-* [Webhook Methods](#webhook_methods): Manage notifications for when gems are
+* [Gem Download Methods](#gem-download-methods): Query for download statistics
+* [Owner Methods](#owner-methods): Manage owners for gems
+* [Webhook Methods](#webhook-methods): Manage notifications for when gems are
   pushed
-* [Activity Methods](#activity_methods): Query for information about site-wide
+* [Activity Methods](#activity-methods): Query for information about site-wide
   activity
-* [Misc Methods](#misc_methods): Various other interactions with the site
+* [Misc Methods](#misc-methods): Various other interactions with the site
 
 API Authorization
 -----------------

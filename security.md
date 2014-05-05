@@ -8,8 +8,8 @@ next: /patterns
 Security practices are being actively discussed. Check back often.
 
 * [General](#general)
-* [Using Gems](#using_gems)
-* [Building Gems](#building_gems)
+* [Using Gems](#using-gems)
+* [Building Gems](#building-gems)
 
 General
 -------

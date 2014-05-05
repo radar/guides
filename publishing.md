@@ -8,11 +8,11 @@ next: /security
 Ways to share your gem code with other users.
 
 * [Introduction](#introduction)
-* [Sharing Source Code](#sharing_source_code)
-* [Serving Your Own Gems](#serving_your_own_gems)
-* [Publishing to RubyGems.org](#publishing_to_rubygemsorg)
-* [Push Permissions on RubyGems.org](#push_permissions_on_rubygemsorg)
-* [Gem Security](#gem_security)
+* [Sharing Source Code](#sharing-source-code)
+* [Serving Your Own Gems](#serving-your-own-gems)
+* [Publishing to RubyGems.org](#publishing-to-rubygemsorg)
+* [Push Permissions on RubyGems.org](#push-permissions-on-rubygemsorg)
+* [Gem Security](#gem-security)
 
 Introduction
 ------------

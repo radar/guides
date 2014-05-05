@@ -7,11 +7,11 @@ next: /specification-reference
 
 Common practices to make your gem users' and other developers' lives easier.
 
-* [Consistent naming](#consistent_naming)
-* [Semantic versioning](#semantic_versioning)
-* [Declaring dependencies](#declaring_dependencies)
-* [Loading code](#loading_code)
-* [Prerelease gems](#prerelease_gems)
+* [Consistent naming](#consistent-naming)
+* [Semantic versioning](#semantic-versioning)
+* [Declaring dependencies](#declaring-dependencies)
+* [Loading code](#loading-code)
+* [Prerelease gems](#prerelease-gems)
 
 Consistent naming
 -----------------
