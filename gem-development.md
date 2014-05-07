@@ -43,7 +43,7 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
 ```ruby
-s.add_development_dependency "rspec", "~> 2.6"
+spec.add_development_dependency "rspec", "~> 2.6"
 ```
 
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
@@ -121,25 +121,25 @@ We're now going to use Active Support's `pluralize` method by calling it using a
 To use another gem, we must first specify it as a dependency in our _foodie.gemspec_. We can specify the dependency on the `activesupport` gem in _foodie.gemspec_ by adding this line inside the `Gem::Specification` object:
 
 ```ruby
-s.add_dependency "activesupport"
+spec.add_dependency "activesupport"
 ```
 
 If we wanted to specify a particular version we may use this line:
 
 ```ruby
-s.add_dependency "activesupport", "4.0.0"
+spec.add_dependency "activesupport", "4.0.0"
 ```
 
 Or specify a version constraint:
 
 ```ruby
-s.add_dependency "activesupport", ">= 4.0.0"
+spec.add_dependency "activesupport", ">= 4.0.0"
 ```
 
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
 ```ruby
-s.add_dependency "activesupport", "~> 4.0.0"
+spec.add_dependency "activesupport", "~> 4.0.0"
 ```
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to *spec/food_spec.rb* now inside our `describe Foodie::Food` block:
@@ -190,8 +190,8 @@ David Chelimsky and Aslak Hellesøy teamed up to create Aruba, a CLI testing too
 We will define new development dependencies in _foodie.gemspec_ now for the Cucumber things:
 
 ```ruby
-s.add_development_dependency "cucumber"
-s.add_development_dependency "aruba"
+spec.add_development_dependency "cucumber"
+spec.add_development_dependency "aruba"
 ```
 
 Hot. Let's run `bundle install` to get these awesome tools set up.
@@ -291,7 +291,7 @@ Let's define the `lib/foodie/cli.rb` file now like this:
 The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
 
 ```ruby
-s.add_dependency "thor"
+spec.add_dependency "thor"
 ```
 
 To install this new dependency, we use `bundle install`. When we run `bundle exec cucumber features` again, we'll see that it's now complaining that it could not find the tasks we're calling:
