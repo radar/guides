@@ -12,6 +12,14 @@ Let's clone Blorgh now:
     cd blorgh
     git checkout pre-admin-namespace
 
+After cloning the app, we should make sure that we can run it. Let's run these commands to set it up:
+
+```
+bundle install
+rake db:setup
+rails s
+```
+
 In this state, Blorgh has only three models: a `Post` model, a `Comment` model and a `User` model. On the `User` model, there's an attribute called `admin` which determines if the user has the ability to create, edit or destroy posts within the application. This check is done in such views as `app/views/posts/show.html.erb`, like this:
 
 ```erb
@@ -40,16 +48,16 @@ It first checks to see if the `current_user` method returns anything. If it does
 So back to the code within `app/views/posts/show.html.erb`. The 'Edit Post' and 'Delete Post' links will only appear if the user is an admin. The `PostsController` itself has a similar check, in the form of a `before_action` call:
 
 ```ruby
-  before_action :admin_only, only: [:new, :create, :edit, :update, :destroy]
+before_action :admin_only, only: [:new, :create, :edit, :update, :destroy]
 
-  ...
+...
 
-  def admin_only
-    unless admin?
-      flash[:error] = "You are not authorized to do that."
-      redirect_to root_path
-    end
+def admin_only
+  unless admin?
+    flash[:error] = "You are not authorized to do that."
+    redirect_to root_path
   end
+end
 ```
 
 If a non-admin user attempts to access any one of the `new`, `create`, `edit`, `update` or `destroy` actions, they'll be knocked back to the root of the application with a message that tells them that they're not authorized.
@@ -80,7 +88,7 @@ class Admin::PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      redirect_to @post
+      redirect_to admin_posts_path
       flash[:success] = 'Post was successfully created.'
     else
       render action: 'new'
@@ -90,7 +98,7 @@ class Admin::PostsController < ApplicationController
   def update
     if @post.update(post_params)
       flash[:success] = 'Post was successfully updated.'
-      redirect_to @post
+      redirect_to admin_posts_path
     else
       render action: 'edit'
     end
@@ -98,7 +106,7 @@ class Admin::PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_url
+    redirect_to admin_posts_path
     flash[:success] = 'Post was successfully deleted.'
   end
 
@@ -120,7 +128,9 @@ class Admin::PostsController < ApplicationController
 end
 ```
 
-In to this new controller, we've placed all the logic for all the post actions that admins can do. This means that our `PostsController` now only has the logic for the actions normal users can do, and that makes that controller a lot cleaner:
+In to this new controller, we've placed all the logic for all the post actions that admins can do. Inside the `create`, `update` and `destroy` actions, we're now redirecting back to `admin_posts_path`, which will be the page where the admin users can see all the posts. We'll define this routing helper in a moment.
+
+This change means that our `PostsController` now only has the logic for the actions normal users can do, and that makes `PostsController` a lot cleaner:
 
 ```ruby
 class PostsController < ApplicationController
@@ -146,16 +156,104 @@ While we're in this file, we should define routes for our new controller, which 
 
 ```ruby
 namespace :admin do
+  root :to => "posts#index"
   resources :posts
 end
 ```
 
-All that's left for us to do is to move the views over from `app/views/posts` into `app/views/admin/posts`. We need to move the `new.html.erb` view, the `_form.html.erb` partial, and the `edit.html.erb` view.
+The `namespace` option here does two things: 1) it defines that all routes underneath this namespace have the `/admin` prefix and 2) all controllers are under the `Admin` module. This allows us to have a pretty clear separation in both the URL and the code about what parts of our application are for users, and what parts are for admins.
+
+Calling `root` inside the `namespace :admin` block allows us to define a root route for this namespace. We've pointed this at the `index` action within `Admin::PostsController`. If we go into the browser now and attempt to navigate to `http://localhost:3000/admin`, we'll be told that there's no action defined:
+
+![No index action](/admin-namespace/no-index-action.png)
+
+Let's add this action in to `Admin::PostsController`:
 
 
-TODO:
-* Setup admin user
-* Fix form_for specifications
-* Test all the actions
+```ruby
+def index
+  @posts = Post.all
+end
+```
 
-* Move the views
+We'll need a template for this action too, which will go at `app/views/admin/posts/index.html.erb`. We'll just display a list of posts within a table:
+
+```erb
+<h1>Listing posts</h1>
+
+<%= link_to 'New Post', new_admin_post_path, class: 'btn btn-primary' %>
+
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <td>Title</td>
+      <td>Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td>
+          <%= link_to 'Show', post %> &middot;
+          <%= link_to 'Edit', [:edit, :admin, post] %> &middot;
+          <%= link_to 'Delete', [:admin, post], method: 'delete', confirm: 'Are you sure you want to delete this post?' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+```
+
+The "New Post" link uses `new_admin_post_path` now, which creates a route that routes to the `new` action within `Admin::PostsController`. The "Show" link here will infer the `post_path` helper which will go back to `PostsController`, since that's the view all the normal users will see the post as. Therefore, this is where we want to see the post too. The "Edit" and "Delete" links go to actions within the admin controller, using the `edit_admin_post_path` and `admin_post_path` helpers respectively. These helpers are defined automatically by the `namespace` code we have placed in `config/routes.rb`.
+
+The next step is to move the views over from `app/views/posts` into `app/views/admin/posts`. We need to move the `new.html.erb` view, the `_form.html.erb` partial, and the `edit.html.erb` view. We'll also need to make changes to these views to point them to the actions within `Admin::PostsController`, rather than the old actions from within `PostsController`.
+
+Let's change the `_form.html.erb` partial first. This line:
+
+```erb
+<%= form_for(@post) do |f| %>
+```
+
+Should turn into this:
+
+```erb
+<%= form_for([:admin, @post]) do |f| %>
+```
+
+While the form will still be displayed for the `@post` object, the route will now change to use the admin namespaced version, `admin_post_path` or `admin_posts_path` depending on if that `@post` object has been persisted or not.
+
+In the `edit.html.erb` template, we'll need to change this:
+
+```erb
+<%= link_to 'Back', posts_path %>
+```
+
+To this:
+
+```erb
+<%= link_to 'Back', admin_posts_path %>
+```
+
+This is because we want to send admins back to the admin list of posts, rather than the normal user list of posts.
+
+Now that we've moved the admin actions over into the namespace, we can remove the admin checks in the normal user views. The first of these is within `app/views/posts/index.html.erb`:
+
+```erb
+<% if admin? %>
+  <%= link_to 'New Post', new_post_path, class: 'btn btn-primary' %>
+<% end %>
+```
+
+Let's remove those lines now, since we have those within our `app/views/admin/posts/index.html.erb` template instead. The only other place we need to remove code from is `app/views/posts/show.html.erb`:
+
+```erb
+<% if admin? %>
+  <%= link_to 'Edit Post', edit_post_path(@post) %> |
+  <%= link_to 'Delete Post', post_path(@post), method: :delete %>
+<% end %>
+```
+
+We have links for both of these links in our admin section, and so there is no need to have them here also. Let's remove that whole `if` block.
+
+That concludes creating an admin namespace. We've moved the admin-only actions to a namespaced controller, removed admin-checking logic from the views and in general made our code easier to understand.
