@@ -165,7 +165,7 @@ The `namespace` option here does two things: 1) it defines that all routes under
 
 Calling `root` inside the `namespace :admin` block allows us to define a root route for this namespace. We've pointed this at the `index` action within `Admin::PostsController`. If we go into the browser now and attempt to navigate to `http://localhost:3000/admin`, we'll be told that there's no action defined:
 
-![No index action](/admin-namespace/no-index-action.png)
+![No index action](/admin-namespace/no_index_action.png)
 
 Let's add this action in to `Admin::PostsController`:
 
