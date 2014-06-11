@@ -45,7 +45,7 @@ specification.</p>
     
 * [platform=](#platform=)
     
-* [require_paths](#require_paths)
+* [require_paths=](#require_paths=)
     
 * [rubygems_version](#rubygems_version)
     
@@ -87,7 +87,11 @@ specification.</p>
     
 * [rdoc_options](#rdoc_options)
     
+* [required_ruby_version](#required_ruby_version)
+    
 * [required_ruby_version=](#required_ruby_version=)
+    
+* [required_rubygems_version](#required_rubygems_version)
     
 * [required_rubygems_version=](#required_rubygems_version=)
     
@@ -180,8 +184,8 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 
 <pre>spec.platform = Gem::Platform.local</pre>    
 
-<a id="require_paths"> </a>
-## require_paths
+<a id="require_paths="> </a>
+## require_paths=(`val`)
 
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
 activated.</p>
@@ -197,7 +201,7 @@ process will copy the extension files into “lib” for you.</p>
 <p>Usage:</p>
 
 <pre># If all library files are in the root directory...
-spec.require_path = &#39;.&#39;</pre>    
+spec.require_paths = [&#39;.&#39;]</pre>    
 
 <a id="rubygems_version"> </a>
 ## rubygems_version
@@ -240,20 +244,25 @@ a letter in it, such as <code>1.0.0.pre</code>.</p>
 
 <p>The license for this gem.</p>
 
-<p>The license must be a short name, no more than 64 characters.</p>
+<p>The license must be no more than 64 characters.</p>
 
 <p>This should just be the name of your license. The full text of the license
-should be inside of the gem when you build it.</p>
+should be inside of the gem (at the top level) when you build it.</p>
 
-<p>See <a
+<p>The simplest way, is to specify the standard SPDX ID <a
+href="https://spdx.org/licenses">spdx.org/licenses</a>/ for the license.
+Ideally you should pick one that is OSI (Open Source Initiative) <a
 href="http://opensource.org/licenses/alphabetical">opensource.org/licenses/alphabetical</a>
-for a list of licenses and their abbreviations (or short names).  GitHub
-also provides a license picker at <a
-href="http://choosealicense.com">choosealicense.com</a>/</p>
+approved.</p>
 
-<pre>According to copyright law, not having an OSI-approved open source license
-means you have no rights to use the code for any purpose-- in other words,
-&quot;all rights reserved&quot;.</pre>
+<p>The most commonly used OSI approved licenses are BSD-3-Clause and MIT.
+GitHub also provides a license picker at <a
+href="http://choosealicense.com">choosealicense.com</a>/.</p>
+
+<p>You should specify a license for your gem so that people know how they are
+permitted to use it, and any restrictions you&#39;re placing on it.  Not
+specifying a license means all rights are reserved; others have no rights
+to use the code for any purpose.</p>
 
 <p>You can set multiple licenses with licenses=</p>
 
@@ -354,6 +363,9 @@ full path (as in bin/rake); all application-style files are expected to be
 found in bindir.  These files must be executable Ruby files.  Files that
 use bash or other interpreters will not work.</p>
 
+<p>Executables included may only be ruby scripts, not scripts for other
+languages or compiled binaries.</p>
+
 <p>Usage:</p>
 
 <pre>spec.executables &lt;&lt; &#39;rake&#39;</pre>    
@@ -442,6 +454,11 @@ bytes</p>
   &#39;--main&#39; &lt;&lt; &#39;README&#39; &lt;&lt;
   &#39;--line-numbers&#39;</pre>    
 
+<a id="required_ruby_version"> </a>
+## required_ruby_version
+
+<p>The version of Ruby required by this gem</p>    
+
 <a id="required_ruby_version="> </a>
 ## required_ruby_version=(`req`)
 
@@ -460,10 +477,15 @@ spec.required_ruby_version = &#39;&gt;= 1.8.6&#39;
 # Only with ruby 2.0.x
 spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>    
 
+<a id="required_rubygems_version"> </a>
+## required_rubygems_version
+
+<p>The RubyGems version required by this gem</p>    
+
 <a id="required_rubygems_version="> </a>
 ## required_rubygems_version=(`req`)
 
-<p>The RubyGems version required by this gem.</p>
+<p>The RubyGems version required by this gem</p>    
 
 <a id="requirements"> </a>
 ## requirements

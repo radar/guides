@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.2.2.
+This reference was automatically generated from RubyGems version 2.3.0.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -17,7 +17,7 @@ This reference was automatically generated from RubyGems version 2.2.2.
 * [gem dependency](#gem-dependency)
 * [gem environment](#gem-environment)
 * [gem fetch](#gem-fetch)
-* [gem generate-index](#gem-generate-index)
+* [gem generate_index](#gem-generate_index)
 * [gem help](#gem-help)
 * [gem install](#gem-install)
 * [gem list](#gem-list)
@@ -294,7 +294,7 @@ Show the dependencies of an installed gem
 
 ### Usage
 
-    gem dependency GEMNAME [options]
+    gem dependency REGEXP [options]
 
 
 ###   Options:
@@ -333,7 +333,7 @@ Show the dependencies of an installed gem
 ### Arguments
 
 
-* *GEMNAME* -        name of gem to show dependencies for
+* *REGEXP* -         show dependencies for gems whose names start with REGEXP
 
   
 
@@ -391,8 +391,9 @@ The RubyGems environment can be controlled through command line arguments,
 gemrc files, environment variables and built-in defaults.
 
 Command line argument defaults and some RubyGems defaults can be set in a
-~/.gemrc file for individual users and a /etc/gemrc for all users. These
-files are YAML files with the following YAML keys:
+~/.gemrc file for individual users and a gemrc in the SYSTEM CONFIGURATION
+DIRECTORY for all users. These files are YAML files with the following YAML
+keys:
 
     :sources: A YAML array of remote gem repositories to install gems from
     :verbose: Verbosity of the gem command. false, true, and :really are the
@@ -550,14 +551,6 @@ Provide help on the 'gem' command
 
 
   
-### Arguments
-
-
-* *commands* -       List all 'gem' commands
-* *examples* -       Show examples of 'gem' usage
-* *&lt;command&gt;* -      Show specific help for &lt;command&gt;
-
-  
 
   
 
@@ -603,6 +596,8 @@ Install a gem into the local repository
 *         -&#8203;-without GROUPS           - Omit the named groups (comma separated) when installing from a gem dependencies file
 *         -&#8203;-default                  - Add the gem's full specification to specifications/default and extract only its bin
 *         -&#8203;-explain                  - Rather than install the gems, indicate which would be installed
+*         -&#8203;-\[no-\]lock                - Create a lock file (when used with -g/-&#8203;-file)
+*         -&#8203;-\[no-\]suggestions         - Suggest alternates when gems are not found
 
 ###   Local/Remote Options:
 
@@ -643,6 +638,25 @@ The wrapper allows you to choose among alternate gem versions using _version_.
 
 For example `rake _0.7.3_ --version` will run rake version 0.7.3 if a newer
 version is also installed.
+
+Gem Dependency Files
+====================
+
+RubyGems can install a consistent set of gems across multiple environments
+using `gem install -g` when a gem dependencies file (gem.deps.rb, Gemfile or
+Isolate) is present.  If no explicit file is given RubyGems attempts to find
+one in the current directory.
+
+When the RUBYGEMS_GEMDEPS environment variable is set to a gem dependencies
+file the gems from that file will be activated at startup time.  Set it to a
+specific filename or to "-" to have RubyGems automatically discover the gem
+dependencies file by walking up from the current directory.
+
+NOTE: Enabling automatic discovery on multiuser systems can lead to
+execution of arbitrary code when used from directories outside your control.
+
+Extension Install Failures
+==========================
 
 If an extension fails to compile during gem installation the gem
 specification is not written out, but the gem remains unpacked in the
@@ -686,7 +700,7 @@ to write the specification by hand.  For example:
 
 ## gem list
 
-Display local gems whose name starts with STRING
+Display local gems whose name matches REGEXP
 
 ### Usage
 
@@ -731,7 +745,7 @@ Display local gems whose name starts with STRING
 ### Arguments
 
 
-* *STRING* -         start of gem name to look for
+* *REGEXP* -         regexp to look for in gem name
 
   
 
@@ -1139,11 +1153,11 @@ Use --overwrite to force rebuilding of documentation.
 
 ## gem search
 
-Display remote gems whose name contains STRING
+Display remote gems whose name matches REGEXP
 
 ### Usage
 
-    gem search [STRING] [options]
+    gem search [REGEXP] [options]
 
 
 ###   Options:
@@ -1184,15 +1198,15 @@ Display remote gems whose name contains STRING
 ### Arguments
 
 
-* *STRING* -         fragment of gem name to search for
+* *REGEXP* -         regexp to search for in gem name
 
   
 
   
 ### Description
 
-The search command displays remote gems whose name contains the given
-string.
+The search command displays remote gems whose name matches the given
+regexp.
 
 The --details option displays additional details from the gem but will
 take a little longer to complete as it must download the information
@@ -1535,7 +1549,7 @@ Update installed gems to the latest version
 
 ### Usage
 
-    gem update GEMNAME [GEMNAME ...] [options]
+    gem update REGEXP [REGEXP ...] [options]
 
 
 ###   Options:
@@ -1592,7 +1606,7 @@ Update installed gems to the latest version
 ### Arguments
 
 
-* *GEMNAME* -        name of gem to update
+* *REGEXP* -         regexp to search for in gem name
 
   
 
@@ -1662,7 +1676,7 @@ Remove a pushed gem from the index
 *     -v, -&#8203;-version VERSION          - Specify version of gem to remove
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to remove
 *       - -&#8203;-undo
-*     -k, -&#8203;-key KEY_NAME             - Use API key from your gem credentials file
+*     -k, -&#8203;-key KEYNAME              - Use the given API key from ~/.gem/credentials
 
 ###   Common Options:
 
