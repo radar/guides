@@ -341,7 +341,7 @@ run on different architectures and interpreters of Ruby.
 In short: *TEST YOUR GEM!* Please!
 
 `Test::Unit` is Ruby's built-in test framework. There are
-[lots](http://www.bootspring.com/2010/09/22/minitest-rubys-test-framework/) of
+[lots](http://www.mikeperham.com/2012/09/25/minitest-ruby-1-9s-test-framework/) of
 [tutorials](https://github.com/seattlerb/minitest/blob/master/README.txt) for
 using it online. There are many other test frameworks available for Ruby as
 well. [RSpec](http://rspec.info/) is a popular choice. At the end of the day,
