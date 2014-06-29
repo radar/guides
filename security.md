@@ -10,6 +10,7 @@ Security practices are being actively discussed. Check back often.
 * [General](#general)
 * [Using Gems](#using-gems)
 * [Building Gems](#building-gems)
+* [Reporting Security Vulnerabilities](#reporting-security-vulnerabilities)
 
 General
 -------
@@ -126,6 +127,44 @@ Add cert paths to your gemspec
 ### Not Recommended: OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
 
 For details, see discussion [with Yorick Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).
+
+Reporting Security vulnerabilities
+-------
+
+
+### Reporting a security vulnerability with someone else's gem
+
+If you spot a security vulnerability in someone else's gem, then you
+first step should be to check whether this is a known vulnerability.
+
+If this looks like a newly discovered vulnerability then you should
+content the author(s) privately (i.e. not via a pull request or issue on public
+project) explaining the issue, how it can be exploited and ideally offering an
+indication of how it might be fixed.
+
+### Reporting a security vulnerability with your own gem
+
+Firstly request a [CVE
+identifier](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)
+by mailing cve-assign@mitre.org. This identifier will make it easy to
+uniquely identify the vulnerability when talking about it.
+
+Secondly work out what people who depend on your gem should do to
+resolve the vulnerability. This may involve releasing a patched version of you gem
+that you can recommend they upgrade to.
+
+Finally you need to tell people about the vulnerability. Currently there
+is no single place to broadcast this information but a good place to
+start might be to:
+
+- Send an email to the Ruby Talk mailing list (ruby-talk@ruby-lang.org)
+  with the subject prefix \[ANN]\[Security] outlining the vulnerabilty,
+  which versions of your gem it affects and what actions those depending
+  on the gem should take.
+
+- Add it a to a open source vulnerability database like
+  [OSVDB](http://osvdb.org/). You can do this by emailing moderators@osvdb.org
+  and/or messaging @osvdb on GitHub or Twitter.
 
 Credits
 -------
