@@ -162,7 +162,7 @@ start might be to:
   which versions of your gem it affects and what actions those depending
   on the gem should take.
 
-- Add it a to a open source vulnerability database like
+- Add it to an open source vulnerability database like
   [OSVDB](http://osvdb.org/). You can do this by emailing moderators@osvdb.org
   and/or messaging @osvdb on GitHub or Twitter.
 
