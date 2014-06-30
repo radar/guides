@@ -138,7 +138,7 @@ If you spot a security vulnerability in someone else's gem, then you
 first step should be to check whether this is a known vulnerability.
 
 If this looks like a newly discovered vulnerability then you should
-content the author(s) privately (i.e. not via a pull request or issue on public
+contact the author(s) privately (i.e. not via a pull request or issue on public
 project) explaining the issue, how it can be exploited and ideally offering an
 indication of how it might be fixed.
 
