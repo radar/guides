@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.3.0.
+This reference was automatically generated from RubyGems version 2.4.0.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -23,6 +23,7 @@ This reference was automatically generated from RubyGems version 2.3.0.
 * [gem list](#gem-list)
 * [gem lock](#gem-lock)
 * [gem mirror](#gem-mirror)
+* [gem open](#gem-open)
 * [gem outdated](#gem-outdated)
 * [gem owner](#gem-owner)
 * [gem pristine](#gem-pristine)
@@ -261,6 +262,7 @@ Display the contents of the installed gems
 *     -s, -&#8203;-spec-dir a,b,c           - Search for gems under specific paths
 *     -l, -&#8203;-\[no-\]lib-only            - Only return files in the Gem's lib_dirs
 *         -&#8203;-\[no-\]prefix              - Don't include installed path prefix
+*         -&#8203;-\[no-\]show-install-dir    - Show only the gem install dir
 
 ###   Common Options:
 
@@ -316,7 +318,7 @@ Show the dependencies of an installed gem
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -447,7 +449,7 @@ Download a gem and place it in the current directory
 
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *         -&#8203;-clear-sources            - Clear the gem sources
 
 ###   Common Options:
@@ -580,6 +582,8 @@ Install a gem into the local repository
 *     -i, -&#8203;-install-dir DIR          - Gem repository directory to get installed gems
 *     -n, -&#8203;-bindir DIR               - Directory where binary files are located
 *         -&#8203;-\[no-\]document \[TYPES\]    - Generate documentation for installed gems List the documentation types you wish to generate.  For example: rdoc,ri
+*         -&#8203;-build-root DIR           - Temporary installation root. Useful for building packages. Do not use this when installing remote gems.
+*         -&#8203;-vendor                   - Install gem into the vendor directory. Only for use by gem repackagers.
 *     -N, -&#8203;-no-document              - Disable documentation generation
 *     -E, -&#8203;-\[no-\]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
 *     -f, -&#8203;-\[no-\]force               - Force gem to install, bypassing dependency checks
@@ -606,7 +610,7 @@ Install a gem into the local repository
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -728,7 +732,7 @@ Display local gems whose name matches REGEXP
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -852,6 +856,46 @@ Mirror all gem files (requires rubygems-mirror)
 The mirror command has been moved to the rubygems-mirror gem.
   
 
+## gem open
+
+Open gem sources in editor
+
+### Usage
+
+    gem open GEMNAME [-e EDITOR] [options]
+
+
+###   Options:
+
+*     -e, -&#8203;-editor EDITOR            - Opens gem sources in EDITOR
+
+###   Common Options:
+
+*     -h, -&#8203;-help                     - Get help on this command
+*     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
+*     -q, -&#8203;-quiet                    - Silence commands
+*         -&#8203;-config-file FILE         - Use this config file instead of default
+*         -&#8203;-backtrace                - Show stack backtrace on errors
+*         -&#8203;-debug                    - Turn on Ruby debugging
+
+
+  
+### Arguments
+
+
+* *GEMNAME* -      name of gem to open in editor
+
+  
+
+  
+### Description
+
+          The open command opens gem in editor and changes current path
+          to gem's source directory. Editor can be specified with -e option,
+          otherwise rubygems will look for editor in $EDITOR, $VISUAL and
+          $GEM_EDITOR variables.
+  
+
 ## gem outdated
 
 Display all gems that need updates
@@ -876,7 +920,7 @@ Display all gems that need updates
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1081,7 +1125,7 @@ Query gem information in local or remote repositories
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1181,7 +1225,7 @@ Display remote gems whose name matches REGEXP
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1372,7 +1416,7 @@ Display gem specification (in yaml)
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1463,6 +1507,7 @@ Uninstall gems from the local repository
 *         -&#8203;-\[no-\]abort-on-dependent  - Prevent uninstalling gems that are depended on by other gems.
 *     -v, -&#8203;-version VERSION          - Specify version of gem to uninstall
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to uninstall
+*         -&#8203;-vendor                   - Uninstall gem from the vendor directory. Only for use by gem repackagers.
 
 ###   Common Options:
 
@@ -1569,6 +1614,8 @@ Update installed gems to the latest version
 *     -i, -&#8203;-install-dir DIR          - Gem repository directory to get installed gems
 *     -n, -&#8203;-bindir DIR               - Directory where binary files are located
 *         -&#8203;-\[no-\]document \[TYPES\]    - Generate documentation for installed gems List the documentation types you wish to generate.  For example: rdoc,ri
+*         -&#8203;-build-root DIR           - Temporary installation root. Useful for building packages. Do not use this when installing remote gems.
+*         -&#8203;-vendor                   - Install gem into the vendor directory. Only for use by gem repackagers.
 *     -N, -&#8203;-no-document              - Disable documentation generation
 *     -E, -&#8203;-\[no-\]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env
 *     -f, -&#8203;-\[no-\]force               - Force gem to install, bypassing dependency checks
@@ -1589,7 +1636,7 @@ Update installed gems to the latest version
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*         -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1615,7 +1662,7 @@ Update installed gems to the latest version
 
 The update command will update your gems to the latest version.
 
-The update comamnd does not remove the previous version.  Use the cleanup
+The update command does not remove the previous version. Use the cleanup
 command to remove old versions.
   
 

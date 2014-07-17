@@ -99,8 +99,6 @@ specification.</p>
     
 * [signing_key](#signing_key)
     
-* [test_files=](#test_files=)
-    
 
 
 # Required gemspec attributes
@@ -334,7 +332,9 @@ details.</p>
 
 <p>A long description of this gem</p>
 
-<p>The description should be more detailed than the summary.</p>
+<p>The description should be more detailed than the summary but not
+excessively long.  A few paragraphs is a recommended length with no
+examples or formatting.</p>
 
 <p>Usage:</p>
 
@@ -502,17 +502,6 @@ spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>
 ## signing_key
 
 <p>The key used to sign this gem.  See Gem::Security for details.</p>    
-
-<a id="test_files="> </a>
-## test_files=(`files`)
-
-<p>A collection of unit test files.  They will be loaded as unit tests when
-the user requests a gem to be unit tested.</p>
-
-<p>Usage:</p>
-
-<pre>spec.test_files = Dir.glob(&#39;test/tc_*.rb&#39;)
-spec.test_files = [&#39;tests/test-suite.rb&#39;]</pre>    
 
 
 <!--<html -->
