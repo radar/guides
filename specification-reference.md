@@ -116,6 +116,7 @@ specification.</p>
 <pre>spec.author = &#39;John Jones&#39;</pre>    
 
 <a id="authors="> </a>
+
 ## authors=(`value`)
 
 <p>Sets the list of authors, ensuring it is an array.</p>
@@ -125,6 +126,7 @@ specification.</p>
 <pre>spec.authors = [&#39;John Jones&#39;, &#39;Mary Smith&#39;]</pre>    
 
 <a id="files"> </a>
+
 ## files
 
 <p>Files included in this gem.  You cannot append to this accessor, you must
@@ -150,6 +152,7 @@ other non-files cause an error.</p>
 </pre>    
 
 <a id="name"> </a>
+
 ## name
 
 <p>This gem&#39;s name.</p>
@@ -159,6 +162,7 @@ other non-files cause an error.</p>
 <pre>spec.name = &#39;rake&#39;</pre>    
 
 <a id="platform="> </a>
+
 ## platform=(`platform`)
 
 <p>The platform this gem runs on.</p>
@@ -184,6 +188,7 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 <pre>spec.platform = Gem::Platform.local</pre>    
 
 <a id="require_paths="> </a>
+
 ## require_paths=(`val`)
 
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
@@ -203,6 +208,7 @@ process will copy the extension files into “lib” for you.</p>
 spec.require_paths = [&#39;.&#39;]</pre>    
 
 <a id="rubygems_version"> </a>
+
 ## rubygems_version
 
 <p>The version of RubyGems used to create this gem.</p>
@@ -210,6 +216,7 @@ spec.require_paths = [&#39;.&#39;]</pre>
 <p>Do not set this, it is set automatically when the gem is packaged.</p>    
 
 <a id="summary"> </a>
+
 ## summary
 
 <p>A short summary of this gem&#39;s description.  Displayed in `gem list -d`.</p>
@@ -222,6 +229,7 @@ should be more detailed than the summary.</p>
 <pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>    
 
 <a id="version"> </a>
+
 ## version
 
 <p>This gem&#39;s version.</p>
@@ -239,6 +247,7 @@ a letter in it, such as <code>1.0.0.pre</code>.</p>
 
 
 <a id="license="> </a>
+
 ## license=(`o`)
 
 <p>The license for this gem.</p>
@@ -270,6 +279,7 @@ to use the code for any purpose.</p>
 <pre>spec.license = &#39;MIT&#39;</pre>    
 
 <a id="licenses="> </a>
+
 ## licenses=(`licenses`)
 
 <p>The license(s) for the library.</p>
@@ -291,6 +301,7 @@ discussion</p>
 
 
 <a id="add_development_dependency"> </a>
+
 ## add_development_dependency(`gem`, `*requirements`)
 
 <p>Adds a development dependency named <code>gem</code> with
@@ -304,6 +315,7 @@ discussion</p>
 activated when a gem is required.</p>    
 
 <a id="add_runtime_dependency"> </a>
+
 ## add_runtime_dependency(`gem`, `*requirements`)
 
 <p>Adds a runtime dependency named <code>gem</code> with
@@ -314,6 +326,7 @@ activated when a gem is required.</p>
 <pre>spec.add_runtime_dependency &#39;example&#39;, &#39;~&gt; 1.1&#39;, &#39;&gt;= 1.1.4&#39;</pre>    
 
 <a id="bindir"> </a>
+
 ## bindir
 
 <p>The path in the gem for executable scripts.  Usually &#39;bin&#39;</p>
@@ -323,12 +336,14 @@ activated when a gem is required.</p>
 <pre>spec.bindir = &#39;bin&#39;</pre>    
 
 <a id="cert_chain"> </a>
+
 ## cert_chain
 
 <p>The certificate chain used to sign this gem.  See Gem::Security for
 details.</p>    
 
 <a id="description"> </a>
+
 ## description
 
 <p>A long description of this gem</p>
@@ -345,6 +360,7 @@ examples or formatting.</p>
 EOF</pre>    
 
 <a id="email"> </a>
+
 ## email
 
 <p>A contact email address (or addresses) for this gem</p>
@@ -355,6 +371,7 @@ EOF</pre>
 spec.email = [&#39;jack@example.com&#39;, &#39;jill@example.com&#39;]</pre>    
 
 <a id="executables"> </a>
+
 ## executables
 
 <p>Executables included in the gem.</p>
@@ -372,6 +389,7 @@ languages or compiled binaries.</p>
 <pre>spec.executables &lt;&lt; &#39;rake&#39;</pre>    
 
 <a id="extensions"> </a>
+
 ## extensions
 
 <p>Extensions to build when installing the gem, specifically the paths to
@@ -387,6 +405,7 @@ whatever) code to be compiled on the user’s machine.</p>
 <p>See Gem::Ext::Builder for information about writing extensions for gems.</p>    
 
 <a id="extra_rdoc_files"> </a>
+
 ## extra_rdoc_files
 
 <p>Extra files to add to RDoc such as README or doc/examples.txt</p>
@@ -401,6 +420,7 @@ a more complete set of documentation.</p>
 <pre>spec.extra_rdoc_files = [&#39;README&#39;, &#39;doc/user-guide.txt&#39;]</pre>    
 
 <a id="homepage"> </a>
+
 ## homepage
 
 <p>The URL of this gem&#39;s home page</p>
@@ -410,6 +430,7 @@ a more complete set of documentation.</p>
 <pre>spec.homepage = &#39;http://rake.rubyforge.org&#39;</pre>    
 
 <a id="metadata"> </a>
+
 ## metadata
 
 <p>:attr_accessor: metadata</p>
@@ -436,6 +457,7 @@ bytes</p>
 </pre>    
 
 <a id="post_install_message"> </a>
+
 ## post_install_message
 
 <p>A message that gets displayed after the gem is installed.</p>
@@ -445,6 +467,7 @@ bytes</p>
 <pre>spec.post_install_message = &quot;Thanks for installing!&quot;</pre>    
 
 <a id="rdoc_options"> </a>
+
 ## rdoc_options
 
 <p>Specifies the rdoc options to be used when generating API documentation.</p>
@@ -456,11 +479,13 @@ bytes</p>
   &#39;--line-numbers&#39;</pre>    
 
 <a id="required_ruby_version"> </a>
+
 ## required_ruby_version
 
 <p>The version of Ruby required by this gem</p>    
 
 <a id="required_ruby_version="> </a>
+
 ## required_ruby_version=(`req`)
 
 <p>The version of Ruby required by this gem.  The ruby version can be
@@ -479,16 +504,19 @@ spec.required_ruby_version = &#39;&gt;= 1.8.6&#39;
 spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>    
 
 <a id="required_rubygems_version"> </a>
+
 ## required_rubygems_version
 
 <p>The RubyGems version required by this gem</p>    
 
 <a id="required_rubygems_version="> </a>
+
 ## required_rubygems_version=(`req`)
 
 <p>The RubyGems version required by this gem</p>    
 
 <a id="requirements"> </a>
+
 ## requirements
 
 <p>Lists the external (to RubyGems) requirements that must be met for this gem
@@ -500,6 +528,7 @@ to work.  It&#39;s simply information for the user.</p>
 spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>    
 
 <a id="signing_key"> </a>
+
 ## signing_key
 
 <p>The key used to sign this gem.  See Gem::Security for details.</p>    
