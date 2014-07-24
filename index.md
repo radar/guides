@@ -52,7 +52,7 @@ Learn about the data in each gem package and how you can configure it.
 
 In depth coverage of each `gem` command.
 
-[RubyGems API](http://rubydoc.info/gems/rubygems-update)
+[RubyGems API](http://docs.seattlerb.org/rubygems)
 ---------------
 
 The API documentation for the RubyGems library.
