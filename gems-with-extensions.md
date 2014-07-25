@@ -12,7 +12,7 @@ wraps [libxml2 and libxslt](http://www.xmlsoft.org),
 [pg](https://rubygems.org/gems/pg) which is an interface to the [PostgreSQL
 database](http://www.postgresql.org) and the
 [mysql](https://rubygems.org/gems/mysql) and
-[mysql2](https://rubygems.org/gems/mysql) gems which provide an interface to
+[mysql2](https://rubygems.org/gems/mysql2) gems which provide an interface to
 the [MySQL database](http://www.mysql.com).
 
 Creating a gem that uses an extension involves several steps.  This guide will
