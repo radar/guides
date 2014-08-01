@@ -205,11 +205,11 @@ Feature: Food
   I want to be as objective as possible
 
   Scenario: Broccoli is gross
-    When I run "foodie portray broccoli"
+    When I run `foodie portray broccoli`
     Then the output should contain "Gross!"
 
   Scenario: Tomato, or Tomato?
-    When I run "foodie pluralize --word Tomato"
+    When I run `foodie pluralize --word Tomato`
     Then the output should contain "Tomatoes"
 ```
 
@@ -379,7 +379,7 @@ Feature: Generating things
   I want foodie to hold my hand, tightly
 
   Scenario: Recipes
-    When I run "foodie recipe dinner steak"
+    When I run `foodie recipe dinner steak`
     Then the following files should exist:
       | dinner/steak.txt |
     Then the file "dinner/steak.txt" should contain:
