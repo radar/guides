@@ -379,7 +379,7 @@ Now you can run `rake test` or simply just `rake` to run tests. Woot! Here's
 a basic test file for hola:
 
     % cat test/test_hola.rb
-    require 'test/unit'
+    require 'minitest/autorun'
     require 'hola'
 
     class HolaTest < Minitest::Test
