@@ -382,7 +382,7 @@ a basic test file for hola:
     require 'test/unit'
     require 'hola'
 
-    class HolaTest < Test::Unit::TestCase
+    class HolaTest < Minitest::Test
       def test_english_hello
         assert_equal "hello world",
           Hola.hi("english")
@@ -413,7 +413,7 @@ Finally, to run the tests:
     Test run options: --seed 15331
 
 It's green! Well, depending on your shell colors. For more great examples, the best thing you can do is hunt around
-[GitHub](https://github.com/languages/Ruby) and read some code.
+[GitHub](https://github.com/search?utf8=%E2%9C%93&q=stars%3A%3E100+forks%3A%3E10&type=Repositories&ref=advsearch&l=Ruby) and read some code.
 
 <a id="documenting-code"> </a>
 Documenting your code
