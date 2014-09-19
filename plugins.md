@@ -9,8 +9,10 @@ As of RubyGems 1.3.2, RubyGems will load plugins installed in gems or $LOAD\_PAT
 
 The following list of RubyGems plugins is probably not exhaustive. If you know of plugins that we missed, feel free to update this page.
 
+* [executable-hooks](#executablehooks)
 * [gem-browse](#gembrowse)
 * [gem-ctags](#gemctags)
+* [gem-empty](#gemempty)
 * [gem_info](#geminfo)
 * [gem-init](#geminit)
 * [gem-man](#gemman)
@@ -18,6 +20,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [gem-orphan](#gemorphan)
 * [gem-patch](#gempatch)
 * [gem-toolbox](#gemtoolbox)
+* [gem-wrappers](#gemwrappers)
 * [graph](#graph)
 * [maven-gem](#mavengem)
 * [open-gem](#opengem)
@@ -28,6 +31,19 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [rubygems-sandbox](#rubygemssandbox)
 * [rubygems_snapshot](#rubygemssnapshot)
 * [rubygems-tasks](#rubygemstasks)
+
+<a id="executablehooks"> </a>
+## executable-hooks
+[https://github.com/mpapis/executable-hooks](https://github.com/mpapis/executable-hooks)
+
+Extends rubygems to support executables plugins.
+
+In gem lib dir create rubygems_executable_plugin.rb:
+
+    Gem.execute do |original_file|
+      warn("Executing: #{original_file}")
+    end
+
 
 <a id="gembrowse"> </a>
 ## gem-browse
@@ -40,6 +56,13 @@ Adds four commands:
 - `gem open` opens a  gem  by name in your editor
 - `gem clone` clones a gem from GitHub
 - `gem browse` opens a gem's homepage in your browser
+
+<a id="gemempty"> </a>
+## gem-empty
+
+[https://github.com/rvm/gem-empty](https://github.com/rvm/gem-empty)
+
+Adds command `gem empty` to remove all gems from current `GEM_HOME`.
 
 <a id="gemctags"> </a>
 ## gem-ctags
@@ -106,6 +129,19 @@ Adds six commands:
 - `gem history` - locates and display's a gem's changelog
 - `gem doc` - Browse a gem's documentation in your default browser
 - `gem visit` - Open a gem's homepage in your default browser
+
+<a id="gemwrappers"> </a>
+## gem-wrappers
+
+[https://github.com/rvm/gem-wrappers](https://github.com/rvm/gem-wrappers)
+
+Create gem wrappers for easy use of gems in cron and other system locations.
+By default wrappers are installed when a gem is installed.
+
+Adds this commands:
+
+- `gem wrappers regenerate` - force rebuilding wrappers for all gem executables
+- `gem wrappers` - show current configuration
 
 <a id="graph"> </a>
 ## graph
