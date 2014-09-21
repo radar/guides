@@ -58,6 +58,16 @@ rails g model oauth/application \
 
 Rails will give this model a bad name (in a literal sense), calling it `Oauth::Application`. We'll just have to tolerate this for now, as it's too much work to call it by its proper name, `OAuth::Application`.
 
+We should add some validations to this model before we do much else:
+
+```ruby
+  validates :name, presence: true
+  validates :owner, presence: true
+  validates :redirect_uri, presence: true
+```
+
+There's no real point in applications registering without these attributes. The `name` and `owner` attributes are for identifying purposes; a user wants to know who they're granting permission to. The `redirect_uri` is ultimately important as well, as that's the location where our application redirects the user after they allow or refuse an application authorization to their devices. Let's now continue adding the application registration feature.
+
 In order for OAuth applications to register in our application, we're going to need a form for them to do that. Because we're diligent about our coding best practices, we're going to write a test.
 
 **spec/features/oauth/applications_spec.rb**
@@ -74,8 +84,11 @@ RSpec.describe "OAuth applications" do
     click_button "Register"
     expect(page).to have_content("Your application has been registered successfully.")
     application = OAuth::Application.first
-    expect("#application_client_id").to eq(application.client_id)
-    expect("#application_client_secret").to eq(application.client_secret)
+    application_client_id = find("#application_client_id").text
+    expect(application_client_id).to eq(application.client_id)
+
+    application_client_secret = find("#application_client_secret").text
+    expect(application_client_secret).to eq(application.client_secret)
   end
 end
 ```
@@ -138,11 +151,138 @@ Next, the `new` template:
 <% end %>
 ```
 
+This form asks the third-party application to provide its name and its owner's name so we can identify it on the authorize screen. The `redirect_uri` field is so that after the authorization process has been complete, we can make a new request to that URL to inform the third-party application of a result.
 
-# TODOs without homes:
+This form is going to need somewhere to submit to, so let's add a `create` action to the controller:
 
-* Add validations to OAuth::Application model
-* Validate redirect_uris are absolute
+**app/controllers/oauth/applications_controller.rb**
+
+```ruby
+class Oauth::ApplicationsController < ApplicationController
+  def new
+    @application = Oauth::Application.new
+  end
+
+  def create
+    @application = Oauth::Application.new(params[:application])
+    if @application.save
+      flash[:success] = 'Your application has been registered successfully.'
+      redirect_to oauth_application_path(@application)
+    end
+  end
+end
+```
+
+The `redirect_to` in the `create` action is going to go to a `show` action, which we'll need to add to our controller:
+
+**app/controllers/oauth/applications_controller.rb**
+
+```ruby
+def show
+  @application = Oauth::Application.find(params[:id])
+end
+```
+
+This action is going to need a template too. We know from our test that this page is going to need an element called `#application_client_id` with an automatically generated `client_id` in it, and another one called `#application_client_secret` with the automatically generated `client_secret` attribute in it. These attributes are going to be unique to this application and they'll be used when the application sends a user to our authorization endpoint. With that in mind, we'll create a basic form of our template:
+
+**app/views/oauth/applications/show.html.erb**
+
+```erb
+<h2><%= @application.name %></h2>
+
+<dl>
+  <dt>Client ID</dt>
+  <dd id='application_client_id'><%= @application.client_id %></dd>
+  <dt>Client Secret</dt>
+  <dd id='application_client_secret'><%= @application.client_secret %></dd>
+</dl>
+```
+
+When we run this test again, we'll see this:
+
+```
+Failure/Error: expect(application_client_id).to eq(application.client_id)
+
+  expected: nil
+       got: ""
+
+  (compared using ==)
+```
+
+The `client_id` that we're supposed to be generating for the third-party application isn't currently being generated, so this part of our test is failing. The part that checks for the `client_secret` attribute will fail the same way too, so while we're fixing up the `client_id`, we'll fix up the `client_secret` too.
+
+To generate these two attributes, we'll use a `before_create callback in our `Oauth::Application` model. Before we do that, we'll write some tests to ensure that these callbacks are working.
+
+**spec/models/oauth/application_spec.rb**
+
+```ruby
+require 'rails_helper'
+
+RSpec.describe Oauth::Application do
+  context "a created object" do
+    let(:application) { Oauth::Application.create }
+    it "has a client_id" do
+      expect(application.client_id).to match(/[a-f\d]{32}/)
+    end
+
+    it "has a client_secret" do
+      expect(application.client_secret).to match(/[a-f\d]{64}/)
+    end
+  end
+end
+```
+
+With these tests, we're checking that the `client_id` is a 32-character hexadecimal string and the `client_secret` is a 64-character hexadecimal string. When we run these tests with `bundle exec rspec spec/models/oauth/application_spec.rb`, they'll fail:
+
+```
+1) Oauth::Application a created object has a client_id
+   Failure/Error: expect(application.client_id).to match(/[a-f\d]{32}/)
+     expected nil to match /[a-f\d]{32}/
+   # ./spec/models/oauth/application_spec.rb:7:in `block (3 levels) in <top (required)>'
+
+2) Oauth::Application a created object has a client_secret
+   Failure/Error: expect(application.client_secret).to match(/[a-f\d]{64}/)
+     expected nil to match /[a-f\d]{64}/
+   # ./spec/models/oauth/application_spec.rb:11:in `block (3 levels) in <top (required)>'
+```
+
+To generate these, we'll use a callback in the `Oauth::Application` model:
+
+**app/models/oauth/application.rb**
+
+```ruby
+class Oauth::Application < ActiveRecord::Base
+  before_create :generate_client_tokens
+
+  private
+
+    def generate_client_tokens
+      self.client_id = SecureRandom.hex(16)
+      self.client_secret = SecureRandom.hex(32)
+    end
+end
+```
+
+The `SecureRandom.hex` method will generate a hexadecimal string such as `eba490c282a8673036892052563518d9` when asked for 16 bytes, or `1e6607f94afad6c558ffd6270b7db5ee2896a7c24b810fef5c81ce54b04c2100` when asked for 32 bytes. If you run this in an `irb` session, you'll see different results (almost) every time:
+
+```ruby
+require 'securerandom'
+SecureRandom.hex(16)
+```
+
+By using this mehtod, we can be sure to get a unique `client_id` and `client_secret` for each `Oauth::Application` record within our application. When we run these model tests again, they'll pass:
+
+```
+2 examples, 0 failures
+```
+
+Now that we've validated that `client_id` and `client_secret` are being generated, let's go back to our feature spec. Does that work? Let's run it again and find out.
+
+```
+1 example, 0 failures
+```
+
+It certainly does. This means that third-party applications can now register with us and begin using our application as an OAuth provider. The next step is to add our authorization endpoint so that those applications can begin the OAuth flow.
 
 ## Authorize endpoint
 
@@ -154,3 +294,8 @@ Next, the `new` template:
 ### 4.1.1
 ### 4.2.1
 
+
+
+# TODOs without homes:
+
+* Validate redirect_uris are absolute
