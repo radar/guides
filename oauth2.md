@@ -286,6 +286,159 @@ It certainly does. This means that third-party applications can now register wit
 
 ## Authorize endpoint
 
+The authorize endpoint serves a single purpose: to provide a screen to the user asking if they want to authorize an application to access things on their behalf. When it's done, it will look like this.
+
+TODO: Screenshot.
+
+The [relevant part of RFC 6749 is Section 3.1](http://tools.ietf.org/html/rfc6749#section-3.1). The first thing this says is:
+
+> The authorization endpoint is used to interact with the resource
+  owner and obtain an authorization grant.  The authorization server
+  MUST first verify the identity of the resource owner.  The way in
+  which the authorization server authenticates the resource owner
+  (e.g., username and password login, session cookies) is beyond the
+  scope of this specification.
+
+The other paragraphs in that section are worth keeping in mind too.
+
+An *authorization grant* can be one of two things: an *auth token* or an *access token*. This depends on the `response_type` parameter requested by the third-party application, described in [Section 3.1.1](http://tools.ietf.org/html/rfc6749#section-3.1.1). The two values supported by default of `response_type` are `code` and `token`. If we use `code`, we'll get an auth token, and if we use `token` we'll get an access token.
+
+Before we can do that, we "MUST first verify the identity of the resource owner". If we don't do this, then we don't know who the auth token or access token belongs to, and that's going to make things hard when we attempt to use the access token to authenticate a user on our API endpoint.  We can "verify the identity of the resource owner" by requiring a user to be signed in before they can begin the OAuth process. 
+
+After we have done that, we'll begin adding the authorization endpoint to our application, adding support for both response types (`code` and `token`), and all the associated fun that comes with that.
+
+### Requiring a user to sign in
+
+Before a user can use our OAuth endpoint, they must be signed in. When a user has signed in, we'll be able to link an OAuth auth token -- and later an OAuth access token -- to their record in the database. This linking can be used to know which user is accessing our API.
+
+To make sure that being signed in is a definite requirement, we'll write a couple of new tests:
+
+**spec/features/oauth/authorize_spec.rb**
+
+```ruby
+require 'rails_helper'
+
+RSpec.describe "OAuth authorization" do
+  include Warden::Test::Helpers
+
+  let(:user) do
+    User.create!(
+      email: 'test@example.com',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+  end
+
+  context "when not signed in" do
+    it "prompts the user to sign in" do
+      visit oauth_authorize_url
+      expect(page.current_url).to eq(new_user_session_url)
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Log in'
+      expect(page.current_url).to eq(oauth_authorize_url)
+    end
+  end
+
+  context "when signed in" do
+    before do
+      login_as(user)
+    end
+
+    it "allows the user to proceed" do
+      visit oauth_authorize_url
+      expect(page.current_url).to eq(oauth_authorize_url)
+    end
+  end
+end
+```
+
+With both tests, we're visiting the `oauth_authorize_path`. This will be the path helper generated for the authorization endpoint in our application. The difference is that in the first test we're not signing in at all, whereas in the second test we're using `Warden::Test::Helpers#login_as` to sign in as a user. 
+
+In the first test, we should be redirected to the `new_user_session_url` and then be made to sign in. Once we're signed in, then we should be back on the `oauth_authorize_url`. In the second test, we are signed in, and so no redirection should take place.
+
+When we run this test with `bundle exec rspec spec/features/oauth/authorize_spec.rb`, we'll see that we're missing our `oauth_authorize_url` helper:
+
+```
+Failure/Error: visit oauth_authorize_url
+NameError:
+  undefined local variable or method `oauth_authorize_url' for ...
+```
+
+To define this path helper, we'll change the `namespace :oauth` block in our `config/routes.rb` file to this:
+
+**config/routes.rb**
+
+```ruby
+namespace :oauth do
+  resources :applications
+  get '/authorize', to: "endpoints#authorize", as: 'authorize'
+end
+```
+
+This new `get` call will define a new path at `/oauth/authorize` that will route to `Oauth::EndpointsController`'s `authorize` action. The path helper will be available as `oauth_authorize_[path|url]` because the route has been defined within the `:oauth` namespace.
+
+Let's generate this `Oauth::EndpointsController`:
+
+```
+rails g oauth/endpoints
+```
+
+We'll also need to define the `authorize` action within this controller too, with just a placeholder for now:
+
+**app/controllers/oauth/endpoints_controller.rb**
+
+```ruby
+class Oauth::EndpointsController < ApplicationController
+  def authorize
+    render text: 'TODO'
+  end
+end
+```
+
+This action doesn't need to do anything yet because our tests don't require it. When we re-run those tests, we'll see that our first test is failing, but the second one is passing:
+
+```
+Failure/Error: expect(page.current_url).to eq(new_user_session_url)
+
+  expected: "http://www.example.com/users/sign_in"
+       got: "http://www.example.com/oauth/authorize"
+
+  (compared using ==)
+# ./spec/features/oauth/authorize_spec.rb:17:in `block (3 levels) in <top (required)>'
+```
+
+Great, just like we've planned. The first test is now failing as it should because we're not yet redirecting users away from `Oauth::EndpointsController#authorize` if they're not first authenticated.
+
+To fix this test, we'll add a call to `authenticate_user!` from Devise as a `before_filter`:
+
+**app/controllers/oauth/endpoints_controller.rb**
+
+```ruby
+class Oauth::EndpointsController < ApplicationController
+  before_filter :authenticate_user!
+
+  def authorize
+    render text: 'TODO'
+  end
+end
+```
+
+By doing this, the controller will first check if the user is authenticated. If they aren't, then it will save the location of the current page to the session and redirect the user to the sign in page. Once the user has signed in, they will be redirected back to the saved page.
+
+Let's see if this is working now by running our tests again:
+
+```
+2 examples, 0 failures
+```
+
+Great! Our `Oauth::EndpointsController` is now requiring a user to be signed in before they can access the action within that controller. 
+
+Our next step is filling out this action to provide a form to the user, asking them to authorize the third-party application to access our API on the user's behalf.
+
+### Authorizing third-party applications
+
+
 ### http://tools.ietf.org/html/rfc6749#section-3.1
 ### http://tools.ietf.org/html/rfc6749#section-4.1
 
@@ -294,6 +447,9 @@ It certainly does. This means that third-party applications can now register wit
 ### 4.1.1
 ### 4.2.1
 
+## Refresh tokens
+
+## Authenticating with the API
 
 
 # TODOs without homes:
