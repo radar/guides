@@ -15,6 +15,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [gem-empty](#gemempty)
 * [gem_info](#geminfo)
 * [gem-init](#geminit)
+* [gem-compare](#gemcompare)
 * [gem-man](#gemman)
 * [gem-nice-install](#gemniceinstall)
 * [gem-orphan](#gemorphan)
@@ -84,6 +85,15 @@ Adds a `gem info` command with fuzzy matching on name and version. Designed for 
 [https://github.com/mwhuss/gem-init](https://github.com/mwhuss/gem-init)
 
 Adds `gem init` to create a barebones gem.
+
+<a id="gemcompare"> </a>
+## gem-compare
+
+[https://github.com/strzibny/gem-compare](https://github.com/strzibny/gem-compare)
+
+Adds `gem compare` command that can help you to track upstream changes in the released
+.gem files by comparing gemspec values, gemspec and Gemfile dependencies and files.
+
 
 <a id="gemman"> </a>
 ## gem-man
