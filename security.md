@@ -22,36 +22,39 @@ by the gem's author. Because of this, the security of gem code is a topic of
 active discussion within the Ruby community.
 
 RubyGems has had the ability to [cryptographically sign
-gems](http://docs.seattlerb.org/rubygems/Gem/Security.html) since version 0.8.11. This
-signing works by using the `gem cert` command to create a key pair, and then
-packaging signing data inside the gem itself. The `gem install` command
-optionally lets you set a security policy, and you can verify the signing key
-for a gem before you install it.
+gems](http://docs.seattlerb.org/rubygems/Gem/Security.html) since version
+0.8.11. This signing works by using the `gem cert` command to create a key
+pair, and then packaging signing data inside the gem itself. The `gem install`
+command optionally lets you set a security policy, and you can verify the
+signing key for a gem before you install it.
 
 However, this method of securing gems is not widely used. It requires a number
 of [manual steps on the part of the developer](#building_gems), and there is no
-well-established chain of trust for gem signing keys.  Discussion of new signing models such as
-X509 and OpenPGP is going on in the [rubygems-trust
+well-established chain of trust for gem signing keys.  Discussion of new
+signing models such as X509 and OpenPGP is going on in the [rubygems-trust
 wiki](https://github.com/rubygems-trust/rubygems.org/wiki/_pages), the
-[RubyGems-Developers list](https://groups.google.com/d/msg/rubygems-developers/lnnGTlfsuYo/TLDcJ2RPSDoJ) and
-in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve (or
-replace) the signing system so that it is easy for authors and transparent for
-users.
+[RubyGems-Developers
+list](https://groups.google.com/d/msg/rubygems-developers/lnnGTlfsuYo/TLDcJ2RPSDoJ)
+and in [IRC](irc://chat.freenode.net/#rubygems-trust). The goal is to improve
+(or replace) the signing system so that it is easy for authors and transparent
+for users.
 
 Using Gems
 -------
 
 Install with a trust policy.
 
-  * `gem install gemname -P HighSecurity`: All dependent gems must be signed and verified.
+  * `gem install gemname -P HighSecurity`: All dependent gems must be signed
+    and verified.
 
-  * `gem install gemname -P MediumSecurity`: All signed dependent gems must be verified.
+  * `gem install gemname -P MediumSecurity`: All signed dependent gems must be
+    verified.
 
-  * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only recognizes
-    the long `--trust-policy` flag, not the short `-P`.
+  * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only
+    recognizes the long `--trust-policy` flag, not the short `-P`.
 
-  * *Caveat*: Gem certificates are trusted globally, such that adding a cert.pem for one gem automatically trusts
-    all gems signed by that cert.
+  * *Caveat*: Gem certificates are trusted globally, such that adding a
+    cert.pem for one gem automatically trusts all gems signed by that cert.
 
 Verify the checksum, if available
 
@@ -124,9 +127,11 @@ Add cert paths to your gemspec
 
 -------
 
-### Not Recommended: OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
+### Not Recommended: OpenPGP signing is [not recommended due to lack of
+support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
 
-For details, see discussion [with Yorick Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).
+For details, see discussion [with Yorick
+Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).
 
 Reporting Security vulnerabilities
 -------
