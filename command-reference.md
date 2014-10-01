@@ -7,7 +7,7 @@ next: /rubygems-org-api
 
 What each `gem` command does, and how to use it.
 
-This reference was automatically generated from RubyGems version 2.4.1.
+This reference was automatically generated from RubyGems version 2.4.2.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -318,7 +318,7 @@ Show the dependencies of an installed gem
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -449,7 +449,7 @@ Download a gem and place it in the current directory
 
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *         -&#8203;-clear-sources            - Clear the gem sources
 
 ###   Common Options:
@@ -610,7 +610,7 @@ Install a gem into the local repository
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -732,7 +732,7 @@ Display local gems whose name matches REGEXP
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -920,7 +920,7 @@ Display all gems that need updates
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1125,7 +1125,7 @@ Query gem information in local or remote repositories
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1225,7 +1225,7 @@ Display remote gems whose name matches REGEXP
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1416,7 +1416,7 @@ Display gem specification (in yaml)
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
@@ -1636,7 +1636,7 @@ Update installed gems to the latest version
 *     -b, -&#8203;-both                     - Allow LOCAL and REMOTE operations
 *     -B, -&#8203;-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)
 *         -&#8203;-clear-sources            - Clear the gem sources
-*     -s, -&#8203;-source URL               - Add URL as a remote source for gems
+*     -s, -&#8203;-source URL               - Append URL to list of remote gem sources
 *     -p, -&#8203;-\[no-\]http-proxy \[URL\]    - Use HTTP proxy for remote operations
 
 ###   Common Options:
