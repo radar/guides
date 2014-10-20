@@ -1,11 +1,20 @@
 ---
 layout: default
 title: Gems with Extensions
+<<<<<<< HEAD
+=======
+url: /gems-with-extensions
+>>>>>>> Add redesign styles for guides
 previous: /make-your-own-gem
 next: /name-your-gem
 alias: /c-extensions
 ---
 
+<<<<<<< HEAD
+=======
+<em class="t-gray">Creating a gem that includes an extension that is built at install time.</em>
+
+>>>>>>> Add redesign styles for guides
 Many gems use extensions to wrap libraries that are written in C with a ruby
 wrapper.  Examples include [nokogiri](https://rubygems.org/gems/nokogiri) which
 wraps [libxml2 and libxslt](http://www.xmlsoft.org),
@@ -228,6 +237,7 @@ a gem with the name `<name>`:
 
 1. `ext/<name>` is the directory that contains the source files and
    `extconf.rb`
+<<<<<<< HEAD
 1. `ext/<name>/<name>.c` is the main source file (there may be others)
 1. `ext/<name>/<name>.c` contains a function `Init_<name>`.  (The name
    following `Init_` function must exactly match the name of the extension for
@@ -237,6 +247,17 @@ a gem with the name `<name>`:
 1. The gemspec sets `extensions = ['ext/<name>/extconf.rb']` and includes any
    of the necessary extension source files in the `files` list.
 1. `lib/<name>.rb` contains `require '<name>/<name>'` which loads the C
+=======
+2. `ext/<name>/<name>.c` is the main source file (there may be others)
+3. `ext/<name>/<name>.c` contains a function `Init_<name>`.  (The name
+   following `Init_` function must exactly match the name of the extension for
+   it to be loadable by require.)
+4. `ext/<name>/extconf.rb` calls `create_makefile('<name>/<name>')` only when
+   the all the pieces needed to compile the extension are present.
+5. The gemspec sets `extensions = ['ext/<name>/extconf.rb']` and includes any
+   of the necessary extension source files in the `files` list.
+6. `lib/<name>.rb` contains `require '<name>/<name>'` which loads the C
+>>>>>>> Add redesign styles for guides
    extension
 
 Further Reading

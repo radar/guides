@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Publishing your gem - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">Start with an idea, end with a distributable package of Ruby code.</em></p>
+
+<p>Ways to share your gem code with other users.</p>
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#sharing-source-code">Sharing Source Code</a></li>
+  <li><a href="#serving-your-own-gems">Serving Your Own Gems</a></li>
+  <li><a href="#publishing-to-rubygemsorg">Publishing to RubyGems.org</a></li>
+  <li><a href="#push-permissions-on-rubygemsorg">Push Permissions on RubyGems.org</a></li>
+  <li><a href="#gem-security">Gem Security</a></li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Now that you’ve <a href="/make-your-own-gem">created your gem</a>, you’re probably ready
+to share it.  While it is perfectly reasonable to create private gems solely to
+organize the code in large private projects, it’s more common to build gems so
+that they can be used by multiple projects.  This guide discusses the various
+ways that you can share your gem with the world.</p>
+
+<h2 id="sharing-source-code">Sharing Source Code</h2>
+
+<p>The simplest way (from the author’s perspective) to share a gem for other
+developers’ use is to distribute it in source code form. If you place the full
+source code for your gem on a public git repository (often, though not always,
+this means sharing it via <a href="https://github.com">GitHub</a>), then other users can
+install it with <a href="http://bundler.io/git.html">Bundler’s git functionality</a>.</p>
+
+<p>For example, you can install the latest code for the wicked_pdf gem in a
+project by including this line in your Gemfile:</p>
+
+<pre><code>gem "wicked_pdf", :git =&gt; "git://github.com/mileszs/wicked_pdf.git"
+</code></pre>
+
+<blockquote>
+  <p>Installing a gem directly from a git repository is a feature of Bundler, not
+a feature of RubyGems. Gems installed this way will not show up when you run
+<code>gem list</code>.</p>
+</blockquote>
+
+<h2 id="serving-your-own-gems">Serving Your Own Gems</h2>
+
+<p>If you want to control who can install a gem, or directly track the activity
+surrounding a gem, then you’ll want to set up a private gem server. You can
+<a href="/run-your-own-gem-server">set up your own gem server</a> or use a commercial
+service such as <a href="http://www.gemfury.com/">Gemfury</a>.</p>
+
+<p>RubyGems 2.2.0 and newer support the <code>allowed_push_host</code> metadata value to
+restrict gem pushes to a single host.  If you are publishing private gems you
+should set this value to prevent accidental pushes to rubygems.org:</p>
+
+<pre><code>Gem::Specification.new 'my_gem', '1.0' do |s|
+  # ...
+  s.metadata['allowed_push_host'] = 'https://gems.my-company.example'
+end
+</code></pre>
+
+<p>See the <a href="/resources">Resources</a> guide for an up-to-date listing of options for
+private gem servers.</p>
+
+<h2 id="publishing-to-rubygemsorg">Publishing to RubyGems.org</h2>
+
+<p>The simplest way to distribute a gem for public consumption is to use
+<a href="https://rubygems.org/">RubyGems.org</a>.  Gems that are published to RubyGems.org
+can be installed via the <code>gem install</code> command or through the use of tools such
+as Isolate or Bundler.</p>
+
+<p>To begin, you’ll need to create an account on RubyGems.org. Visit the <a href="https://rubygems.org/users/new">sign
+up</a> page and supply an email address that you
+control, a handle (username) and a password.</p>
+
+<p>After creating the account, use your email and password when pushing the gem.
+(RubyGems saves the credentials in ~/.gem/credentials for you so you only need
+to log in once.)</p>
+
+<p>To publish version 0.1.0 of a new gem named ‘squid-utils’:</p>
+
+<pre><code>$ gem push squid-utils-0.1.0.gem
+Enter your RubyGems.org credentials.
+Don't have an account yet? Create one at https://rubygems.org/sign_up
+   Email:   gem_author@example
+Password:
+Signed in.
+Pushing gem to RubyGems.org...
+Successfully registered gem: squid-utils (0.1.0)
+</code></pre>
+
+<p>Congratulations! Your new gem is now ready for any ruby user in the world to
+install!</p>
+
+<h2 id="push-permissions-on-rubygemsorg">Push Permissions on RubyGems.org</h2>
+
+<p>If you have multiple maintainers for your gem you can give your fellow
+maintainers permission to push the gem to rubygems.org through the <a href="/command-reference/#gem_owner">gem
+owner command</a>.</p>
+
+<h2 id="gem-security">Gem Security</h2>
+
+<p>See <a href="/security">Security</a> page.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/name-your-gem">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/security">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

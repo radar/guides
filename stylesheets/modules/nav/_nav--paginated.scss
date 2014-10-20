@@ -1,0 +1,59 @@
+.paginated-nav-links {
+  margin-top: 90px;
+  padding-top: 50px;
+  position: relative;
+  border-top: 1px solid $gray;
+  overflow: auto;
+}
+
+.paginated-nav-link--prev, .paginated-nav-link--numbered, .paginated-nav-link--next {
+  color: $gray;
+  @include transition-duration(.25s);
+  @include transition-property(color);
+  &:focus, &:hover, &.is-active {
+    color: $black;
+  }
+  &:focus {
+    outline: none;
+  }
+  span {
+    position: relative;
+    top: -1px;
+    text-transform: uppercase;
+  }
+}
+
+.paginated-nav-link--prev {
+  float: left;
+  span {
+    margin-left: 5px;
+  }
+}
+
+.paginated-nav-link--next {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  &:before, span {
+    float: right;
+  }
+  span {
+    margin-right: 7px;
+  }
+}
+
+.paginated-nav-links--numbered-wrap {
+  padding-top: 50px;
+  position: relative;
+}
+
+.paginated-nav-links--numbered {
+  text-align: center;
+}
+
+.paginated-nav-link--numbered {
+  margin: {
+    right: 8px;
+    left: 8px;
+  }
+}

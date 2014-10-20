@@ -1,10 +1,19 @@
 ---
 layout: default
 title: RubyGems Basics
+<<<<<<< HEAD
+=======
+url: /rubygems-basics
+>>>>>>> Add redesign styles for guides
 previous: /
 next: /what-is-a-gem
 ---
 
+<<<<<<< HEAD
+=======
+<em class="t-gray">Use of common RubyGems commands</em>
+
+>>>>>>> Add redesign styles for guides
 The `gem` command allows you to interact with RubyGems.
 
 Ruby 1.9 and newer ships with RubyGems built-in but you may need to upgrade for

@@ -1,0 +1,75 @@
+.project__name {
+  font: {
+    weight: 300;
+    size: 30px;
+  }
+  &:not(.is-first) {
+    margin-top: 48px;
+    padding-top: 48px;
+    display: block;
+    border-top: 1px solid lighten($gray, 16%);
+  }
+}
+
+.project__desc {
+  margin-top: 25px;
+}
+
+.project__links {
+  margin: {
+    top: 16px;
+    bottom: 25px;
+  }
+}
+
+.project__link {
+  font: {
+    weight: 400;
+    size: 15px;
+  }
+  text-transform: uppercase;
+  &:not(:last-child) {
+    &:after {
+      @extend %bullet;
+      margin-left: 15px;
+    }
+  }
+}
+
+.project__members {
+  margin-top: 25px;
+}
+
+.project__member {
+  color: $black;
+  @include transition-duration(.25s);
+  @include transition-property(color);
+  &:hover {
+    color: $red;
+  }
+}
+
+// TODO this appears in projects and help staff
+.project__member--v {
+  @extend .project__member;
+  display: table;
+  overflow: auto;
+  &:not(:first-child) {
+    margin-top: 12px;
+  }
+  .project__member__image {
+    float: left;
+  }
+  .project__member__name {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.project__member__image {
+  margin-right: 12px;
+  height: 32px;
+  width: 32px;
+  border-radius: 16px;
+  border-radius: 50%;
+}

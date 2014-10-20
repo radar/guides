@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Contributing to RubyGems - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">How you can help make RubyGems and the surrounding ecosystem better.</em></p>
+
+<p>Looking to contribute to a RubyGems project? You’ve come to the right place!
+There are many development efforts going on right now, and they could use
+your help. Just follow the links below to get started contributing or to contact the
+project maintainers.</p>
+
+<ul>
+  <li><a href="#core-projects">Core Projects</a></li>
+  <li><a href="#ecosystem-projects">Ecosystem Projects</a></li>
+  <li><a href="#add-your-own-idea">Add Your Own Idea</a></li>
+</ul>
+
+<h2 id="core-projects">Core Projects</h2>
+
+<p>These projects are under the wing of the core <a href="https://github.com/rubygems/">RubyGems team</a>.</p>
+
+<p><a class="project__name is-first" href="https://github.com/rubygems/rubygems">RubyGems</a></p>
+
+<p>Ruby’s premier packaging system. Bundled with Ruby 1.9+ and available for Ruby 1.8. Any time you run
+<code>gem</code> at the command line, you’re using this project.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems/issues">Issues</a>
+  <a class="project__link t-link" href="http://rubyforge.org/mailman/listinfo/rubygems-developers">Mailing List</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/drbrain">
+    <img src="https://secure.gravatar.com/avatar/58479f76374a3ba3c69b9804163f39f4?s=32" title="Eric Hodel" />
+  </a>
+  <a href="https://github.com/zenspider">
+    <img src="https://secure.gravatar.com/avatar/16c4b19d8670085a428787f8b2438223?s=32" title="Ryan Davis" />
+  </a>
+  <a href="https://github.com/jbarnette">
+    <img src="https://secure.gravatar.com/avatar/c237cf537a06b60921c97804679e3b15?s=32" title="John Barnette" />
+  </a>
+  <a href="https://github.com/evanphx">
+    <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix" />
+  </a>
+</p>
+
+<p><em class="t-gray t-uppercase">Code Guidelines:</em></p>
+
+<ul>
+  <li>New features should be coupled with tests.</li>
+  <li>Ensure that your code blends well with ours (eg, no trailing whitespace, match indentation and coding style).</li>
+  <li>Don’t modify the history file or version number.</li>
+  <li>If you have any questions, just ask us on IRC in #rubygems or file <a href="https://github.com/rubygems/rubygems/issues">an issue</a>.</li>
+</ul>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems.org">RubyGems.org</a></p>
+
+<p>The Ruby community’s gem hosting service. Provides a better API for accessing,
+deploying, and managing gems along with clear and accessible project pages.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems.org/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/gemcutter">Mailing List</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/qrush">
+    <img src="https://secure.gravatar.com/avatar/eb8975af8e49e19e3dd6b6b84a542e26?s=32" title="Nick Quaranto" />
+  </a>
+  <a href="https://github.com/sferik">
+    <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober" />
+  </a>
+  <a href="https://github.com/cldwalker">
+    <img src="https://secure.gravatar.com/avatar/8f0660cdc9f5d91c7d97456f8f0be8c7?s=32" title="Gabriel Horner" />
+  </a>
+  <a href="https://github.com/cmeiklejohn">
+    <img src="https://secure.gravatar.com/avatar/3e09fee7b359be847ed5fa48f524a3d3?s=32" title="Christopher Meiklejohn" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems-aws">RubyGems AWS</a></p>
+
+<p>Chef cookbooks and bootstrap scripts to configure and manage Rubygems.org on AWS.
+Includes Vagrant configuration for local testing.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-aws/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/skottler">
+    <img src="https://secure.gravatar.com/avatar/ee9182ab4e45d446dfa05c20c341371f?s=32" title="Sam Kottler" />
+  </a>
+  <a href="https://github.com/dwradcliffe">
+    <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe" />
+  </a>
+  <a href="https://github.com/vertis">
+    <img src="https://secure.gravatar.com/avatar/b2a9e57c2a8ed757833b4c787b6c51d5?s=32" title="Luke Chadwick" />
+  </a>
+  <a href="https://github.com/evanphx">
+    <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems-status">RubyGems Status</a></p>
+
+<p>A simple Rails app to show the status of the rubygems.org infrastructure.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://status.rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-status/issues">Issues</a>
+</div>
+
+<p><a class="project__name" href="https://github.com/rubygems/guides">RubyGems Guides</a></p>
+
+<p>The central home for RubyGems documentation, including tutorials and reference material.
+User-contributed guides are more than welcome and encouraged!</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://guides.rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/guides/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/qrush">
+    <img src="https://secure.gravatar.com/avatar/eb8975af8e49e19e3dd6b6b84a542e26?s=32" title="Nick Quaranto" />
+  </a>
+  <a href="https://github.com/sandal">
+    <img src="https://secure.gravatar.com/avatar/31e038e4e9330f6c75ccfd1fca8010ee?s=32" title="Gregory Brown" />
+  </a>
+  <a href="https://github.com/ffmike">
+    <img src="https://secure.gravatar.com/avatar/a54251b745d59735ea5e9f0656a5d58d?s=32" title="Mike Gunderloy" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems-test">RubyGems Testers</a></p>
+
+<p>A community effort to document the test results for various gems,
+on various machine architectures.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://test.rubygems.org/">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-test/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/bluepojo">
+    <img src="https://secure.gravatar.com/avatar/4b1e87301a43b027903617a98d61831a?s=32" title="Josiah Kiehl" />
+  </a>
+  <a href="https://github.com/erikh">
+    <img src="https://secure.gravatar.com/avatar/1b641a79b2717f2d582ad455b40d5b89?s=32" title="Erik Hollensbe" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/gemwhisperer">Gem Whisperer</a></p>
+
+<p>An example of how to use <a href="http://guides.rubygems.org/rubygems-org-api/#webhook">RubyGems.org’s
+webhooks</a> to listen to every gem being
+pushed. Currently powers <a href="http://m.rubygems.org">m.rubygems.org</a> and
+<a href="http://twitter.com/rubygems">@rubygems</a>.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://m.rubygems.org/">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/gemwhisperer/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/qrush">
+    <img src="https://secure.gravatar.com/avatar/eb8975af8e49e19e3dd6b6b84a542e26?s=32" title="Nick Quaranto" />
+  </a>
+  <a href="https://github.com/laserlemon">
+    <img src="https://secure.gravatar.com/avatar/0887991a8846577a6aa85433d6ab3ea2?s=32" title="Steve Richert" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/gems">RubyGems.org API Library</a></p>
+
+<p>A Ruby implementation of the various API endpoints available on RubyGems.org.
+If you’re writing a service in Ruby to interact with gems available to the
+community, check this out!</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/gems/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/sferik">
+    <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/search">RubyGems Search</a></p>
+
+<p>A souped-up implementation of search on RubyGems.org, using Solr. Still not
+100% done yet, but hopefully will replace the search box on RubyGems.org soon!</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/search/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/nz">
+    <img src="https://secure.gravatar.com/avatar/5198f305281b34927f936ba77cffcbf6?s=32" title="Nick Zadrozny" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0">RubyGems Mirror</a></p>
+
+<p>The current state of mirroring RubyGems is frankly embarrassing. We need
+RubyGems to be highly available all over the world, no more excuses! Discussion
+is going on in the <a href="https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0">rubygems-mirror
+wiki</a> on how
+to improve it.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-mirror/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/raggi">
+    <img src="https://secure.gravatar.com/avatar/b19b02a49b433c9e2e6e6c43785d2bfb?s=32" title="James Tucker" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/rubygems/rubygems-verification">RubyGems Verification</a></p>
+
+<p>A collection of tools and data used for verifying the integrity of gems on rubygems.org based on checksums
+collected by third parties.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-verification/issues">Issues</a>
+</div>
+
+<h2 id="ecosystem-projects">Ecosystem Projects</h2>
+
+<p>These projects are outside of the RubyGems core, but work closely with RubyGems to improve the gem experience for everyone.</p>
+
+<p><a class="project__name is-first" href="https://github.com/bundler/bundler">Bundler</a></p>
+
+<p>Bundler manages an application’s dependencies through its entire life across
+many machines systematically and repeatably.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://bundler.io">Site</a>
+  <a class="project__link t-link" href="https://github.com/bundler/bundler/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/ruby-bundler">Mailing List</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/indirect">
+    <img src="https://secure.gravatar.com/avatar/fb389f1e8b98d5d03be29e9dd309b3be?s=32" title="Andre Arko" />
+  </a>
+  <a href="https://github.com/hone">
+    <img src="https://secure.gravatar.com/avatar/efb7c66871043330ce1310a9bdd0aaf6?s=32" title="Terence Lee" />
+  </a>
+  <a href="https://github.com/wycats">
+    <img src="https://secure.gravatar.com/avatar/428167a3ec72235ba971162924492609?s=32" title="Yehuda Katz" />
+  </a>
+  <a href="https://github.com/carllerche">
+    <img src="https://secure.gravatar.com/avatar/da5274b27cc6c0f505495bf5d504575d?s=32" title="Carl Lerche" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/jbarnette/isolate">Isolate</a></p>
+
+<p>A simple gem sandbox that makes sure your application has the exact gem
+versions you require. It does not perform dependency resolution like Bundler.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/jbarnette/isolate/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/jbarnette">
+    <img src="https://secure.gravatar.com/avatar/c237cf537a06b60921c97804679e3b15?s=32" title="John Barnette" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/lsegal/rubydoc.info">RubyDoc.info</a></p>
+
+<p>A fantastic provider of <a href="http://yardoc.org">YARD</a> documentation for every
+RubyGem available. Push a gem, and you get docs created instantly!
+RubyGems.org links to this site and it uses <a href="http://guides.rubygems.org/rubygems-org-api/#webhook">RubyGems.org’s
+webhooks</a> as well.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="http://rubydoc.info">Site</a>
+  <a class="project__link t-link" href="https://github.com/lsegal/rubydoc.info/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/yardoc">Mailing List</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/indirect">
+    <img src="https://secure.gravatar.com/avatar/fb389f1e8b98d5d03be29e9dd309b3be?s=32" title="Andre Arko" />
+  </a>
+  <a href="https://github.com/hone">
+    <img src="https://secure.gravatar.com/avatar/efb7c66871043330ce1310a9bdd0aaf6?s=32" title="Terence Lee" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/copiousfreetime/stickler">Stickler</a></p>
+
+<p>Stickler is a great way to run and organize an internal gem server in your
+organization. It helps with mirroring gems and providing a gem source to add
+internal or proprietary code to.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/copiousfreetime/stickler/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/copiousfreetime">
+    <img src="https://secure.gravatar.com/avatar/cff2d90ae70bbbb5d4865d8412159f85?s=32" title="Jeremy Hinegardner" />
+  </a>
+</p>
+
+<p><a class="project__name" href="https://github.com/cwninja/geminabox">Geminabox</a></p>
+
+<p>Need simple RubyGems hosting? Geminabox can do that! This project provides an
+easy to setup way to host RubyGems internally and allow uploading of gems
+without much hassle.</p>
+
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/cwninja/geminabox/issues">Issues</a>
+</div>
+
+<p class="avatars">
+  <a href="https://github.com/cwninja">
+    <img src="https://secure.gravatar.com/avatar/f61c5838432c656ea88dd77a56a40f52?s=32" title="Tom Leal" />
+  </a>
+</p>
+
+<h2 id="add-your-own-idea">Add Your Own Idea</h2>
+
+<p>We’d love for your new idea to be on this list. If you’re working on a
+RubyGems related project, just <a href="https://github.com/rubygems/guides">fork this
+repo</a> and add the link!</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/resources">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/faqs">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

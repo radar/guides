@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Command Reference - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">What each <code>gem</code> command does, and how to use it.</em></p>
+
+<p>This reference was automatically generated from RubyGems version 2.4.2.</p>
+
+<ul>
+  <li><a href="#gem-build">gem build</a></li>
+  <li><a href="#gem-cert">gem cert</a></li>
+  <li><a href="#gem-check">gem check</a></li>
+  <li><a href="#gem-cleanup">gem cleanup</a></li>
+  <li><a href="#gem-contents">gem contents</a></li>
+  <li><a href="#gem-dependency">gem dependency</a></li>
+  <li><a href="#gem-environment">gem environment</a></li>
+  <li><a href="#gem-fetch">gem fetch</a></li>
+  <li><a href="#gem-generate_index">gem generate_index</a></li>
+  <li><a href="#gem-help">gem help</a></li>
+  <li><a href="#gem-install">gem install</a></li>
+  <li><a href="#gem-list">gem list</a></li>
+  <li><a href="#gem-lock">gem lock</a></li>
+  <li><a href="#gem-mirror">gem mirror</a></li>
+  <li><a href="#gem-open">gem open</a></li>
+  <li><a href="#gem-outdated">gem outdated</a></li>
+  <li><a href="#gem-owner">gem owner</a></li>
+  <li><a href="#gem-pristine">gem pristine</a></li>
+  <li><a href="#gem-push">gem push</a></li>
+  <li><a href="#gem-query">gem query</a></li>
+  <li><a href="#gem-rdoc">gem rdoc</a></li>
+  <li><a href="#gem-search">gem search</a></li>
+  <li><a href="#gem-server">gem server</a></li>
+  <li><a href="#gem-sources">gem sources</a></li>
+  <li><a href="#gem-specification">gem specification</a></li>
+  <li><a href="#gem-stale">gem stale</a></li>
+  <li><a href="#gem-uninstall">gem uninstall</a></li>
+  <li><a href="#gem-unpack">gem unpack</a></li>
+  <li><a href="#gem-update">gem update</a></li>
+  <li><a href="#gem-which">gem which</a></li>
+  <li><a href="#gem-yank">gem yank</a></li>
+</ul>
+
+<h2 id="gem-build">gem build</h2>
+
+<p>Build a gem from a gemspec</p>
+
+<h3 id="usage">Usage</h3>
+
+<pre><code>gem build GEMSPEC_FILE [options]
+</code></pre>
+
+<h3 id="options">Options:</h3>
+
+<ul>
+  <li>-​-force                    - skip validation of the spec</li>
+</ul>
+
+<h3 id="common-options">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments">Arguments</h3>
+
+<ul>
+  <li><em>GEMSPEC_FILE</em> -   gemspec file name to build a gem for</li>
+</ul>
+
+<h3 id="description">Description</h3>
+
+<p>The build command allows you to create a gem from a ruby gemspec.</p>
+
+<p>The best way to build a gem is to use a Rakefile and the Gem::PackageTask
+which ships with RubyGems.</p>
+
+<p>The gemspec can either be created by hand or extracted from an existing gem
+with gem spec:</p>
+
+<pre><code>$ gem unpack my_gem-1.0.gem
+Unpacked gem: '.../my_gem-1.0'
+$ gem spec my_gem-1.0.gem --ruby &gt; my_gem-1.0/my_gem-1.0.gemspec
+$ cd my_gem-1.0
+[edit gem contents]
+$ gem build my_gem-1.0.gemspec
+</code></pre>
+
+<h2 id="gem-cert">gem cert</h2>
+
+<p>Manage RubyGems certificates and signing settings</p>
+
+<h3 id="usage-1">Usage</h3>
+
+<pre><code>gem cert [options]
+</code></pre>
+
+<h3 id="options-1">Options:</h3>
+
+<ul>
+  <li>-a, -​-add CERT                 - Add a trusted certificate.</li>
+  <li>-l, -​-list [FILTER]            - List trusted certificates where the subject contains FILTER</li>
+  <li>-r, -​-remove FILTER            - Remove trusted certificates where the subject contains FILTER</li>
+  <li>-b, -​-build EMAIL_ADDR         - Build private key and self-signed certificate for EMAIL_ADDR</li>
+  <li>-C, -​-certificate CERT         - Signing certificate for -​-sign</li>
+  <li>-K, -​-private-key KEY          - Key for -​-sign or -​-build</li>
+  <li>-s, -​-sign CERT                - Signs CERT with the key from -K and the certificate from -C</li>
+</ul>
+
+<h3 id="common-options-1">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-1">Description</h3>
+
+<p>The cert command manages signing keys and certificates for creating signed
+gems.  Your signing certificate and private key are typically stored in
+~/.gem/gem-public_cert.pem and ~/.gem/gem-private_key.pem respectively.</p>
+
+<p>To build a certificate for signing gems:</p>
+
+<pre><code>gem cert --build you@example
+</code></pre>
+
+<p>If you already have an RSA key, or are creating a new certificate for an
+existing key:</p>
+
+<pre><code>gem cert --build you@example --private-key /path/to/key.pem
+</code></pre>
+
+<p>If you wish to trust a certificate you can add it to the trust list with:</p>
+
+<pre><code>gem cert --add /path/to/cert.pem
+</code></pre>
+
+<p>You can list trusted certificates with:</p>
+
+<pre><code>gem cert --list
+</code></pre>
+
+<p>or:</p>
+
+<pre><code>gem cert --list cert_subject_substring
+</code></pre>
+
+<p>If you wish to remove a previously trusted certificate:</p>
+
+<pre><code>gem cert --remove cert_subject_substring
+</code></pre>
+
+<p>To sign another gem author’s certificate:</p>
+
+<pre><code>gem cert --sign /path/to/other_cert.pem
+</code></pre>
+
+<p>For further reading on signing gems see <code>ri Gem::Security</code>.</p>
+
+<h2 id="gem-check">gem check</h2>
+
+<p>Check a gem repository for added or missing files</p>
+
+<h3 id="usage-2">Usage</h3>
+
+<pre><code>gem check [OPTIONS] [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-2">Options:</h3>
+
+<ul>
+  <li>-a, -​-[no-]alien               - Report “unmanaged” or rogue files in the gem repository</li>
+  <li>-​-[no-]doctor              - Clean up uninstalled gems and broken specifications</li>
+  <li>-​-[no-]dry-run             - Do not remove files, only report what would be removed</li>
+  <li>-​-[no-]gems                - Check installed gems for problems</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to check</li>
+</ul>
+
+<h3 id="common-options-2">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-1">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to check</li>
+</ul>
+
+<h3 id="description-2">Description</h3>
+
+<p>The check command can list and repair problems with installed gems and
+specifications and will clean up gems that have been partially uninstalled.</p>
+
+<h2 id="gem-cleanup">gem cleanup</h2>
+
+<p>Clean up old versions of installed gems</p>
+
+<h3 id="usage-3">Usage</h3>
+
+<pre><code>gem cleanup [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-3">Options:</h3>
+
+<ul>
+  <li>-n, -d, -​-dryrun               - Do not uninstall gems</li>
+</ul>
+
+<h3 id="common-options-3">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-2">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to cleanup</li>
+</ul>
+
+<h3 id="description-3">Description</h3>
+
+<p>The cleanup command removes old versions of gems from GEM_HOME that are not
+required to meet a dependency.  If a gem is installed elsewhere in GEM_PATH
+the cleanup command won’t delete it.</p>
+
+<p>If no gems are named all gems in GEM_HOME are cleaned.</p>
+
+<h2 id="gem-contents">gem contents</h2>
+
+<p>Display the contents of the installed gems</p>
+
+<h3 id="usage-4">Usage</h3>
+
+<pre><code>gem contents GEMNAME [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-4">Options:</h3>
+
+<ul>
+  <li>-v, -​-version VERSION          - Specify version of gem to contents</li>
+  <li>-​-all                      - Contents for all gems</li>
+  <li>-s, -​-spec-dir a,b,c           - Search for gems under specific paths</li>
+  <li>-l, -​-[no-]lib-only            - Only return files in the Gem’s lib_dirs</li>
+  <li>-​-[no-]prefix              - Don’t include installed path prefix</li>
+  <li>-​-[no-]show-install-dir    - Show only the gem install dir</li>
+</ul>
+
+<h3 id="common-options-4">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-3">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to list contents for</li>
+</ul>
+
+<h3 id="description-4">Description</h3>
+
+<p>The contents command lists the files in an installed gem.  The listing can
+be given as full file names, file names without the installed directory
+prefix or only the files that are requireable.</p>
+
+<h2 id="gem-dependency">gem dependency</h2>
+
+<p>Show the dependencies of an installed gem</p>
+
+<h3 id="usage-5">Usage</h3>
+
+<pre><code>gem dependency REGEXP [options]
+</code></pre>
+
+<h3 id="options-5">Options:</h3>
+
+<ul>
+  <li>-v, -​-version VERSION          - Specify version of gem to dependency</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to dependency</li>
+  <li>-​-[no-]prerelease          - Allow prerelease versions of a gem</li>
+  <li>
+    <ul>
+      <li>-R, -​-[no-]reverse-dependencies  Include reverse dependencies in the output</li>
+    </ul>
+  </li>
+  <li>-​-pipe                     - Pipe Format (name -​-version ver)</li>
+</ul>
+
+<h3 id="deprecated-options">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-5">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-4">Arguments</h3>
+
+<ul>
+  <li><em>REGEXP</em> -         show dependencies for gems whose names start with REGEXP</li>
+</ul>
+
+<h3 id="description-5">Description</h3>
+
+<p>The dependency commands lists which other gems a given gem depends on.  For
+local gems only the reverse dependencies can be shown (which gems depend on
+the named gem).</p>
+
+<p>The dependency list can be displayed in a format suitable for piping for
+use with other commands.</p>
+
+<h2 id="gem-environment">gem environment</h2>
+
+<p>Display information about the RubyGems environment</p>
+
+<h3 id="usage-6">Usage</h3>
+
+<pre><code>gem environment [arg] [options]
+</code></pre>
+
+<h3 id="common-options-6">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-5">Arguments</h3>
+
+<ul>
+  <li><em>packageversion</em> -   display the package version</li>
+  <li><em>gemdir</em> -           display the path where gems are installed</li>
+  <li><em>gempath</em> -          display path used to search for gems</li>
+  <li><em>version</em> -          display the gem format version</li>
+  <li><em>remotesources</em> -    display the remote gem servers</li>
+  <li><em>platform</em> -         display the supported gem platforms</li>
+  <li><em>&lt;omitted&gt;</em> -        display everything</li>
+</ul>
+
+<h3 id="description-6">Description</h3>
+
+<p>The environment command lets you query rubygems for its configuration for
+use in shell scripts or as a debugging aid.</p>
+
+<p>The RubyGems environment can be controlled through command line arguments,
+gemrc files, environment variables and built-in defaults.</p>
+
+<p>Command line argument defaults and some RubyGems defaults can be set in a
+~/.gemrc file for individual users and a gemrc in the SYSTEM CONFIGURATION
+DIRECTORY for all users. These files are YAML files with the following YAML
+keys:</p>
+
+<pre><code>:sources: A YAML array of remote gem repositories to install gems from
+:verbose: Verbosity of the gem command. false, true, and :really are the
+          levels
+:update_sources: Enable/disable automatic updating of repository metadata
+:backtrace: Print backtrace when RubyGems encounters an error
+:gempath: The paths in which to look for gems
+:disable_default_gem_server: Force specification of gem server host on push
+&lt;gem_command&gt;: A string containing arguments for the specified gem command
+</code></pre>
+
+<p>Example:</p>
+
+<pre><code>:verbose: false
+install: --no-wrappers
+update: --no-wrappers
+:disable_default_gem_server: true
+</code></pre>
+
+<p>RubyGems’ default local repository can be overridden with the GEM_PATH and
+GEM_HOME environment variables. GEM_HOME sets the default repository to
+install into. GEM_PATH allows multiple local repositories to be searched for
+gems.</p>
+
+<p>If you are behind a proxy server, RubyGems uses the HTTP_PROXY,
+HTTP_PROXY_USER and HTTP_PROXY_PASS environment variables to discover the
+proxy server.</p>
+
+<p>If you would like to push gems to a private gem server the RUBYGEMS_HOST
+environment variable can be set to the URI for that server.</p>
+
+<p>If you are packaging RubyGems all of RubyGems’ defaults are in
+lib/rubygems/defaults.rb.  You may override these in
+lib/rubygems/defaults/operating_system.rb</p>
+
+<h2 id="gem-fetch">gem fetch</h2>
+
+<p>Download a gem and place it in the current directory</p>
+
+<h3 id="usage-7">Usage</h3>
+
+<pre><code>gem fetch GEMNAME [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-6">Options:</h3>
+
+<ul>
+  <li>-v, -​-version VERSION          - Specify version of gem to fetch</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to fetch</li>
+  <li>-​-[no-]prerelease          - Allow prerelease versions of a gem</li>
+</ul>
+
+<h3 id="localremote-options-1">Local/Remote Options:</h3>
+
+<ul>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+</ul>
+
+<h3 id="common-options-7">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-6">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to download</li>
+</ul>
+
+<h3 id="description-7">Description</h3>
+
+<p>The fetch command fetches gem files that can be stored for later use or
+unpacked to examine their contents.</p>
+
+<p>See the build command help for an example of unpacking a gem, modifying it,
+then repackaging it.</p>
+
+<h2 id="gem-generateindex">gem generate_index</h2>
+
+<p>Generates the index files for a gem server directory</p>
+
+<h3 id="usage-8">Usage</h3>
+
+<pre><code>gem generate_index [options]
+</code></pre>
+
+<h3 id="options-7">Options:</h3>
+
+<ul>
+  <li>-d, -​-directory=DIRNAME        - repository base dir containing gems subdir</li>
+  <li>-​-[no-]modern              - Generate indexes for RubyGems (always true)</li>
+  <li>-​-update                   - Update modern indexes with gems added since the last update</li>
+</ul>
+
+<h3 id="common-options-8">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-8">Description</h3>
+
+<p>The generate_index command creates a set of indexes for serving gems
+statically.  The command expects a ‘gems’ directory under the path given to
+the –directory option.  The given directory will be the directory you serve
+as the gem repository.</p>
+
+<p>For <code>gem generate_index --directory /path/to/repo</code>, expose /path/to/repo via
+your HTTP server configuration (not /path/to/repo/gems).</p>
+
+<p>When done, it will generate a set of files like this:</p>
+
+<pre><code>gems/*.gem                                   # .gem files you want to
+                                             # index
+
+specs.&lt;version&gt;.gz                           # specs index
+latest_specs.&lt;version&gt;.gz                    # latest specs index
+prerelease_specs.&lt;version&gt;.gz                # prerelease specs index
+quick/Marshal.&lt;version&gt;/&lt;gemname&gt;.gemspec.rz # Marshal quick index file
+</code></pre>
+
+<p>The .rz extension files are compressed with the inflate algorithm.
+The Marshal version number comes from ruby’s Marshal::MAJOR_VERSION and
+Marshal::MINOR_VERSION constants.  It is used to ensure compatibility.</p>
+
+<h2 id="gem-help">gem help</h2>
+
+<p>Provide help on the ‘gem’ command</p>
+
+<h3 id="usage-9">Usage</h3>
+
+<pre><code>gem help ARGUMENT [options]
+</code></pre>
+
+<h3 id="common-options-9">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h2 id="gem-install">gem install</h2>
+
+<p>Install a gem into the local repository</p>
+
+<h3 id="usage-10">Usage</h3>
+
+<pre><code>gem install GEMNAME [GEMNAME ...] [options] -- --build-flags [options]
+</code></pre>
+
+<h3 id="options-8">Options:</h3>
+
+<ul>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to install</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to install</li>
+  <li>-​-[no-]prerelease          - Allow prerelease versions of a gem to be installed. (Only for listed gems)</li>
+</ul>
+
+<h3 id="deprecated-options-1">Deprecated Options:</h3>
+
+<ul>
+  <li>-​-[no-]rdoc                - Generate RDoc for installed gems Use -​-document instead</li>
+  <li>-​-[no-]ri                  - Generate ri data for installed gems. Use -​-document instead</li>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="installupdate-options">Install/Update Options:</h3>
+
+<ul>
+  <li>-i, -​-install-dir DIR          - Gem repository directory to get installed gems</li>
+  <li>-n, -​-bindir DIR               - Directory where binary files are located</li>
+  <li>-​-[no-]document [TYPES]    - Generate documentation for installed gems List the documentation types you wish to generate.  For example: rdoc,ri</li>
+  <li>-​-build-root DIR           - Temporary installation root. Useful for building packages. Do not use this when installing remote gems.</li>
+  <li>-​-vendor                   - Install gem into the vendor directory. Only for use by gem repackagers.</li>
+  <li>-N, -​-no-document              - Disable documentation generation</li>
+  <li>-E, -​-[no-]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env</li>
+  <li>-f, -​-[no-]force               - Force gem to install, bypassing dependency checks</li>
+  <li>-w, -​-[no-]wrappers            - Use bin wrappers for executables Not available on dosish platforms</li>
+  <li>-P, -​-trust-policy POLICY      - Specify gem trust policy</li>
+  <li>-​-ignore-dependencies      - Do not install any required dependent gems</li>
+  <li>-​-[no-]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18</li>
+  <li>-​-[no-]user-install        - Install in user’s home directory instead of GEM_HOME.</li>
+  <li>-​-development              - Install additional development dependencies</li>
+  <li>-​-development-all          - Install development dependencies for all gems (including dev deps themselves)</li>
+  <li>-​-conservative             - Don’t attempt to upgrade gems already meeting version requirement</li>
+  <li>-​-minimal-deps             - Don’t upgrade any dependencies that already meet version requirements</li>
+  <li>-g, -​-file [FILE]              - Read from a gem dependencies API file and install the listed gems</li>
+  <li>-​-without GROUPS           - Omit the named groups (comma separated) when installing from a gem dependencies file</li>
+  <li>-​-default                  - Add the gem’s full specification to specifications/default and extract only its bin</li>
+  <li>-​-explain                  - Rather than install the gems, indicate which would be installed</li>
+  <li>-​-[no-]lock                - Create a lock file (when used with -g/-​-file)</li>
+  <li>-​-[no-]suggestions         - Suggest alternates when gems are not found</li>
+</ul>
+
+<h3 id="localremote-options-2">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-10">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-7">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to install</li>
+</ul>
+
+<h3 id="description-9">Description</h3>
+
+<p>The install command installs local or remote gem into a gem repository.</p>
+
+<p>For gems with executables ruby installs a wrapper file into the executable
+directory by default.  This can be overridden with the –no-wrappers option.
+The wrapper allows you to choose among alternate gem versions using <em>version</em>.</p>
+
+<p>For example <code>rake _0.7.3_ --version</code> will run rake version 0.7.3 if a newer
+version is also installed.</p>
+
+<h1 id="gem-dependency-files">Gem Dependency Files</h1>
+
+<p>RubyGems can install a consistent set of gems across multiple environments
+using <code>gem install -g</code> when a gem dependencies file (gem.deps.rb, Gemfile or
+Isolate) is present.  If no explicit file is given RubyGems attempts to find
+one in the current directory.</p>
+
+<p>When the RUBYGEMS_GEMDEPS environment variable is set to a gem dependencies
+file the gems from that file will be activated at startup time.  Set it to a
+specific filename or to “-“ to have RubyGems automatically discover the gem
+dependencies file by walking up from the current directory.</p>
+
+<p>NOTE: Enabling automatic discovery on multiuser systems can lead to
+execution of arbitrary code when used from directories outside your control.</p>
+
+<h1 id="extension-install-failures">Extension Install Failures</h1>
+
+<p>If an extension fails to compile during gem installation the gem
+specification is not written out, but the gem remains unpacked in the
+repository.  You may need to specify the path to the library’s headers and
+libraries to continue.  You can do this by adding a – between RubyGems’
+options and the extension’s build options:</p>
+
+<pre><code>$ gem install some_extension_gem
+[build fails]
+Gem files will remain installed in \
+/path/to/gems/some_extension_gem-1.0 for inspection.
+Results logged to /path/to/gems/some_extension_gem-1.0/gem_make.out
+$ gem install some_extension_gem -- --with-extension-lib=/path/to/lib
+[build succeeds]
+$ gem list some_extension_gem
+
+*** LOCAL GEMS ***
+
+some_extension_gem (1.0)
+$
+</code></pre>
+
+<p>If you correct the compilation errors by editing the gem files you will need
+to write the specification by hand.  For example:</p>
+
+<pre><code>$ gem install some_extension_gem
+[build fails]
+Gem files will remain installed in \
+/path/to/gems/some_extension_gem-1.0 for inspection.
+Results logged to /path/to/gems/some_extension_gem-1.0/gem_make.out
+$ [cd /path/to/gems/some_extension_gem-1.0]
+$ [edit files or what-have-you and run make]
+$ gem spec ../../cache/some_extension_gem-1.0.gem --ruby &gt; \
+           ../../specifications/some_extension_gem-1.0.gemspec
+$ gem list some_extension_gem
+
+*** LOCAL GEMS ***
+
+some_extension_gem (1.0)
+$
+</code></pre>
+
+<h2 id="gem-list">gem list</h2>
+
+<p>Display local gems whose name matches REGEXP</p>
+
+<h3 id="usage-11">Usage</h3>
+
+<pre><code>gem list [STRING ...] [options]
+</code></pre>
+
+<h3 id="options-9">Options:</h3>
+
+<ul>
+  <li>-i, -​-[no-]installed           - Check for installed gem</li>
+  <li>-I                             - Equivalent to -​-no-installed</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to list for use with -​-installed</li>
+  <li>-d, -​-[no-]details             - Display detailed information of gem(s)</li>
+  <li>-​-[no-]versions            - Display only gem names</li>
+  <li>-a, -​-all                      - Display all gem versions</li>
+  <li>-​-[no-]prerelease          - Display prerelease versions</li>
+</ul>
+
+<h3 id="deprecated-options-2">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options-3">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-11">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-8">Arguments</h3>
+
+<ul>
+  <li><em>REGEXP</em> -         regexp to look for in gem name</li>
+</ul>
+
+<h3 id="description-10">Description</h3>
+
+<p>The list command is used to view the gems you have installed locally.</p>
+
+<p>The –details option displays additional details including the summary, the
+homepage, the author, the locations of different versions of the gem.</p>
+
+<p>To search for remote gems use the search command.</p>
+
+<h2 id="gem-lock">gem lock</h2>
+
+<p>Generate a lockdown list of gems</p>
+
+<h3 id="usage-12">Usage</h3>
+
+<pre><code>gem lock GEMNAME-VERSION [GEMNAME-VERSION ...] [options]
+</code></pre>
+
+<h3 id="options-10">Options:</h3>
+
+<ul>
+  <li>-s, -​-[no-]strict              - fail if unable to satisfy a dependency</li>
+</ul>
+
+<h3 id="common-options-12">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-9">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to lock</li>
+  <li><em>VERSION</em> -        version of gem to lock</li>
+</ul>
+
+<h3 id="description-11">Description</h3>
+
+<p>The lock command will generate a list of +gem+ statements that will lock down
+the versions for the gem given in the command line.  It will specify exact
+versions in the requirements list to ensure that the gems loaded will always
+be consistent.  A full recursive search of all effected gems will be
+generated.</p>
+
+<p>Example:</p>
+
+<pre><code>gem lock rails-1.0.0 &gt; lockdown.rb
+</code></pre>
+
+<p>will produce in lockdown.rb:</p>
+
+<pre><code>require "rubygems"
+gem 'rails', '= 1.0.0'
+gem 'rake', '= 0.7.0.1'
+gem 'activesupport', '= 1.2.5'
+gem 'activerecord', '= 1.13.2'
+gem 'actionpack', '= 1.11.2'
+gem 'actionmailer', '= 1.1.5'
+gem 'actionwebservice', '= 1.0.0'
+</code></pre>
+
+<p>Just load lockdown.rb from your application to ensure that the current
+versions are loaded.  Make sure that lockdown.rb is loaded <em>before</em> any
+other require statements.</p>
+
+<p>Notice that rails 1.0.0 only requires that rake 0.6.2 or better be used.
+Rake-0.7.0.1 is the most recent version installed that satisfies that, so we
+lock it down to the exact version.</p>
+
+<h2 id="gem-mirror">gem mirror</h2>
+
+<p>Mirror all gem files (requires rubygems-mirror)</p>
+
+<h3 id="usage-13">Usage</h3>
+
+<pre><code>gem mirror [options]
+</code></pre>
+
+<h3 id="common-options-13">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-12">Description</h3>
+
+<p>The mirror command has been moved to the rubygems-mirror gem.</p>
+
+<h2 id="gem-open">gem open</h2>
+
+<p>Open gem sources in editor</p>
+
+<h3 id="usage-14">Usage</h3>
+
+<pre><code>gem open GEMNAME [-e EDITOR] [options]
+</code></pre>
+
+<h3 id="options-11">Options:</h3>
+
+<ul>
+  <li>-e, -​-editor EDITOR            - Opens gem sources in EDITOR</li>
+</ul>
+
+<h3 id="common-options-14">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-10">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -      name of gem to open in editor</li>
+</ul>
+
+<h3 id="description-13">Description</h3>
+
+<pre><code>      The open command opens gem in editor and changes current path
+      to gem's source directory. Editor can be specified with -e option,
+      otherwise rubygems will look for editor in $EDITOR, $VISUAL and
+      $GEM_EDITOR variables.
+</code></pre>
+
+<h2 id="gem-outdated">gem outdated</h2>
+
+<p>Display all gems that need updates</p>
+
+<h3 id="usage-15">Usage</h3>
+
+<pre><code>gem outdated [options]
+</code></pre>
+
+<h3 id="options-12">Options:</h3>
+
+<ul>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to outdated</li>
+</ul>
+
+<h3 id="deprecated-options-3">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options-4">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-15">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-14">Description</h3>
+
+<p>The outdated command lists gems you may wish to upgrade to a newer version.</p>
+
+<p>You can check for dependency mismatches using the dependency command and
+update the gems with the update or install commands.</p>
+
+<h2 id="gem-owner">gem owner</h2>
+
+<p>Manage gem owners of a gem on the push server</p>
+
+<h3 id="usage-16">Usage</h3>
+
+<pre><code>gem owner GEM [options]
+</code></pre>
+
+<h3 id="options-13">Options:</h3>
+
+<ul>
+  <li>-k, -​-key KEYNAME              - Use the given API key from ~/.gem/credentials</li>
+  <li>-a, -​-add EMAIL                - Add an owner</li>
+  <li>-r, -​-remove EMAIL             - Remove an owner</li>
+  <li>-​-host HOST                - Use another gemcutter-compatible host</li>
+</ul>
+
+<h3 id="localremote-options-5">Local/Remote Options:</h3>
+
+<ul>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-16">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-11">Arguments</h3>
+
+<ul>
+  <li><em>GEM</em> -        gem to manage owners for</li>
+</ul>
+
+<h3 id="description-15">Description</h3>
+
+<p>The owner command lets you add and remove owners of a gem on a push
+server (the default is https://rubygems.org).</p>
+
+<p>The owner of a gem has the permission to push new versions, yank existing
+versions or edit the HTML page of the gem.  Be careful of who you give push
+permission to.</p>
+
+<h2 id="gem-pristine">gem pristine</h2>
+
+<p>Restores installed gems to pristine condition from files located in the gem cache</p>
+
+<h3 id="usage-17">Usage</h3>
+
+<pre><code>gem pristine [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-14">Options:</h3>
+
+<ul>
+  <li>-​-all                      - Restore all installed gems to pristine condition</li>
+  <li>-​-[no-]extensions          - Restore gems with extensions in addition to regular gems</li>
+  <li>-​-only-executables         - Only restore executables</li>
+  <li>-E, -​-[no-]env-shebang         - Rewrite executables with a shebang of /usr/bin/env</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to restore to pristine condition</li>
+</ul>
+
+<h3 id="common-options-17">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-12">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        gem to restore to pristine condition (unless –all)</li>
+</ul>
+
+<h3 id="description-16">Description</h3>
+
+<p>The pristine command compares an installed gem with the contents of its
+cached .gem file and restores any files that don’t match the cached .gem’s
+copy.</p>
+
+<p>If you have made modifications to an installed gem, the pristine command
+will revert them.  All extensions are rebuilt and all bin stubs for the gem
+are regenerated after checking for modifications.</p>
+
+<p>If the cached gem cannot be found it will be downloaded.</p>
+
+<p>If –no-extensions is provided pristine will not attempt to restore a gem
+with an extension.</p>
+
+<p>If –extensions is given (but not –all or gem names) only gems with
+extensions will be restored.</p>
+
+<h2 id="gem-push">gem push</h2>
+
+<p>Push a gem up to the gem server</p>
+
+<h3 id="usage-18">Usage</h3>
+
+<pre><code>gem push GEM [options]
+</code></pre>
+
+<h3 id="options-15">Options:</h3>
+
+<ul>
+  <li>-k, -​-key KEYNAME              - Use the given API key from ~/.gem/credentials</li>
+  <li>-​-host HOST                - Push to another gemcutter-compatible host</li>
+</ul>
+
+<h3 id="localremote-options-6">Local/Remote Options:</h3>
+
+<ul>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-18">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-13">Arguments</h3>
+
+<ul>
+  <li><em>GEM</em> -        built gem to push up</li>
+</ul>
+
+<h3 id="description-17">Description</h3>
+
+<p>The push command uploads a gem to the push server (the default is
+https://rubygems.org) and adds it to the index.</p>
+
+<p>The gem can be removed from the index (but only the index) using the yank
+command.  For further discussion see the help for the yank command.</p>
+
+<h2 id="gem-query">gem query</h2>
+
+<p>Query gem information in local or remote repositories</p>
+
+<h3 id="usage-19">Usage</h3>
+
+<pre><code>gem query [options]
+</code></pre>
+
+<h3 id="options-16">Options:</h3>
+
+<ul>
+  <li>-i, -​-[no-]installed           - Check for installed gem</li>
+  <li>-I                             - Equivalent to -​-no-installed</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to query for use with -​-installed</li>
+  <li>-n, -​-name-matches REGEXP      - Name of gem(s) to query on matches the provided REGEXP</li>
+  <li>-d, -​-[no-]details             - Display detailed information of gem(s)</li>
+  <li>-​-[no-]versions            - Display only gem names</li>
+  <li>-a, -​-all                      - Display all gem versions</li>
+  <li>-​-[no-]prerelease          - Display prerelease versions</li>
+</ul>
+
+<h3 id="deprecated-options-4">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options-7">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-19">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-18">Description</h3>
+
+<p>The query command is the basis for the list and search commands.</p>
+
+<p>You should really use the list and search commands instead.  This command
+is too hard to use.</p>
+
+<h2 id="gem-rdoc">gem rdoc</h2>
+
+<p>Generates RDoc for pre-installed gems</p>
+
+<h3 id="usage-20">Usage</h3>
+
+<pre><code>gem rdoc [args] [options]
+</code></pre>
+
+<h3 id="options-17">Options:</h3>
+
+<ul>
+  <li>-​-all                      - Generate RDoc/RI documentation for all installed gems</li>
+  <li>-​-[no-]rdoc                - Generate RDoc HTML</li>
+  <li>-​-[no-]ri                  - Generate RI data</li>
+  <li>-​-[no-]overwrite           - Overwrite installed documents</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to rdoc</li>
+</ul>
+
+<h3 id="common-options-20">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-14">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        gem to generate documentation for (unless –all)</li>
+</ul>
+
+<h3 id="description-19">Description</h3>
+
+<p>The rdoc command builds documentation for installed gems.  By default
+only documentation is built using rdoc, but additional types of
+documentation may be built through rubygems plugins and the
+Gem.post_installs hook.</p>
+
+<p>Use –overwrite to force rebuilding of documentation.</p>
+
+<h2 id="gem-search">gem search</h2>
+
+<p>Display remote gems whose name matches REGEXP</p>
+
+<h3 id="usage-21">Usage</h3>
+
+<pre><code>gem search [REGEXP] [options]
+</code></pre>
+
+<h3 id="options-18">Options:</h3>
+
+<ul>
+  <li>-i, -​-[no-]installed           - Check for installed gem</li>
+  <li>-I                             - Equivalent to -​-no-installed</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to search for use with -​-installed</li>
+  <li>-d, -​-[no-]details             - Display detailed information of gem(s)</li>
+  <li>-​-[no-]versions            - Display only gem names</li>
+  <li>-a, -​-all                      - Display all gem versions</li>
+  <li>-​-[no-]prerelease          - Display prerelease versions</li>
+</ul>
+
+<h3 id="deprecated-options-5">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options-8">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-21">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-15">Arguments</h3>
+
+<ul>
+  <li><em>REGEXP</em> -         regexp to search for in gem name</li>
+</ul>
+
+<h3 id="description-20">Description</h3>
+
+<p>The search command displays remote gems whose name matches the given
+regexp.</p>
+
+<p>The –details option displays additional details from the gem but will
+take a little longer to complete as it must download the information
+individually from the index.</p>
+
+<p>To list local gems use the list command.</p>
+
+<h2 id="gem-server">gem server</h2>
+
+<p>Documentation and gem repository HTTP server</p>
+
+<h3 id="usage-22">Usage</h3>
+
+<pre><code>gem server [options]
+</code></pre>
+
+<h3 id="options-19">Options:</h3>
+
+<ul>
+  <li>-p, -​-port=PORT                - port to listen on</li>
+  <li>-d, -​-dir=GEMDIR               - directories from which to serve gems multiple directories may be provided</li>
+  <li>-​-[no-]daemon              - run as a daemon</li>
+  <li>-b, -​-bind=HOST,HOST           - addresses to bind</li>
+  <li>-l, -​-launch[=COMMAND]         - launches a browser window COMMAND defaults to ‘start’ on Windows and ‘open’ on all other platforms</li>
+</ul>
+
+<h3 id="common-options-22">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-21">Description</h3>
+
+<p>The server command starts up a web server that hosts the RDoc for your
+installed gems and can operate as a server for installation of gems on other
+machines.</p>
+
+<p>The cache files for installed gems must exist to use the server as a source
+for gem installation.</p>
+
+<p>To install gems from a running server, use <code>gem install GEMNAME --source
+http://gem_server_host:8808</code></p>
+
+<p>You can set up a shortcut to gem server documentation using the URL:</p>
+
+<pre><code>http://localhost:8808/rdoc?q=%s - Firefox
+http://localhost:8808/rdoc?q=* - LaunchBar
+</code></pre>
+
+<h2 id="gem-sources">gem sources</h2>
+
+<p>Manage the sources and cache file RubyGems uses to search for gems</p>
+
+<h3 id="usage-23">Usage</h3>
+
+<pre><code>gem sources [options]
+</code></pre>
+
+<h3 id="options-20">Options:</h3>
+
+<ul>
+  <li>-a, -​-add SOURCE_URI           - Add source</li>
+  <li>-l, -​-list                     - List sources</li>
+  <li>-r, -​-remove SOURCE_URI        - Remove source</li>
+  <li>-c, -​-clear-all                - Remove all sources (clear the cache)</li>
+  <li>-u, -​-update                   - Update source cache</li>
+</ul>
+
+<h3 id="localremote-options-9">Local/Remote Options:</h3>
+
+<ul>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-23">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-22">Description</h3>
+
+<p>RubyGems fetches gems from the sources you have configured (stored in your
+~/.gemrc).</p>
+
+<p>The default source is https://rubygems.org, but you may have older sources
+configured.  This guide will help you update your sources or configure
+yourself to use your own gem server.</p>
+
+<p>Without any arguments the sources lists your currently configured sources:</p>
+
+<pre><code>$ gem sources
+*** CURRENT SOURCES ***
+
+https://rubygems.org
+</code></pre>
+
+<p>This may list multiple sources or non-rubygems sources.  You probably
+configured them before or have an old <code>~/.gemrc</code>.  If you have sources you
+do not recognize you should remove them.</p>
+
+<p>RubyGems has been configured to serve gems via the following URLs through
+its history:</p>
+
+<ul>
+  <li>http://gems.rubyforge.org (RubyGems 1.3.6 and earlier)</li>
+  <li>http://rubygems.org       (RubyGems 1.3.7 through 1.8.25)</li>
+  <li>https://rubygems.org      (RubyGems 2.0.1 and newer)</li>
+</ul>
+
+<p>Since all of these sources point to the same set of gems you only need one
+of them in your list.  https://rubygems.org is recommended as it brings the
+protections of an SSL connection to gem downloads.</p>
+
+<p>To add a source use the –add argument:</p>
+
+<pre><code>  $ gem sources --add https://rubygems.org
+  https://rubygems.org added to sources
+</code></pre>
+
+<p>RubyGems will check to see if gems can be installed from the source given
+before it is added.</p>
+
+<p>To remove a source use the –remove argument:</p>
+
+<pre><code>  $ gem sources --remove http://rubygems.org
+  http://rubygems.org removed from sources
+</code></pre>
+
+<h2 id="gem-specification">gem specification</h2>
+
+<p>Display gem specification (in yaml)</p>
+
+<h3 id="usage-24">Usage</h3>
+
+<pre><code>gem specification [GEMFILE] [FIELD] [options]
+</code></pre>
+
+<h3 id="options-21">Options:</h3>
+
+<ul>
+  <li>-v, -​-version VERSION          - Specify version of gem to examine</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to specification</li>
+  <li>-​-[no-]prerelease          - Allow prerelease versions of a gem</li>
+  <li>-​-all                      - Output specifications for all versions of the gem</li>
+  <li>-​-ruby                     - Output ruby format</li>
+  <li>-​-yaml                     - Output YAML format</li>
+  <li>-​-marshal                  - Output Marshal format</li>
+</ul>
+
+<h3 id="deprecated-options-6">Deprecated Options:</h3>
+
+<ul>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="localremote-options-10">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-24">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-16">Arguments</h3>
+
+<ul>
+  <li><em>GEMFILE</em> -        name of gem to show the gemspec for</li>
+  <li><em>FIELD</em> -          name of gemspec field to show</li>
+</ul>
+
+<h3 id="description-23">Description</h3>
+
+<p>The specification command allows you to extract the specification from
+a gem for examination.</p>
+
+<p>The specification can be output in YAML, ruby or Marshal formats.</p>
+
+<p>Specific fields in the specification can be extracted in YAML format:</p>
+
+<pre><code>$ gem spec rake summary
+--- Ruby based make-like utility.
+...
+</code></pre>
+
+<h2 id="gem-stale">gem stale</h2>
+
+<p>List gems along with access times</p>
+
+<h3 id="usage-25">Usage</h3>
+
+<pre><code>gem stale [options]
+</code></pre>
+
+<h3 id="common-options-25">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="description-24">Description</h3>
+
+<p>The stale command lists the latest access time for all the files in your
+installed gems.</p>
+
+<p>You can use this command to discover gems and gem versions you are no
+longer using.</p>
+
+<h2 id="gem-uninstall">gem uninstall</h2>
+
+<p>Uninstall gems from the local repository</p>
+
+<h3 id="usage-26">Usage</h3>
+
+<pre><code>gem uninstall GEMNAME [GEMNAME ...] [options]
+</code></pre>
+
+<h3 id="options-22">Options:</h3>
+
+<ul>
+  <li>-a, -​-[no-]all                 - Uninstall all matching versions</li>
+  <li>-I, -​-[no-]ignore-dependencies - Ignore dependency requirements while uninstalling</li>
+  <li>-D, -​-[no-]-check-development  - Check development dependencies while uninstalling (default: false)</li>
+  <li>-x, -​-[no-]executables         - Uninstall applicable executables without confirmation</li>
+  <li>-i, -​-install-dir DIR          - Directory to uninstall gem from</li>
+  <li>-n, -​-bindir DIR               - Directory to remove binaries from</li>
+  <li>-​-[no-]user-install        - Uninstall from user’s home directory in addition to GEM_HOME.</li>
+  <li>-​-[no-]format-executable   - Assume executable names match Ruby’s prefix and suffix.</li>
+  <li>-​-[no-]force               - Uninstall all versions of the named gems ignoring dependencies</li>
+  <li>-​-[no-]abort-on-dependent  - Prevent uninstalling gems that are depended on by other gems.</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to uninstall</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to uninstall</li>
+  <li>-​-vendor                   - Uninstall gem from the vendor directory. Only for use by gem repackagers.</li>
+</ul>
+
+<h3 id="common-options-26">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-17">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to uninstall</li>
+</ul>
+
+<h3 id="description-25">Description</h3>
+
+<p>The uninstall command removes a previously installed gem.</p>
+
+<p>RubyGems will ask for confirmation if you are attempting to uninstall a gem
+that is a dependency of an existing gem.  You can use the
+–ignore-dependencies option to skip this check.</p>
+
+<h2 id="gem-unpack">gem unpack</h2>
+
+<p>Unpack an installed gem to the current directory</p>
+
+<h3 id="usage-27">Usage</h3>
+
+<pre><code>gem unpack GEMNAME [options]
+</code></pre>
+
+<h3 id="options-23">Options:</h3>
+
+<ul>
+  <li>-​-target=DIR               - target directory for unpacking</li>
+  <li>-​-spec                     - unpack the gem specification</li>
+  <li>-v, -​-version VERSION          - Specify version of gem to unpack</li>
+</ul>
+
+<h3 id="common-options-27">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-18">Arguments</h3>
+
+<ul>
+  <li><em>GEMNAME</em> -        name of gem to unpack</li>
+</ul>
+
+<h3 id="description-26">Description</h3>
+
+<p>The unpack command allows you to examine the contents of a gem or modify
+them to help diagnose a bug.</p>
+
+<p>You can add the contents of the unpacked gem to the load path using the
+RUBYLIB environment variable or -I:</p>
+
+<pre><code>$ gem unpack my_gem
+Unpacked gem: '.../my_gem-1.0'
+[edit my_gem-1.0/lib/my_gem.rb]
+$ ruby -Imy_gem-1.0/lib -S other_program
+</code></pre>
+
+<p>You can repackage an unpacked gem using the build command.  See the build
+command help for an example.</p>
+
+<h2 id="gem-update">gem update</h2>
+
+<p>Update installed gems to the latest version</p>
+
+<h3 id="usage-28">Usage</h3>
+
+<pre><code>gem update REGEXP [REGEXP ...] [options]
+</code></pre>
+
+<h3 id="options-24">Options:</h3>
+
+<ul>
+  <li>-​-system [VERSION]         - Update the RubyGems system software</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to update</li>
+  <li>-​-[no-]prerelease          - Allow prerelease versions of a gem as update targets</li>
+</ul>
+
+<h3 id="deprecated-options-7">Deprecated Options:</h3>
+
+<ul>
+  <li>-​-[no-]rdoc                - Generate RDoc for installed gems Use -​-document instead</li>
+  <li>-​-[no-]ri                  - Generate ri data for installed gems. Use -​-document instead</li>
+  <li>-u, -​-[no-]update-sources      - Update local source cache</li>
+</ul>
+
+<h3 id="installupdate-options-1">Install/Update Options:</h3>
+
+<ul>
+  <li>-i, -​-install-dir DIR          - Gem repository directory to get installed gems</li>
+  <li>-n, -​-bindir DIR               - Directory where binary files are located</li>
+  <li>-​-[no-]document [TYPES]    - Generate documentation for installed gems List the documentation types you wish to generate.  For example: rdoc,ri</li>
+  <li>-​-build-root DIR           - Temporary installation root. Useful for building packages. Do not use this when installing remote gems.</li>
+  <li>-​-vendor                   - Install gem into the vendor directory. Only for use by gem repackagers.</li>
+  <li>-N, -​-no-document              - Disable documentation generation</li>
+  <li>-E, -​-[no-]env-shebang         - Rewrite the shebang line on installed scripts to use /usr/bin/env</li>
+  <li>-f, -​-[no-]force               - Force gem to install, bypassing dependency checks</li>
+  <li>-w, -​-[no-]wrappers            - Use bin wrappers for executables Not available on dosish platforms</li>
+  <li>-P, -​-trust-policy POLICY      - Specify gem trust policy</li>
+  <li>-​-ignore-dependencies      - Do not install any required dependent gems</li>
+  <li>-​-[no-]format-executable   - Make installed executable names match ruby. If ruby is ruby18, foo_exec will be foo_exec18</li>
+  <li>-​-[no-]user-install        - Install in user’s home directory instead of GEM_HOME.</li>
+  <li>-​-development              - Install additional development dependencies</li>
+  <li>-​-development-all          - Install development dependencies for all gems (including dev deps themselves)</li>
+  <li>-​-conservative             - Don’t attempt to upgrade gems already meeting version requirement</li>
+  <li>-​-minimal-deps             - Don’t upgrade any dependencies that already meet version requirements</li>
+</ul>
+
+<h3 id="localremote-options-11">Local/Remote Options:</h3>
+
+<ul>
+  <li>-l, -​-local                    - Restrict operations to the LOCAL domain</li>
+  <li>-r, -​-remote                   - Restrict operations to the REMOTE domain</li>
+  <li>-b, -​-both                     - Allow LOCAL and REMOTE operations</li>
+  <li>-B, -​-bulk-threshold COUNT     - Threshold for switching to bulk synchronization (default 1000)</li>
+  <li>-​-clear-sources            - Clear the gem sources</li>
+  <li>-s, -​-source URL               - Append URL to list of remote gem sources</li>
+  <li>-p, -​-[no-]http-proxy [URL]    - Use HTTP proxy for remote operations</li>
+</ul>
+
+<h3 id="common-options-28">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-19">Arguments</h3>
+
+<ul>
+  <li><em>REGEXP</em> -         regexp to search for in gem name</li>
+</ul>
+
+<h3 id="description-27">Description</h3>
+
+<p>The update command will update your gems to the latest version.</p>
+
+<p>The update command does not remove the previous version. Use the cleanup
+command to remove old versions.</p>
+
+<h2 id="gem-which">gem which</h2>
+
+<p>Find the location of a library file you can require</p>
+
+<h3 id="usage-29">Usage</h3>
+
+<pre><code>gem which FILE [FILE ...] [options]
+</code></pre>
+
+<h3 id="options-25">Options:</h3>
+
+<ul>
+  <li>-a, -​-[no-]all                 - show all matching files</li>
+  <li>-g, -​-[no-]gems-first          - search gems before non-gems</li>
+</ul>
+
+<h3 id="common-options-29">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-20">Arguments</h3>
+
+<ul>
+  <li><em>FILE</em> -           name of file to find</li>
+</ul>
+
+<h3 id="description-28">Description</h3>
+
+<p>The which command is like the shell which command and shows you where
+the file you wish to require lives.</p>
+
+<p>You can use the which command to help determine why you are requiring a
+version you did not expect or to look at the content of a file you are
+requiring to see why it does not behave as you expect.</p>
+
+<h2 id="gem-yank">gem yank</h2>
+
+<p>Remove a pushed gem from the index</p>
+
+<h3 id="usage-30">Usage</h3>
+
+<pre><code>gem yank GEM -v VERSION [-p PLATFORM] [--undo] [--key KEY_NAME] [options]
+</code></pre>
+
+<h3 id="options-26">Options:</h3>
+
+<ul>
+  <li>-v, -​-version VERSION          - Specify version of gem to remove</li>
+  <li>-​-platform PLATFORM        - Specify the platform of gem to remove</li>
+  <li>
+    <ul>
+      <li>-​-undo</li>
+    </ul>
+  </li>
+  <li>-k, -​-key KEYNAME              - Use the given API key from ~/.gem/credentials</li>
+</ul>
+
+<h3 id="common-options-30">Common Options:</h3>
+
+<ul>
+  <li>-h, -​-help                     - Get help on this command</li>
+  <li>-V, -​-[no-]verbose             - Set the verbose level of output</li>
+  <li>-q, -​-quiet                    - Silence commands</li>
+  <li>-​-config-file FILE         - Use this config file instead of default</li>
+  <li>-​-backtrace                - Show stack backtrace on errors</li>
+  <li>-​-debug                    - Turn on Ruby debugging</li>
+</ul>
+
+<h3 id="arguments-21">Arguments</h3>
+
+<ul>
+  <li><em>GEM</em> -        name of gem</li>
+</ul>
+
+<h3 id="description-29">Description</h3>
+
+<p>The yank command removes a gem you pushed to a server from the server’s
+index.</p>
+
+<p>Note that if you push a gem to rubygems.org the yank command does not
+prevent other people from downloading the gem via the download link.</p>
+
+<p>Once you have pushed a gem several downloads will happen automatically
+via the webhooks.  If you accidentally pushed passwords or other sensitive
+data you will need to change them immediately and yank your gem.</p>
+
+<p>If you are yanking a gem due to intellectual property reasons contact
+http://help.rubygems.org for permanant removal.  Be sure to mention this
+as the reason for the removal request.</p>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/patterns">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/rubygems-org-api">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

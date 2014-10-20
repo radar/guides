@@ -1,0 +1,78 @@
+$red: #fa3c29;
+$red-orange: #ff4625;
+$orange: #ff6125;
+$blue: #53a4e0;
+$green: #4fcc9c;
+$yellow: #ffde00;
+$white: #ffffff;
+$gray: #c1c4ca;
+$d-gray: #42484d;
+$black: #141c22;
+
+%bullet {
+  content: "";
+  margin-right: 15px;
+  position: relative;
+  top: -2px;
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 4px;
+  background-color: $gray;
+}
+
+%border {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: {
+    style: solid;
+    color: $gray;
+  }
+}
+
+%font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+%box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin calc($property, $expression, $fallback) {
+  #{$property}: $fallback;
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+@mixin transition-duration($transition-duration) {
+  -webkit-transition-duration: $transition-duration;
+  -moz-transition-duration: $transition-duration;
+  -ms-transition-duration: $transition-duration;
+  -o-transition-duration: $transition-duration;
+  transition-duration: $transition-duration;
+}
+
+@mixin transition-property($transition-property...) {
+  -webkit-transition-property: $transition-property;
+  -moz-transition-property: $transition-property;
+  -ms-transition-property: $transition-property;
+  -o-transition-property: $transition-property;
+  transition-property: $transition-property;
+}
+
+@mixin transition-delay($transition-delay) {
+  -webkit-transition-delay: $transition-delay;
+  -moz-transition-delay: $transition-delay;
+  -o-transition-delay: $transition-delay;
+  transition-delay: $transition-delay;
+}
+
+@mixin rotate($deg) {
+  -webkit-transform: rotateY($deg);
+  -ms-transform: rotateY($deg);
+  transform: rotateY($deg);
+}

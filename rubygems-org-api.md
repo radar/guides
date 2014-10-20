@@ -1,13 +1,21 @@
 ---
 layout: default
 title: RubyGems.org API
+<<<<<<< HEAD
+=======
+url: /rubygems-org-api
+>>>>>>> Add redesign styles for guides
 previous: /command-reference
 next: /run-your-own-gem-server
 ---
 
 {% include big.html %}
 
+<<<<<<< HEAD
 Details on interacting with RubyGems.org over HTTP.
+=======
+<em class="t-gray">Details on interacting with RubyGems.org over HTTP.</em>
+>>>>>>> Add redesign styles for guides
 
 > NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/gemcutter)
 > RubyGems itself and the

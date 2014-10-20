@@ -1,0 +1,61 @@
+.profile__header {
+  padding: {
+    top: 60px;
+    bottom: 40px;
+  }
+  width: 100%;
+  overflow: auto;
+  border-bottom: 1px solid $gray;
+}
+
+.profile__header__name-wrap {
+  @media (min-width: 600px) {
+    float: left;
+    width: 70%;
+  }
+}
+
+.profile__header__name {
+  word-break: break-word;
+  @media (min-width: 600px) {
+    padding-top: 16px;
+  }
+  @media (min-width: 780px) {
+    padding-left: 195px;
+  }
+}
+
+.profile__header__avatar {
+  @media (max-width: 779px) {
+    display: none;
+  }
+  @media (min-width: 780px) {
+    margin-right: 45px;
+    height: 150px;
+    width: 150px;
+    float: left;
+    border-radius: 50%;
+  }
+}
+
+.profile__header__email {
+  padding-top: 10px;
+  display: inline-block;
+  &:before {
+    margin-right: 9px;
+    position: relative;
+    top: 1px;
+  }
+}
+
+.profile__downloads-wrap {
+  padding-top: 32px;
+  @media (max-width: 599px) {
+    width: 100%;
+    float: left;
+  }
+  @media (min-width: 600px) {
+    float: right;
+    text-align: right;
+  }
+}

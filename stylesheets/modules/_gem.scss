@@ -1,0 +1,114 @@
+.gem__version {
+  font-size: 18px;
+  color: darken($gray, 10%);
+}
+
+.gem__intro {
+  margin-bottom: 45px;
+  border-bottom: 1px solid $gray;
+}
+
+.gem__pre {
+  padding-left: 30px;
+  height: 60px;
+  @extend %box-sizing;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 30px;
+  &:first-of-type {
+    margin: {
+      top: 35px;
+      bottom: 30px;
+    }
+  }
+  &:last-of-type {
+    margin-bottom: 75px;
+  }
+}
+
+.gem__code__heading {
+  display: inline-block;
+  width: 112px;
+  background: {
+    image: url("/arrow.svg");
+    repeat: no-repeat;
+    position: center right;
+  }
+  font: {
+    weight: 800;
+    size: 18px;
+    family: "aktiv-grotesk-std", sans-serif;
+  }
+  line-height: 60px;
+  text-transform: uppercase;
+}
+
+.gem__code {
+  padding-right: 30px;
+  position: absolute;
+  top: 0;
+  left: 155px;
+  line-height: 60px;
+}
+
+// TODO this should be in layout. shows up on dashboard, gem, help;
+.gem__aside {
+  @media (max-width: 779px) {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid $gray;
+  }
+}
+
+.gem__downloads-wrap {
+  margin-bottom: 40px;
+}
+
+.gem__downloads__heading {
+  margin-bottom: 6px;
+}
+
+.gem__downloads {
+  margin-bottom: 20px;
+  display: block;
+  font: {
+    weight: 800;
+    size: 24px;
+  }
+}
+
+.gem__see-all-versions {
+  font-style: italic;
+}
+
+.gem__ruby-version__heading {
+  margin-bottom: 10px;
+}
+
+.gem__ruby-version {
+  margin-bottom: 40px;
+  display: block;
+  font: {
+    weight: 800;
+    style: italic;
+    size: 24px;
+  }
+  color: $black;
+}
+
+.gem__link:before {
+  margin-right: 16px;
+}
+
+.gem__versions-wrap {
+  margin-bottom: 70px;
+}
+
+.gem__versions {
+  margin-bottom: 12px;
+}
+
+.gem__version__date {
+  color: $gray;
+}

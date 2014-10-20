@@ -1,0 +1,199 @@
+.l-wrap--header {
+  @media (min-width: 900px) {
+    position: relative;
+    max-width: 1100px;
+  }
+  @media (min-width: 900px) and (max-width: 1199px) {
+    margin: {
+      right: 5%;
+      left: 5%;
+    }
+  }
+  @media (min-width: 1200px) {
+    margin: {
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+.header {
+  -webkit-transform: translateZ(0); // Weird fix to make transition smoother in Safari
+  @media (max-width: 899px) {
+    height: 48px;
+  }
+  @media (min-width: 900px) {
+    height: 68px;
+  }
+}
+
+.header--interior {
+  border-bottom-style: solid;
+  @media (max-width: 899px) {
+    border-bottom: {
+      width: 1px;
+      color: darken($orange, 12%);
+    }
+  }
+  @media (min-width: 900px) {
+    border-bottom: {
+      width: 7px;
+      color: $black;
+    }
+    box-shadow: inset 0 -2px 0 0 rgba($white, .3);
+  }
+}
+
+.header__logo-wrap {
+  position: relative;
+  float: left;
+  &:focus {
+    outline: none;
+  }
+  &:focus, &:hover {
+    .header__logo:before {
+      @include rotate(180deg);
+    }
+  }
+  @media (max-width: 899px) {
+    top: 9px;
+    left: 5%;
+    font-size: 26px;
+  }
+  @media (min-width: 900px) {
+    top: 12px;
+    font-size: 40px;
+  }
+}
+
+.header__logo {
+  position: absolute;
+  font-family: "icomoon";
+  @extend %font-smoothing;
+  color: $white;
+  speak: none;
+  @include rotate(0deg);
+  &:before {
+    position: absolute;
+    @extend %font-smoothing;
+    @include transition-duration(.5s);
+    @include transition-property(transform);
+  }
+  @media (max-width: 899px) {
+    line-height: 32px;
+  }
+  @media (min-width: 900px) {
+    line-height: 45px;
+  }
+}
+
+.header__club-sandwich {
+  &:before {
+    @extend %font-smoothing;
+  }
+  @media (max-width: 899px) {
+    &:before {
+      content: '≡';
+      margin-right: 5%;
+      padding: 14px;
+      position: relative;
+      right: -14px;
+      float: right;
+      font: {
+        family: "icomoon";
+        size: 20px;
+      }
+      speak: none;
+      color: $white;
+      @include transition-duration(.25s);
+      @include transition-property(color);
+    }
+    &:hover:before, &:focus:before {
+      color: rgba($white, .3);
+    }
+  }
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+
+.header__nav-links-wrap {
+  position: absolute;
+  @media (max-width: 899px) {
+    top: 0;
+    right: -270px;
+    width: 270px;
+  }
+  @media (min-width: 900px) {
+    right: 0;
+  }
+}
+
+.header__nav-links {
+  @media (min-width: 900px) {
+    float: left;
+  }
+}
+
+.header__nav-link {
+  @extend %box-sizing;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: $white;
+  @include transition-duration(.25s);
+  &:focus {
+    outline: none;
+  }
+  @media (max-width: 899px) {
+    padding: 18px 30px;
+    display: block;
+    width: 100%;
+    border-top: 1px solid darken($orange, 12%);
+    @include transition-property(background-color, border-top-color);
+    &:last-child {
+      border-bottom: 1px solid darken($orange, 12%);
+    }
+    &:focus, &:hover {
+      border-top-color: darken($orange, 16%);
+      background-color: darken($orange, 12%);
+    }
+    &:active, &.is-active {
+      background-color: $white;
+      color: $red-orange;
+    }
+  }
+  @media (min-width: 900px) {
+    display: inline-block;
+    padding: 25px 16px 26px 16px;
+    border-bottom: 5px solid transparent;
+    @include transition-property(color);
+    &:last-child {
+      margin-right: -16px;
+    }
+    &:focus, &:hover {
+      color: rgba($white, .3);
+    }
+    &.is-active {
+      position: relative;
+      border-bottom-color: $red;
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        @include calc(left, "50% - 5px", 50%);
+        border: {
+          width: 5px 5px 0;
+          style: solid;
+          color: $red transparent;
+        }
+        display: block;
+      }
+    }
+  }
+}
+
+@-moz-document url-prefix() {
+  .header__nav-link {
+    padding-bottom: 25px;
+  }
+}

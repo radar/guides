@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>RubyGems Basics - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">Use of common RubyGems commands</em></p>
+
+<p>The <code>gem</code> command allows you to interact with RubyGems.</p>
+
+<p>Ruby 1.9 and newer ships with RubyGems built-in but you may need to upgrade for
+bug fixes or new features.  To upgrade RubyGems or install it for the first
+time (if you need to use Ruby 1.9) visit the
+<a href="https://rubygems.org/pages/download">download</a> page.</p>
+
+<p>If you want to see how to require files from a gem, skip ahead to <a href="/what-is-a-gem">What is a
+gem</a></p>
+
+<ul>
+  <li><a href="#finding-gems">Finding Gems</a></li>
+  <li><a href="#installing-gems">Installing Gems</a></li>
+  <li><a href="#requiring-code">Requiring Code</a></li>
+  <li><a href="#listing-installed-gems">Listing Installed Gems</a></li>
+  <li><a href="#uninstalling-gems">Uninstalling Gems</a></li>
+  <li><a href="#viewing-documentation">Viewing Documentation</a></li>
+  <li><a href="#fetching-and-unpacking-gems">Fetching and Unpacking Gems</a></li>
+  <li><a href="#further-reading">Further Reading</a></li>
+</ul>
+
+<h2 id="finding-gems">Finding Gems</h2>
+
+<p>The <code>search</code> command lets you find remote gems by name.  You can use regular
+expression characters in your query:</p>
+
+<pre><code>$ gem search ^rails
+
+*** REMOTE GEMS ***
+
+rails (4.0.0)
+rails-3-settings (0.1.1)
+rails-action-args (0.1.1)
+rails-admin (0.0.0)
+rails-ajax (0.2.0.20130731)
+[...]
+</code></pre>
+
+<p>If you see a gem you want more information on you can add the details option.
+You’ll want to do this with a small number of gems, though, as listing gems
+with details requires downloading more files:</p>
+
+<pre><code>$ gem search ^rails$ -d
+
+*** REMOTE GEMS ***
+
+rails (4.0.0)
+    Author: David Heinemeier Hansson
+    Homepage: http://www.rubyonrails.org
+
+    Full-stack web application framework.
+</code></pre>
+
+<p>You can also search for gems on rubygems.org such as <a href="https://rubygems.org/search?utf8=✓&amp;query=rake">this search for
+rake</a></p>
+
+<h2 id="installing-gems">Installing Gems</h2>
+
+<p>The <code>install</code> command downloads and installs the gem and any necessary
+dependencies then builds documentation for the installed gems.</p>
+
+<pre><code>$ gem install drip
+Fetching: rbtree-0.4.1.gem (100%)
+Building native extensions.  This could take a while...
+Successfully installed rbtree-0.4.1
+Fetching: drip-0.0.2.gem (100%)
+Successfully installed drip-0.0.2
+Parsing documentation for rbtree-0.4.1
+Installing ri documentation for rbtree-0.4.1
+Parsing documentation for drip-0.0.2
+Installing ri documentation for drip-0.0.2
+Done installing documentation for rbtree, drip after 0 seconds
+2 gems installed
+</code></pre>
+
+<p>Here the drip command depends upon the rbtree gem which has an extension.  Ruby
+installs the dependency rbtree and builds its extension, installs the drip gem,
+then builds documentation for the installed gems.</p>
+
+<p>You can disable documentation generation using the <code>--no-doc</code> argument when
+installing gems.</p>
+
+<h2 id="requiring-code">Requiring code</h2>
+
+<p>RubyGems modifies your Ruby load path, which controls how your Ruby code is
+found by the <code>require</code> statement. When you <code>require</code> a gem, really you’re just
+placing that gem’s <code>lib</code> directory onto your <code>$LOAD_PATH</code>. Let’s try this out
+in <code>irb</code> and get some help from the <code>pretty_print</code> library included with Ruby.</p>
+
+<p><em>Tip: Passing <code>-r</code> to
+<code>irb</code> will automatically require a library when irb is loaded.</em></p>
+
+<pre><code>% irb -rpp
+&gt;&gt; pp $LOAD_PATH
+[".../lib/ruby/site_ruby/1.9.1",
+ ".../lib/ruby/site_ruby",
+ ".../lib/ruby/vendor_ruby/1.9.1",
+ ".../lib/ruby/vendor_ruby",
+ ".../lib/ruby/1.9.1",
+ "."]
+</code></pre>
+
+<p>By default you have just a few system directories on the load path and the Ruby
+standard libraries.  To add the awesome_print directories to the load path,
+you can require one of its files:</p>
+
+<pre><code>% irb -rpp
+&gt;&gt; require 'ap'
+=&gt; true
+&gt;&gt; pp $LOAD_PATH.first
+".../gems/awesome_print-1.0.2/lib"
+</code></pre>
+
+<p>Note:  For Ruby 1.8 you must <code>require 'rubygems'</code> before requiring any gems.</p>
+
+<p>Once you’ve required <code>ap</code>, RubyGems automatically places its
+<code>lib</code> directory on the <code>$LOAD_PATH</code>.</p>
+
+<p>That’s basically it for what’s in a gem.  Drop Ruby code into <code>lib</code>, name a
+Ruby file the same as your gem (for the gem “freewill” the file should be
+<code>freewill.rb</code>, see also <a href="/name-your-gem">name your gem</a>) and it’s loadable by
+RubyGems.</p>
+
+<p>The <code>lib</code> directory itself normally contains only one <code>.rb</code> file and a
+directory with the same name as the gem which contains the rest of the files.</p>
+
+<p>For example:</p>
+
+<pre><code>% tree freewill/
+freewill/
+└── lib/
+    ├── freewill/
+    │   ├── user.rb
+    │   ├── widget.rb
+    │   └── ...
+    └── freewill.rb
+</code></pre>
+
+<h2 id="listing-installed-gems">Listing Installed Gems</h2>
+
+<p>The <code>list</code> command shows your locally installed gems:</p>
+
+<pre><code>$ gem list
+
+*** LOCAL GEMS ***
+
+bigdecimal (1.2.0)
+drip (0.0.2)
+io-console (0.4.2)
+json (1.7.7)
+minitest (4.3.2)
+psych (2.0.0)
+rake (0.9.6)
+rbtree (0.4.1)
+rdoc (4.0.0)
+test-unit (2.0.0.0)
+</code></pre>
+
+<p>(Ruby ships with some gems by default, bigdecimal, io-console, json, minitest,
+psych, rake, rdoc, test-unit for ruby 2.0.0).</p>
+
+<h2 id="uninstalling-gems">Uninstalling Gems</h2>
+
+<p>The <code>uninstall</code> command removes the gems you have installed.</p>
+
+<pre><code>$ gem uninstall drip
+Successfully uninstalled drip-0.0.2
+</code></pre>
+
+<p>If you uninstall a dependency of a gem RubyGems will ask you for confirmation.</p>
+
+<pre><code>$ gem uninstall rbtree
+
+You have requested to uninstall the gem:
+	rbtree-0.4.1
+
+drip-0.0.2 depends on rbtree (&gt;= 0)
+If you remove this gem, these dependencies will not be met.
+Continue with Uninstall? [yN]  n
+ERROR:  While executing gem ... (Gem::DependencyRemovalException)
+    Uninstallation aborted due to dependent gem(s)
+</code></pre>
+
+<h2 id="viewing-documentation">Viewing Documentation</h2>
+
+<p>You can view the documentation for your installed gems with <code>ri</code>:</p>
+
+<pre><code>$ ri RBTree
+RBTree &lt; MultiRBTree
+
+(from gem rbtree-0.4.0)
+-------------------------------------------
+A sorted associative collection that cannot
+contain duplicate keys. RBTree is a
+subclass of MultiRBTree.
+-------------------------------------------
+</code></pre>
+
+<p>You can view the documentation for your installed gems in your browser with
+the <code>server</code> command:</p>
+
+<pre><code>$ gem server
+Server started at http://0.0.0.0:8808
+Server started at http://[::]:8808
+</code></pre>
+
+<p>You can access this documentation at http://localhost:8808</p>
+
+<h2 id="fetching-and-unpacking-gems">Fetching and Unpacking Gems</h2>
+
+<p>If you wish to audit a gem’s contents without installing it you can use the
+<code>fetch</code> command to download the .gem file then extract its contents with the
+<code>unpack</code> command.</p>
+
+<pre><code>$ gem fetch malice
+Fetching: malice-13.gem (100%)
+Downloaded malice-13
+$ gem unpack malice-13.gem
+Fetching: malice-13.gem (100%)
+Unpacked gem: '.../malice-13'
+$ more malice-13/README
+
+Malice v. 13
+
+DESCRIPTION
+
+A small, malicious library.
+
+[...]
+$ rm -r malice-13*
+</code></pre>
+
+<p>You can also unpack a gem you have installed, modify a few files, then use the
+modified gem in place of the installed one:</p>
+
+<pre><code>$ gem unpack rake
+Unpacked gem: '.../rake-10.1.0'
+$ vim rake-10.1.0/lib/rake/...
+$ ruby -I rake-10.1.0/lib -S rake some_rake_task
+[...]
+</code></pre>
+
+<p>The <code>-I</code> argument adds your unpacked rake to the ruby <code>$LOAD_PATH</code> which
+prevents RubyGems from loading the gem version (or the default version).  The
+<code>-S</code> argument finds <code>rake</code> in the shell’s <code>$PATH</code> so you don’t have to type out
+the full path.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<p>This guide only shows the basics of using the <code>gem</code> command.  For information
+on what’s inside a gem and how to use one you’ve installed see the next
+section, <a href="/what-is-a-gem">What is a gem</a>.  For a complete reference of gem
+commands see the <a href="/command-reference">Command Reference</a>.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/what-is-a-gem">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

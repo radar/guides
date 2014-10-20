@@ -5,9 +5,15 @@ previous: /plugins
 next: /
 ---
 
+<<<<<<< HEAD
 This site is [open source](https://github.com/rubygems/guides) and its content is
 [Creative Commons](https://github.com/rubygems/guides/blob/gh-pages/CC-LICENSE)
 licensed.
+=======
+<em class="t-gray">This site is [open source](https://github.com/rubygems/guides) and its content is
+[Creative Commons](https://github.com/rubygems/guides/blob/gh-pages/CC-LICENSE)
+licensed.</em>
+>>>>>>> Add redesign styles for guides
 
 Contributors
 ------------

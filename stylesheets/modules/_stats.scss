@@ -1,0 +1,193 @@
+.stats {
+  overflow: auto;
+  border-bottom: 1px solid $gray;
+  @media (max-width: 709px) {
+    margin: {
+      top: -32px;
+      bottom: 24px;
+    }
+    padding-bottom: 12px;
+  }
+  @media (min-width: 710px) {
+    margin: {
+      top: -15px;
+      bottom: 60px;
+    }
+    padding-bottom: 24px;
+  }
+}
+
+.stat {
+  width: 33.33%;
+  float: left;
+  font-weight: 500;
+  text-transform: uppercase;
+  @media (max-width: 709px) {
+    font-size: 9px;
+  }
+  @media (min-width: 710px) {
+    font-size: 12px;
+  }
+  &:before {
+    @media (max-width: 399px) {
+      display: none;
+    }
+    @media (min-width: 400px) {
+      float: left;
+    }
+    @media (min-width: 400px) and (max-width: 719px) {
+      margin-right: 6px;
+      font-size: 20px;
+    }
+    @media (min-width: 710px) {
+      margin-right: 18px;
+      font-size: 34px;
+    }
+  }
+}
+
+.stat__count {
+  display: block;
+  font-weight: 600;
+  @media (max-width: 719px) {
+    font-size: 12px;
+  }
+  @media (min-width: 710px) {
+    font-size: 24px;
+  }
+}
+
+.stats__graph__heading {
+  margin-bottom: 42px;
+  font: {
+    weight: 600;
+    size: 18px;
+  }
+  text-transform: uppercase;
+}
+
+.stats__graph__gem {
+  margin-bottom: 15px;
+  display: table;
+  height: 30px;
+  width: 100%;
+  position: relative;
+}
+
+.stats__graph__gem__name {
+  display: table-cell;
+  font-weight: 400;
+  text-align: right;
+  vertical-align: middle;
+  @media (max-width: 709px) {
+    // TODO fix calc 15%
+    @include calc(width, 86px, 15%);
+    font-size: 13px;
+  }
+  @media (min-width: 710px) {
+    @include calc(width, 140px, 15%);
+    font-size: 15px;
+  }
+}
+
+.stats__graph__gem__meter-wrap {
+  position: relative;
+}
+
+.stats__graph__gem__meter {
+  height: 30px;
+  box-shadow: inset 0 1px 1px -1px $gray;
+  background-image: none;
+  background-color: lighten($gray, 20%);
+  -webkit-appearance: none;
+  @media (max-width: 709px) {
+    @include calc(margin-left, 16px, 3%);
+    @include calc(width, "100% - 16px", 97%);
+  }
+  @media (min-width: 710px) {
+    @include calc(margin-left, 30px, 3%);
+    @include calc(width, "100% - 30px", 97%);
+  }
+  &::-webkit-meter-bar {
+    box-shadow: inset 0 1px 1px -1px $gray;
+    background-image: none;
+    background-color: lighten($gray, 20%);
+  }
+  &::-webkit-meter-optimum-value {
+    background: none;
+  }
+}
+
+
+$colors: #ffae00 #9fdd18 #c45dff #599cdb #bbf5ff #bbbbff #ff90de #fc7765 #a4f5b0 #fce865;
+$light-colors: #ffd67f #cbed83 #dda1ff #8abae8 #cff8ff #cfcfff #ffb1e8 #fda093 #bff8c8 #fdef92;
+$text-colors: #b8820a #75a31b #8f49bc #4475a3 #82aab2 #7779a3 #b86da5 #b65c51 #689972 #b6aa51;
+
+@mixin meter-value-bar($color, $index) {
+  border-right: 1px solid darken($color, 4%);
+  background-color: $color;
+  background: -webkit-linear-gradient(right, $color 0%,nth($light-colors, $index) 100%);
+  background: -moz-linear-gradient(right, $color 0%,nth($light-colors, $index) 100%);
+  background: linear-gradient(to left, $color 0%,nth($light-colors, $index) 100%);
+}
+
+@each $color in $colors {
+  $i: index($colors, $color);
+  .stats__graph__gem:nth-of-type(#{$i+1}) .stats__graph__gem__meter::-webkit-meter-optimum-value {
+    @include meter-value-bar($color, $i);
+  }
+  .stats__graph__gem:nth-of-type(#{$i+1}) .stats__graph__gem__meter::-moz-meter-bar {
+    @include meter-value-bar($color, $i);
+  }
+  .stats__graph__gem:nth-of-type(#{$i+1}) .stats__graph__gem__meter-polyfill {
+    @include meter-value-bar($color, $i);
+    height: 100%;
+  }
+}
+
+@each $text-color in $text-colors {
+  $j: index($text-colors, $text-color);
+  .stats__graph__gem:nth-of-type(#{$j+1}) .stats__graph__gem__count {
+    color: $text-color;
+  }
+}
+
+.stats__graph__gem__count {
+  position: absolute;
+  top: 7px;
+  font-size: 13px;
+  @media (min-width: 710px) {
+    top: 5px;
+    font-size: 15px;
+  }
+  &[data-name='rake'] {
+    right: 9%;
+  }
+  &[data-name='rack'] {
+    right: 11.5%;
+  }
+  &[data-name='thor'] {
+    right: 17%;
+  }
+  &[data-name='activesupport'] {
+    right: 23%;
+  }
+  &[data-name='json'] {
+    right: 27%;
+  }
+  &[data-name='rails'] {
+    right: 28%;
+  }
+  &[data-name='activerecord'] {
+    right: 42.5%;
+  }
+  &[data-name='actionpack'] {
+    right: 46.5%;
+  }
+  &[data-name='actionmailer'] {
+    right: 52%;
+  }
+  &[data-name='activesource'] {
+    right: 64%;
+  }
+}

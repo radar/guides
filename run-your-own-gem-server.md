@@ -1,10 +1,19 @@
 ---
 layout: default
 title: Run your own gem server
+<<<<<<< HEAD
+=======
+url: /run-your-own-gem-server
+>>>>>>> Add redesign styles for guides
 previous: /rubygems-org-api
 next: /resources
 ---
 
+<<<<<<< HEAD
+=======
+<em class="t-gray">Need to serve gems locally or for your organization?</em>
+
+>>>>>>> Add redesign styles for guides
 {% include big.html %}
 
 There are times you would like to run your own gem server.  You may want to

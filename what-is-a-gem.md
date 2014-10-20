@@ -1,10 +1,19 @@
 ---
 layout: default
 title: What is a gem?
+<<<<<<< HEAD
+=======
+url: /what-is-a-gem
+>>>>>>> Add redesign styles for guides
 previous: /rubygems-basics
 next: /make-your-own-gem
 ---
 
+<<<<<<< HEAD
+=======
+<em class="t-gray">Unpack the mystery behind what's in a RubyGem.</em>
+
+>>>>>>> Add redesign styles for guides
 Structure of a Gem
 ------------------
 

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>What is a gem? - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">Unpack the mystery behind what’s in a RubyGem.</em></p>
+
+<h2 id="structure-of-a-gem">Structure of a Gem</h2>
+
+<p>Each gem has a name, version, and platform. For example, the
+<a href="http://rubygems.org/gems/rake">rake</a> gem has a <code>0.8.7</code> version (from May,
+2009).  Rake’s platform is <code>ruby</code>, which means it works on any platform Ruby
+runs on.</p>
+
+<p>Platforms are based on the CPU architecture, operating system type and
+sometimes the operating system version.  Examples include “x86-mingw32” or
+“java”.  The platform indicates the gem only works with a ruby built for the
+same platform.  RubyGems will automatically download the correct version for
+your platform.  See <code>gem help platform</code> for full details.</p>
+
+<p>Inside a gems are the following components:</p>
+
+<ul>
+  <li>Code (including tests and supporting utilities)</li>
+  <li>Documentation</li>
+  <li>gemspec</li>
+</ul>
+
+<p>Each gem follows the same standard structure of code organization:</p>
+
+<pre><code>% tree freewill
+freewill/
+├── bin/
+│   └── freewill
+├── lib/
+│   └── freewill.rb
+├── test/
+│   └── test_freewill.rb
+├── README
+├── Rakefile
+└── freewill.gemspec
+</code></pre>
+
+<p>Here, you can see the major components of a gem:</p>
+
+<ul>
+  <li>The <code>lib</code> directory contains the code for the gem</li>
+  <li>The <code>test</code> or <code>spec</code> directory contains tests, depending on which test
+framework the developer uses</li>
+  <li>A gem usually has a <code>Rakefile</code>, which the
+<a href="http://rake.rubyforge.org/">rake</a> program uses to automate tests,
+generate code, and perform other tasks.</li>
+  <li>This gem also includes an executable file in the
+<code>bin</code> directory, which will be loaded into the user’s <code>PATH</code> when the gem is
+installed.</li>
+  <li>Documentation is usually included in the <code>README</code> and inline with the code.
+When you install a gem, documentation is generated automatically for you.
+Most gems include <a href="http://rdoc.sourceforge.net/doc/">RDoc</a> documentation,
+but some use <a href="http://yardoc.org/">YARD</a> docs instead.</li>
+  <li>The final piece is the gemspec, which contains information about the gem.
+The gem’s files, test information, platform, version number and more are all
+laid out here along with the author’s email and name.</li>
+</ul>
+
+<p><a href="/specification-reference/">More information on the gemspec file</a></p>
+
+<p><a href="/make-your-own-gem/">Building your own gem</a></p>
+
+<h2 id="the-gemspec">The Gemspec</h2>
+
+<p>Your application, your gem’s users, and you 6 months from now will want to
+know who wrote a gem, when, and what it does.  The gemspec contains this
+information.</p>
+
+<p>Here’s an example of a gemspec file. You can learn more in <a href="/make-your-own-gem">how to make a
+gem</a>.</p>
+
+<pre><code>% cat freewill.gemspec
+Gem::Specification.new do |s|
+  s.name        = 'freewill'
+  s.version     = '1.0.0'
+  s.summary     = "Freewill!"
+  s.description = "I will choose Freewill!"
+  s.authors     = ["Nick Quaranto"]
+  s.email       = 'nick@quaran.to'
+  s.homepage    = 'http://example.com/freewill'
+  s.files       = ["lib/freewill.rb", ...]
+end
+</code></pre>
+
+<p>For more information on the gemspec, please check out the full <a href="/specification-reference">Specification
+Reference</a> which goes over each metadata field in
+detail.</p>
+
+<h2 id="credits">Credits</h2>
+
+<p>This guide was adapted from <a href="https://twitter.com/#!/goncalossilva">Gonçalo
+Silva</a>’s original tutorial on
+docs.rubygems.org and from <a href="http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/">Gem Sawyer, Modern Day Ruby
+Warrior</a>.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/rubygems-basics">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/make-your-own-gem">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

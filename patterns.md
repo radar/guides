@@ -1,11 +1,19 @@
 ---
 layout: default
 title: Patterns
+<<<<<<< HEAD
+=======
+url: /patterns
+>>>>>>> Add redesign styles for guides
 previous: /security
 next: /specification-reference
 ---
 
+<<<<<<< HEAD
 Common practices to make your gem users' and other developers' lives easier.
+=======
+<em class="t-gray">Common practices to make your gem users' and other developers' lives easier.</em>
+>>>>>>> Add redesign styles for guides
 
 * [Consistent naming](#consistent-naming)
 * [Semantic versioning](#semantic-versioning)

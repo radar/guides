@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>RubyGems.org API - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <!-- TODO: make a layout for this -->
+<style type="text/css">
+  #container {
+    max-width: 920px;
+  }
+</style>
+
+<p><em class="t-gray">Details on interacting with RubyGems.org over HTTP.</em></p>
+
+<blockquote>
+  <p>NOTE: The API is a work in progress, and <a href="https://github.com/rubygems/gemcutter">can use your help!</a>
+RubyGems itself and the
+<a href="https://rubygems.org/gems/gemcutter">gemcutter gem</a> use the API to push gems,
+add owners, and more.</p>
+</blockquote>
+
+<ul>
+  <li><a href="#api-authorization">API Authorization</a>: How to authenticate with RubyGems.org</li>
+  <li><a href="#gem-methods">Gem Methods</a>: Query or create gems to be hosted</li>
+  <li><a href="#gem-version-methods">Gem Version Methods</a>: Query for information about
+versions of a particular gem</li>
+  <li><a href="#gem-download-methods">Gem Download Methods</a>: Query for download statistics</li>
+  <li><a href="#owner-methods">Owner Methods</a>: Manage owners for gems</li>
+  <li><a href="#webhook-methods">Webhook Methods</a>: Manage notifications for when gems are
+pushed</li>
+  <li><a href="#activity-methods">Activity Methods</a>: Query for information about site-wide
+activity</li>
+  <li><a href="#misc-methods">Misc Methods</a>: Various other interactions with the site</li>
+</ul>
+
+<h2 id="api-authorization">API Authorization</h2>
+
+<p>Some API calls require an Authorization header. To find your API key, click on
+your username when logged in to <a href="http://rubygems.org">RubyGems.org</a> and then click on ‘Edit Profile’. Here’s an example of
+using an API key:</p>
+
+<pre><code>$ curl -H 'Authorization:YOUR_API_KEY' \
+  https://rubygems.org/api/v1/some_api_call.json
+</code></pre>
+
+<h2 id="ruby-library">Ruby Library</h2>
+
+<p>You can also interact with RubyGems.org using Ruby.</p>
+
+<p>The <a href="https://rubygems.org/gems/gems">gems</a> client provides a Ruby interface to
+all the resources listed below. This library has
+<a href="http://rdoc.info/gems/gems">full documentation</a> that includes some basic usage
+examples in the README. You can install the library with the command:</p>
+
+<pre><code>gem install gems
+</code></pre>
+
+<h2 id="gem-methods">Gem Methods</h2>
+
+<h3 id="get---apiv1gemsgem-namejsonxmlyaml">GET - <code>/api/v1/gems/[GEM NAME].(json|xml|yaml)</code></h3>
+
+<p>Returns some basic information about the given gem. See below an example response for the gem “rails” in JSON format:</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/gems/rails.json
+
+{
+  "name": "rails",
+  "downloads": 7528417,
+  "version": "3.2.1",
+  "version_downloads": 47602,
+  "authors": "David Heinemeier Hansson",
+  "info": "Ruby on Rails is a full-stack web framework optimized for programmer
+          happiness and sustainable productivity. It encourages beautiful code
+          by favoring convention over configuration.",
+  "project_uri": "http://rubygems.org/gems/rails",
+  "gem_uri": "http://rubygems.org/gems/rails-3.2.1.gem",
+  "homepage_uri": "http://www.rubyonrails.org",
+  "wiki_uri": "http://wiki.rubyonrails.org",
+  "documentation_uri": "http://api.rubyonrails.org",
+  "mailing_list_uri": "http://groups.google.com/group/rubyonrails-talk",
+  "source_code_uri": "http://github.com/rails/rails",
+  "bug_tracker_uri": "http://github.com/rails/rails/issues",
+  "dependencies": {
+    "development": [],
+    "runtime": [
+      {
+        "name": "actionmailer",
+        "requirements":"= 3.2.1"
+      },
+      {
+        "name": "actionpack",
+        "requirements": "= 3.2.1"
+      },
+      {
+        "name": "activerecord",
+        "requirements": "= 3.2.1"
+      },
+      {
+        "name": "activeresource",
+        "requirements": "= 3.2.1"
+      },
+      {
+        "name": "activesupport",
+        "requirements": "= 3.2.1"
+      },
+      {
+        "name": "bundler",
+        "requirements": "~&gt; 1.0"
+      },
+      {
+        "name": "railties",
+        "requirements": "= 3.2.1"
+      }
+    ]
+  }
+}
+}
+</code></pre>
+
+<p>or XML format:</p>
+
+<pre><code>$ curl http://rubygems.org/api/v1/gems/rails.xml
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rubygem&gt;
+  &lt;name&gt;rails&lt;/name&gt;
+  &lt;downloads type="integer"&gt;7528499&lt;/downloads&gt;
+  &lt;version&gt;3.2.1&lt;/version&gt;
+  &lt;version-downloads type="integer"&gt;47633&lt;/version-downloads&gt;
+  &lt;authors&gt;David Heinemeier Hansson&lt;/authors&gt;
+  &lt;info&gt;Ruby on Rails is a full-stack web framework optimized for programmer happiness and
+    sustainable productivity. It encourages beautiful code by favoring convention over
+    configuration.&lt;/info&gt;
+  &lt;project-uri&gt;http://rubygems.org/gems/rails&lt;/project-uri&gt;
+  &lt;gem-uri&gt;http://rubygems.org/gems/rails-3.2.1.gem&lt;/gem-uri&gt;
+  &lt;homepage-uri&gt;http://www.rubyonrails.org&lt;/homepage-uri&gt;
+  &lt;wiki-uri&gt;http://wiki.rubyonrails.org&lt;/wiki-uri&gt;
+  &lt;documentation-uri&gt;http://api.rubyonrails.org&lt;/documentation-uri&gt;
+  &lt;mailing-list-uri&gt;http://groups.google.com/group/rubyonrails-talk&lt;/mailing-list-uri&gt;
+  &lt;source-code-uri&gt;http://github.com/rails/rails&lt;/source-code-uri&gt;
+  &lt;bug-tracker-uri&gt;http://github.com/rails/rails/issues&lt;/bug-tracker-uri&gt;
+  &lt;dependencies&gt;
+    &lt;development type="array"/&gt;
+    &lt;runtime type="array"&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;actionmailer&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;actionpack&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;activerecord&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;activeresource&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;activesupport&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;bundler&lt;/name&gt;
+        &lt;requirements&gt;~&amp;gt; 1.0&lt;/requirements&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+        &lt;name&gt;railties&lt;/name&gt;
+        &lt;requirements&gt;= 3.2.1&lt;/requirements&gt;
+      &lt;/dependency&gt;
+    &lt;/runtime&gt;
+  &lt;/dependencies&gt;
+&lt;/rubygem&gt;
+</code></pre>
+
+<h3 id="get---apiv1searchjsonxmlyamlqueryyour-query">GET - <code>/api/v1/search.(json|xml|yaml)?query=[YOUR QUERY]</code></h3>
+
+<p>Submit a search to Gemcutter for active gems, just like a search query on the
+site. Returns an array of the XML or JSON representation of gems that match.</p>
+
+<pre><code>$ curl 'https://rubygems.org/api/v1/search.json?query=cucumber'
+
+$ curl 'https://rubygems.org/api/v1/search.xml?query=cucumber'
+</code></pre>
+
+<p>The results are paginated so the API call will return only the first 30 matched
+gems. To get subsequent results, use the page query parameter until an empty
+reponse is received.</p>
+
+<pre><code>$ curl 'https://rubygems.org/api/v1/search.json?query=cucumber&amp;page=2'
+</code></pre>
+
+<h3 id="get---apiv1gemsjsonxmlyaml">GET - <code>/api/v1/gems.(json|xml|yaml)</code></h3>
+
+<p>List all gems that you own. Returns an array of the XML or JSON representation
+of gems you own.</p>
+
+<pre><code>$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+          https://rubygems.org/api/v1/gems.json
+</code></pre>
+
+<h3 id="post---apiv1gems">POST - <code>/api/v1/gems</code></h3>
+
+<p>Submit a gem to RubyGems.org. Must post a built RubyGem in the request body.</p>
+
+<pre><code>$ curl --data-binary @gemcutter-0.2.1.gem \
+       -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       https://rubygems.org/api/v1/gems
+
+Successfully registered gem: gemcutter (0.2.1)
+</code></pre>
+
+<h3 id="delete---apiv1gemsyank">DELETE - <code>/api/v1/gems/yank</code></h3>
+
+<p>Remove a gem from RubyGems.org’s index. Platform is optional.</p>
+
+<pre><code>$ curl -X DELETE -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -d 'gem_name=bills' -d 'version=0.0.1' \
+       -d 'platform=x86-darwin-10' \
+       https://rubygems.org/api/v1/gems/yank
+
+Successfully yanked gem: bills (0.0.1)
+</code></pre>
+
+<h3 id="put---apiv1gemsunyank">PUT - <code>/api/v1/gems/unyank</code></h3>
+
+<p>Update a previously yanked gem back into RubyGems.org’s index. Platform is optional.</p>
+
+<pre><code>$ curl -X PUT -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -d 'gem_name=bills' -d 'version=0.0.1' \
+       -d 'platform=x86-darwin-10' \
+       https://rubygems.org/api/v1/gems/unyank
+
+Successfully unyanked gem: bills (0.0.1)
+</code></pre>
+
+<h2 id="gem-version-methods">Gem Version Methods</h2>
+
+<h3 id="get---apiv1versionsgem-namejsonxmlyaml">GET - <code>/api/v1/versions/[GEM NAME].(json|xml|yaml)</code></h3>
+
+<p>Returns an array of gem version details like the below:</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/versions/coulda.json
+
+[
+   {
+      "number" : "0.6.3",
+      "built_at" : "2010-12-23T05:00:00Z",
+      "summary" : "Test::Unit-based acceptance testing DSL",
+      "downloads_count" : 175,
+      "platform" : "ruby",
+      "authors" : "Evan David Light",
+      "description" : "Behaviour Driven Development derived from Cucumber but
+                       as an internal DSL with methods for reuse",
+      "prerelease" : false,
+   }
+]
+</code></pre>
+
+<h2 id="gem-download-methods">Gem Download Methods</h2>
+
+<h3 id="get---apiv1downloadsjsonxmlyaml">GET - <code>/api/v1/downloads.(json|xml|yaml)</code></h3>
+
+<p>Returns an object containing the total number of downloads on RubyGems.</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/downloads.json
+
+{
+  "total": 461672727
+}
+</code></pre>
+
+<h3 id="get---apiv1downloadsgem-name-gem-versionjsonxmlyaml">GET - <code>/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)</code></h3>
+
+<p>Returns an object containing the total number of downloads for a paritcular gem
+as well as the total number of downloads for the specified version.</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/downloads/rails_admin-0.0.0.json
+
+{
+  "version_downloads": 3142,
+  "total_downloads": 3142
+}
+</code></pre>
+
+<h2 id="owner-methods">Owner Methods</h2>
+<p>### GET - <code>/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)</code></p>
+
+<p>View all gems for a user. This is all the gems a user can push to.</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/owners/qrush/gems.json
+
+[
+  {
+    "name": "factory_girl",
+	...
+  },
+  ...
+]
+</code></pre>
+
+<h3 id="get---apiv1gemsgem-nameownersjsonxmlyaml">GET - <code>/api/v1/gems/[GEM NAME]/owners.(json|xml|yaml)</code></h3>
+
+<p>View all owners of a gem. These users can all push to this gem.</p>
+
+<pre><code>$ curl https://rubygems.org/api/v1/gems/gemcutter/owners.json
+
+[
+  {
+    "email": "nick@gemcutter.org"
+  },
+  {
+    "email": "ddollar@gmail.com"
+  }
+]
+</code></pre>
+
+<h3 id="post---apiv1gemsgem-nameowners">POST - <code>/api/v1/gems/[GEM NAME]/owners</code></h3>
+
+<p>Add an owner to a RubyGem you own, giving that user permission to manage it.</p>
+
+<pre><code>$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -F 'email=josh@technicalpickles.com' \
+       https://rubygems.org/api/v1/gems/gemcutter/owners
+
+Owner added successfully.
+</code></pre>
+
+<h3 id="delete---apiv1gemsgem-nameowners">DELETE - <code>/api/v1/gems/[GEM NAME]/owners</code></h3>
+
+<p>Remove a user’s permission to manage a RubyGem you own.</p>
+
+<pre><code>$ curl -X DELETE -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+        -d "email=josh@technicalpickles.com" \
+        https://rubygems.org/api/v1/gems/gemcutter/owners
+
+Owner removed successfully.
+</code></pre>
+
+<h2 id="webhook-methods">WebHook Methods</h2>
+
+<h3 id="get---apiv1webhooksjsonxmlyaml">GET - <code>/api/v1/web_hooks.(json|xml|yaml)</code></h3>
+
+<p>List the webhooks registered under your account.</p>
+
+<pre><code>$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       https://rubygems.org/api/v1/web_hooks.json
+
+{
+  "all gems": [
+    {
+      "url": "http://gemwhisperer.heroku.com",
+      "failure_count": 1
+    }
+  ],
+  "rails": [
+    {
+      "url": "http://example.com",
+      "failure_count": 0
+    }
+  ]
+}
+</code></pre>
+
+<h3 id="post---apiv1webhooks">POST - <code>/api/v1/web_hooks</code></h3>
+
+<p>Create a webhook. Requires two parameters: <code>gem_name</code> and <code>url</code>. Specify <code>*</code>
+for the <code>gem_name</code> parameter to apply the hook globally to all gems.</p>
+
+<pre><code>$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -F 'gem_name=rails' -F 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks
+
+Successfully created webhook for rails to http://example.com
+
+$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -F 'gem_name=*' -F 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks
+
+Successfully created webhook for all gems to http://example.com
+</code></pre>
+
+<h3 id="delete---apiv1webhooksremove">DELETE - <code>/api/v1/web_hooks/remove</code></h3>
+
+<p>Remove a webhook. Requires two parameters: <code>gem_name</code> and <code>url</code>. Specify <code>*</code>
+for the <code>gem_name</code> parameter to apply the hook globally to all gems.</p>
+
+<pre><code>$ curl -X DELETE -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -d 'gem_name=rails' -d 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks/remove
+
+Successfully removed webhook for rails to http://example.com
+
+$ curl -X DELETE -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -d 'gem_name=*' -d 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks/remove
+
+Successfully removed webhook for all gems to http://example.com
+</code></pre>
+
+<h3 id="post---apiv1webhooksfire">POST - <code>/api/v1/web_hooks/fire</code></h3>
+
+<p>Test fire a webhook. This can be used to test out an endpoint at any time, for
+example when you’re developing your application. Requires two parameters:
+<code>gem_name</code> and <code>url</code>. Specify <code>*</code> for the gem_name parameter to apply the hook
+globally to all gems.</p>
+
+<p>An <code>Authorization</code> header is included with every fired webhook so you can be
+sure the request came from RubyGems.org. The value of the header is the
+SHA2-hashed concatenation of the gem name, the gem version and your API key.</p>
+
+<pre><code>$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -F 'gem_name=rails' -F 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks/fire
+
+Successfully deployed webhook for rails to http://example.com
+
+$ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
+       -F 'gem_name=*' -F 'url=http://example.com' \
+       https://rubygems.org/api/v1/web_hooks/fire
+
+Successfully deployed webhook for all gems to http://example.com
+</code></pre>
+
+<h2 id="activity-methods">Activity Methods</h2>
+
+<h3 id="get---apiv1activitylatest">GET - <code>/api/v1/activity/latest</code></h3>
+
+<p>Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the XML or JSON representation of the gems.</p>
+
+<pre><code>$ curl 'https://rubygems.org/api/v1/activity/latest.json'
+</code></pre>
+
+<h3 id="get---apiv1activityjustupdated">GET - <code>/api/v1/activity/just_updated</code></h3>
+
+<p>Pulls the 50 most recently updated gems. Returns an array of the XML or JSON representation of the gem versions.</p>
+
+<pre><code>$ curl 'https://rubygems.org/api/v1/activity/just_updated.json'
+</code></pre>
+
+<h2 id="misc-methods">Misc Methods</h2>
+
+<h3 id="get---apiv1apikeyjsonxmlyaml">GET - <code>/api/v1/api_key.(json|xml|yaml)</code></h3>
+
+<p>Retrieve your API key using HTTP basic auth.</p>
+
+<pre><code>$ curl -u "nick@gemcutter.org:schwwwwing" \
+       https://rubygems.org/api/v1/api_key.json
+
+{
+  "rubygems_api_key": "701243f217cdf23b1370c7b66b65ca97"
+}
+</code></pre>
+
+<h3 id="get---apiv1dependenciesgemscomma-delimited-gem-names">GET - <code>/api/v1/dependencies?gems=[COMMA DELIMITED GEM NAMES]</code></h3>
+
+<p>Returns a marshalled array of hashes for all versions of given gems. Each hash
+contains a gem version with its dependencies making this useful for resolving dependencies.</p>
+
+<pre><code>$ ruby -ropen-uri -rpp -e \
+  'pp Marshal.load(open("https://rubygems.org/api/v1/dependencies?gems=rails,thor"))'
+
+[{:platform=&gt;"ruby",
+  :dependencies=&gt;
+   [["bundler", "~&gt; 1.0"],
+    ["railties", "= 3.0.3"],
+    ["actionmailer", "= 3.0.3"],
+    ["activeresource", "= 3.0.3"],
+    ["activerecord", "= 3.0.3"],
+    ["actionpack", "= 3.0.3"],
+    ["activesupport", "= 3.0.3"]],
+  :name=&gt;"rails",
+  :number=&gt;"3.0.3"},
+...
+{:number=&gt;"0.9.9", :platform=&gt;"ruby", :dependencies=&gt;[], :name=&gt;"thor"}]
+</code></pre>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/command-reference">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/run-your-own-gem-server">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

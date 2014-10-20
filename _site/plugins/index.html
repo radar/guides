@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Plugins - RubyGems Guides</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
+    </script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form class="header__search-wrap">
+            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
+            <label class="header__search__icon" data-icon="⌕" for="header__search">
+              <span class="t-hidden">Search gems</span>
+            </label>
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="/gems">Gems</a>
+            <a class="header__nav-link" href="/guides">Guides</a>
+            <a class="header__nav-link" href="/contribute">Contribute</a>
+            <a class="header__nav-link" href="#" id="js-sign-in-trigger">Sign In</a>
+            <a class="header__nav-link js-sign-up-trigger" href="#">Sign Up</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              <p><em class="t-gray">Extensions that use the RubyGems plugin API.</em></p>
+
+<p>As of RubyGems 1.3.2, RubyGems will load plugins installed in gems or $LOAD_PATH.  Plugins must be named ‘rubygems_plugin’ (.rb, .so, etc) and placed at the root of your gem’s #require_path.  Plugins are discovered via Gem::find_files then loaded.  Take care when implementing a plugin as your plugin file may be loaded multiple times if multiple versions of your gem are installed.</p>
+
+<p>The following list of RubyGems plugins is probably not exhaustive. If you know of plugins that we missed, feel free to update this page.</p>
+
+<ul>
+  <li><a href="#executablehooks">executable-hooks</a></li>
+  <li><a href="#gembrowse">gem-browse</a></li>
+  <li><a href="#gemctags">gem-ctags</a></li>
+  <li><a href="#gemempty">gem-empty</a></li>
+  <li><a href="#geminfo">gem_info</a></li>
+  <li><a href="#geminit">gem-init</a></li>
+  <li><a href="#gemcompare">gem-compare</a></li>
+  <li><a href="#gemman">gem-man</a></li>
+  <li><a href="#gemniceinstall">gem-nice-install</a></li>
+  <li><a href="#gemorphan">gem-orphan</a></li>
+  <li><a href="#gempatch">gem-patch</a></li>
+  <li><a href="#gemtoolbox">gem-toolbox</a></li>
+  <li><a href="#gemwrappers">gem-wrappers</a></li>
+  <li><a href="#graph">graph</a></li>
+  <li><a href="#mavengem">maven-gem</a></li>
+  <li><a href="#opengem">open-gem</a></li>
+  <li><a href="#pushsafety">PushSafety</a></li>
+  <li><a href="#rbenvrehash">rbenv-rehash</a></li>
+  <li><a href="#rubygemsdesc">rubygems-desc</a></li>
+  <li><a href="#rubygemsopenpgp">rubygems-openpgp</a></li>
+  <li><a href="#rubygemssandbox">rubygems-sandbox</a></li>
+  <li><a href="#rubygemssnapshot">rubygems_snapshot</a></li>
+  <li><a href="#rubygemstasks">rubygems-tasks</a></li>
+</ul>
+
+<p><a id="executablehooks"> </a>
+## executable-hooks
+<a href="https://github.com/mpapis/executable-hooks">https://github.com/mpapis/executable-hooks</a></p>
+
+<p>Extends rubygems to support executables plugins.</p>
+
+<p>In gem lib dir create rubygems_executable_plugin.rb:</p>
+
+<pre><code>Gem.execute do |original_file|
+  warn("Executing: #{original_file}")
+end
+</code></pre>
+
+<p><a id="gembrowse"> </a>
+## gem-browse</p>
+
+<p><a href="https://github.com/tpope/gem-browse">https://github.com/tpope/gem-browse</a></p>
+
+<p>Adds four commands:</p>
+
+<ul>
+  <li><code>gem edit</code> opens a gem in your editor</li>
+  <li><code>gem open</code> opens a  gem  by name in your editor</li>
+  <li><code>gem clone</code> clones a gem from GitHub</li>
+  <li><code>gem browse</code> opens a gem’s homepage in your browser</li>
+</ul>
+
+<p><a id="gemempty"> </a>
+## gem-empty</p>
+
+<p><a href="https://github.com/rvm/gem-empty">https://github.com/rvm/gem-empty</a></p>
+
+<p>Adds command <code>gem empty</code> to remove all gems from current <code>GEM_HOME</code>.</p>
+
+<p><a id="gemctags"> </a>
+## gem-ctags</p>
+
+<p><a href="https://github.com/tpope/gem-ctags">https://github.com/tpope/gem-ctags</a></p>
+
+<p>Adds a <code>gem ctags</code> command to invoke the Exuberant Ctags indexer on already-installed gems, and then automatically invokes it on gems as they are installed.</p>
+
+<p><a id="geminfo"> </a>
+## gem_info</p>
+
+<p><a href="https://github.com/oggy/gem_info">https://github.com/oggy/gem_info</a></p>
+
+<p>Adds a <code>gem info</code> command with fuzzy matching on name and version. Designed for scripting use.</p>
+
+<p><a id="geminit"> </a>
+## gem-init</p>
+
+<p><a href="https://github.com/mwhuss/gem-init">https://github.com/mwhuss/gem-init</a></p>
+
+<p>Adds <code>gem init</code> to create a barebones gem.</p>
+
+<p><a id="gemcompare"> </a>
+## gem-compare</p>
+
+<p><a href="https://github.com/strzibny/gem-compare">https://github.com/strzibny/gem-compare</a></p>
+
+<p>Adds <code>gem compare</code> command that can help you to track upstream changes in the released
+.gem files by comparing gemspec values, gemspec and Gemfile dependencies and files.</p>
+
+<p><a id="gemman"> </a>
+## gem-man</p>
+
+<p><a href="https://github.com/defunkt/gem-man">https://github.com/defunkt/gem-man</a></p>
+
+<p>The <code>gem man</code> command lets you view a gem’s man page.</p>
+
+<p><a id="gemniceinstall"> </a>
+## gem-nice-install</p>
+
+<p><a href="https://github.com/voxik/gem-nice-install">https://github.com/voxik/gem-nice-install</a></p>
+
+<p>Tries to install system dependencies needed to install your gems with binary extensions
+using standard <code>gem install</code> command. This currently works only for Fedora, but
+hopefully will be extended.</p>
+
+<p><a id="gemorphan"> </a>
+## gem-orphan</p>
+
+<p><a href="https://github.com/sakuro/gem-orphan">https://github.com/sakuro/gem-orphan</a></p>
+
+<p>Adds a <code>gem orphan</code> command that finds and lists  gems on which no other gems are depending.</p>
+
+<p><a id="gempatch"> </a>
+## gem-patch</p>
+
+<p><a href="https://github.com/strzibny/gem-patch">https://github.com/strzibny/gem-patch</a></p>
+
+<p>Adds <code>gem patch</code> command, which enables you to apply patches directly on <code>.gem</code> files.
+Supports both RubyGems 1.8 and RubyGems 2.0.</p>
+
+<p><a id="gemtoolbox"> </a>
+## gem-toolbox</p>
+
+<p><a href="https://github.com/gudleik/gem-toolbox">https://github.com/gudleik/gem-toolbox</a></p>
+
+<p>Adds six commands:</p>
+
+<ul>
+  <li><code>gem open</code> - opens a gem in your default editor</li>
+  <li><code>gem cd</code> - changes your working directory  to the gem’s source root</li>
+  <li><code>gem readme</code> - locates and displays a gem’s readme file</li>
+  <li><code>gem history</code> - locates and display’s a gem’s changelog</li>
+  <li><code>gem doc</code> - Browse a gem’s documentation in your default browser</li>
+  <li><code>gem visit</code> - Open a gem’s homepage in your default browser</li>
+</ul>
+
+<p><a id="gemwrappers"> </a>
+## gem-wrappers</p>
+
+<p><a href="https://github.com/rvm/gem-wrappers">https://github.com/rvm/gem-wrappers</a></p>
+
+<p>Create gem wrappers for easy use of gems in cron and other system locations.
+By default wrappers are installed when a gem is installed.</p>
+
+<p>Adds this commands:</p>
+
+<ul>
+  <li><code>gem wrappers regenerate</code> - force rebuilding wrappers for all gem executables</li>
+  <li><code>gem wrappers</code> - show current configuration</li>
+</ul>
+
+<p><a id="graph"> </a>
+## graph</p>
+
+<p><a href="https://github.com/seattlerb/graph">https://github.com/seattlerb/graph</a></p>
+
+<p>Adds a <code>gem graph</code> command to output a gem dependency graph in graphviz’s dot format.</p>
+
+<p><a id="mavengem"> </a>
+## maven_gem</p>
+
+<p><a href="https://github.com/jruby/maven_gem">https://github.com/jruby/maven_gem</a></p>
+
+<p>Adds <code>gem maven</code> to install any Maven-published Java library as though it were a gem.</p>
+
+<p><a id="opengem"> </a>
+## open_gem</p>
+
+<p><a href="https://github.com/adamsanderson/open_gem">https://github.com/adamsanderson/open_gem</a></p>
+
+<p>Adds two commands:</p>
+
+<ul>
+  <li><code>gem open</code> opens a gem in your default editor</li>
+  <li><code>gem read</code> opens a gem’s rdoc in your default browser</li>
+</ul>
+
+<p><a id="pushsafety"> </a>
+## PushSafety</p>
+
+<p><a href="https://github.com/jdleesmiller/push_safety">https://github.com/jdleesmiller/push_safety</a></p>
+
+<p>Applies a whitelist to <code>gem push</code> to prevent accidentally pushing private gems to the public RubyGems repository.</p>
+
+<p><a id="rbenvrehash"> </a>
+## rbenv-rehash</p>
+
+<p><a href="https://github.com/scoz/rbenv-rehash">https://github.com/scoz/rbenv-rehash</a></p>
+
+<p>Automatically runs <code>rbenv rehash</code> after installing or uninstalling gems.</p>
+
+<p><a id="rubygemsdesc"> </a>
+## rubygems-desc</p>
+
+<p><a href="https://github.com/chad/rubygems-desc">https://github.com/chad/rubygems-desc</a></p>
+
+<p>Adds <code>gem desc</code> to describe a gem by name.</p>
+
+<p><a id="rubygemsopenpgp"> </a>
+## rubygems-openpgp</p>
+
+<p><a href="https://github.com/grant-olson/rubygems-openpgp">https://github.com/grant-olson/rubygems-openpgp</a></p>
+
+<p>Adds commands and flags to allow OpenPGP signing of gems.</p>
+
+<ul>
+  <li><code>gem sign foo.gem</code> to sign a gem.</li>
+  <li><code>gem verify foo.gem --trust</code> to verify a gem.</li>
+  <li><code>gem build foo.gemspec --sign</code> to sign at build time.</li>
+  <li><code>gem install foo --verify --trust</code> to verify on install.</li>
+</ul>
+
+<p><a id="rubygemssandbox"> </a>
+## rubygems-sandbox</p>
+
+<p><a href="https://github.com/seattlerb/rubygems-sandbox">https://github.com/seattlerb/rubygems-sandbox</a></p>
+
+<p>Manages command-line gem tools and dependencies with a <code>gem  sandbox</code> command. This lets you install things like flay and rdoc outside of the global rubygems repository.</p>
+
+<p><a id="rubygemssnapshot"> </a>
+## rubygems_snapshot</p>
+
+<p><a href="https://github.com/rogerleite/rubygems_snapshot">https://github.com/rogerleite/rubygems_snapshot</a></p>
+
+<p>Adds <code>gem snapshot</code> to create exports of all your current gems into a single file that you can import later.</p>
+
+<p><a id="rubygemstasks"> </a>
+## rubygems-tasks</p>
+
+<p><a href="https://github.com/postmodern/rubygems-tasks#readme">https://github.com/postmodern/rubygems-tasks</a></p>
+
+<p>rubygems-tasks provides agnostic and unobtrusive Rake tasks for building, installing and releasing Ruby Gems.</p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="/faqs">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="/credits">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-wrap" id="js-sign-in-modal">
+      <form class="modal--sign-in">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-in-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email or Username</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email or Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div class="modal-wrap" id="js-sign-up-modal">
+      <form class="modal--sign-up">
+        <a class="modal__close" data-icon="x" href="#" id="js-sign-up-close">
+          <span class="t-hidden">Close modal</span>
+        </a>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="email">Email</label>
+          <input class="modal__input" id="email" name="email" placeholder="Email" type="email">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="username">Username</label>
+          <input class="modal__input" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="modal__input-wrap">
+          <label class="modal__label t-hidden" for="password">Password</label>
+          <input class="modal__input" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="modal__submit" data-icon="&gt;" type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="/status">Status</a>
+            <a class="nav--v__link--footer" href="/uptime">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="/stats">Stats</a>
+            <a class="nav--v__link--footer" href="/blogs">Blog</a>
+            <a class="nav--v__link--footer" href="/about">About</a>
+            <a class="nav--v__link--footer" href="/help">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

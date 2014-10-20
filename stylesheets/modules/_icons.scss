@@ -1,0 +1,72 @@
+%icon {
+  &--normal, &--disruption, &--outage, &--no-data {
+    display: inline-block;
+    font-family: "icomoon";
+    @extend %font-smoothing;
+    text-align: center;
+    color: $white;
+    speak: none;
+  }
+  &--normal {
+    background-color: $green;
+  }
+  &--disruption {
+    background-color: $yellow;
+  }
+  &--outage {
+    background-color: $red;
+  }
+  &--no-data {
+    background-color: $gray;
+  }
+}
+
+.status__icon, .uptime__icon, .uptime__definition__icon {
+  &--normal, &--disruption, &--outage, &--no-data {
+    &:before {
+      height: 30px;
+      width: 30px;
+      border-radius: 15px;
+      line-height: 30px;
+      @media (max-width: 529px) {
+        font-size: 12px;
+      }
+      @media (min-width: 530px) {
+        font-size: 14px;
+      }
+    }
+  }
+  &--normal:before {
+    @extend %icon--normal;
+  }
+  &--disruption:before {
+    @extend %icon--disruption;
+  }
+  &--outage:before {
+    @extend %icon--outage;
+  }
+  &--no-data:before {
+    @extend %icon--no-data;
+  }
+}
+
+.status__icon {
+  &--normal, &--disruption, &--outage, &--no-data {
+    &:before {
+      position: absolute;
+      top: -4px;
+      left: 0;
+    }
+  }
+}
+
+.uptime__definition__icon {
+  &--normal, &--disruption, &--outage, &--no-data {
+    position: relative;
+    &:before {
+      position: absolute;
+      top: -6px;
+      left: -40px;
+    }
+  }
+}
