@@ -306,10 +306,14 @@ A souped-up implementation of search on RubyGems.org, using Solr. Still not
 </p>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### [RubyGems Mirror](https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0)
 =======
 <a class="project__name" href="https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0">RubyGems Mirror</a>
 >>>>>>> Add redesign styles for guides
+=======
+<a class="project__name" href="https://github.com/rubygems/rubygems-mirror">RubyGems Mirror</a>
+>>>>>>> Fix some broken links
 
 The current state of mirroring RubyGems is frankly embarrassing. We need
 RubyGems to be highly available all over the world, no more excuses! Discussion

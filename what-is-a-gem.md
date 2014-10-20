@@ -102,5 +102,4 @@ Credits
 
 This guide was adapted from [Gonçalo
 Silva](https://twitter.com/#!/goncalossilva)'s original tutorial on
-docs.rubygems.org and from [Gem Sawyer, Modern Day Ruby
-Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/).
+docs.rubygems.org and from Gem Sawyer, Modern Day Ruby Warrior.

@@ -97,7 +97,7 @@ information you see on a gem page
 
 > The description member can be much longer than you see in this example. If it
 > matches `/^== [A-Z]/` then the description will be run through
-> [RDoc's markup formatter](http://rdoc.rubyforge.org/RDoc/Markup.html) for display on
+> [RDoc's markup formatter](https://github.com/rdoc/rdoc) for display on
 > the RubyGems web site. Be aware though that other consumers of the data might not
 > understand this markup.
 
@@ -276,9 +276,10 @@ for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
 your gemspec's `files` array before publishing a new gem! For this reason (among others),
-many developers automate this with [Hoe](http://seattlerb.rubyforge.org/hoe/),
+many developers automate this with
+[Hoe](https://github.com/seattlerb/hoe),
 [Jeweler](https://github.com/technicalpickles/jeweler),
-[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html),
+[Rake](https://github.com/jimweirich/rake),
 [Bundler](http://railscasts.com/episodes/245-new-gem-with-bundler), or
 [just a dynamic gemspec
 ](https://github.com/wycats/newgem-template/blob/master/newgem.gemspec).
