@@ -96,7 +96,7 @@ This site is [open source](https://github.com/rubygems/guides) and its content i
 licensed.
 =======
 layout: default
-title: Frequently Asked Questions
+title: Guides
 previous: /credits
 next: /rubygems-basics
 ---
