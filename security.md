@@ -140,8 +140,7 @@ Add cert paths to your gemspec
 
 -------
 
-### Not Recommended: OpenPGP signing is [not recommended due to lack of
-support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
+### OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
 
 For details, see discussion [with Yorick
 Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).

@@ -206,7 +206,7 @@ a.t-list__item {
 
   h2 {
     margin: {
-      top: 48px;
+      top: 30px;
       bottom: 30px;
     }
     padding-top: 30px;
@@ -230,6 +230,19 @@ a.t-list__item {
       size: 18px;
     }
     line-height: 1.66;
+  }
+
+  hr {
+    margin: {
+      top: 30px;
+      bottom: 30px;
+    }
+    border: {
+      top: 1px solid lighten($gray, 16%);
+      right: none;
+      bottom: none;
+      left: none;
+    }
   }
 
   pre {

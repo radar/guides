@@ -314,7 +314,7 @@ a.t-list__item {
   .t-body h1 code, .t-body h2 code {
     text-transform: none; }
 .t-body h2 {
-  margin-top: 48px;
+  margin-top: 30px;
   margin-bottom: 30px;
   padding-top: 30px;
   border-top-style: solid;
@@ -329,6 +329,13 @@ a.t-list__item {
   font-style: italic;
   font-size: 18px;
   line-height: 1.66; }
+.t-body hr {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-top: 1px solid #edeef0;
+  border-right: none;
+  border-bottom: none;
+  border-left: none; }
 .t-body pre {
   padding: 30px;
   overflow: auto;
@@ -1006,8 +1013,8 @@ body.has-modal > *:not(.modal-wrap) {
   font-weight: 300;
   font-size: 30px; }
   .project__name:not(.is-first) {
-    margin-top: 48px;
-    padding-top: 48px;
+    margin-top: 30px;
+    padding-top: 22px;
     display: block;
     border-top: 1px solid #edeef0; }
 
@@ -1485,7 +1492,7 @@ a.page__heading {
   transition-property: color; }
   .nav--v__link:not(:last-child), .nav--v__link--footer:not(:last-child) {
     margin-bottom: 10px; }
-  .is-active.nav--v__link, .is-active.nav--v__link--footer {
+  .nav--v__link.is-active, .nav--v__link--footer.is-active {
     color: #fa3c29; }
 
 .nav--v__link {

@@ -1,4 +1,4 @@
-%nav--v__link {
+.nav--v__link, .nav--v__link--footer {
   display: block;
   font: {
     weight: 800;
@@ -14,10 +14,6 @@
   &.is-active {
     color: $red;
   }
-}
-
-.nav--v__link, .nav--v__link--footer {
-  @extend %nav--v__link;
 }
 
 .nav--v__link {
