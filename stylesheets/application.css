@@ -332,7 +332,7 @@ a.t-list__item {
 .t-body hr {
   margin-top: 30px;
   margin-bottom: 30px;
-  border-top: 1px solid #edeef0;
+  border-top: 1px solid #e5e6e9;
   border-right: none;
   border-bottom: none;
   border-left: none; }
@@ -376,6 +376,11 @@ a.t-list__item {
     padding-top: 10px; }
     .t-body tbody td code {
       padding: 0; }
+.t-body blockquote {
+  padding-left: 20px;
+  border-left: 10px solid #e5e6e9; }
+  .t-body blockquote p {
+    font-style: italic; }
 
 .home__join, .modal__submit, .help__link--new-discussion, .help__form__submit, .help__category__link--new-discussion, .post__aside__close {
   -webkit-appearance: none;
@@ -1016,7 +1021,7 @@ body.has-modal > *:not(.modal-wrap) {
     margin-top: 30px;
     padding-top: 22px;
     display: block;
-    border-top: 1px solid #edeef0; }
+    border-top: 1px solid #e5e6e9; }
 
 .project__desc {
   margin-top: 25px; }
