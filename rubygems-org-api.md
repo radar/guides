@@ -282,6 +282,7 @@ as well as the total number of downloads for the specified version.
 
 Owner Methods
 -------------
+
 ### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)`
 
 View all gems for a user. This is all the gems a user can push to.
