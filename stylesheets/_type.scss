@@ -309,12 +309,44 @@ a.t-list__item {
     }
   }
 
-  tbody {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead, tbody {
     vertical-align: top;
-    td {
-      padding-top: 10px;
-      code {
-        padding: 0;
+  }
+
+  thead tr {
+    border-bottom: 5px solid $gray;
+  }
+
+  th, td {
+    padding-right: 16px;
+  }
+
+  th {
+    padding-bottom: 16px;
+    text: {
+      align: left;
+      transform: uppercase;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid lighten($gray, 13%);
+  }
+
+  td {
+    padding: {
+      top: 16px;
+      bottom: 28px;
+    }
+    code {
+      font: {
+        weight: normal;
+        size: 13px;
       }
     }
   }

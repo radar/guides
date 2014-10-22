@@ -370,12 +370,27 @@ a.t-list__item {
   width: 32px;
   border-radius: 16px;
   border-radius: 50%; }
-.t-body tbody {
+.t-body table {
+  width: 100%;
+  border-collapse: collapse; }
+.t-body thead, .t-body tbody {
   vertical-align: top; }
-  .t-body tbody td {
-    padding-top: 10px; }
-    .t-body tbody td code {
-      padding: 0; }
+.t-body thead tr {
+  border-bottom: 5px solid #c1c4ca; }
+.t-body th, .t-body td {
+  padding-right: 16px; }
+.t-body th {
+  padding-bottom: 16px;
+  text-align: left;
+  text-transform: uppercase; }
+.t-body tbody tr {
+  border-bottom: 1px solid #e5e6e9; }
+.t-body td {
+  padding-top: 16px;
+  padding-bottom: 28px; }
+  .t-body td code {
+    font-weight: normal;
+    font-size: 13px; }
 .t-body blockquote {
   padding-left: 20px;
   border-left: 10px solid #e5e6e9; }
