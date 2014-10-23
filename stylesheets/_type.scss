@@ -45,7 +45,7 @@ label.t-hidden {
 }
 
 .t-gray {
-  color: $gray;
+  color: darken($gray, 13%);
 }
 
 .t-uppercase {

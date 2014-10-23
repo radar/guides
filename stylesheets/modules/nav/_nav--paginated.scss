@@ -7,7 +7,7 @@
 }
 
 .paginated-nav-link--prev, .paginated-nav-link--numbered, .paginated-nav-link--next {
-  color: $gray;
+  color: darken($gray, 13%);
   @include transition-duration(.25s);
   @include transition-property(color);
   &:focus, &:hover, &.is-active {

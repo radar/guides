@@ -210,7 +210,7 @@ label.t-hidden {
   clip: auto\0; }
 
 .t-gray {
-  color: #c1c4ca; }
+  color: #9da2ab; }
 
 .t-uppercase {
   text-transform: uppercase; }
@@ -1449,7 +1449,7 @@ a.page__heading {
   overflow: auto; }
 
 .paginated-nav-link--prev, .paginated-nav-link--numbered, .paginated-nav-link--next {
-  color: #c1c4ca;
+  color: #9da2ab;
   -webkit-transition-duration: 0.25s;
   -moz-transition-duration: 0.25s;
   -ms-transition-duration: 0.25s;
