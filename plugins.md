@@ -43,7 +43,9 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [rubygems-tasks](#rubygemstasks)
 
 <a id="executablehooks"> </a>
+
 ## executable-hooks
+
 [https://github.com/mpapis/executable-hooks](https://github.com/mpapis/executable-hooks)
 
 Extends rubygems to support executables plugins.
@@ -56,6 +58,7 @@ In gem lib dir create rubygems_executable_plugin.rb:
 
 
 <a id="gembrowse"> </a>
+
 ## gem-browse
 
 [https://github.com/tpope/gem-browse](https://github.com/tpope/gem-browse)
@@ -68,6 +71,7 @@ Adds four commands:
 - `gem browse` opens a gem's homepage in your browser
 
 <a id="gemempty"> </a>
+
 ## gem-empty
 
 [https://github.com/rvm/gem-empty](https://github.com/rvm/gem-empty)
@@ -75,6 +79,7 @@ Adds four commands:
 Adds command `gem empty` to remove all gems from current `GEM_HOME`.
 
 <a id="gemctags"> </a>
+
 ## gem-ctags
 
 [https://github.com/tpope/gem-ctags](https://github.com/tpope/gem-ctags)
@@ -82,6 +87,7 @@ Adds command `gem empty` to remove all gems from current `GEM_HOME`.
 Adds a `gem ctags` command to invoke the Exuberant Ctags indexer on already-installed gems, and then automatically invokes it on gems as they are installed.
 
 <a id="geminfo"> </a>
+
 ## gem_info
 
 [https://github.com/oggy/gem_info](https://github.com/oggy/gem_info)
@@ -89,6 +95,7 @@ Adds a `gem ctags` command to invoke the Exuberant Ctags indexer on already-inst
 Adds a `gem info` command with fuzzy matching on name and version. Designed for scripting use.
 
 <a id="geminit"> </a>
+
 ## gem-init
 
 [https://github.com/mwhuss/gem-init](https://github.com/mwhuss/gem-init)
@@ -96,6 +103,7 @@ Adds a `gem info` command with fuzzy matching on name and version. Designed for 
 Adds `gem init` to create a barebones gem.
 
 <a id="gemcompare"> </a>
+
 ## gem-compare
 
 [https://github.com/strzibny/gem-compare](https://github.com/strzibny/gem-compare)
@@ -105,6 +113,7 @@ Adds `gem compare` command that can help you to track upstream changes in the re
 
 
 <a id="gemman"> </a>
+
 ## gem-man
 
 [https://github.com/defunkt/gem-man](https://github.com/defunkt/gem-man)
@@ -112,6 +121,7 @@ Adds `gem compare` command that can help you to track upstream changes in the re
 The `gem man` command lets you view a gem's man page.
 
 <a id="gemniceinstall"> </a>
+
 ## gem-nice-install
 
 [https://github.com/voxik/gem-nice-install](https://github.com/voxik/gem-nice-install)
@@ -121,6 +131,7 @@ using standard `gem install` command. This currently works only for Fedora, but
 hopefully will be extended.
 
 <a id="gemorphan"> </a>
+
 ## gem-orphan
 
 [https://github.com/sakuro/gem-orphan](https://github.com/sakuro/gem-orphan)
@@ -128,6 +139,7 @@ hopefully will be extended.
 Adds a `gem orphan` command that finds and lists  gems on which no other gems are depending.
 
 <a id="gempatch"> </a>
+
 ## gem-patch
 
 [https://github.com/strzibny/gem-patch](https://github.com/strzibny/gem-patch)
@@ -136,6 +148,7 @@ Adds `gem patch` command, which enables you to apply patches directly on `.gem` 
 Supports both RubyGems 1.8 and RubyGems 2.0.
 
 <a id="gemtoolbox"> </a>
+
 ## gem-toolbox
 
 [https://github.com/gudleik/gem-toolbox](https://github.com/gudleik/gem-toolbox)
@@ -150,6 +163,7 @@ Adds six commands:
 - `gem visit` - Open a gem's homepage in your default browser
 
 <a id="gemwrappers"> </a>
+
 ## gem-wrappers
 
 [https://github.com/rvm/gem-wrappers](https://github.com/rvm/gem-wrappers)
@@ -163,6 +177,7 @@ Adds this commands:
 - `gem wrappers` - show current configuration
 
 <a id="graph"> </a>
+
 ## graph
 
 [https://github.com/seattlerb/graph](https://github.com/seattlerb/graph)
@@ -170,6 +185,7 @@ Adds this commands:
 Adds a `gem graph` command to output a gem dependency graph in graphviz's dot format.
 
 <a id="mavengem"> </a>
+
 ## maven_gem
 
 [https://github.com/jruby/maven_gem](https://github.com/jruby/maven_gem)
@@ -177,6 +193,7 @@ Adds a `gem graph` command to output a gem dependency graph in graphviz's dot fo
 Adds `gem maven` to install any Maven-published Java library as though it were a gem.
 
 <a id="opengem"> </a>
+
 ## open_gem
 
 [https://github.com/adamsanderson/open_gem](https://github.com/adamsanderson/open_gem)
@@ -187,6 +204,7 @@ Adds two commands:
 - `gem read` opens a gem's rdoc in your default browser
 
 <a id="pushsafety"> </a>
+
 ## PushSafety
 
 [https://github.com/jdleesmiller/push_safety](https://github.com/jdleesmiller/push_safety)
@@ -194,6 +212,7 @@ Adds two commands:
 Applies a whitelist to `gem push` to prevent accidentally pushing private gems to the public RubyGems repository.
 
 <a id="rbenvrehash"> </a>
+
 ## rbenv-rehash
 
 [https://github.com/scoz/rbenv-rehash](https://github.com/scoz/rbenv-rehash)
@@ -201,6 +220,7 @@ Applies a whitelist to `gem push` to prevent accidentally pushing private gems t
 Automatically runs `rbenv rehash` after installing or uninstalling gems.
 
 <a id="rubygemsdesc"> </a>
+
 ## rubygems-desc
 
 [https://github.com/chad/rubygems-desc](https://github.com/chad/rubygems-desc)
@@ -208,6 +228,7 @@ Automatically runs `rbenv rehash` after installing or uninstalling gems.
 Adds `gem desc` to describe a gem by name.
 
 <a id="rubygemsopenpgp"> </a>
+
 ## rubygems-openpgp
 
 [https://github.com/grant-olson/rubygems-openpgp](https://github.com/grant-olson/rubygems-openpgp)
@@ -220,6 +241,7 @@ Adds commands and flags to allow OpenPGP signing of gems.
 - `gem install foo --verify --trust` to verify on install.
 
 <a id="rubygemssandbox"> </a>
+
 ## rubygems-sandbox
 
 [https://github.com/seattlerb/rubygems-sandbox](https://github.com/seattlerb/rubygems-sandbox)
@@ -227,6 +249,7 @@ Adds commands and flags to allow OpenPGP signing of gems.
 Manages command-line gem tools and dependencies with a `gem  sandbox` command. This lets you install things like flay and rdoc outside of the global rubygems repository.
 
 <a id="rubygemssnapshot"> </a>
+
 ## rubygems_snapshot
 
 [https://github.com/rogerleite/rubygems_snapshot](https://github.com/rogerleite/rubygems_snapshot)
@@ -234,6 +257,7 @@ Manages command-line gem tools and dependencies with a `gem  sandbox` command. T
 Adds `gem snapshot` to create exports of all your current gems into a single file that you can import later.
 
 <a id="rubygemstasks"> </a>
+
 ## rubygems-tasks
 
 [https://github.com/postmodern/rubygems-tasks](https://github.com/postmodern/rubygems-tasks#readme)
