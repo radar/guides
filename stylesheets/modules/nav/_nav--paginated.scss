@@ -37,6 +37,10 @@
   &:before, span {
     float: right;
   }
+  &:before {
+    position: relative;
+    top: 1px;
+  }
   span {
     margin-right: 7px;
   }

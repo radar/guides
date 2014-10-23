@@ -1482,6 +1482,9 @@ a.page__heading {
   right: 0; }
   .paginated-nav-link--next:before, .paginated-nav-link--next span {
     float: right; }
+  .paginated-nav-link--next:before {
+    position: relative;
+    top: 1px; }
   .paginated-nav-link--next span {
     margin-right: 7px; }
 
