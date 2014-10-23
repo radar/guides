@@ -303,6 +303,8 @@ a.t-list__item {
   line-height: 1.66; }
 .t-body p, .t-body ul, .t-body ol, .t-body pre, .t-body table {
   margin-bottom: 30px; }
+.t-body a {
+  word-wrap: break-word; }
 .t-body b, .t-body strong {
   font-weight: 500; }
 .t-body h1, .t-body h2 {
