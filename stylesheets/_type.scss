@@ -300,6 +300,10 @@ a.t-list__item {
     }
   }
 
+  li {
+    word-wrap: break-word;
+  }
+
   img {
     margin-right: 12px;
     height: 32px;
