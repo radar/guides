@@ -340,13 +340,13 @@ a.t-list__item {
   border-left: none; }
 .t-body pre {
   padding: 30px;
-  overflow: auto;
+  overflow-x: scroll;
   border-radius: 5px;
   color: white; }
   .t-body pre code {
-    padding-right: 0;
-    padding-left: 0;
-    line-height: 1.33; }
+    overflow-x: scroll;
+    line-height: 1.33;
+    word-break: normal; }
 .t-body code {
   font-weight: bold;
   font-family: "courier", monospace;
@@ -366,6 +366,8 @@ a.t-list__item {
     margin-right: 5px;
     font-weight: 800;
     content: counter(counter,decimal) ". "; }
+.t-body li {
+  word-wrap: break-word; }
 .t-body img {
   margin-right: 12px;
   height: 32px;

@@ -15,7 +15,7 @@ What each `gem` command does, and how to use it.
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 >>>>>>> Add redesign styles for guides
 
-This reference was automatically generated from RubyGems version 2.4.2.
+This reference was automatically generated from RubyGems version 2.2.0.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)

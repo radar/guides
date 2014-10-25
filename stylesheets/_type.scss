@@ -248,16 +248,13 @@ a.t-list__item {
 
   pre {
     padding: 30px;
-    overflow: auto;
+    overflow-x: scroll;
     border-radius: 5px;
     color: $white;
     code {
-      // TODO fix undo-ing style
-      padding: {
-        right: 0;
-        left: 0;
-      }
+      overflow-x: scroll;
       line-height: 1.33;
+      word-break: normal;
     }
   }
 
