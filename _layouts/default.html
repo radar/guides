@@ -74,12 +74,12 @@
     <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
     <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/javascripts/mobile-nav.js" type="text/javascript"></script>
     <script src="//use.typekit.net/lkc4mmu.js" type="text/javascript"></script>
     <script>
       try{Typekit.load();}catch(e){}
     </script>
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script>
       $(function() {
         var path = window.location.pathname;
@@ -111,17 +111,18 @@
         </a>
 
         <div class="header__nav-links-wrap">
-          <form class="header__search-wrap">
-            <input class="header__search" id="header__search" name="header__search" placeholder="Search Gems..." type="search">
-            <label class="header__search__icon" data-icon="⌕" for="header__search">
+          <form accept-charset="UTF-8" action="https://rubygems.org/search" class="header__search-wrap" id="main-search" method="get"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+            <input class="header__search" id="query" name="query" placeholder="Search Gems&hellip;" type="search" />
+            <label for="query">
               <span class="t-hidden">Search gems</span>
             </label>
+            <input class="header__search__icon" id="search_submit" type="submit" value="⌕" />
           </form>
 
           <nav class="header__nav-links">
             <a class="header__nav-link" href="https://rubygems.org/gems">Gems</a>
-            <a class="header__nav-link is-active" href="/">Guides</a>
-            <a class="header__nav-link" href="http://guides.rubygems.org/contributing/">Contribute</a>
+            <a class="header__nav-link" href="/">Guides</a>
+            <a class="header__nav-link" href="/contributing">Contribute</a>
           </nav>
         </div>
       </div>
