@@ -1,19 +1,13 @@
 ---
 layout: default
 title: Publishing your gem
-<<<<<<< HEAD
-=======
 url: /publishing
->>>>>>> Add redesign styles for guides
 previous: /name-your-gem
 next: /security
 ---
 
-<<<<<<< HEAD
-=======
 <em class="t-gray">Start with an idea, end with a distributable package of Ruby code.</em>
 
->>>>>>> Add redesign styles for guides
 Ways to share your gem code with other users.
 
 * [Introduction](#introduction)

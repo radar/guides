@@ -1,19 +1,13 @@
 ---
 layout: default
 title: Security
-<<<<<<< HEAD
-=======
 url: /security
->>>>>>> Add redesign styles for guides
 previous: /publishing
 next: /patterns
 ---
 
-<<<<<<< HEAD
-=======
 <em class="t-gray">How to build and install cryptographically signed gems-- and other security concerns.</em>
 
->>>>>>> Add redesign styles for guides
 Security practices are being actively discussed. Check back often.
 
 * [General](#general)
@@ -62,11 +56,7 @@ Install with a trust policy.
   * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only
     recognizes the long `--trust-policy` flag, not the short `-P`.
 
-<<<<<<< HEAD
-  * *Caveat*: Gem certificates are trusted globally, such that adding a
-=======
   * *Caveat:* Gem certificates are trusted globally, such that adding a
->>>>>>> Add redesign styles for guides
     cert.pem for one gem automatically trusts all gems signed by that cert.
 
 Verify the checksum, if available

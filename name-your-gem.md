@@ -1,19 +1,13 @@
 ---
 layout: default
 title: Name your gem
-<<<<<<< HEAD
-=======
 url: /name-your-gem
->>>>>>> Add redesign styles for guides
 previous: /gems-with-extensions
 next: /publishing
 ---
 
-<<<<<<< HEAD
-=======
 <em class="t-gray">Our recommendation on the use of "_" and "-" in your gem's name.</em>
 
->>>>>>> Add redesign styles for guides
 Here are some examples of our recommendations for naming gems:
 
 Gem name               | Require statement                | Main class or module

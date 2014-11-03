@@ -1,19 +1,13 @@
 ---
 layout: default
 title: Resources
-<<<<<<< HEAD
-=======
 url: /resources
->>>>>>> Add redesign styles for guides
 previous: /run-your-own-gem-server
 next: /contributing
 ---
 
-<<<<<<< HEAD
-=======
 <em class="t-gray">Great blog posts, tutorials, and other sites to help you out.</em>
 
->>>>>>> Add redesign styles for guides
 A collection of helpful material about RubyGems. Feel free to
 [fork](https://github.com/rubygems/guides) and add your own!
 

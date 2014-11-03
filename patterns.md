@@ -1,19 +1,12 @@
 ---
 layout: default
 title: Patterns
-<<<<<<< HEAD
-=======
 url: /patterns
->>>>>>> Add redesign styles for guides
 previous: /security
 next: /specification-reference
 ---
 
-<<<<<<< HEAD
-Common practices to make your gem users' and other developers' lives easier.
-=======
 <em class="t-gray">Common practices to make your gem users' and other developers' lives easier.</em>
->>>>>>> Add redesign styles for guides
 
 * [Consistent naming](#consistent-naming)
 * [Semantic versioning](#semantic-versioning)
@@ -37,12 +30,12 @@ gem](/make-your-own-gem) guide is a great example:
     .
     ├── Rakefile
     ├── bin
-    │   └── hola
+    │   └── hola
     ├── hola.gemspec
     ├── lib
-    │   ├── hola
-    │   │   └── translator.rb
-    │   └── hola.rb
+    │   ├── hola
+    │   │   └── translator.rb
+    │   └── hola.rb
     └── test
         └── test_hola.rb
 
@@ -255,11 +248,11 @@ For example, let's say we have a `foo` gem with the following structure:
 
     .
     └── lib
-        ├── foo
-        │   └── cgi.rb
-        ├── erb.rb
-        ├── foo.rb
-        └── set.rb
+        ├── foo
+        │   └── cgi.rb
+        ├── erb.rb
+        ├── foo.rb
+        └── set.rb
 
 This might seem harmless since your custom `erb` and `set` files are within
 your gem.  However, this is not harmless, anyone who requires this gem will not

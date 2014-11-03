@@ -1,27 +1,11 @@
 ---
 layout: default
 title: Make your own gem
-<<<<<<< HEAD
-=======
 url: /make-your-own-gem
->>>>>>> Add redesign styles for guides
 previous: /what-is-a-gem
 next: /gems-with-extensions
 ---
 
-<<<<<<< HEAD
-From start to finish, learn how to package your Ruby code in a gem.
-
-* [Introduction](#intro)
-* [Your first gem](#first-gem)
-* [Requiring more files](#more-files)
-* [Adding an executable](#adding-an-executable)
-* [Writing tests](#writing-tests)
-* [Documenting your code](#documenting-code)
-* [Wrapup](#wrapup)
-
-<a id="intro"> </a>
-=======
 <em class="t-gray">From start to finish, learn how to package your Ruby code in a gem.</em>
 
 
@@ -33,7 +17,6 @@ From start to finish, learn how to package your Ruby code in a gem.
 * [Documenting your code](#documenting-your-code)
 * [Wrapup](#wrapup)
 
->>>>>>> Add redesign styles for guides
 Introduction
 ------------
 
@@ -42,10 +25,6 @@ into RubyGems. Let’s make a simple “hello world” gem, and feel free to
 play along at home! The code for the gem we're going to make here is up
 [on GitHub](https://github.com/qrush/hola).
 
-<<<<<<< HEAD
-<a id="first-gem"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Your first gem
 --------------
 
@@ -167,10 +146,6 @@ or grab it from any computer with RubyGems installed:
 
 It’s really that easy to share code with Ruby and RubyGems.
 
-<<<<<<< HEAD
-<a id="more-files"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Requiring more files
 --------------------
 
@@ -211,7 +186,7 @@ out like so:
     ├── hola.gemspec
     └── lib
         ├── hola
-        │   └── translator.rb
+        │   └── translator.rb
         └── hola.rb
 
 The `Translator` is now in `lib/hola`, which can easily be picked up with a
@@ -289,10 +264,6 @@ process. Split your Ruby files up when it makes sense! Making a sane order for
 your project will help you and your future maintainers from headaches down the
 line.
 
-<<<<<<< HEAD
-<a id="adding-an-executable"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Adding an executable
 --------------------
 
@@ -352,10 +323,6 @@ there's an `executables` array field on the gemspec.
 > Note that you should change the gem's version when pushing up a new release.
 > For more information on gem versioning, see the [Patterns Guide](/patterns/#semantic-versioning)
 
-<<<<<<< HEAD
-<a id="writing-tests"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Writing tests
 --------------
 
@@ -385,12 +352,12 @@ Let's add some tests to Hola. This requires adding a few more files, namely a
     .
     ├── Rakefile
     ├── bin
-    │   └── hola
+    │   └── hola
     ├── hola.gemspec
     ├── lib
-    │   ├── hola
-    │   │   └── translator.rb
-    │   └── hola.rb
+    │   ├── hola
+    │   │   └── translator.rb
+    │   └── hola.rb
     └── test
         └── test_hola.rb
 
@@ -446,10 +413,6 @@ Finally, to run the tests:
 It's green! Well, depending on your shell colors. For more great examples, the best thing you can do is hunt around
 [GitHub](https://github.com/search?utf8=%E2%9C%93&q=stars%3A%3E100+forks%3A%3E10&type=Repositories&ref=advsearch&l=Ruby) and read some code.
 
-<<<<<<< HEAD
-<a id="documenting-code"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Documenting your code
 ---------------------
 
@@ -481,10 +444,6 @@ has a [good
 introduction](http://rubydoc.info/docs/yard/file/docs/GettingStarted.md) on
 what's different and how to use it.
 
-<<<<<<< HEAD
-<a id="wrapup"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Wrapup
 ------
 
@@ -492,10 +451,6 @@ With this basic understanding of building your own RubyGem, we hope you'll be
 on your way to making your own! The next few guides cover patterns in making a
 gem and the other capabilities of the RubyGems system.
 
-<<<<<<< HEAD
-<a id="credits"> </a>
-=======
->>>>>>> Add redesign styles for guides
 Credits
 -------
 

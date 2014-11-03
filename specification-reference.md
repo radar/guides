@@ -1,23 +1,14 @@
 ---
 layout: default
 title: Specification Reference
-<<<<<<< HEAD
-=======
 url: /specification-refence
->>>>>>> Add redesign styles for guides
 previous: /patterns
 next: /command-reference
 ---
 
-<<<<<<< HEAD
-{% include big.html %}
-
-
-=======
 <em class="t-gray">Learn about the data in each gem package and how you can configure it.</em>
 
 {% include big.html %}
->>>>>>> Add redesign styles for guides
 
 <p>The Specification class contains the
 information for a Gem.  Typically defined in a .gemspec file or a Rakefile,
