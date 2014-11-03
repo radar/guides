@@ -188,7 +188,12 @@
   @extend %search__icon;
   top: 5px;
   right: 0;
-  font-size: 18px;
+  border: none;
+  background-color: transparent;
+  font: {
+    size: 18px;
+    family: "icomoon";
+  }
   color: $white;
 }
 

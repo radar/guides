@@ -61,3 +61,34 @@
     left: 8px;
   }
 }
+
+.pagination {
+  margin-top: 90px;
+  position: relative;
+  overflow: auto;
+  text-align: center;
+  &.previous_page {
+    position: absolute;
+    left: 0;
+  }
+  &.next_page {
+    position: absolute;
+    right: 0;
+  }
+  a, em {
+    margin: {
+      right: 8px;
+      left: 8px;
+    }
+    font-style: normal;
+  }
+  a {
+    color: #9da2ab;
+    @include transition-duration(.25s);
+    @include transition-property(color);
+    outline: none;
+    &:hover, &:focus, &:active {
+      color: #141c22;
+    }
+  }
+}

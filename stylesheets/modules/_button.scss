@@ -85,7 +85,7 @@
   text-align: left;
 }
 
-.help__link--new-discussion, .help__form__submit {
+.help__link--new-discussion, .form__submit {
   @extend %button;
   @extend %button--has-arrow;
   background-color: $red;
@@ -136,7 +136,7 @@
   }
 }
 
-.help__form__submit {
+.form__submit {
   margin: {
     top: 42px;
     bottom: 150px;
@@ -168,5 +168,38 @@
   }
   &:hover {
     background-color: $red-orange;
+  }
+}
+
+.download__format {
+  margin-bottom: 24px;
+  padding: {
+    top: 10px;
+    bottom: 10px;
+  }
+  display: inline-block;
+  float: left;
+  width: 22%;
+  max-width: 320px;
+  border-radius: 20px;
+  background-color: #fa3c29;
+  text: {
+    align: center;
+    transform: uppercase;
+  }
+  font-weight: 800;
+  color: white !important;
+  letter-spacing: 1px;
+  @include transition-duration(.25s);
+  -webkit-transition-property: background-color !important;
+  -moz-transition-property: background-color !important;
+  -ms-transition-property: background-color !important;
+  -o-transition-property: background-color !important;
+  transition-property: background-color !important;
+  &:hover, &:focus {
+    background-color: $red-orange !important;
+  }
+  &:not(:last-of-type) {
+    margin-right: 4%;
   }
 }
