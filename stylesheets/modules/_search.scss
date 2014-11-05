@@ -41,7 +41,7 @@
 .header__search-wrap {
   position: relative;
   @extend %box-sizing;
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     margin-top: 7px;
     padding: {
       right: 30px;
@@ -52,24 +52,24 @@
       margin-top: 7px;
     }
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     margin: {
       top: 14px;
       right: 28px;
     }
     float: left;
   }
-  @media (min-width: 900px) and (max-width: 1019px) {
+  @media (min-width: 1020px) and (max-width: 1139px) {
     width: 250px;
   }
-  @media (min-width: 1020px) {
+  @media (min-width: 1140px) {
     width: 350px;
   }
 }
 
 .header__search-wrap--home {
   @extend .header__search-wrap;
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     display: none;
   }
 }
@@ -87,10 +87,10 @@
   color: rgba($white, .5);
   @include transition-duration(.25s);
   @include transition-property(color);
-  @media (max-width: 899px) {
-    right: 4px;
+  @media (max-width: 1019px) {
+    right: 10px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     right: 0;
   }
   &:hover, &:focus {
@@ -107,17 +107,17 @@
   font-size: 15px;
   @include transition-duration(.25s);
   @include transition-property(border-bottom-color);
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     padding-right: 24px;
     width: 210px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     padding-right: 10px;
   }
-  @media (min-width: 900px) and (max-width: 1019px) {
+  @media (min-width: 1020px) and (max-width: 1139px) {
     width: 230px;
   }
-  @media (min-width: 1020px) {
+  @media (min-width: 1140px) {
     width: 330px;
   }
   &::-webkit-input-placeholder {
