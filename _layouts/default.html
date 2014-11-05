@@ -17,7 +17,7 @@
     <script>
       $(function() {
         var path = window.location.pathname;
-        $('a[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+        $('a.nav--v__link[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
       });
     </script>
 
@@ -55,7 +55,7 @@
 
           <nav class="header__nav-links">
             <a class="header__nav-link" href="https://rubygems.org/gems">Gems</a>
-            <a class="header__nav-link" href="/">Guides</a>
+            <a class="header__nav-link is-active" href="/">Guides</a>
             <a class="header__nav-link" href="/contributing">Contribute</a>
           </nav>
         </div>
