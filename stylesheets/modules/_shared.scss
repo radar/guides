@@ -11,7 +11,7 @@
 }
 
 main, .header, .footer {
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     position: relative;
     left: 0;
     overflow: hidden;
@@ -24,7 +24,7 @@ main, .header, .footer {
 }
 
 main, .header {
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     &.mobile-nav-is-expanded {
       overflow: visible;
     }
@@ -36,7 +36,7 @@ main {
 }
 
 .footer {
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     &.mobile-nav-is-expanded {
       overflow: hidden;
     }
@@ -148,4 +148,12 @@ a.page__heading {
 
 .push {
   margin-top: 60px;
+}
+
+.push--bottom {
+  margin-bottom: 60px;
+}
+
+.push--s {
+  margin-top: 20px;
 }

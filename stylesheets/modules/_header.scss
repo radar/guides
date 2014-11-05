@@ -1,9 +1,9 @@
 .l-wrap--header {
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     position: relative;
     max-width: 1100px;
   }
-  @media (min-width: 900px) and (max-width: 1199px) {
+  @media (min-width: 1020px) and (max-width: 1199px) {
     margin: {
       right: 5%;
       left: 5%;
@@ -19,23 +19,23 @@
 
 .header {
   -webkit-transform: translateZ(0); // Weird fix to make transition smoother in Safari
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     height: 48px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     height: 68px;
   }
 }
 
 .header--interior {
   border-bottom-style: solid;
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     border-bottom: {
       width: 1px;
       color: darken($orange, 12%);
     }
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     border-bottom: {
       width: 7px;
       color: $black;
@@ -55,12 +55,12 @@
       @include rotate(180deg);
     }
   }
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     top: 9px;
     left: 5%;
     font-size: 26px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     top: 12px;
     font-size: 40px;
   }
@@ -79,10 +79,10 @@
     @include transition-duration(.5s);
     @include transition-property(transform);
   }
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     line-height: 32px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     line-height: 45px;
   }
 }
@@ -91,7 +91,7 @@
   &:before {
     @extend %font-smoothing;
   }
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     &:before {
       content: '≡';
       margin-right: 5%;
@@ -112,25 +112,25 @@
       color: rgba($white, .3);
     }
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     display: none;
   }
 }
 
 .header__nav-links-wrap {
   position: absolute;
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     top: 0;
     right: -270px;
     width: 270px;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     right: 0;
   }
 }
 
 .header__nav-links {
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     float: left;
   }
 }
@@ -144,7 +144,7 @@
   &:focus {
     outline: none;
   }
-  @media (max-width: 899px) {
+  @media (max-width: 1019px) {
     padding: 18px 30px;
     display: block;
     width: 100%;
@@ -162,7 +162,7 @@
       color: $red-orange;
     }
   }
-  @media (min-width: 900px) {
+  @media (min-width: 1020px) {
     display: inline-block;
     padding: 25px 16px 26px 16px;
     border-bottom: 5px solid transparent;
@@ -190,10 +190,139 @@
       }
     }
   }
+  span {
+    display: inline-block;
+    position: relative;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 @-moz-document url-prefix() {
   .header__nav-link {
     padding-bottom: 25px;
+  }
+}
+
+.mobile__header__nav-link {
+  @media (max-width: 1019px) {
+    span {
+      top: 2px;
+    }
+  }
+  @media (min-width: 1020px) {
+    display: none;
+  }
+}
+
+.desktop__header__nav-link {
+  @media (max-width: 1019px) {
+    display: none;
+  }
+  @media (min-width: 1020px) {
+    position: relative;
+    z-index: 1;
+    span {
+      margin-top: -4px;
+      top: 4px;
+    }
+  }
+}
+
+#user_gravatar {
+  margin: {
+    top: -30px;
+    left: 16px;
+  }
+  position: relative;
+  top: 14px;
+  height: 40px;
+  width: 40px;
+  @extend %box-sizing;
+  box-shadow: 0 0 0 1px rgba($black, .2);
+  border: 2px solid $white;
+  border-radius: 20px;
+}
+
+.header__popup__nav-links, .home__header__popup__nav-links {
+  @media (min-width: 1020px) {
+    display: none;
+    &.is-expanded {
+      margin-top: -7px;
+      display: block;
+      float: right;
+      position: absolute;
+      right: 0;
+      text-align: right;
+    }
+    .header__nav-link {
+      padding: {
+        top: 15px;
+        right: 30px;
+        bottom: 15px;
+      }
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.header__popup__nav-links {
+  @media (min-width: 1020px) {
+    &.is-expanded {
+      width: 180px;
+      border-bottom: {
+        right-radius: 3px;
+        left-radius: 3px;
+      }
+      box-shadow: 0 2px 0 0 rgba($black, .15);
+      background-color: #fa3c29;
+    }
+    .header__nav-link {
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba($white, .3);
+      }
+    }
+  }
+}
+
+.body--index .header__popup__nav-links {
+  @media (min-width: 1020px) {
+    &.is-expanded {
+      width: 150px;
+      top: 0;
+      padding-top: 74px;
+      border-right: 1px solid rgba($white, .3);
+      border-radius: 0;
+      box-shadow: none;
+      background-color: transparent;
+    }
+    .header__nav-link {
+      border-bottom: 1px solid rgba($white, .3);
+    }
+  }
+}
+
+.header__popup-link {
+  @media (max-width: 1019px) {
+    display: none;
+  }
+  @media (min-width: 1020px) {
+    margin: {
+      right: 5px;
+      left: 5px;
+    }
+    position: relative;
+    right: 11px;
+    float: right;
+    line-height: 70px;
+    color: $white;
+    z-index: 1;
+    @include transition-duration(.25s);
+    @include transition-property(color);
+    &:hover {
+      color: rgba($white, .3);
+    }
   }
 }

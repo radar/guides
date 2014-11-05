@@ -67,14 +67,6 @@
   position: relative;
   overflow: auto;
   text-align: center;
-  &.previous_page {
-    position: absolute;
-    left: 0;
-  }
-  &.next_page {
-    position: absolute;
-    right: 0;
-  }
   a, em {
     margin: {
       right: 8px;
@@ -90,5 +82,13 @@
     &:hover, &:focus, &:active {
       color: #141c22;
     }
+  }
+  .previous_page {
+    position: absolute;
+    left: 0;
+  }
+  .next_page {
+    position: absolute;
+    right: 0;
   }
 }
