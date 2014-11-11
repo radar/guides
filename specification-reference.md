@@ -171,10 +171,10 @@ other non-files cause an error.</p>
 
 <p>Most gems contain pure Ruby code; they should simply leave the default
 value in place.  Some gems contain C (or other) code to be compiled into a
-Ruby “extension”.  The gem should leave the default value in place unless the
-code will only compile on a certain type of system.  Some gems consist of
-pre-compiled code (“binary gems”).  It&#39;s especially important that they
-set the platform attribute appropriately.  A shortcut is to set the
+Ruby “extension”.  The gem should leave the default value in place unless
+the code will only compile on a certain type of system.  Some gems consist
+of pre-compiled code (“binary gems”).  It&#39;s especially important that
+they set the platform attribute appropriately.  A shortcut is to set the
 platform to Gem::Platform::CURRENT, which will cause the gem builder to set
 the platform to the appropriate value for the system on which the build is
 being performed.</p>
