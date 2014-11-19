@@ -64,7 +64,7 @@ The Ruby community's gem hosting service. Provides a better API for accessing,
 deploying, and managing gems along with clear and accessible project pages.
 
 <div class="project__links">
-  <a class="project__link t-link" href="http://rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://rubygems.org">Site</a>
   <a class="project__link t-link" href="https://github.com/rubygems/rubygems.org/issues">Issues</a>
   <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/gemcutter">Mailing List</a>
 </div>
@@ -76,21 +76,21 @@ deploying, and managing gems along with clear and accessible project pages.
   <a href="https://github.com/sferik">
     <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober">
   </a>
-  <a href="https://github.com/cldwalker">
-    <img src="https://secure.gravatar.com/avatar/8f0660cdc9f5d91c7d97456f8f0be8c7?s=32" title="Gabriel Horner">
+  <a href="https://github.com/dwradcliffe">
+    <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe">
   </a>
-  <a href="https://github.com/cmeiklejohn">
-    <img src="https://secure.gravatar.com/avatar/3e09fee7b359be847ed5fa48f524a3d3?s=32" title="Christopher Meiklejohn">
+  <a href="https://github.com/evanphx">
+    <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix">
   </a>
 </p>
 
-<a class="project__name" href="https://github.com/rubygems/rubygems-aws">RubyGems AWS</a>
+<a class="project__name" href="https://github.com/rubygems/rubygems-infrastructure">RubyGems Infrastructure</a>
 
 Chef cookbooks and bootstrap scripts to configure and manage Rubygems.org on AWS.
-Includes Vagrant configuration for local testing.
 
 <div class="project__links">
-  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-aws/issues">Issues</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-infrastructure/wiki">Wiki</a>
+  <a class="project__link t-link" href="https://trello.com/b/cd2HqKnE/infrastructure">Trello</a>
 </div>
 
 <p class="avatars">
@@ -99,9 +99,6 @@ Includes Vagrant configuration for local testing.
   </a>
   <a href="https://github.com/dwradcliffe">
     <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe">
-  </a>
-  <a href="https://github.com/vertis">
-    <img src="https://secure.gravatar.com/avatar/b2a9e57c2a8ed757833b4c787b6c51d5?s=32" title="Luke Chadwick">
   </a>
   <a href="https://github.com/evanphx">
     <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix">
@@ -116,6 +113,15 @@ A simple Rails app to show the status of the rubygems.org infrastructure.
   <a class="project__link t-link" href="http://status.rubygems.org">Site</a>
   <a class="project__link t-link" href="https://github.com/rubygems/rubygems-status/issues">Issues</a>
 </div>
+
+<p class="avatars">
+  <a href="https://github.com/sferik">
+    <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober">
+  </a>
+  <a href="https://github.com/dwradcliffe">
+    <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe">
+  </a>
+</p>
 
 <a class="project__name" href="https://github.com/rubygems/guides">RubyGems Guides</a>
 
@@ -192,21 +198,6 @@ community, check this out!
 <p class="avatars">
   <a href="https://github.com/sferik">
     <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober">
-  </a>
-</p>
-
-<a class="project__name" href="https://github.com/rubygems/search">RubyGems Search</a>
-
-A souped-up implementation of search on RubyGems.org, using Solr. Still not
-100% done yet, but hopefully will replace the search box on RubyGems.org soon!
-
-<div class="project__links">
-  <a class="project__link t-link" href="https://github.com/rubygems/search/issues">Issues</a>
-</div>
-
-<p class="avatars">
-  <a href="https://github.com/nz">
-    <img src="https://secure.gravatar.com/avatar/5198f305281b34927f936ba77cffcbf6?s=32" title="Nick Zadrozny">
   </a>
 </p>
 
