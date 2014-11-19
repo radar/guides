@@ -1,9 +1,12 @@
 ---
 layout: default
 title: RubyGems Basics
+url: /rubygems-basics
 previous: /
 next: /what-is-a-gem
 ---
+
+<em class="t-gray">Use of common RubyGems commands</em>
 
 The `gem` command allows you to interact with RubyGems.
 
@@ -174,7 +177,7 @@ If you uninstall a dependency of a gem RubyGems will ask you for confirmation.
     $ gem uninstall rbtree
 
     You have requested to uninstall the gem:
-    	rbtree-0.4.1
+      rbtree-0.4.1
 
     drip-0.0.2 depends on rbtree (>= 0)
     If you remove this gem, these dependencies will not be met.

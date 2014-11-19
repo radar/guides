@@ -1,13 +1,14 @@
 ---
 layout: default
 title: RubyGems.org API
+url: /rubygems-org-api
 previous: /command-reference
 next: /run-your-own-gem-server
 ---
 
 {% include big.html %}
 
-Details on interacting with RubyGems.org over HTTP.
+<em class="t-gray">Details on interacting with RubyGems.org over HTTP.</em>
 
 > NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/gemcutter)
 > RubyGems itself and the
@@ -274,6 +275,7 @@ as well as the total number of downloads for the specified version.
 
 Owner Methods
 -------------
+
 ### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)`
 
 View all gems for a user. This is all the gems a user can push to.
@@ -283,9 +285,9 @@ View all gems for a user. This is all the gems a user can push to.
     [
       {
         "name": "factory_girl",
-		...
+    ...
       },
-	  ...
+    ...
     ]
 
 

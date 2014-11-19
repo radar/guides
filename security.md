@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Security
+url: /security
 previous: /publishing
 next: /patterns
 ---
+
+<em class="t-gray">How to build and install cryptographically signed gems-- and other security concerns.</em>
 
 Security practices are being actively discussed. Check back often.
 
@@ -29,7 +32,7 @@ command optionally lets you set a security policy, and you can verify the
 signing key for a gem before you install it.
 
 However, this method of securing gems is not widely used. It requires a number
-of [manual steps on the part of the developer](#building_gems), and there is no
+of [manual steps on the part of the developer](#building-gems), and there is no
 well-established chain of trust for gem signing keys.  Discussion of new
 signing models such as X509 and OpenPGP is going on in the [rubygems-trust
 wiki](https://github.com/rubygems-trust/rubygems.org/wiki/_pages), the
@@ -53,7 +56,7 @@ Install with a trust policy.
   * `bundle --trust-policy MediumSecurity`: Same as above, except Bundler only
     recognizes the long `--trust-policy` flag, not the short `-P`.
 
-  * *Caveat*: Gem certificates are trusted globally, such that adding a
+  * *Caveat:* Gem certificates are trusted globally, such that adding a
     cert.pem for one gem automatically trusts all gems signed by that cert.
 
 Verify the checksum, if available
@@ -127,8 +130,7 @@ Add cert paths to your gemspec
 
 -------
 
-### Not Recommended: OpenPGP signing is [not recommended due to lack of
-support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
+### OpenPGP signing is [not recommended due to lack of support](http://www.rubygems-openpgp-ca.org/blog/nobody-cares-about-signed-gems.html).
 
 For details, see discussion [with Yorick
 Peterse](https://github.com/rubygems/guides/pull/70#issuecomment-29007487).

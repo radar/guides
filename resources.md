@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Resources
+url: /resources
 previous: /run-your-own-gem-server
 next: /contributing
 ---
+
+<em class="t-gray">Great blog posts, tutorials, and other sites to help you out.</em>
 
 A collection of helpful material about RubyGems. Feel free to
 [fork](https://github.com/rubygems/guides) and add your own!
@@ -12,7 +15,6 @@ Tutorials
 ---------
 
 * [Making Ruby Gems](http://timelessrepo.com/making-ruby-gems)
-* [Gem Sawyer, Modern Day Ruby Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/)
 * [Gemcutter & Jeweler](http://railscasts.com/episodes/183-gemcutter-jeweler)
 * [MicroGems: five minute RubyGems](http://jeffkreeftmeijer.com/2011/microgems-five-minute-rubygems/) - Gems so small that you can store them in a gist.
 * [Let's Write a Gem: Part 1](http://rakeroutes.com/blog/lets-write-a-gem-part-one/) and [Part 2](http://rakeroutes.com/blog/lets-write-a-gem-part-two/)

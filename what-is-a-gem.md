@@ -1,9 +1,12 @@
 ---
 layout: default
 title: What is a gem?
+url: /what-is-a-gem
 previous: /rubygems-basics
 next: /make-your-own-gem
 ---
+
+<em class="t-gray">Unpack the mystery behind what's in a RubyGem.</em>
 
 Structure of a Gem
 ------------------
@@ -93,5 +96,4 @@ Credits
 
 This guide was adapted from [Gonçalo
 Silva](https://twitter.com/#!/goncalossilva)'s original tutorial on
-docs.rubygems.org and from [Gem Sawyer, Modern Day Ruby
-Warrior](http://rubylearning.com/blog/2010/10/06/gem-sawyer-modern-day-ruby-warrior/).
+docs.rubygems.org and from Gem Sawyer, Modern Day Ruby Warrior.

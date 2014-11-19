@@ -1,11 +1,12 @@
 ---
 layout: default
 title: Command Reference
+url: /command-reference
 previous: /patterns
 next: /rubygems-org-api
 ---
 
-What each `gem` command does, and how to use it.
+<em class="t-gray">What each `gem` command does, and how to use it.</em>
 
 This reference was automatically generated from RubyGems version 2.4.4.
 

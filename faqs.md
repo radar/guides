@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Frequently Asked Questions
+url: /faqs
 previous: /contributing
 next: /plugins
 ---
+
+<em class="t-gray">More of the "why" and "wtf" than "how".</em>
 
 The RubyGems development team has gotten a lot of support requests over the
 years, and this is a list of the questions users both new and old that
@@ -21,7 +24,8 @@ in #rubygems. Some of the information you can find on the support site includes:
 * [Why do I get HTTP Response 302 or 301 when installing a gem?](http://help.rubygems.org/kb/rubygems/why-do-i-get-http-response-302-or-301-when-installing-a-gem)
 * [RubyGems Upgrade Issues](http://help.rubygems.org/kb/rubygems/rubygems-upgrade-issues)
 
-<a id="user-install"> </a>
+<a id="user-install"></a>
+
 I installed gems with `--user-install` and their commands are not available
 ---------------------------------------------------------------------------
 
@@ -43,7 +47,8 @@ After adding this code to your `~/.bashrc`, you need to restart your shell for
 the changes to take effect. You can do this by opening a new terminal window or
 by running `exec $SHELL` in the window you already have open.
 
-<a id="security"> </a>
+<a id="security"></a>
+
 How can I trust Gem code that's automatically downloaded?
 ---------------------------------------------------------
 
@@ -56,7 +61,8 @@ The Ruby community is discussing ways to make gem code more secure in the future
 using some public-key infrastructure. To see the progress of this discussion, visit the
 [rubygems-trust](https://github.com/rubygems-trust) organization on GitHub.
 
-<a id="require-fail"> </a>
+<a id="require-fail"></a>
+
 Why does `require 'some-gem'` fail?
 -----------------------------------
 
@@ -105,7 +111,8 @@ In this instance we’ve got two ruby installations so that `gem` uses a differe
 
 You may also need to give `irb` the same treatment.
 
-<a id="require-false"> </a>
+<a id="require-false"></a>
+
 Why does require return false when loading a file from a gem?
 -------------------------------------------------------------
 

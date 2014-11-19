@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Publishing your gem
+url: /publishing
 previous: /name-your-gem
 next: /security
 ---
+
+<em class="t-gray">Start with an idea, end with a distributable package of Ruby code.</em>
 
 Ways to share your gem code with other users.
 

@@ -1,21 +1,22 @@
 ---
 layout: default
 title: Make your own gem
+url: /make-your-own-gem
 previous: /what-is-a-gem
 next: /gems-with-extensions
 ---
 
-From start to finish, learn how to package your Ruby code in a gem.
+<em class="t-gray">From start to finish, learn how to package your Ruby code in a gem.</em>
 
-* [Introduction](#intro)
-* [Your first gem](#first-gem)
-* [Requiring more files](#more-files)
+
+* [Introduction](#introduction)
+* [Your first gem](#your-first-gem)
+* [Requiring more files](#requiring-more-files)
 * [Adding an executable](#adding-an-executable)
 * [Writing tests](#writing-tests)
-* [Documenting your code](#documenting-code)
+* [Documenting your code](#documenting-your-code)
 * [Wrapup](#wrapup)
 
-<a id="intro"> </a>
 Introduction
 ------------
 
@@ -24,7 +25,6 @@ into RubyGems. Let’s make a simple “hello world” gem, and feel free to
 play along at home! The code for the gem we're going to make here is up
 [on GitHub](https://github.com/qrush/hola).
 
-<a id="first-gem"> </a>
 Your first gem
 --------------
 
@@ -76,7 +76,7 @@ information you see on a gem page
 
 > The description member can be much longer than you see in this example. If it
 > matches `/^== [A-Z]/` then the description will be run through
-> [RDoc's markup formatter](http://rdoc.rubyforge.org/RDoc/Markup.html) for display on
+> [RDoc's markup formatter](https://github.com/rdoc/rdoc) for display on
 > the RubyGems web site. Be aware though that other consumers of the data might not
 > understand this markup.
 
@@ -146,7 +146,6 @@ or grab it from any computer with RubyGems installed:
 
 It’s really that easy to share code with Ruby and RubyGems.
 
-<a id="more-files"> </a>
 Requiring more files
 --------------------
 
@@ -187,7 +186,7 @@ out like so:
     ├── hola.gemspec
     └── lib
         ├── hola
-        │   └── translator.rb
+        │   └── translator.rb
         └── hola.rb
 
 The `Translator` is now in `lib/hola`, which can easily be picked up with a
@@ -252,9 +251,10 @@ for gems, explained in [this guide](/patterns).
 
 If you've added more files to your gem, make sure to remember to add them to
 your gemspec's `files` array before publishing a new gem! For this reason (among others),
-many developers automate this with [Hoe](http://seattlerb.rubyforge.org/hoe/),
+many developers automate this with
+[Hoe](https://github.com/seattlerb/hoe),
 [Jeweler](https://github.com/technicalpickles/jeweler),
-[Rake](http://rake.rubyforge.org/classes/Rake/GemPackageTask.html),
+[Rake](https://github.com/jimweirich/rake),
 [Bundler](http://railscasts.com/episodes/245-new-gem-with-bundler), or
 [just a dynamic gemspec
 ](https://github.com/wycats/newgem-template/blob/master/newgem.gemspec).
@@ -264,7 +264,6 @@ process. Split your Ruby files up when it makes sense! Making a sane order for
 your project will help you and your future maintainers from headaches down the
 line.
 
-<a id="adding-an-executable"> </a>
 Adding an executable
 --------------------
 
@@ -324,7 +323,6 @@ there's an `executables` array field on the gemspec.
 > Note that you should change the gem's version when pushing up a new release.
 > For more information on gem versioning, see the [Patterns Guide](/patterns/#semantic-versioning)
 
-<a id="writing-tests"> </a>
 Writing tests
 --------------
 
@@ -354,12 +352,12 @@ Let's add some tests to Hola. This requires adding a few more files, namely a
     .
     ├── Rakefile
     ├── bin
-    │   └── hola
+    │   └── hola
     ├── hola.gemspec
     ├── lib
-    │   ├── hola
-    │   │   └── translator.rb
-    │   └── hola.rb
+    │   ├── hola
+    │   │   └── translator.rb
+    │   └── hola.rb
     └── test
         └── test_hola.rb
 
@@ -415,7 +413,6 @@ Finally, to run the tests:
 It's green! Well, depending on your shell colors. For more great examples, the best thing you can do is hunt around
 [GitHub](https://github.com/search?utf8=%E2%9C%93&q=stars%3A%3E100+forks%3A%3E10&type=Repositories&ref=advsearch&l=Ruby) and read some code.
 
-<a id="documenting-code"> </a>
 Documenting your code
 ---------------------
 
@@ -447,7 +444,6 @@ has a [good
 introduction](http://rubydoc.info/docs/yard/file/docs/GettingStarted.md) on
 what's different and how to use it.
 
-<a id="wrapup"> </a>
 Wrapup
 ------
 
@@ -455,7 +451,6 @@ With this basic understanding of building your own RubyGem, we hope you'll be
 on your way to making your own! The next few guides cover patterns in making a
 gem and the other capabilities of the RubyGems system.
 
-<a id="credits"> </a>
 Credits
 -------
 

@@ -1,26 +1,36 @@
 ---
 layout: default
 title: Contributing to RubyGems
+url: /contributing
 previous: /resources
 next: /faqs
 ---
+
+<em class="t-gray">How you can help make RubyGems and the surrounding ecosystem better.</em>
 
 Looking to contribute to a RubyGems project? You've come to the right place!
 There are many development efforts going on right now, and they could use
 your help. Just follow the links below to get started contributing or to contact the
 project maintainers.
 
-## Core Projects
+* [Core Projects](#core-projects)
+* [Ecosystem Projects](#ecosystem-projects)
+* [Add Your Own Idea](#add-your-own-idea)
+
+Core Projects
+-------------
 
 These projects are under the wing of the core [RubyGems team](https://github.com/rubygems/).
 
-### [RubyGems](https://github.com/rubygems/rubygems)
+<a class="project__name is-first" href="https://github.com/rubygems/rubygems">RubyGems</a>
 
 Ruby's premier packaging system. Bundled with Ruby 1.9+ and available for Ruby 1.8. Any time you run
 `gem` at the command line, you're using this project.
 
-[issues](https://github.com/rubygems/rubygems/issues) -
-[mailing list](http://rubyforge.org/mailman/listinfo/rubygems-developers)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems/issues">Issues</a>
+  <a class="project__link t-link" href="http://rubyforge.org/mailman/listinfo/rubygems-developers">Mailing List</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/drbrain">
@@ -37,24 +47,27 @@ Ruby's premier packaging system. Bundled with Ruby 1.9+ and available for Ruby 1
   </a>
 </p>
 
-*Code Guidelines*
-+ New features should be coupled with tests.
-+ Ensure that your code blends well with ours (eg, no trailing whitespace, match indentation and coding style).
-+ Don't modify the history file or version number.
-+ If you have any questions, just ask us on IRC in #rubygems or file [an issue][1].
+<em class="t-gray t-uppercase">Code Guidelines:</em>
+
+* New features should be coupled with tests.
+* Ensure that your code blends well with ours (eg, no trailing whitespace, match indentation and coding style).
+* Don’t modify the history file or version number.
+* If you have any questions, just ask us on IRC in #rubygems or file [an issue][1].
 
 [0]: https://github.com/rubygems/rubygems
 [1]: https://github.com/rubygems/rubygems/issues
 [2]: http://help.rubygems.org
 
-### [RubyGems.org](https://github.com/rubygems/rubygems.org)
+<a class="project__name" href="https://github.com/rubygems/rubygems.org">RubyGems.org</a>
 
 The Ruby community's gem hosting service. Provides a better API for accessing,
 deploying, and managing gems along with clear and accessible project pages.
 
-[site](http://rubygems.org) -
-[issues](https://github.com/rubygems/rubygems.org/issues) -
-[mailing list](https://groups.google.com/forum/#!forum/gemcutter)
+<div class="project__links">
+  <a class="project__link t-link" href="http://rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems.org/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/gemcutter">Mailing List</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/qrush">
@@ -71,12 +84,14 @@ deploying, and managing gems along with clear and accessible project pages.
   </a>
 </p>
 
-### [RubyGems AWS](https://github.com/rubygems/rubygems-aws)
+<a class="project__name" href="https://github.com/rubygems/rubygems-aws">RubyGems AWS</a>
 
 Chef cookbooks and bootstrap scripts to configure and manage Rubygems.org on AWS.
 Includes Vagrant configuration for local testing.
 
-[issues](https://github.com/rubygems/rubygems-aws/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-aws/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/skottler">
@@ -93,20 +108,24 @@ Includes Vagrant configuration for local testing.
   </a>
 </p>
 
-### [RubyGems Status](https://github.com/rubygems/rubygems-status)
+<a class="project__name" href="https://github.com/rubygems/rubygems-status">RubyGems Status</a>
 
 A simple Rails app to show the status of the rubygems.org infrastructure.
 
-[site](http://status.rubygems.org) -
-[issues](https://github.com/rubygems/rubygems-status/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="http://status.rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-status/issues">Issues</a>
+</div>
 
-### [RubyGems Guides](https://github.com/rubygems/guides)
+<a class="project__name" href="https://github.com/rubygems/guides">RubyGems Guides</a>
 
 The central home for RubyGems documentation, including tutorials and reference material.
 User-contributed guides are more than welcome and encouraged!
 
-[site](http://guides.rubygems.org) -
-[issues](https://github.com/rubygems/guides/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="http://guides.rubygems.org">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/guides/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/qrush">
@@ -120,13 +139,15 @@ User-contributed guides are more than welcome and encouraged!
   </a>
 </p>
 
-### [RubyGems Testers](https://github.com/rubygems/rubygems-test)
+<a class="project__name" href="https://github.com/rubygems/rubygems-test">RubyGems Testers</a>
 
 A community effort to document the test results for various gems,
 on various machine architectures.
 
-[site](http://test.rubygems.org/) -
-[issues](https://github.com/rubygems/rubygems-test/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="http://test.rubygems.org/">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-test/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/bluepojo">
@@ -137,15 +158,17 @@ on various machine architectures.
   </a>
 </p>
 
-### [Gem Whisperer](https://github.com/rubygems/gemwhisperer)
+<a class="project__name" href="https://github.com/rubygems/gemwhisperer">Gem Whisperer</a>
 
 An example of how to use [RubyGems.org's
 webhooks](http://guides.rubygems.org/rubygems-org-api/#webhook) to listen to every gem being
 pushed. Currently powers [m.rubygems.org](http://m.rubygems.org) and
 [@rubygems](http://twitter.com/rubygems).
 
-[site](http://m.rubygems.org/) -
-[issues](https://github.com/rubygems/gemwhisperer/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="http://m.rubygems.org/">Site</a>
+  <a class="project__link t-link" href="https://github.com/rubygems/gemwhisperer/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/qrush">
@@ -156,13 +179,15 @@ pushed. Currently powers [m.rubygems.org](http://m.rubygems.org) and
   </a>
 </p>
 
-### [RubyGems.org API Library](https://github.com/rubygems/gems)
+<a class="project__name" href="https://github.com/rubygems/gems">RubyGems.org API Library</a>
 
 A Ruby implementation of the various API endpoints available on RubyGems.org.
 If you're writing a service in Ruby to interact with gems available to the
 community, check this out!
 
-[issues](https://github.com/rubygems/gems/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/gems/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/sferik">
@@ -170,12 +195,14 @@ community, check this out!
   </a>
 </p>
 
-### [RubyGems Search](https://github.com/rubygems/search)
+<a class="project__name" href="https://github.com/rubygems/search">RubyGems Search</a>
 
 A souped-up implementation of search on RubyGems.org, using Solr. Still not
 100% done yet, but hopefully will replace the search box on RubyGems.org soon!
 
-[issues](https://github.com/rubygems/search/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/search/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/nz">
@@ -183,7 +210,7 @@ A souped-up implementation of search on RubyGems.org, using Solr. Still not
   </a>
 </p>
 
-### [RubyGems Mirror](https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0)
+<a class="project__name" href="https://github.com/rubygems/rubygems-mirror">RubyGems Mirror</a>
 
 The current state of mirroring RubyGems is frankly embarrassing. We need
 RubyGems to be highly available all over the world, no more excuses! Discussion
@@ -191,7 +218,9 @@ is going on in the [rubygems-mirror
 wiki](https://github.com/rubygems/rubygems-mirror/wiki/Mirroring-2.0) on how
 to improve it.
 
-[issues](https://github.com/rubygems/rubygems-mirror/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-mirror/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/raggi">
@@ -199,25 +228,29 @@ to improve it.
   </a>
 </p>
 
-### [RubyGems Verification](https://github.com/rubygems/rubygems-verification)
+<a class="project__name" href="https://github.com/rubygems/rubygems-verification">RubyGems Verification</a>
 
 A collection of tools and data used for verifying the integrity of gems on rubygems.org based on checksums
 collected by third parties.
 
-[issues](https://github.com/rubygems/rubygems-verification/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/rubygems/rubygems-verification/issues">Issues</a>
+</div>
 
 ## Ecosystem Projects
 
 These projects are outside of the RubyGems core, but work closely with RubyGems to improve the gem experience for everyone.
 
-### [Bundler](https://github.com/bundler/bundler)
+<a class="project__name is-first" href="https://github.com/bundler/bundler">Bundler</a>
 
 Bundler manages an application's dependencies through its entire life across
 many machines systematically and repeatably.
 
-[site](http://bundler.io) -
-[issues](https://github.com/bundler/bundler/issues) -
-[mailing list](https://groups.google.com/forum/#!forum/ruby-bundler)
+<div class="project__links">
+  <a class="project__link t-link" href="http://bundler.io">Site</a>
+  <a class="project__link t-link" href="https://github.com/bundler/bundler/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/ruby-bundler">Mailing List</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/indirect">
@@ -234,12 +267,14 @@ many machines systematically and repeatably.
   </a>
 </p>
 
-### [Isolate](https://github.com/jbarnette/isolate)
+<a class="project__name" href="https://github.com/jbarnette/isolate">Isolate</a>
 
 A simple gem sandbox that makes sure your application has the exact gem
 versions you require. It does not perform dependency resolution like Bundler.
 
-[issues](https://github.com/jbarnette/isolate/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/jbarnette/isolate/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/jbarnette">
@@ -247,16 +282,18 @@ versions you require. It does not perform dependency resolution like Bundler.
   </a>
 </p>
 
-### [RubyDoc.info](https://github.com/lsegal/rubydoc.info)
+<a class="project__name" href="https://github.com/lsegal/rubydoc.info">RubyDoc.info</a>
 
 A fantastic provider of [YARD](http://yardoc.org) documentation for every
 RubyGem available. Push a gem, and you get docs created instantly!
 RubyGems.org links to this site and it uses [RubyGems.org's
 webhooks](http://guides.rubygems.org/rubygems-org-api/#webhook) as well.
 
-[site](http://rubydoc.info) -
-[issues](https://github.com/lsegal/rubydoc.info/issues) -
-[mailing list](https://groups.google.com/forum/#!forum/yardoc)
+<div class="project__links">
+  <a class="project__link t-link" href="http://rubydoc.info">Site</a>
+  <a class="project__link t-link" href="https://github.com/lsegal/rubydoc.info/issues">Issues</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/yardoc">Mailing List</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/indirect">
@@ -267,13 +304,15 @@ webhooks](http://guides.rubygems.org/rubygems-org-api/#webhook) as well.
   </a>
 </p>
 
-### [Stickler](https://github.com/copiousfreetime/stickler)
+<a class="project__name" href="https://github.com/copiousfreetime/stickler">Stickler</a>
 
 Stickler is a great way to run and organize an internal gem server in your
 organization. It helps with mirroring gems and providing a gem source to add
 internal or proprietary code to.
 
-[issues](https://github.com/copiousfreetime/stickler/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/copiousfreetime/stickler/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/copiousfreetime">
@@ -281,13 +320,15 @@ internal or proprietary code to.
   </a>
 </p>
 
-### [Geminabox](https://github.com/cwninja/geminabox)
+<a class="project__name" href="https://github.com/cwninja/geminabox">Geminabox</a>
 
 Need simple RubyGems hosting? Geminabox can do that! This project provides an
 easy to setup way to host RubyGems internally and allow uploading of gems
 without much hassle.
 
-[issues](https://github.com/cwninja/geminabox/issues)
+<div class="project__links">
+  <a class="project__link t-link" href="https://github.com/cwninja/geminabox/issues">Issues</a>
+</div>
 
 <p class="avatars">
   <a href="https://github.com/cwninja">
@@ -295,10 +336,9 @@ without much hassle.
   </a>
 </p>
 
-## Your idea?
+Add Your Own Idea
+-----------------
 
-We'd love for your new idea to be on this list. If you're working on a
+We’d love for your new idea to be on this list. If you’re working on a
 RubyGems related project, just [fork this
 repo](https://github.com/rubygems/guides) and add the link!
-
-

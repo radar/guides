@@ -1,9 +1,12 @@
 ---
 layout: default
 title: Name your gem
+url: /name-your-gem
 previous: /gems-with-extensions
 next: /publishing
 ---
+
+<em class="t-gray">Our recommendation on the use of "_" and "-" in your gem's name.</em>
 
 Here are some examples of our recommendations for naming gems:
 

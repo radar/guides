@@ -1,66 +1,173 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <!--[if lt IE 9]>
-  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <meta charset="utf-8" />
-  <title>{{ page.title }} - RubyGems Guides</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
-  <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
-  <link href="/stylesheets/screen.css" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
-  <!--[if !IE]>-->
-    <meta name="viewport" content="width=device-width">
-    <script type="text/javascript">
-      window.scrollTo(0, 1);
+<html lang="en-us">
+  <head>
+    <title>{{ page.title }} - RubyGems Guides</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Description" name="Description" content="Tutorials, guides, FAQs for RubyGems package management" />
+    <meta http-equiv="Keywords" name="Keywords" content="rubygems, gems, programming, ruby, packages" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <link href="/stylesheets/application.css" rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/javascripts/mobile-nav.js" type="text/javascript"></script>
+    <script src="//use.typekit.net/omu5dik.js" type="text/javascript"></script>
+    <script>
+      try{Typekit.load();}catch(e){}
     </script>
-  <!--<![endif]-->
-</head>
-<body class="default">
-<section id="head-wrapper">
-  <section id="small-top">
-    <header>
-      <a href="/">
-        <h1>RubyGems Guides</h1>
-      </a>
+    <script>
+      $(function() {
+        var path = window.location.pathname;
+        $('a.nav--v__link[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+      });
+    </script>
+
+    <!--[if !IE]>-->
+      <meta name="viewport" content="width=device-width">
+      <script type="text/javascript">
+        window.scrollTo(0, 1);
+      </script>
+    <!--<![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body class="default">
+    <header class="header header--interior">
+      <div class="l-wrap--header">
+        <a class="header__logo-wrap" href="https://rubygems.org/">
+          <span class="header__logo" data-icon="⬡">⬢</span>
+          <span class="t-hidden">RubyGems</span>
+        </a>
+        <a class="header__club-sandwich" href="#">
+          <span class="t-hidden">Navigation menu</span>
+        </a>
+
+        <div class="header__nav-links-wrap">
+          <form accept-charset="UTF-8" action="https://rubygems.org/search" class="header__search-wrap" id="main-search" method="get"><div style="display:none"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+            <input class="header__search" id="query" name="query" placeholder="Search Gems&hellip;" type="search" />
+            <label for="query">
+              <span class="t-hidden">Search gems</span>
+            </label>
+            <input class="header__search__icon" id="search_submit" type="submit" value="⌕" />
+          </form>
+
+          <nav class="header__nav-links">
+            <a class="header__nav-link" href="https://rubygems.org/gems">Gems</a>
+            <a class="header__nav-link is-active" href="/">Guides</a>
+            <a class="header__nav-link" href="/contributing">Contribute</a>
+          </nav>
+        </div>
+      </div>
     </header>
-  </section>
-</section>
 
-<section id="container">
-  <div class="nav">
-    <span class="previous"><a href="{{ page.previous }}" class="left">&larr; Previous</a></span>
-    <span class="next"><a href="{{ page.next }}" class="right">Next &rarr;</a></span>
-  </div>
-  <section id="content">
-    <h1><a href="#">{{ page.title }}</a></h1>
-    {{ content }}
-  </section>
-  <div class="nav">
-    <span class="previous"><a href="{{ page.previous }}" class="left">&larr; Previous</a></span>
-    <span class="next"><a href="{{ page.next }}" class="right">Next &rarr;</a></span>
-  </div>
-  <footer>
-    <p>
-      hosted on <a href="http://pages.github.com/">GitHub</a> | these guides are <a href="https://github.com/rubygems/guides">open source</a> and  <a href="http://creativecommons.org/licenses/by/3.0/">free to remix</a>
-    </p>
-  </footer>
-</section>
+    <main class="main--interior">
+      <div class="l-wrap--b">
+        <a class="t-display page__heading" href="/">Guides</a>
+        <div class="l-overflow">
+          <div class="l-col--l">
+            <div class="nav--v">
+              <a class="nav--v__link" href="/rubygems-basics">RubyGems Basics</a>
+              <a class="nav--v__link" href="/what-is-a-gem">What is a gem?</a>
+              <a class="nav--v__link" href="/make-your-own-gem">Make your own gem</a>
+              <a class="nav--v__link" href="/gems-with-extensions">Gems with Extensions</a>
+              <a class="nav--v__link" href="/name-your-gem">Name your gem</a>
+              <a class="nav--v__link" href="/publishing">Publishing your gem</a>
+              <a class="nav--v__link" href="/security">Security Practices</a>
+              <a class="nav--v__link" href="/patterns">Patterns</a>
+              <a class="nav--v__link" href="/specification-reference">Specification Reference</a>
+              <a class="nav--v__link" href="/command-reference">Command Reference</a>
+              <a class="nav--v__link" href="http://docs.seattlerb.org/rubygems">RubyGems API</a>
+              <a class="nav--v__link" href="/rubygems-org-api">RubyGems.org API</a>
+              <a class="nav--v__link" href="/run-your-own-gem-server">Run your own gem server</a>
+              <a class="nav--v__link" href="/resources">Resources</a>
+              <a class="nav--v__link" href="/contributing">Contributing to RubyGems</a>
+              <a class="nav--v__link" href="/faqs">Frequently Asked Questions</a>
+              <a class="nav--v__link" href="/plugins">Plugins</a>
+              <a class="nav--v__link" href="/credits">Credits</a>
+            </div>
+          </div>
+          <div class="l-colspan--r">
+            <div class="t-body">
+              {{ content }}
+            </div>
+          </div>
+        </div>
 
-<script type="text/javascript">
+        <div class="paginated-nav-links">
+          <a class="paginated-nav-link--prev" data-icon="&lt;" href="{{ page.previous }}">
+            <span>Previous</span>
+          </a>
+          <a class="paginated-nav-link--next" data-icon="&gt;" href="{{ page.next }}">
+            <span>Next</span>
+          </a>
+        </div>
+      </div>
+    </main>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-10315684-2']);
-  _gaq.push(['_trackPageview']);
+    <footer class="footer">
+      <div class="l-wrap--footer">
+        <div class="l-overflow">
+          <div class="nav--v l-col--r--pad">
+            <a class="nav--v__link--footer" href="http://status.rubygems.org/">Status</a>
+            <a class="nav--v__link--footer" href="http://uptime.rubygems.org/">Uptime</a>
+            <a class="nav--v__link--footer" href="https://github.com/rubygems/rubygems.org" target='_blank'>Code</a>
+            <a class="nav--v__link--footer" href="https://groups.google.com/forum/#!forum/rubygems-org" target='_blank'>Discuss</a>
+            <a class="nav--v__link--footer" href="https://rubygems.org/stats">Stats</a>
+            <a class="nav--v__link--footer" href="http://blog.rubygems.org/">Blog</a>
+            <a class="nav--v__link--footer" href="https://rubygems.org/pages/about">About</a>
+            <a class="nav--v__link--footer" href="http://help.rubygems.org/">Help</a>
+          </div>
+          <div class="l-colspan--l colspan--l--has-border">
+            <p class="footer__about">RubyGems.org is the Ruby community&rsquo;s gem hosting service. Instantly publish your gems and install them. Use the API to interact and find out more information about available gems. Become a contributor and enhance the site with your own changes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__sponsors-wrap">
+        <div class="footer__sponsors">
+          <a class="footer__sponsor" href="http://rubycentral.org/" target="_blank">
+            Supported by
+            <img alt="Ruby Central" class="footer__sponsor__logo" src="/images/logos/ruby-central.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.bluebox.net/" target="_blank">
+            Hosted by
+            <img alt="Blue Box" class="footer__sponsor__logo" src="/images/logos/bluebox.png">
+          </a>
+          <a class="footer__sponsor" href="http://www.dockyard.com/" target="_blank">
+            Designed by
+            <img alt="DockYard" class="footer__sponsor__logo" src="/images/logos/dockyard.png">
+          </a>
+          <a class="footer__sponsor" href="https://dnsimple.com/" target="_blank">
+            Resolved with
+            <img alt="DNSimple" class="footer__sponsor__logo" src="/images/logos/dnsimple.png">
+          </a>
+          <a class="footer__sponsor" href="http://newrelic.com/" target="_blank">
+            Optimized by
+            <img alt="New Relic" class="footer__sponsor__logo" src="/images/logos/new-relic.png">
+          </a>
+          <a class="footer__sponsor" href="http://get.gaug.es/" target="_blank">
+            Tracking by
+            <img alt="Gauges" class="footer__sponsor__logo" src="/images/logos/gauges.png">
+          </a>
+          <a class="footer__sponsor" href="https://www.runscope.com/" target="_blank">
+            Monitored by
+            <img alt="Runscope" class="footer__sponsor__logo" src="/images/logos/runscope.png">
+          </a>
+        </div>
+      </div>
+    </footer>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-10315684-2']);
+      _gaq.push(['_trackPageview']);
 
-</script>
-</body>
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
 </html>
