@@ -18,6 +18,11 @@
       $(function() {
         var path = window.location.pathname;
         $('a.nav--v__link[href="'+path.substring(0, path.length -1)+'"]').addClass('is-active');
+        var header_link = $('a.header__nav-link[href="'+path.substring(0, path.length -1)+'"]');
+        if(header_link.length > 0) {
+          $('.header__nav-links a').removeClass('is-active');
+          header_link.addClass('is-active');
+        }
       });
     </script>
 
