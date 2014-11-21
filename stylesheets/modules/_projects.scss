@@ -11,10 +11,6 @@
   }
 }
 
-.project__desc {
-  margin-top: 25px;
-}
-
 .project__links {
   margin: {
     top: 16px;
@@ -34,42 +30,4 @@
       margin-left: 15px;
     }
   }
-}
-
-.project__members {
-  margin-top: 25px;
-}
-
-.project__member {
-  color: $black;
-  @include transition-duration(.25s);
-  @include transition-property(color);
-  &:hover {
-    color: $red;
-  }
-}
-
-// TODO this appears in projects and help staff
-.project__member--v {
-  @extend .project__member;
-  display: table;
-  overflow: auto;
-  &:not(:first-child) {
-    margin-top: 12px;
-  }
-  .project__member__image {
-    float: left;
-  }
-  .project__member__name {
-    display: table-cell;
-    vertical-align: middle;
-  }
-}
-
-.project__member__image {
-  margin-right: 12px;
-  height: 32px;
-  width: 32px;
-  border-radius: 16px;
-  border-radius: 50%;
 }
