@@ -8,8 +8,6 @@ next: /resources
 
 <em class="t-gray">Need to serve gems locally or for your organization?</em>
 
-{% include big.html %}
-
 There are times you would like to run your own gem server.  You may want to
 share gems with colleagues when you are both without internet connectivity. You
 may have private code, internal to your organization, that you'd like to

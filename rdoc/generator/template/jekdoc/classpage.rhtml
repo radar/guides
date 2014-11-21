@@ -6,8 +6,6 @@ previous: /patterns
 next: /command-reference
 ---
 
-{% include big.html %}
-
 <% description = klass.description
    description.gsub! %r%<a\shref=(["'])Specification\.html#.*?\1>(.*?)</a>%m, '\2'
    description.gsub! %r%<a\shref=(["'])Specification\.html\1>Specification</a>%,
