@@ -1,5 +1,6 @@
 language: ruby
-script: "bundle exec jekyll build"
+install: "gem install jekyll"
+script: "jekyll build"
 notifications:
   email:
   - drbrain@segment7.net
