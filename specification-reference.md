@@ -8,8 +8,6 @@ next: /command-reference
 
 <em class="t-gray">Learn about the data in each gem package and how you can configure it.</em>
 
-{% include big.html %}
-
 <p>The Specification class contains the
 information for a Gem.  Typically defined in a .gemspec file or a Rakefile,
 and looks like this:</p>

@@ -6,8 +6,6 @@ previous: /command-reference
 next: /run-your-own-gem-server
 ---
 
-{% include big.html %}
-
 <em class="t-gray">Details on interacting with RubyGems.org over HTTP.</em>
 
 > NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/gemcutter)
