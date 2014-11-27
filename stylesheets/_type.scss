@@ -8,22 +8,6 @@
   }
 }
 
-.t-text {
-  font: {
-    weight: 300;
-    size: 18px;
-  }
-  line-height: 1.66;
-}
-
-.t-text--s {
-  font: {
-    weight: 500;
-    size: 12px;
-  }
-  text-transform: uppercase;
-}
-
 .t-hidden {
   position: absolute !important;
   height: 1px;
@@ -31,17 +15,6 @@
   overflow: hidden;
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
-}
-
-label.t-hidden {
-  margin-bottom: 5px;
-  // Placeholders for IE8 and IE9
-  position: static\0 !important;
-  display: inline-block\0;
-  height: auto\0;
-  width: auto\0;
-  overflow: visible\0;
-  clip: auto\0;
 }
 
 .t-gray {
@@ -54,115 +27,17 @@ label.t-hidden {
 
 
 
-// Lists
-
-.t-list__heading {
-  font: {
-    weight: 800;
-    size: 12px;
-  }
-  @extend %font-smoothing;
-  text-transform: uppercase;
-  color: $gray;
-  &:not(:first-child) {
-    margin-top: 25px;
-  }
-}
-
-.t-list__items {
-  margin-top: 18px;
-}
-
-.t-list__item {
-  &:not(:first-child) {
-    margin-top: 12px;
-  }
-}
-
-a.t-list__item {
-  display: block;
-  color: $black;
-  @include transition-duration(.25s);
-  @include transition-property(color);
-  &:hover {
-    color: $red;
-  }
-}
-
-.t-bulleted-items, .t-numbered-items {
-  padding-left: 23px;
-  text-indent: -23px;
-  line-height: 1.66;
-}
-
-.t-bulleted-items {
-  @extend .t-list__items;
-}
-
-.t-bulleted-item {
-  @extend .t-list__items;
-  &:before {
-    @extend %bullet;
-  }
-}
-
-.t-numbered-item {
-  counter-increment: counter;
-  &:before {
-    margin-right: 5px;
-    font-weight: 800;
-    content: counter(counter, decimal) '. ';
-  }
-}
-
-
-
 // Links
-
-.t-link, .t-link--black, .t-link--blue, .t-link--gray {
-  @include transition-duration(.25s);
-  @include transition-property(color);
-  &:focus {
-    outline: none;
-  }
-}
 
 .t-link {
   color: $red;
+  @include transition-duration(.25s);
+  @include transition-property(color);
   &:focus, &:hover, &:active {
     color: rgba($red, .7);
   }
-}
-
-.t-link--black {
-  color: $black !important;
-  &:focus, &:hover, &:active {
-    color: $red !important;
-  }
-}
-
-.t-link--blue {
-  color: $blue;
-  &:focus, &:hover, &:active {
-    color: rgba($blue, .7);
-  }
-}
-
-.t-link--gray {
-  color: $gray;
-  &:focus, &:hover, &:active {
-    color: $black;
-  }
-}
-
-.t-link--has-arrow {
-  &:after {
-    margin-left: 3px;
-    font: {
-      family: "Times New Roman", sans-serif;
-      style: normal;
-    }
-    content: "→";
+  &:focus {
+    outline: none;
   }
 }
 

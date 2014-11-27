@@ -54,7 +54,7 @@ main {
 }
 
 .page__heading {
-  margin-bottom: 45px;
+  margin-bottom: 30px;
   border-bottom: 1px solid $gray;
   @media (max-width: 929px) {
     padding: {
@@ -64,8 +64,8 @@ main {
   }
   @media (min-width: 930px) {
     padding: {
-      top: 50px;
-      bottom: 32px;
+      top: 30px;
+      bottom: 30px;
     }
   }
 }
