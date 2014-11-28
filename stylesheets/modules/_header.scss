@@ -162,14 +162,22 @@
   }
   @media (min-width: 1020px) {
     display: inline-block;
-    padding: 25px 16px 26px 16px;
+    padding: {
+      top: 25px;
+      bottom: 26px;
+    }
+    margin: {
+      right: 16px;
+      left: 16px;
+    }
     border-bottom: 5px solid transparent;
-    @include transition-property(color);
+    box-shadow: inset 0 5px 0 0 transparent;
+    @include transition-property(box-shadow);
     &:last-child {
       margin-right: -16px;
     }
     &:focus, &:hover {
-      color: rgba($white, .3);
+      box-shadow: inset 0 5px 0 0 $white;
     }
     &.is-active {
       position: relative;

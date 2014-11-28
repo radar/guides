@@ -1,7 +1,3 @@
-.l-relative {
-  position: relative;
-}
-
 %l-wrap {
   margin: {
     right: auto;
@@ -17,10 +13,6 @@
 .l-wrap--b {
   @extend %l-wrap;
   max-width: 940px;
-}
-
-.l-colspan {
-  max-width: 640px;
 }
 
 .l-colspan--l, .l-colspan--r {
@@ -81,29 +73,5 @@
   @extend .l-col--r;
   @media (min-width: 780px) {
     padding-left: 60px;
-  }
-}
-
-.l-half--l, .l-half--r {
-  @extend %box-sizing;
-  @media (min-width: 960px) {
-    width: 50%;
-  }
-}
-
-.l-half--l {
-  margin-bottom: 60px;
-  @media (max-width: 959px) {
-    margin-bottom: 60px;
-  }
-  @media (min-width: 960px) {
-    padding-right: 60px;
-    float: left;
-  }
-}
-
-.l-half--r {
-  @media (min-width: 960px) {
-    float: right;
   }
 }
