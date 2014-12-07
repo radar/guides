@@ -77,7 +77,7 @@
     size: 16px;
     family: "icomoon";
   }
-  color: #fa3c29;
+  color: $red;
   @include transition-duration(.25s);
   @include transition-property(color);
   @media (max-width: 1019px) {

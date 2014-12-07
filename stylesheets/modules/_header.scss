@@ -32,7 +32,7 @@
   @media (max-width: 1019px) {
     border-bottom: {
       width: 1px;
-      color: darken($orange, 12%);
+      color: darken($red, 10%);
     }
   }
   @media (min-width: 1020px) {
@@ -149,15 +149,15 @@
     padding: 18px 30px;
     display: block;
     width: 100%;
-    border-bottom: 1px solid darken($orange, 12%);
+    border-bottom: 1px solid darken($red, 10%);
     @include transition-property(background-color, border-top-color);
     &:focus, &:hover {
-      border-top-color: darken($orange, 16%);
-      background-color: darken($orange, 12%);
+      border-top-color: darken($red, 10%);
+      background-color: darken($red, 10%);
     }
     &:active, &.is-active {
       background-color: $white;
-      color: $red-orange;
+      color: $red;
     }
   }
   @media (min-width: 1020px) {
