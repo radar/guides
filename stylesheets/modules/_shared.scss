@@ -1,15 +1,3 @@
-.body--index, .header--interior {
-  background-image: url("/images/red.jpg");
-}
-
-.body--index {
-  background-size: cover;
-}
-
-.header--interior {
-  background-size: 100% auto;
-}
-
 main, .header, .footer {
   @media (max-width: 1019px) {
     position: relative;
