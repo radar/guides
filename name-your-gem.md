@@ -12,11 +12,9 @@ Here are some examples of our recommendations for naming gems:
 
 Gem name               | Require statement                | Main class or module
 ---------------------- | -------------------------------- | -----------------------
-`fancy_require`        | `require 'fancy_require'`        | `FancyRequire`
 `ruby_parser`          | `require 'ruby_parser'`          | `RubyParser`
-`net-http-persistent`  | `require 'net/http/persistent'`  | `Net::HTTP::Persistent`
 `rdoc-data`            | `require 'rdoc/data'`            | `RDoc::Data`
-`autotest-growl`       | `require 'autotest/growl'`       | `Autotest::Growl`
+`net-http-persistent`  | `require 'net/http/persistent'`  | `Net::HTTP::Persistent`
 `net-http-digest_auth` | `require 'net/http/digest_auth'` | `Net::HTTP::DigestAuth`
 
 The main goal of these recommendations is to give the user some clue about
