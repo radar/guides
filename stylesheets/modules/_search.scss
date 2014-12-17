@@ -97,15 +97,19 @@
   box-shadow: 0 0 0px 3px rgba($black, .1);
   font-size: 15px;
   &::-webkit-input-placeholder {
+    opacity: 1;
     color: $red;
   }
   &:-moz-placeholder {
+    opacity: 1;
     color: $red;
   }
   &::-moz-placeholder {
+    opacity: 1;
     color: $red;
   }
   &:-ms-input-placeholder {
+    opacity: 1;
     color: $red;
   }
   &:hover, &:focus {
