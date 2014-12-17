@@ -53,7 +53,7 @@
   }
   &:focus, &:hover {
     .header__logo:before {
-      @include rotate(180deg);
+      @include rotate(360deg);
     }
   }
   @media (max-width: 1019px) {
@@ -77,7 +77,7 @@
   &:before {
     position: absolute;
     @extend %font-smoothing;
-    @include transition-duration(.5s);
+    @include transition-duration(.75s);
     @include transition-property(transform);
   }
   @media (max-width: 1019px) {
