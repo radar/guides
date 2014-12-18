@@ -73,6 +73,11 @@
 .footer__sponsor {
   margin-bottom: 36px;
   float: left;
+  height: 100px;
+  background: {
+    image: url(/images/sponsors.png);
+    size: 100%;
+  }
   font: {
     style: italic;
     weight: 300;
@@ -89,20 +94,66 @@
   &:focus {
     outline: none;
   }
+  &:nth-child(1) {
+    background-position: 0 20px;
+  }
   @media (max-width: 579px) {
-    width: 100px;
     &:nth-child(odd) {
       margin-right: 18%;
     }
   }
   @media (min-width: 580px) {
-    width: 10%;
     &:not(:last-child) {
-      margin-right: 5%;
+      margin-right: 30px;
     }
   }
-  @media (min-width: 580px) and (max-width: 859px) {
-    min-width: 100px;
+  @media (max-width: 1039px) {
+    width: 100px;
+    &:nth-child(2) {
+      background-position: 0 -84px;
+    }
+    &:nth-child(3) {
+      background-position: 0 -174px;
+    }
+    &:nth-child(4) {
+      background-position: 0 -264px;
+    }
+    &:nth-child(5) {
+      background-position: 0 -355px;
+    }
+    &:nth-child(6) {
+      background-position: 0 108px;
+    }
+    &:nth-child(7) {
+      background-position: 0 -456px;
+    }
+    &:nth-child(8) {
+      background-position: 0 210px;
+    }
+  }
+  @media (min-width: 1040px) {
+    width: 90px;
+    &:nth-child(2) {
+      background-position: 0 -72px;
+    }
+    &:nth-child(3) {
+      background-position: 0 -153px;
+    }
+    &:nth-child(4) {
+      background-position: 0 -236px;
+    }
+    &:nth-child(5) {
+      background-position: 0 -314px;
+    }
+    &:nth-child(6) {
+      background-position: 0 100px;
+    }
+    &:nth-child(7) {
+      background-position: 0 -409px;
+    }
+    &:nth-child(8) {
+      background-position: 0 192px;
+    }
   }
 }
 
