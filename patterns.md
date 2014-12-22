@@ -66,7 +66,7 @@ an "irrational" policy will only be a disservice to those in the community who
 use your gems.
 
 Suppose you have a 'stack' gem that holds a `Stack` class with both `push` and
-`pop` functionalty. Your `CHANGELOG` might look like this if you use
+`pop` functionality. Your `CHANGELOG` might look like this if you use
 semantic versioning:
 
 * **Version 0.0.1**: The initial `Stack` class is released.
