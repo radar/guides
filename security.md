@@ -165,7 +165,7 @@ is no single place to broadcast this information but a good place to
 start might be to:
 
 - Send an email to the Ruby Talk mailing list (ruby-talk@ruby-lang.org)
-  with the subject prefix \[ANN]\[Security] outlining the vulnerabilty,
+  with the subject prefix \[ANN]\[Security] outlining the vulnerability,
   which versions of your gem it affects and what actions those depending
   on the gem should take.
 
