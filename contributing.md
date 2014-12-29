@@ -29,7 +29,7 @@ Ruby's premier packaging system. Bundled with Ruby 1.9+ and available for Ruby 1
 
 <div class="project__links">
   <a class="project__link t-link" href="https://github.com/rubygems/rubygems/issues">Issues</a>
-  <a class="project__link t-link" href="http://rubyforge.org/mailman/listinfo/rubygems-developers">Mailing List</a>
+  <a class="project__link t-link" href="https://groups.google.com/forum/#!forum/rubygems-developers">Mailing List</a>
 </div>
 
 <p class="avatars">
