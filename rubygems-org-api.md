@@ -50,7 +50,7 @@ examples in the README. You can install the library with the command:
 Gem Methods
 -----------
 
-### GET - `/api/v1/gems/[GEM NAME].(json|xml|yaml)`
+### GET - `/api/v1/gems/[GEM NAME].(json|yaml)`
 
 Returns some basic information about the given gem. See below an example response for the gem "rails" in JSON format:
 
@@ -109,71 +109,14 @@ Returns some basic information about the given gem. See below an example respons
     }
     }
 
-or XML format:
-
-    $ curl http://rubygems.org/api/v1/gems/rails.xml
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <rubygem>
-      <name>rails</name>
-      <downloads type="integer">7528499</downloads>
-      <version>3.2.1</version>
-      <version-downloads type="integer">47633</version-downloads>
-      <authors>David Heinemeier Hansson</authors>
-      <info>Ruby on Rails is a full-stack web framework optimized for programmer happiness and
-        sustainable productivity. It encourages beautiful code by favoring convention over
-        configuration.</info>
-      <project-uri>http://rubygems.org/gems/rails</project-uri>
-      <gem-uri>http://rubygems.org/gems/rails-3.2.1.gem</gem-uri>
-      <homepage-uri>http://www.rubyonrails.org</homepage-uri>
-      <wiki-uri>http://wiki.rubyonrails.org</wiki-uri>
-      <documentation-uri>http://api.rubyonrails.org</documentation-uri>
-      <mailing-list-uri>http://groups.google.com/group/rubyonrails-talk</mailing-list-uri>
-      <source-code-uri>http://github.com/rails/rails</source-code-uri>
-      <bug-tracker-uri>http://github.com/rails/rails/issues</bug-tracker-uri>
-      <dependencies>
-        <development type="array"/>
-        <runtime type="array">
-          <dependency>
-            <name>actionmailer</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-          <dependency>
-            <name>actionpack</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-          <dependency>
-            <name>activerecord</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-          <dependency>
-            <name>activeresource</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-          <dependency>
-            <name>activesupport</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-          <dependency>
-            <name>bundler</name>
-            <requirements>~&gt; 1.0</requirements>
-          </dependency>
-          <dependency>
-            <name>railties</name>
-            <requirements>= 3.2.1</requirements>
-          </dependency>
-        </runtime>
-      </dependencies>
-    </rubygem>
-
-### GET - `/api/v1/search.(json|xml|yaml)?query=[YOUR QUERY]`
+### GET - `/api/v1/search.(json|yaml)?query=[YOUR QUERY]`
 
 Submit a search to Gemcutter for active gems, just like a search query on the
-site. Returns an array of the XML or JSON representation of gems that match.
+site. Returns an array of the JSON or YAML representation of gems that match.
 
     $ curl 'https://rubygems.org/api/v1/search.json?query=cucumber'
 
-    $ curl 'https://rubygems.org/api/v1/search.xml?query=cucumber'
+    $ curl 'https://rubygems.org/api/v1/search.yaml?query=cucumber'
 
 The results are paginated so the API call will return only the first 30 matched
 gems. To get subsequent results, use the page query parameter until an empty
@@ -181,9 +124,9 @@ response is received.
 
     $ curl 'https://rubygems.org/api/v1/search.json?query=cucumber&page=2'
 
-### GET - `/api/v1/gems.(json|xml|yaml)`
+### GET - `/api/v1/gems.(json|yaml)`
 
-List all gems that you own. Returns an array of the XML or JSON representation
+List all gems that you own. Returns an array of the JSON or YAML representation
 of gems you own.
 
     $ curl -H 'Authorization:701243f217cdf23b1370c7b66b65ca97' \
@@ -226,7 +169,7 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 Gem Version Methods
 -------------------
 
-### GET - `/api/v1/versions/[GEM NAME].(json|xml|yaml)`
+### GET - `/api/v1/versions/[GEM NAME].(json|yaml)`
 
 Returns an array of gem version details like the below:
 
@@ -249,7 +192,7 @@ Returns an array of gem version details like the below:
 Gem Download Methods
 --------------------
 
-### GET - `/api/v1/downloads.(json|xml|yaml)`
+### GET - `/api/v1/downloads.(json|yaml)`
 
 Returns an object containing the total number of downloads on RubyGems.
 
@@ -259,7 +202,7 @@ Returns an object containing the total number of downloads on RubyGems.
       "total": 461672727
     }
 
-### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|xml|yaml)`
+### GET - `/api/v1/downloads/[GEM NAME]-[GEM VERSION].(json|yaml)`
 
 Returns an object containing the total number of downloads for a particular gem
 as well as the total number of downloads for the specified version.
@@ -274,7 +217,7 @@ as well as the total number of downloads for the specified version.
 Owner Methods
 -------------
 
-### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|xml|yaml)`
+### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|yaml)`
 
 View all gems for a user. This is all the gems a user can push to.
 
@@ -289,7 +232,7 @@ View all gems for a user. This is all the gems a user can push to.
     ]
 
 
-### GET - `/api/v1/gems/[GEM NAME]/owners.(json|xml|yaml)`
+### GET - `/api/v1/gems/[GEM NAME]/owners.(json|yaml)`
 
 View all owners of a gem. These users can all push to this gem.
 
@@ -327,7 +270,7 @@ Remove a user's permission to manage a RubyGem you own.
 WebHook Methods
 ---------------
 
-### GET - `/api/v1/web_hooks.(json|xml|yaml)`
+### GET - `/api/v1/web_hooks.(json|yaml)`
 
 List the webhooks registered under your account.
 
@@ -411,20 +354,20 @@ Activity Methods
 
 ### GET - `/api/v1/activity/latest`
 
-Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the XML or JSON representation of the gems.
+Pulls the 50 gems most recently added to RubyGems.org (for the first time). Returns an array of the JSON or YAML representation of the gems.
 
     $ curl 'https://rubygems.org/api/v1/activity/latest.json'
 
 ### GET - `/api/v1/activity/just_updated`
 
-Pulls the 50 most recently updated gems. Returns an array of the XML or JSON representation of the gem versions.
+Pulls the 50 most recently updated gems. Returns an array of the JSON or YAML representation of the gem versions.
 
     $ curl 'https://rubygems.org/api/v1/activity/just_updated.json'
 
 Misc Methods
 ------------
 
-### GET - `/api/v1/api_key.(json|xml|yaml)`
+### GET - `/api/v1/api_key.(json|yaml)`
 
 Retrieve your API key using HTTP basic auth.
 
