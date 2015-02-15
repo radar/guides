@@ -48,7 +48,7 @@ Here, you can see the major components of a gem:
 * The `test` or `spec` directory contains tests, depending on which test
   framework the developer uses
 * A gem usually has a `Rakefile`, which the
-  [rake](http://rake.rubyforge.org/) program uses to automate tests,
+  [rake](https://rubygems.org/gems/rake) program uses to automate tests,
   generate code, and perform other tasks.
 * This gem also includes an executable file in the
   `bin` directory, which will be loaded into the user's `PATH` when the gem is
