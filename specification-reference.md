@@ -33,71 +33,71 @@ specification.</p>
 
 
 ## Required gemspec attributes
-
+    
 * [author=](#author=)
-
+    
 * [authors=](#authors=)
-
+    
 * [files](#files)
-
+    
 * [name](#name)
-
+    
 * [platform=](#platform=)
-
+    
 * [require_paths=](#require_paths=)
-
+    
 * [rubygems_version](#rubygems_version)
-
+    
 * [summary](#summary)
-
+    
 * [version](#version)
-
+    
 ## Recommended gemspec attributes
-
+    
 * [license=](#license=)
-
+    
 * [licenses=](#licenses=)
-
+    
 ## Optional gemspec attributes
-
+    
 * [add_development_dependency](#add_development_dependency)
-
+    
 * [add_runtime_dependency](#add_runtime_dependency)
-
+    
 * [bindir](#bindir)
-
+    
 * [cert_chain](#cert_chain)
-
+    
 * [description](#description)
-
+    
 * [email](#email)
-
+    
 * [executables](#executables)
-
+    
 * [extensions](#extensions)
-
+    
 * [extra_rdoc_files](#extra_rdoc_files)
-
+    
 * [homepage](#homepage)
-
+    
 * [metadata](#metadata)
-
+    
 * [post_install_message](#post_install_message)
-
+    
 * [rdoc_options](#rdoc_options)
-
+    
 * [required_ruby_version](#required_ruby_version)
-
+    
 * [required_ruby_version=](#required_ruby_version=)
-
+    
 * [required_rubygems_version](#required_rubygems_version)
-
+    
 * [required_rubygems_version=](#required_rubygems_version=)
-
+    
 * [requirements](#requirements)
-
+    
 * [signing_key](#signing_key)
-
+    
 
 
 # Required gemspec attributes
@@ -112,7 +112,7 @@ specification.</p>
 
 <p>Usage:</p>
 
-<pre>spec.author = &#39;John Jones&#39;</pre>
+<pre>spec.author = &#39;John Jones&#39;</pre>    
 
 <a id="authors="> </a>
 
@@ -122,7 +122,7 @@ specification.</p>
 
 <p>Usage:</p>
 
-<pre>spec.authors = [&#39;John Jones&#39;, &#39;Mary Smith&#39;]</pre>
+<pre>spec.authors = [&#39;John Jones&#39;, &#39;Mary Smith&#39;]</pre>    
 
 <a id="files"> </a>
 
@@ -148,7 +148,7 @@ other non-files cause an error.</p>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> = <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;lib/   *.rb&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;bin/*&#39;</span>]
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;[A-Z]*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;test/**/*&#39;</span>]
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span>.<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">fn</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">&quot;CVS&quot;</span> }
-</pre>
+</pre>    
 
 <a id="name"> </a>
 
@@ -158,7 +158,7 @@ other non-files cause an error.</p>
 
 <p>Usage:</p>
 
-<pre>spec.name = &#39;rake&#39;</pre>
+<pre>spec.name = &#39;rake&#39;</pre>    
 
 <a id="platform="> </a>
 
@@ -184,7 +184,7 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 
 <p>Usage:</p>
 
-<pre>spec.platform = Gem::Platform.local</pre>
+<pre>spec.platform = Gem::Platform.local</pre>    
 
 <a id="require_paths="> </a>
 
@@ -204,7 +204,7 @@ process will copy the extension files into “lib” for you.</p>
 <p>Usage:</p>
 
 <pre># If all library files are in the root directory...
-spec.require_paths = [&#39;.&#39;]</pre>
+spec.require_paths = [&#39;.&#39;]</pre>    
 
 <a id="rubygems_version"> </a>
 
@@ -212,7 +212,7 @@ spec.require_paths = [&#39;.&#39;]</pre>
 
 <p>The version of RubyGems used to create this gem.</p>
 
-<p>Do not set this, it is set automatically when the gem is packaged.</p>
+<p>Do not set this, it is set automatically when the gem is packaged.</p>    
 
 <a id="summary"> </a>
 
@@ -225,7 +225,7 @@ should be more detailed than the summary.</p>
 
 <p>Usage:</p>
 
-<pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>
+<pre>spec.summary = &quot;This is a small summary of my gem&quot;</pre>    
 
 <a id="version"> </a>
 
@@ -239,7 +239,7 @@ a letter in it, such as <code>1.0.0.pre</code>.</p>
 
 <p>Usage:</p>
 
-<pre>spec.version = &#39;0.4.1&#39;</pre>
+<pre>spec.version = &#39;0.4.1&#39;</pre>    
 
 # Recommended gemspec attributes
 
@@ -275,7 +275,7 @@ to use the code for any purpose.</p>
 
 <p>Usage:</p>
 
-<pre>spec.license = &#39;MIT&#39;</pre>
+<pre>spec.license = &#39;MIT&#39;</pre>    
 
 <a id="licenses="> </a>
 
@@ -293,7 +293,7 @@ discussion</p>
 
 <p>Usage:</p>
 
-<pre>spec.licenses = [&#39;MIT&#39;, &#39;GPL-2&#39;]</pre>
+<pre>spec.licenses = [&#39;MIT&#39;, &#39;GPL-2&#39;]</pre>    
 
 # Optional gemspec attributes
 
@@ -311,7 +311,7 @@ discussion</p>
 <pre>spec.add_development_dependency &#39;example&#39;, &#39;~&gt; 1.1&#39;, &#39;&gt;= 1.1.4&#39;</pre>
 
 <p>Development dependencies aren&#39;t installed by default and aren&#39;t
-activated when a gem is required.</p>
+activated when a gem is required.</p>    
 
 <a id="add_runtime_dependency"> </a>
 
@@ -322,7 +322,7 @@ activated when a gem is required.</p>
 
 <p>Usage:</p>
 
-<pre>spec.add_runtime_dependency &#39;example&#39;, &#39;~&gt; 1.1&#39;, &#39;&gt;= 1.1.4&#39;</pre>
+<pre>spec.add_runtime_dependency &#39;example&#39;, &#39;~&gt; 1.1&#39;, &#39;&gt;= 1.1.4&#39;</pre>    
 
 <a id="bindir"> </a>
 
@@ -332,14 +332,14 @@ activated when a gem is required.</p>
 
 <p>Usage:</p>
 
-<pre>spec.bindir = &#39;bin&#39;</pre>
+<pre>spec.bindir = &#39;bin&#39;</pre>    
 
 <a id="cert_chain"> </a>
 
 ## cert_chain
 
 <p>The certificate chain used to sign this gem.  See Gem::Security for
-details.</p>
+details.</p>    
 
 <a id="description"> </a>
 
@@ -356,7 +356,7 @@ examples or formatting.</p>
 <pre>spec.description = &lt;&lt;-EOF
   Rake is a Make-like program implemented in Ruby. Tasks and
   dependencies are specified in standard Ruby syntax.
-EOF</pre>
+EOF</pre>    
 
 <a id="email"> </a>
 
@@ -367,7 +367,7 @@ EOF</pre>
 <p>Usage:</p>
 
 <pre>spec.email = &#39;john.jones@example.com&#39;
-spec.email = [&#39;jack@example.com&#39;, &#39;jill@example.com&#39;]</pre>
+spec.email = [&#39;jack@example.com&#39;, &#39;jill@example.com&#39;]</pre>    
 
 <a id="executables"> </a>
 
@@ -385,7 +385,7 @@ languages or compiled binaries.</p>
 
 <p>Usage:</p>
 
-<pre>spec.executables &lt;&lt; &#39;rake&#39;</pre>
+<pre>spec.executables &lt;&lt; &#39;rake&#39;</pre>    
 
 <a id="extensions"> </a>
 
@@ -401,7 +401,7 @@ whatever) code to be compiled on the user’s machine.</p>
 
 <pre>spec.extensions &lt;&lt; &#39;ext/rmagic/extconf.rb&#39;</pre>
 
-<p>See Gem::Ext::Builder for information about writing extensions for gems.</p>
+<p>See Gem::Ext::Builder for information about writing extensions for gems.</p>    
 
 <a id="extra_rdoc_files"> </a>
 
@@ -416,7 +416,7 @@ a more complete set of documentation.</p>
 
 <p>Usage:</p>
 
-<pre>spec.extra_rdoc_files = [&#39;README&#39;, &#39;doc/user-guide.txt&#39;]</pre>
+<pre>spec.extra_rdoc_files = [&#39;README&#39;, &#39;doc/user-guide.txt&#39;]</pre>    
 
 <a id="homepage"> </a>
 
@@ -426,7 +426,7 @@ a more complete set of documentation.</p>
 
 <p>Usage:</p>
 
-<pre>spec.homepage = &#39;https://rubygems.org/gems/rake&#39;</pre>
+<pre>spec.homepage = &#39;http://rake.rubyforge.org&#39;</pre>    
 
 <a id="metadata"> </a>
 
@@ -453,7 +453,7 @@ bytes</p>
 <p>To add metadata for the location of a issue tracker:</p>
 
 <pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">metadata</span> = { <span class="ruby-string">&quot;issue_tracker&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;https://example/issues&quot;</span> }
-</pre>
+</pre>    
 
 <a id="post_install_message"> </a>
 
@@ -463,7 +463,7 @@ bytes</p>
 
 <p>Usage:</p>
 
-<pre>spec.post_install_message = &quot;Thanks for installing!&quot;</pre>
+<pre>spec.post_install_message = &quot;Thanks for installing!&quot;</pre>    
 
 <a id="rdoc_options"> </a>
 
@@ -475,13 +475,13 @@ bytes</p>
 
 <pre>spec.rdoc_options &lt;&lt; &#39;--title&#39; &lt;&lt; &#39;Rake -- Ruby Make&#39; &lt;&lt;
   &#39;--main&#39; &lt;&lt; &#39;README&#39; &lt;&lt;
-  &#39;--line-numbers&#39;</pre>
+  &#39;--line-numbers&#39;</pre>    
 
 <a id="required_ruby_version"> </a>
 
 ## required_ruby_version
 
-<p>The version of Ruby required by this gem</p>
+<p>The version of Ruby required by this gem</p>    
 
 <a id="required_ruby_version="> </a>
 
@@ -500,19 +500,19 @@ ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-darwin12.4.0]
 spec.required_ruby_version = &#39;&gt;= 1.8.6&#39;
 
 # Only with ruby 2.0.x
-spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>
+spec.required_ruby_version = &#39;~&gt; 2.0&#39;</pre>    
 
 <a id="required_rubygems_version"> </a>
 
 ## required_rubygems_version
 
-<p>The RubyGems version required by this gem</p>
+<p>The RubyGems version required by this gem</p>    
 
 <a id="required_rubygems_version="> </a>
 
 ## required_rubygems_version=(`req`)
 
-<p>The RubyGems version required by this gem</p>
+<p>The RubyGems version required by this gem</p>    
 
 <a id="requirements"> </a>
 
@@ -524,13 +524,13 @@ to work.  It&#39;s simply information for the user.</p>
 <p>Usage:</p>
 
 <pre>spec.requirements &lt;&lt; &#39;libmagick, v6.0&#39;
-spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>
+spec.requirements &lt;&lt; &#39;A good graphics card&#39;</pre>    
 
 <a id="signing_key"> </a>
 
 ## signing_key
 
-<p>The key used to sign this gem.  See Gem::Security for details.</p>
+<p>The key used to sign this gem.  See Gem::Security for details.</p>    
 
 
 <!--<html -->
