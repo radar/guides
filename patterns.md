@@ -2,7 +2,7 @@
 layout: default
 title: Patterns
 url: /patterns
-previous: /security
+previous: /ssl-certificate-update
 next: /specification-reference
 ---
 
