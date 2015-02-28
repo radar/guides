@@ -288,7 +288,7 @@ Display the contents of the installed gems
 
 The contents command lists the files in an installed gem.  The listing can
 be given as full file names, file names without the installed directory
-prefix or only the files that are requireable.
+prefix or only the files that are requirable.
   
 
 ## gem dependency
