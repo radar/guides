@@ -176,17 +176,20 @@ Returns an array of gem version details like the below:
     $ curl https://rubygems.org/api/v1/versions/coulda.json
 
     [
-       {
-          "number" : "0.6.3",
-          "built_at" : "2010-12-23T05:00:00Z",
-          "summary" : "Test::Unit-based acceptance testing DSL",
-          "downloads_count" : 175,
-          "platform" : "ruby",
-          "authors" : "Evan David Light",
-          "description" : "Behaviour Driven Development derived from Cucumber but
-                           as an internal DSL with methods for reuse",
-          "prerelease" : false,
-       }
+      {
+        "authors" : "Evan David Light",
+        "built_at" : "2011-08-08T04:00:00.000Z",
+        "description" : "Behaviour Driven Development derived from Cucumber but as an internal DSL with methods for reuse",
+        "downloads_count" : 2224,
+        "number" : "0.7.1",
+        "summary" : "Test::Unit-based acceptance testing DSL",
+        "platform" : "ruby",
+        "ruby_version" : nil,
+        "prerelease" : false,
+        "licenses" : nil,
+        "requirements" : nil,
+        "sha" : "777c3a7ed83e44198b0a624976ec99822eb6f4a44bf1513eafbc7c13997cd86c"
+      }
     ]
 
 Gem Download Methods
