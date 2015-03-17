@@ -75,7 +75,7 @@ semantic versioning:
 * **Version 0.1.0**: Added a `depth` method.
 * **Version 1.0.0**: Added `top` and made `pop` return `nil` (`pop` used to
   return the old top item).
-* **Version 1.1.0**: `push` now returns the value pushed (it used it return
+* **Version 1.1.0**: `push` now returns the value pushed (it used to return
   `nil`).
 * **Version 1.1.1**: Fixed a bug in the linked list implementation.
 * **Version 1.1.2**: Fixed a bug introduced in the last fix.
