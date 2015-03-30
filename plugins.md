@@ -35,6 +35,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [rubygems-sandbox](#rubygemssandbox)
 * [rubygems_snapshot](#rubygemssnapshot)
 * [rubygems-tasks](#rubygemstasks)
+* [rubygems_plugin_generator](#rubygemsplugingenerator)
 
 <a id="executablehooks"> </a>
 
@@ -257,3 +258,11 @@ Adds `gem snapshot` to create exports of all your current gems into a single fil
 [https://github.com/postmodern/rubygems-tasks](https://github.com/postmodern/rubygems-tasks#readme)
 
 rubygems-tasks provides agnostic and unobtrusive Rake tasks for building, installing and releasing Ruby Gems.
+
+<a id="rubygemsplugingenerator"> </a>
+
+## rubygems_plugin_generator
+
+[https://github.com/brianstorti/rubygems_plugin_generator](https://github.com/brianstorti/rubygems_plugin_generator)
+
+`rubygems_plugin_generator` is a plugin that generates plugins. Just run `gem plugin <name>` and you are good to go.
