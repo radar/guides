@@ -53,7 +53,7 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
 ```ruby
-spec.add_development_dependency "rspec", "~> 2.6"
+spec.add_development_dependency "rspec", "~> 3.2"
 ```
 
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
@@ -137,19 +137,19 @@ spec.add_dependency "activesupport"
 If we wanted to specify a particular version we may use this line:
 
 ```ruby
-spec.add_dependency "activesupport", "4.0.0"
+spec.add_dependency "activesupport", "4.2.0"
 ```
 
 Or specify a version constraint:
 
 ```ruby
-spec.add_dependency "activesupport", ">= 4.0.0"
+spec.add_dependency "activesupport", ">= 4.2.0"
 ```
 
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
 ```ruby
-spec.add_dependency "activesupport", "~> 4.0.0"
+spec.add_dependency "activesupport", "~> 4.2.0"
 ```
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to *spec/food_spec.rb* now inside our `describe Foodie::Food` block:
