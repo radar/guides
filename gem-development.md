@@ -18,11 +18,15 @@ To begin to create a gem using Bundler, use the `bundle gem` command like this:
 
 We call our gem `foodie` because this gem is going to do a couple of things around food, such as portraying them as either "Delicious!" or "Gross!". Stay tuned.
 
-This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. The files generated are:
+This command creates a [scaffold directory](gem-scaffold/foodie) for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. If this is your first time running the `bundle gem` command, you will be asked whether you want to include a the `CODE_OF_CONDUCT.md` and `LICENSE.txt` files with your project. The files generated are:
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
 
  * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling `Bundler::GemHelper.install_tasks`. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
+
+ * [**CODE_OF_CONDUCT.md**](gem-scaffold/foodie/CODE_OF_CONDUCT.md): Provides a code of conduct that you expect all contributors to your gem to follow. Will only be included if you chose to have it included.
+
+ * [**LICENSE.txt**](gem-scaffold/foodie/LICENSE.txt): Includes the MIT license. Will only be included if you chose to have it included.
 
  * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
 
