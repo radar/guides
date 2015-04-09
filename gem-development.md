@@ -70,7 +70,7 @@ By running `bundle install`, Bundler will generate the **extremely important** _
 
 Additionally in the `bundle install` output, we will see this line:
 
-    Using foodie (0.0.1) from source at /path/to/foodie
+    Using foodie (0.1.0) from source at /path/to/foodie
 
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
@@ -504,7 +504,7 @@ This is because the `foodie.gemspec` file uses `git ls-files` to detect which fi
 
 The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
 
-Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.0.1.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
+Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.1.0.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
 
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org.
 
