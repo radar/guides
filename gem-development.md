@@ -12,6 +12,12 @@ Also: Sharing is caring.
 
 ## Getting Started
 
+This guide was made using version 1.9.0 of bundler. We can follow along with other versions, but we might not get the exact same output.  To check which version of bundler we currently have, lets run the following command:
+
+    bundle -v
+
+We should see something close to `Bundler version 1.9.0`.  If necessary, we can update to the newest version of Bundler by running `gem update bundler`.
+
 To begin to create a gem using Bundler, use the `bundle gem` command like this:
 
     bundle gem foodie
