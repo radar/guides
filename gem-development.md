@@ -254,7 +254,7 @@ We have to re-run `bundle exec cucumber features`, just to see what happens next
 
     sh: foodie: command not found
 
-OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _bin_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
+OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _exe_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
 
 ```bash
 #!/usr/bin/env ruby
@@ -263,21 +263,21 @@ print "nothing."
 
 If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error. Hey, speaking of running, we should `chmod` this file to be an executable from our terminal:
 
-    chmod +x bin/foodie
+    chmod +x exe/foodie
 
 Alright so we've got the executable file, now what? If we re-run our features we get *nothing* for the output. Nothing! Literally!
 
     got: "nothing."
 
 
-Our _bin/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
+Our _exe/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
 
 ```ruby
 require 'foodie/cli'
 Foodie::CLI.start
 ```
 
-Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
+Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _exe/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do?
 
@@ -298,7 +298,7 @@ Let's define the `lib/foodie/cli.rb` file now like this:
       end
     end
 
-The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
+The `Thor` class has a series of methods -- such as the `start` method we reference back in `exe/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
 
 ```ruby
 spec.add_dependency "thor"
@@ -350,7 +350,7 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
     2 scenarios (2 passed)
     4 steps (4 passed)
 
-We can try executing the CLI app by running `bundle exec bin/foodie portray broccoli`.
+We can try executing the CLI app by running `bundle exec exe/foodie portray broccoli`.
 
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
@@ -460,7 +460,7 @@ end
 
 If we had any ERB calls in this file, they would be evaluated and the result would be output in the new template file.
 
-It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec bin/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
+It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec exe/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
 
     create  dinner
     Could not find "recipe.txt" in any of your source paths. Please invoke Foodie::Generators::Recipe.source_root(PATH) with the PATH containing your templates. Currently you have no source paths.
