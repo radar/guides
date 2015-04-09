@@ -12,17 +12,27 @@ Also: Sharing is caring.
 
 ## Getting Started
 
+This guide was made using version 1.9.0 of bundler. We can follow along with other versions, but we might not get the exact same output.  To check which version of bundler we currently have, lets run the following command:
+
+    bundle -v
+
+We should see something close to `Bundler version 1.9.0`.  If necessary, we can update to the newest version of Bundler by running `gem update bundler`.
+
 To begin to create a gem using Bundler, use the `bundle gem` command like this:
 
     bundle gem foodie
 
 We call our gem `foodie` because this gem is going to do a couple of things around food, such as portraying them as either "Delicious!" or "Gross!". Stay tuned.
 
-This command creates a [scaffold directory](gem-scaffold/foodie)  for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. The files generated are:
+This command creates a [scaffold directory](gem-scaffold/foodie) for our new gem and, if we have Git installed, initializes a Git repository in this directory so we can start committing right away. If this is your first time running the `bundle gem` command, you will be asked whether you want to include a the `CODE_OF_CONDUCT.md` and `LICENSE.txt` files with your project. The files generated are:
 
  * [**Gemfile**](gem-scaffold/foodie/Gemfile): Used to manage gem dependencies for our library's development. This file contains a `gemspec` line meaning that Bundler will include dependencies specified in _foodie.gemspec_ too. It's best practice to specify all the gems that our library depends on in the _gemspec_.
 
  * [**Rakefile**](gem-scaffold/foodie/Rakefile): Requires Bundler and adds the `build`, `install` and `release` Rake tasks by way of calling `Bundler::GemHelper.install_tasks`. The `build` task will build the current version of the gem and store it under the _pkg_ folder, the `install` task will build _and_ install the gem to our system (just like it would do if we `gem install`'d it) and `release` will push the gem to Rubygems for consumption by the public.
+
+ * [**CODE_OF_CONDUCT.md**](gem-scaffold/foodie/CODE_OF_CONDUCT.md): Provides a code of conduct that you expect all contributors to your gem to follow. Will only be included if you chose to have it included.
+
+ * [**LICENSE.txt**](gem-scaffold/foodie/LICENSE.txt): Includes the MIT license. Will only be included if you chose to have it included.
 
  * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
 
@@ -43,7 +53,7 @@ For this guide, we're going to use RSpec to test our gem. We write tests to ensu
 To get started with writing our tests, we'll create a _spec_ directory at the root of gem by using the command `mkdir spec`. Next, we'll specify in our _foodie.gemspec_ file that `rspec` is a development dependency by adding this line inside the `Gem::Specification` block:
 
 ```ruby
-spec.add_development_dependency "rspec", "~> 2.6"
+spec.add_development_dependency "rspec", "~> 3.2"
 ```
 
 Because we have the `gemspec` method call in our _Gemfile_, Bundler will automatically add this gem to a group called "development" which then we can reference any time we want to load these gems with the following line:
@@ -60,7 +70,7 @@ By running `bundle install`, Bundler will generate the **extremely important** _
 
 Additionally in the `bundle install` output, we will see this line:
 
-    Using foodie (0.0.1) from source at /path/to/foodie
+    Using foodie (0.1.0) from source at /path/to/foodie
 
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
@@ -69,11 +79,11 @@ We can write our first test with this framework now in place. For testing, first
 ```ruby
 describe Foodie::Food do
   it "broccoli is gross" do
-    Foodie::Food.portray("Broccoli").should eql("Gross!")
+    expect(Foodie::Food.portray("Broccoli")).to eql("Gross!")
   end
 
   it "anything else is delicious" do
-    Foodie::Food.portray("Not Broccoli").should eql("Delicious!")
+    expect(Foodie::Food.portray("Not Broccoli")).to eql("Delicious!")
   end
 end
 ```
@@ -127,32 +137,32 @@ spec.add_dependency "activesupport"
 If we wanted to specify a particular version we may use this line:
 
 ```ruby
-spec.add_dependency "activesupport", "4.0.0"
+spec.add_dependency "activesupport", "4.2.0"
 ```
 
 Or specify a version constraint:
 
 ```ruby
-spec.add_dependency "activesupport", ">= 4.0.0"
+spec.add_dependency "activesupport", ">= 4.2.0"
 ```
 
 However, relying on a version simply greater than the latest-at-the-time is a sure-fire way to run into problems later on down the line. Try to always use `~>` for specifying dependencies:
 
 ```ruby
-spec.add_dependency "activesupport", "~> 4.0.0"
+spec.add_dependency "activesupport", "~> 4.2.0"
 ```
 
 When we run `bundle install` again, the `activesupport` gem will be installed for us to use. Of course, like the diligent TDD/BDD zealots we are, we will test our `pluralize` method before we code it. Let's add this test to *spec/food_spec.rb* now inside our `describe Foodie::Food` block:
 
 ```ruby
 it "pluralizes a word" do
-  Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
+  expect(Foodie::Food.pluralize("Tomato")).to eql("Tomatoes")
 end
 ```
 
 Of course when we run this spec with `bundle exec rspec spec` it will fail:
 
-    Failure/Error: Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
+    expect(Failure/Error: Foodie::Food.pluralize("Tomato")).to eql("Tomatoes")
          undefined method `pluralize' for Foodie::Food:Class
 
 We can now define this `pluralize` method in _lib/foodie/food.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
@@ -244,7 +254,7 @@ We have to re-run `bundle exec cucumber features`, just to see what happens next
 
     sh: foodie: command not found
 
-OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _bin_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
+OK, so it's not *that* cryptic. It just means it can't find the executable file for our gem. No worries, we can create a _exe_ directory at the root of our gem, and put a file in it named _foodie_. This file has no extension because it's an *executable* file rather than a script. We don't want to go around calling `foodie.rb` everywhere, do we? No, no we don't. We will fill this file with this content:
 
 ```bash
 #!/usr/bin/env ruby
@@ -253,21 +263,21 @@ print "nothing."
 
 If this file was completely empty, we would run into a non-friendly `Errno::ENOEXEC` error. Hey, speaking of running, we should `chmod` this file to be an executable from our terminal:
 
-    chmod +x bin/foodie
+    chmod +x exe/foodie
 
 Alright so we've got the executable file, now what? If we re-run our features we get *nothing* for the output. Nothing! Literally!
 
     got: "nothing."
 
 
-Our _bin/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
+Our _exe/foodie_ file is empty, which results in this Nothing Travesty. Get rid of the `print "nothing."` line and replace it with all the code required to run our CLI, which consists of two lines:
 
 ```ruby
 require 'foodie/cli'
 Foodie::CLI.start
 ```
 
-Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _bin/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
+Boom! When we run `bundle exec cucumber features` again it will whinge that there's no _foodie/cli_ file to require. Before we go into what this file does, we should explain the code on the _other_ line of the _exe/foodie_ file. The `start` method fires up our `CLI` class and will look for a task that matches the one we ask for.
 
  Ok, so it's therefore obvious that the next step is to create this file, but what does it do?
 
@@ -288,7 +298,7 @@ Let's define the `lib/foodie/cli.rb` file now like this:
       end
     end
 
-The `Thor` class has a series of methods -- such as the `start` method we reference back in `bin/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
+The `Thor` class has a series of methods -- such as the `start` method we reference back in `exe/foodie` -- that we can use to create this CLI. Oh, by the way, our class doesn't have to be called `CLI`, it's just best practice to do so. We don't magically get this `Thor` class; we need to tell our _gemspec_ that we depend on this gem by adding this line underneath our previous `add_dependency`:
 
 ```ruby
 spec.add_dependency "thor"
@@ -340,7 +350,7 @@ When we run our scenarios again with `bundle exec cucumber features` both scenar
     2 scenarios (2 passed)
     4 steps (4 passed)
 
-We can try executing the CLI app by running `bundle exec bin/foodie portray broccoli`.
+We can try executing the CLI app by running `bundle exec exe/foodie portray broccoli`.
 
 If we want to add more options later on, we can define them by using the `method_options` helper like this:
 
@@ -450,7 +460,7 @@ end
 
 If we had any ERB calls in this file, they would be evaluated and the result would be output in the new template file.
 
-It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec bin/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
+It's been an awful long time since we ran something. Hey, here's an idea! Let's run our generator! We can do this without using Cucumber by running `bundle exec exe/foodie recipe dinner steak`, but just this once. Generally we'd test it solely through Cucumber. When we run this command we'll be told all of this:
 
     create  dinner
     Could not find "recipe.txt" in any of your source paths. Please invoke Foodie::Generators::Recipe.source_root(PATH) with the PATH containing your templates. Currently you have no source paths.
@@ -494,7 +504,7 @@ This is because the `foodie.gemspec` file uses `git ls-files` to detect which fi
 
 The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
 
-Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.0.1.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
+Now we're going to make sure that our gem is ready to be published. To do this, we can run `rake build` which will build a local copy of our gem and then `gem install pkg/foodie-0.1.0.gem` to install it. Then we can try it locally by running the commands that it provides. Once we know everything's working, then we can release the first version.
 
 To release the first version of our gem we can use the `rake release` command, providing we have committed everything. This command does a couple of things. First it builds the gem to the _pkg_ directory in preparation for a push to Rubygems.org.
 
