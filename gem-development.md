@@ -79,11 +79,11 @@ We can write our first test with this framework now in place. For testing, first
 ```ruby
 describe Foodie::Food do
   it "broccoli is gross" do
-    Foodie::Food.portray("Broccoli").should eql("Gross!")
+    expect(Foodie::Food.portray("Broccoli")).to eql("Gross!")
   end
 
   it "anything else is delicious" do
-    Foodie::Food.portray("Not Broccoli").should eql("Delicious!")
+    expect(Foodie::Food.portray("Not Broccoli")).to eql("Delicious!")
   end
 end
 ```
@@ -156,13 +156,13 @@ When we run `bundle install` again, the `activesupport` gem will be installed fo
 
 ```ruby
 it "pluralizes a word" do
-  Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
+  expect(Foodie::Food.pluralize("Tomato")).to eql("Tomatoes")
 end
 ```
 
 Of course when we run this spec with `bundle exec rspec spec` it will fail:
 
-    Failure/Error: Foodie::Food.pluralize("Tomato").should eql("Tomatoes")
+    expect(Failure/Error: Foodie::Food.pluralize("Tomato")).to eql("Tomatoes")
          undefined method `pluralize' for Foodie::Food:Class
 
 We can now define this `pluralize` method in _lib/foodie/food.rb_ by first off requiring the part of Active Support which contains the `pluralize` method. This line should go at the top of the file, just like all good `require`s do.
