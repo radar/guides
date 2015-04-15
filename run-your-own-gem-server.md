@@ -86,9 +86,52 @@ There is a web interface available on
 [http://localhost:9292](http://localhost:9292) as well.  For more information,
 read the [Gem in a box](https://github.com/geminabox/geminabox) README.
 
+## Running Gemirro
+
+If you need a simple application that makes it easy way to create your own 
+RubyGems mirror without having to push or write all gem you wanted in a 
+configuration file try out [Gemirro](https://github.com/PierreRambaud/gemirro). 
+It does mirroring without any authentication and you can add your private 
+gems in the gems directory. More, to mirroring a source, you only need 
+to start the server, and gems will automaticly be downloaded when needed. 
+
+To get started, install `gemirro`:
+
+    $ gem install gemirro
+
+The process of setting up a mirror is fairly easy and can be done in few seconds.
+
+The first step is to set up a new, empty mirror directory.
+This is done by running the `gemirro init` command.
+
+    $ gemirro init /srv/http/mirror.com/
+
+Once created you can edit the main configuration file called `config.rb`.
+This configuration file specifies what source to mirror, destination directory, server host and port, etc.
+
+Once configured and if you add gem in the `define_source`, you can pull them by running the following command:
+
+    $ gemirro update
+
+Once all the Gems have been downloaded you'll need to generate an index of all the installed files. This can be done as following:
+
+    $ gemirro index
+
+Last, launch the server, and all requests will check if gems are detected, and download them if necessary and generate index immediately.
+
+    $ gemirro server --start
+    $ gemirro server --status
+    $ gemirro server --restart
+    $ gemirro server --stop
+
+
+A web interface will be available at [http://localhost:2000](http://localhost:2000).
+
+For more information, read the [Gemirro](https://github.com/PierreRambaud/gemirro) README.
+
 ## Using gems from your server
 
-Whether you use `gem server`, Gem in a Box, or another gem server, you can
+Whether you use `gem server`, Gem in a Box, Gemirro or another gem server, you can
 configure RubyGems to use your local or internal source alongside other sources
 such as [http://rubygems.org](http://rubygems.org).
 
