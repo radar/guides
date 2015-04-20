@@ -166,6 +166,22 @@ Update a previously yanked gem back into RubyGems.org's index. Platform is optio
 
     Successfully unyanked gem: bills (0.0.1)
 
+### GET - `/api/v1/gems/[GEM NAME]/reverse_dependencies.json`
+
+List gems that depends on specified gem. This is all the dependents of particular gem.
+Returns an array that includes names of dependent gems.
+
+    $ curl https://rubygems.org/api/v1/gems/shoulda/reverse_dependencies.json
+
+    [
+      "jeweler",
+      "rubigen",
+      "verhoeff",
+      "vanilla",
+      "soup",
+      ...
+    ]
+
 Gem Version Methods
 -------------------
 
