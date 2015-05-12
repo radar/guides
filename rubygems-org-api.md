@@ -208,6 +208,16 @@ Returns an array of gem version details like the below:
       }
     ]
 
+### GET - `/api/v1/versions/[GEM NAME]/latest.json`
+
+Returns an object containing the latest version of particular gem.
+
+    $ curl https://rubygems.org/api/v1/versions/rails/latest.json
+
+    {
+      "version": "4.2.1"
+    }
+
 Gem Download Methods
 --------------------
 
