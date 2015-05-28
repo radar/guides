@@ -194,7 +194,7 @@ The `Translator` is now in `lib/hola`, which can easily be picked up with a
 change much:
 
     % cat lib/hola/translator.rb
-    class Translator
+    class Hola::Translator
       def initialize(language)
         @language = language
       end
