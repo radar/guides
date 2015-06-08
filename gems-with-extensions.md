@@ -62,7 +62,7 @@ Makefile that will install the built extension at `lib/my_malloc/my_malloc.so`:
 
     create_makefile "my_malloc/my_malloc"
 
-See the [mkmf documentation][mkmf.rb] and [README.EXT][README.EXT] for further
+See the [mkmf documentation][mkmf.rb] and [extension.rdoc][extension.rdoc] for further
 information about creating an extconf.rb and for documentation on these
 methods.
 
@@ -247,8 +247,8 @@ Further Reading
 
 * [my_malloc](https://github.com/rubygems/guides/tree/my_malloc) contains the
   source for this extension with some additional comments.
-* [README.EXT][README.EXT] describes in greater detail how to build extensions
-  in ruby
+* [extension.rdoc][extension.rdoc] describes in greater detail how to build
+  extensions in ruby
 * [MakeMakefile][mkmf.rb] contains documentation for mkmf.rb, the library
   extconf.rb uses to detect ruby and C library features
 * [rake-compiler][rake-compiler] integrates building C and Java extensions into
@@ -261,6 +261,6 @@ Further Reading
   [fiddle](http://ruby-doc.org/stdlib-2.0/libdoc/fiddle/rdoc/Fiddle.html) (part
   of the standard library) or [ruby-ffi](https://github.com/ffi/ffi)
 
-[README.EXT]: https://github.com/ruby/ruby/blob/trunk/README.EXT
-[mkmf.rb]: http://ruby-doc.org/stdlib-2.0/libdoc/mkmf/rdoc/MakeMakefile.html
+[extension.rdoc]: https://github.com/ruby/ruby/blob/trunk/doc/extension.rdoc
+[mkmf.rb]: https://github.com/ruby/ruby/blob/trunk/lib/mkmf.rb
 [rake-compiler]: https://github.com/luislavena/rake-compiler
