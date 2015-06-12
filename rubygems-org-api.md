@@ -246,9 +246,10 @@ as well as the total number of downloads for the specified version.
 Owner Methods
 -------------
 
-### GET - `/api/v1/owners/[USER HANDLE]/gems.(json|yaml)`
+### GET - `/api/v1/owners/[USER HANDLE|USER ID]/gems.(json|yaml)`
 
-View all gems for a user. This is all the gems a user can push to.
+View all gems for a user. This is all the gems a user can push to. Owner gems
+list can be requested with both user handle or user id.
 
     $ curl https://rubygems.org/api/v1/owners/qrush/gems.json
 
