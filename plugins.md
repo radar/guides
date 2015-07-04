@@ -208,9 +208,9 @@ Applies a whitelist to `gem push` to prevent accidentally pushing private gems t
 
 <a id="rbenvrehash"> </a>
 
-## rbenv-rehash
+## rbenv-gem-rehash
 
-[https://github.com/scoz/rbenv-rehash](https://github.com/scoz/rbenv-rehash)
+[https://github.com/sstephenson/rbenv-gem-rehash](https://github.com/sstephenson/rbenv-gem-rehash)
 
 Automatically runs `rbenv rehash` after installing or uninstalling gems.
 
