@@ -500,7 +500,7 @@ If we haven't already, we should commit all the files for our repository:
     git add .
     git commit -m "The beginnings of the foodie gem"
 
-This is because the `foodie.gemspec` file uses `git ls-files` to detect which files should be added to the gem when we release it.s
+This is because the `foodie.gemspec` file uses `git ls-files` to detect which files should be added to the gem when we release it.
 
 The final step before releasing our gem is to give it a summary and description in the _foodie.gemspec_ file.
 
