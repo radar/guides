@@ -143,35 +143,44 @@ Reporting Security vulnerabilities
 
 If you spot a security vulnerability in someone else's gem, then you
 first step should be to check whether this is a known vulnerability.
+One way is by searching for an advisory on [RubySec](http://www.rubysec.com).
 
-If this looks like a newly discovered vulnerability then you should
-contact the author(s) privately (i.e. not via a pull request or issue on public
-project) explaining the issue, how it can be exploited and ideally offering an
-indication of how it might be fixed.
+If this looks like a newly discovered vulnerability, then you should
+contact the author(s) privately (i.e., not via a pull request or issue on a
+public project) explaining the issue, how it can be exploited, and ideally
+offering an indication of how it might be fixed.
 
 ### Reporting a security vulnerability with your own gem
 
-Firstly request a [CVE
+First, request a [CVE
 identifier](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)
-by mailing cve-assign@mitre.org. This identifier will make it easy to
-uniquely identify the vulnerability when talking about it.
+by emailing [one of these
+places](https://github.com/RedHatProductSecurity/CVE-HOWTO#how-do-i-request-a-cve).
+This identifier will make it easy to uniquely identify the vulnerability when
+talking about it.
 
-Secondly work out what people who depend on your gem should do to
-resolve the vulnerability. This may involve releasing a patched version of you gem
-that you can recommend they upgrade to.
+Second, work out what people who depend on your gem should do to resolve the
+vulnerability. This may involve releasing a patched version of your gem that
+you can recommend they upgrade to.
 
-Finally you need to tell people about the vulnerability. Currently there
-is no single place to broadcast this information but a good place to
+Finally, you need to tell people about the vulnerability. Currently there
+is no single place to broadcast this information but some good places to
 start might be to:
 
-- Send an email to the Ruby Talk mailing list (ruby-talk@ruby-lang.org)
-  with the subject prefix \[ANN]\[Security] outlining the vulnerability,
-  which versions of your gem it affects and what actions those depending
-  on the gem should take.
+- Send an email to several lists including ruby-security-ann@googlegroups.com,
+  rubysec-announce@googlegroups.com, and oss-security@lists.openwall.com
+  outlining the vulnerability, which versions of your gem it affects, and what
+  actions those depending on the gem should take. Make sure to use a subject
+  that includes the gem name, some short summary of the vulnerability, and the
+  CVE ID if you have one.
 
-- Add it to an open source vulnerability database like
-  [OSVDB](http://osvdb.org/). You can do this by emailing moderators@osvdb.org
-  and/or messaging @osvdb on GitHub or Twitter.
+- Add it to [OSVDB](http://osvdb.org/). You can do this by emailing
+  moderators@osvdb.org.
+
+- Add it to [ruby-advisory-db](https://github.com/rubysec/ruby-advisory-db/).
+  You can do this by following the
+  [CONTRIBUTING](https://github.com/rubysec/ruby-advisory-db/blob/master/CONTRIBUTING.md)
+  guidelines and submitting a pull request.
 
 Credits
 -------
@@ -182,6 +191,6 @@ Several sources were used for content for this guide:
 * [Signing rubygems - Pasteable instructions](http://developer.zendesk.com/blog/2013/02/03/signing-gems/)
 * [Twitter gem gemspec](https://github.com/sferik/twitter/blob/master/twitter.gemspec)
 * [RubyGems Trust Model Overview](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](http://goo.gl/ybFIO)
-* [Let’s figure out a way to start signing RubyGems](http://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
+* [Let's figure out a way to start signing RubyGems](http://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
 * [A Practical Guide to Using Signed Ruby Gems - Part 3: Signing your Own](http://blog.meldium.com/home/2013/3/6/signing-gems-how-to)
 * Also see the [Resources](/resources) page.
