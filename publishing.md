@@ -99,7 +99,7 @@ Push Permissions on RubyGems.org
 
 If you have multiple maintainers for your gem you can give your fellow
 maintainers permission to push the gem to rubygems.org through the [gem
-owner command](/command-reference/#gem_owner).
+owner command](/command-reference/#gem-owner).
 
 Gem Security
 ------------
