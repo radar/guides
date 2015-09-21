@@ -195,6 +195,7 @@ Returns an array of gem version details like the below:
       {
         "authors" : "Evan David Light",
         "built_at" : "2011-08-08T04:00:00.000Z",
+        "created_at" : "2011-08-08T21:23:40.254Z",
         "description" : "Behaviour Driven Development derived from Cucumber but as an internal DSL with methods for reuse",
         "downloads_count" : 2224,
         "number" : "0.7.1",
