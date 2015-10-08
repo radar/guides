@@ -82,6 +82,9 @@ deploying, and managing gems along with clear and accessible project pages.
   <a href="https://github.com/evanphx">
     <img src="https://secure.gravatar.com/avatar/540cb3b3712ffe045113cb03bab616a2?s=32" title="Evan Phoenix">
   </a>
+  <a href="https://github.com/arthurnn">
+    <img src="https://secure.gravatar.com/avatar/bd33b5aaf0eb48d67a8145732d8f61a9?s=32" title="Arthur Nogueira Neves">
+  </a>  
 </p>
 
 <a class="project__name" href="https://github.com/rubygems/rubygems-infrastructure">RubyGems Infrastructure</a>
@@ -120,6 +123,9 @@ A simple Rails app to show the status of the rubygems.org infrastructure.
   </a>
   <a href="https://github.com/dwradcliffe">
     <img src="https://secure.gravatar.com/avatar/013fd4dfb0e29744d5f37cf9068ba930?s=32" title="David Radcliffe">
+  </a>
+  <a href="https://github.com/arthurnn">
+    <img src="https://secure.gravatar.com/avatar/bd33b5aaf0eb48d67a8145732d8f61a9?s=32" title="Arthur Nogueira Neves">
   </a>
 </p>
 
@@ -198,6 +204,9 @@ community, check this out!
 <p class="avatars">
   <a href="https://github.com/sferik">
     <img src="https://secure.gravatar.com/avatar/1f74b13f1e5c6c69cb5d7fbaabb1e2cb?s=32" title="Erik Michaels-Ober">
+  </a>
+  <a href="https://github.com/arthurnn">
+    <img src="https://secure.gravatar.com/avatar/bd33b5aaf0eb48d67a8145732d8f61a9?s=32" title="Arthur Nogueira Neves">
   </a>
 </p>
 
