@@ -8,7 +8,7 @@ next: /rubygems-org-api
 
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 
-This reference was automatically generated from RubyGems version 2.4.2.
+This reference was automatically generated from RubyGems version 2.5.0.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -709,7 +709,7 @@ Display local gems whose name matches REGEXP
 
 ### Usage
 
-    gem list [STRING ...] [options]
+    gem list [REGEXP ...] [options]
 
 
 ###   Options:
@@ -1006,6 +1006,7 @@ Restores installed gems to pristine condition from files located in the gem cach
 ###   Options:
 
 *         -&#8203;-all                      - Restore all installed gems to pristine condition
+*         -&#8203;-skip=gem_name            - used on -&#8203;-all, skip if name == gem_name
 *         -&#8203;-\[no-\]extensions          - Restore gems with extensions in addition to regular gems
 *         -&#8203;-only-executables         - Only restore executables
 *     -E, -&#8203;-\[no-\]env-shebang         - Rewrite executables with a shebang of /usr/bin/env
@@ -1347,7 +1348,7 @@ Manage the sources and cache file RubyGems uses to search for gems
 RubyGems fetches gems from the sources you have configured (stored in your
 ~/.gemrc).
 
-The default source is https://rubygems.org, but you may have older sources
+The default source is https://rubygems.org, but you may have other sources
 configured.  This guide will help you update your sources or configure
 yourself to use your own gem server.
 
@@ -1595,7 +1596,7 @@ Update installed gems to the latest version
 
 ### Usage
 
-    gem update REGEXP [REGEXP ...] [options]
+    gem update GEMNAME [GEMNAME ...] [options]
 
 
 ###   Options:
@@ -1654,7 +1655,7 @@ Update installed gems to the latest version
 ### Arguments
 
 
-* *REGEXP* -         regexp to search for in gem name
+* *GEMNAME* -        name of gem to update
 
   
 
