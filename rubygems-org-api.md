@@ -8,9 +8,9 @@ next: /run-your-own-gem-server
 
 <em class="t-gray">Details on interacting with RubyGems.org over HTTP.</em>
 
-> NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/gemcutter)
+> NOTE: The API is a work in progress, and [can use your help!](https://github.com/rubygems/rubygems.org)
 > RubyGems itself and the
-> [gemcutter gem](https://rubygems.org/gems/gemcutter) use the API to push gems,
+> [RubyGems gem](https://github.com/rubygems/rubygems) use the API to push gems,
 > add owners, and more.
 
 * [API Authorization](#api-authorization): How to authenticate with RubyGems.org
