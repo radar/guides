@@ -294,7 +294,7 @@ approved.</p>
 
 <p>The most commonly used OSI approved licenses are MIT and Apache-2.0. GitHub
 also provides a license picker at <a
-href="http://choosealicense.com">choosealicense.com</a>/.</p>
+href="http://choosealicense.com">choosealicense.com</a>.</p>
 
 <p>You should specify a license for your gem so that people know how they are
 permitted to use it, and any restrictions you&#39;re placing on it.  Not
