@@ -75,7 +75,7 @@ Tools to watch gems for changes.
 Hosting and Serving
 -------------------
 
-* [Geminabox](https://github.com/cwninja/geminabox)- Host your own gems, with a rubygems-compatible API.
+* [Geminabox](https://github.com/cwninja/geminabox) - Host your own gems, with a rubygems-compatible API.
 * [Gem Mirror](https://github.com/YorickPeterse/gem-mirror) - Run an internal mirror of external gem sources.
 * [Gemfury](http://www.gemfury.com/) - Private cloud-based RubyGems servers. Priced by number of collaborators.
 
