@@ -18,7 +18,7 @@ Tutorials
 * [Gemcutter & Jeweler](http://railscasts.com/episodes/183-gemcutter-jeweler)
 * [MicroGems: five minute RubyGems](http://jeffkreeftmeijer.com/2011/microgems-five-minute-rubygems/) - Gems so small that you can store them in a gist.
 * [Let's Write a Gem: Part 1](http://rakeroutes.com/blog/lets-write-a-gem-part-one/) and [Part 2](http://rakeroutes.com/blog/lets-write-a-gem-part-two/)
-* [Polishing Rubies](http://intridea.com/blog/tag/polishing%20rubies)
+* [Polishing Rubies](https://wayback.archive.org/web/20151009055337/https://www.intridea.com/blog/tag/polishing%20rubies)
 * [A Practical Guide to Using Signed Ruby Gems - Part 1: Bundler](http://blog.meldium.com/home/2013/3/3/signed-rubygems-part)
 * [Basic RubyGem Development](http://tech.pro/tutorial/1226/basic-rubygem-development) and [Intermediate RubyGem Development](http://tech.pro/tutorial/1277/intermediate-rubygem-development)
 * [How to make a Rubygem](http://www.alexedwards.net/blog/how-to-make-a-rubygem) and [How to make a Rubygem: Part Two](http://www.alexedwards.net/blog/how-to-make-a-rubygem-part-two)
