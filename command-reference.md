@@ -8,7 +8,7 @@ next: /rubygems-org-api
 
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 
-This reference was automatically generated from RubyGems version 2.5.0.
+This reference was automatically generated from RubyGems version 2.5.1.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -288,7 +288,7 @@ Display the contents of the installed gems
 
 The contents command lists the files in an installed gem.  The listing can
 be given as full file names, file names without the installed directory
-prefix or only the files that are requirable.
+prefix or only the files that are requireable.
   
 
 ## gem dependency
