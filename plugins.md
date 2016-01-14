@@ -101,7 +101,7 @@ Adds `gem init` to create a barebones gem.
 
 ## gem-compare
 
-[https://github.com/strzibny/gem-compare](https://github.com/strzibny/gem-compare)
+[https://github.com/fedora-ruby/gem-compare](https://github.com/fedora-ruby/gem-compare)
 
 Adds `gem compare` command that can help you to track upstream changes in the released
 .gem files by comparing gemspec values, gemspec and Gemfile dependencies and files.
