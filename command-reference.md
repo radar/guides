@@ -8,7 +8,7 @@ next: /rubygems-org-api
 
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 
-This reference was automatically generated from RubyGems version 2.5.1.
+This reference was automatically generated from RubyGems version 2.5.2.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -65,6 +65,7 @@ Build a gem from a gemspec
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -121,6 +122,7 @@ Manage RubyGems certificates and signing settings
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -189,6 +191,7 @@ Check a gem repository for added or missing files
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -227,6 +230,7 @@ Clean up old versions of installed gems
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -273,6 +277,7 @@ Display the contents of the installed gems
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -330,6 +335,7 @@ Show the dependencies of an installed gem
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -368,6 +374,7 @@ Display information about the RubyGems environment
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -461,6 +468,7 @@ Download a gem and place it in the current directory
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -504,6 +512,7 @@ Generates the index files for a gem server directory
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -551,6 +560,7 @@ Provide help on the 'gem' command
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -597,6 +607,7 @@ Install a gem into the local repository
 *         -&#8203;-development-all          - Install development dependencies for all gems (including dev deps themselves)
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 *         -&#8203;-minimal-deps             - Don't upgrade any dependencies that already meet version requirements
+*       - -&#8203;-\[no-\]post-install-message  Print post install message
 *     -g, -&#8203;-file \[FILE\]              - Read from a gem dependencies API file and install the listed gems
 *         -&#8203;-without GROUPS           - Omit the named groups (comma separated) when installing from a gem dependencies file
 *         -&#8203;-default                  - Add the gem's full specification to specifications/default and extract only its bin
@@ -622,6 +633,7 @@ Install a gem into the local repository
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -720,6 +732,7 @@ Display local gems whose name matches REGEXP
 *     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
 *         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
+*     -e, -&#8203;-exact                    - Name of gem(s) to query on matches the provided STRING
 *         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
@@ -744,6 +757,7 @@ Display local gems whose name matches REGEXP
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -786,6 +800,7 @@ Generate a lockdown list of gems
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -847,6 +862,7 @@ Mirror all gem files (requires rubygems-mirror)
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -878,6 +894,7 @@ Open gem sources in editor
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -932,6 +949,7 @@ Display all gems that need updates
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -973,6 +991,7 @@ Manage gem owners of a gem on the push server
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1020,6 +1039,7 @@ Restores installed gems to pristine condition from files located in the gem cach
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1076,6 +1096,7 @@ Push a gem up to the gem server
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1114,6 +1135,7 @@ Query gem information in local or remote repositories
 *     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
 *         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
+*     -e, -&#8203;-exact                    - Name of gem(s) to query on matches the provided STRING
 *         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
@@ -1138,6 +1160,7 @@ Query gem information in local or remote repositories
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1176,6 +1199,7 @@ Generates RDoc for pre-installed gems
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1214,6 +1238,7 @@ Display remote gems whose name matches REGEXP
 *     -d, -&#8203;-\[no-\]details             - Display detailed information of gem(s)
 *         -&#8203;-\[no-\]versions            - Display only gem names
 *     -a, -&#8203;-all                      - Display all gem versions
+*     -e, -&#8203;-exact                    - Name of gem(s) to query on matches the provided STRING
 *         -&#8203;-\[no-\]prerelease          - Display prerelease versions
 
 ###   Deprecated Options:
@@ -1238,6 +1263,7 @@ Display remote gems whose name matches REGEXP
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1286,6 +1312,7 @@ Documentation and gem repository HTTP server
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1338,6 +1365,7 @@ Manage the sources and cache file RubyGems uses to search for gems
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1429,6 +1457,7 @@ Display gem specification (in yaml)
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1472,6 +1501,7 @@ List gems along with access times
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1519,6 +1549,7 @@ Uninstall gems from the local repository
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1562,6 +1593,7 @@ Unpack an installed gem to the current directory
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1630,6 +1662,7 @@ Update installed gems to the latest version
 *         -&#8203;-development-all          - Install development dependencies for all gems (including dev deps themselves)
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 *         -&#8203;-minimal-deps             - Don't upgrade any dependencies that already meet version requirements
+*       - -&#8203;-\[no-\]post-install-message  Print post install message
 
 ###   Local/Remote Options:
 
@@ -1649,6 +1682,7 @@ Update installed gems to the latest version
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1690,6 +1724,7 @@ Find the location of a library file you can require
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
@@ -1717,14 +1752,14 @@ Remove a pushed gem from the index
 
 ### Usage
 
-    gem yank GEM -v VERSION [-p PLATFORM] [--undo] [--key KEY_NAME] [options]
+    gem yank GEM -v VERSION [-p PLATFORM] [--key KEY_NAME] [--host HOST] [options]
 
 
 ###   Options:
 
 *     -v, -&#8203;-version VERSION          - Specify version of gem to remove
 *         -&#8203;-platform PLATFORM        - Specify the platform of gem to remove
-*       - -&#8203;-undo
+*         -&#8203;-host HOST                - Yank from another gemcutter-compatible host
 *     -k, -&#8203;-key KEYNAME              - Use the given API key from ~/.gem/credentials
 
 ###   Common Options:
@@ -1735,6 +1770,7 @@ Remove a pushed gem from the index
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
+*         -&#8203;-norc                     - Avoid loading any .gemrc file
 
 
   
