@@ -332,9 +332,7 @@ evaluating a gem, Ruby developers tend to view a solid test suite (or lack there
 as one of the main reasons for trusting that piece of code.
 
 Gems support adding test files into the package itself so tests can be run
-when a gem is downloaded. An entire community effort has sprung up called
-[GemTesters](http://test.rubygems.org/) to help document how gem test suites
-run on different architectures and interpreters of Ruby.
+when a gem is downloaded.
 
 In short: *TEST YOUR GEM!* Please!
 
