@@ -8,7 +8,7 @@ next: /rubygems-org-api
 
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 
-This reference was automatically generated from RubyGems version 2.5.2.
+This reference was automatically generated from RubyGems version 2.6.0.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -61,7 +61,8 @@ Build a gem from a gemspec
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -118,7 +119,8 @@ Manage RubyGems certificates and signing settings
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -187,7 +189,8 @@ Check a gem repository for added or missing files
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -226,7 +229,8 @@ Clean up old versions of installed gems
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -273,7 +277,8 @@ Display the contents of the installed gems
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -331,7 +336,8 @@ Show the dependencies of an installed gem
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -370,7 +376,8 @@ Display information about the RubyGems environment
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -464,7 +471,8 @@ Download a gem and place it in the current directory
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -508,7 +516,8 @@ Generates the index files for a gem server directory
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -556,7 +565,8 @@ Provide help on the 'gem' command
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -629,7 +639,8 @@ Install a gem into the local repository
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -753,7 +764,8 @@ Display local gems whose name matches REGEXP
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -796,7 +808,8 @@ Generate a lockdown list of gems
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -858,7 +871,8 @@ Mirror all gem files (requires rubygems-mirror)
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -885,12 +899,14 @@ Open gem sources in editor
 ###   Options:
 
 *     -e, -&#8203;-editor EDITOR            - Opens gem sources in EDITOR
+*     -v, -&#8203;-version VERSION          - Opens specific gem version
 
 ###   Common Options:
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -945,7 +961,8 @@ Display all gems that need updates
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -987,7 +1004,8 @@ Manage gem owners of a gem on the push server
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1035,7 +1053,8 @@ Restores installed gems to pristine condition from files located in the gem cach
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1092,7 +1111,8 @@ Push a gem up to the gem server
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1156,7 +1176,8 @@ Query gem information in local or remote repositories
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1195,7 +1216,8 @@ Generates RDoc for pre-installed gems
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1259,7 +1281,8 @@ Display remote gems whose name matches REGEXP
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1308,7 +1331,8 @@ Documentation and gem repository HTTP server
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1361,7 +1385,8 @@ Manage the sources and cache file RubyGems uses to search for gems
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1453,7 +1478,8 @@ Display gem specification (in yaml)
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1497,7 +1523,8 @@ List gems along with access times
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1545,7 +1572,8 @@ Uninstall gems from the local repository
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1589,7 +1617,8 @@ Unpack an installed gem to the current directory
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1678,7 +1707,8 @@ Update installed gems to the latest version
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1720,7 +1750,8 @@ Find the location of a library file you can require
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
@@ -1766,7 +1797,8 @@ Remove a pushed gem from the index
 
 *     -h, -&#8203;-help                     - Get help on this command
 *     -V, -&#8203;-\[no-\]verbose             - Set the verbose level of output
-*     -q, -&#8203;-quiet                    - Silence commands
+*     -q, -&#8203;-quiet                    - Silence command progress meter
+*         -&#8203;-silent                   - Silence rubygems output
 *         -&#8203;-config-file FILE         - Use this config file instead of default
 *         -&#8203;-backtrace                - Show stack backtrace on errors
 *         -&#8203;-debug                    - Turn on Ruby debugging
