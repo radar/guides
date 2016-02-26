@@ -71,6 +71,7 @@ Tools to watch gems for changes.
 * [Gemnasium](https://gemnasium.com/) - Parses your GitHub projects to learn what to notify you about. Free for public repos only.
 * [Gemnasium gem](https://github.com/gemnasium/gemnasium-gem) - Allows you to use Gemnasium without granting it access to private repos.
 * [gemwhisperer](https://github.com/rubygems/gemwhisperer)
+* [Libraries.io](https://libraries.io/) - Get alerts for new versions of the gems you depend upon.
 
 Hosting and Serving
 -------------------
