@@ -520,9 +520,9 @@ If we want to make this process a little easier we could install the "gem-releas
 
 This gem provides several methods for helping with gem development in general, but most helpful is the `gem bump` command which will bump the gem version to the next patch level. This method also takes options to do these things:
 
-    gem bump --to minor # bumps to the next minor version
-    gem bump --to major # bumps to the next major version
-    gem bump --to 1.1.1 # bumps to the specified version
+    gem bump --version minor # bumps to the next minor version
+    gem bump --version major # bumps to the next major version
+    gem bump --version 1.1.1 # bumps to the specified version
 
 For more information, check out the ["gem-release" GitHub repository homepage](http://github.com/svenfuchs/gem-release).
 
