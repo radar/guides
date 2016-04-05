@@ -8,7 +8,7 @@ next: /rubygems-org-api
 
 <em class="t-gray">What each `gem` command does, and how to use it.</em>
 
-This reference was automatically generated from RubyGems version 2.6.1.
+This reference was automatically generated from RubyGems version 2.6.3.
 
 * [gem build](#gem-build)
 * [gem cert](#gem-cert)
@@ -1692,6 +1692,12 @@ Update installed gems to the latest version
 *         -&#8203;-conservative             - Don't attempt to upgrade gems already meeting version requirement
 *         -&#8203;-minimal-deps             - Don't upgrade any dependencies that already meet version requirements
 *       - -&#8203;-\[no-\]post-install-message  Print post install message
+*     -g, -&#8203;-file \[FILE\]              - Read from a gem dependencies API file and install the listed gems
+*         -&#8203;-without GROUPS           - Omit the named groups (comma separated) when installing from a gem dependencies file
+*         -&#8203;-default                  - Add the gem's full specification to specifications/default and extract only its bin
+*         -&#8203;-explain                  - Rather than install the gems, indicate which would be installed
+*         -&#8203;-\[no-\]lock                - Create a lock file (when used with -g/-&#8203;-file)
+*         -&#8203;-\[no-\]suggestions         - Suggest alternates when gems are not found
 
 ###   Local/Remote Options:
 
