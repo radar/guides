@@ -9,7 +9,7 @@ use Ecto, then the database querying for both of those applications will be
 almost identical.
 
 If you've come from the Ruby language, the equivalent there would be Active
-Record, or Sequel. Java has Hibernate, and so on.
+Record, Data Mapper, or Sequel. Java has Hibernate, and so on.
 
 In this guide, we're going to learn some basics about Ecto, such as creating,
 reading, updating and destroying records from a PostgreSQL database. 
@@ -342,7 +342,62 @@ end
 
 If the insertion of the changeset succeeds, then you can do whatever you wish with the `person` returned in that result. If it fails, then you have access to the changeset and its errors. In the failure case, you may wish to present these errors to the end user.
 
+One more final thing to mention here: you can trigger an exception to be thrown by using `Friends.Repo.insert!/2`. If a changeset is invalid, you will see an `Ecto.InvalidChangesetError` exception. Here's a quick example of that:
+
+```
+Friends.Repo.insert! Friends.Person.changeset(%Friends.Person{}, %{ first_name: "Ryan" })
+
+** (Ecto.InvalidChangesetError) could not perform insert because changeset is invalid.
+
+* Changeset changes
+
+%{first_name: "Ryan"}
+
+* Changeset params
+
+%{"first_name" => "Ryan"}
+
+* Changeset errors
+
+[last_name: "can't be blank"]
+
+    lib/ecto/repo/schema.ex:111: Ecto.Repo.Schema.insert!/4
+```
+
+This exception shows us the changes from the changeset, and how the changeset is invalid. This can be useful if you want to insert a bunch of data and then have an exception raised if that data does not insert correctly at all.
+
+Now that we've covered inserting data into the database, let's look at how we can pull that data back out.
+
 ## Querying the database
+
+Querying a database requries two steps in Ecto. First, we must construct the query and then we must execute that query against the database. Let's build a query in our `iex -S mix` session and the execute it against the database. This query will fetch the first person from our `people` table:
+
+```elixir
+Friends.Person |> Ecto.Query.first
+```
+
+That code will generate an `Ecto.Query`, which will be this:
+
+```
+#Ecto.Query<from p in Friends.Person, order_by: [asc: p.id], limit: 1>
+```
+
+The code between the angle brackets `<...>` here shows the Ecto query which has been constructed. We could construct this query ourselves with almost exactly the same syntax:
+
+```elixir
+require Ecto.Query
+Ecto.Query.from p in Friends.Person, order_by: [asc: p.id], limit: 1
+```
+
+We need to `require Ecto.Query` here so that the module is available for us to use. Then it's a matter of calling the `from` function from `Ecto.Query` and passing in the code from between the angle brackets. As we can see here, `Ecto.Query.first` saves us from having to specify the `order` and `limit` for the query.
+
+To execute the query that we've just constructed, we can call `Friends.Repo.one`:
+
+```elixir
+Friends.Person |> Ecto.Query.first |> Friends.Repo.one
+```
+
+
 
 ## Updating records
 
