@@ -169,11 +169,13 @@ mix ecto.migrate
 
 If we found out that we made a mistake in this migration, we could run `mix ecto.rollback` to undo the changes in the migration. We could then fix the changes in the migration and run `mix ecto.migrate` again. If we ran `mix ecto.rollback` now, it would delete the table that we just created.
 
-We now have a table created in our database. The next step that we'll need to do is to create the model.
+We now have a table created in our database. The next step that we'll need to do is to create the schema.
 
-## Creating the model
+## Creating the schema
 
-Let's create the model within our application at `lib/friends/person.ex`:
+The schema is an Elixir representation of data from our database. Each schema doesn't necessarily need to be tied to a table; they can be tied to database views too.
+
+Let's create the schema within our application at `lib/friends/person.ex`:
 
 ```elixir
 defmodule Friends.Person do
@@ -324,6 +326,7 @@ The changeset does not have errors, and is valid. Therefore if we try to insert 
   first_name: "Ryan", id: 3, last_name: "Bigg"}}
 ```
 
+
 Due to `Friends.Repo.insert` returning a tuple, we can use a `case` to determine different code paths depending on what happens:
 
 ```elixir
@@ -335,6 +338,9 @@ case Friends.Repo.insert(changeset) do
 end
 ```
 
+**NOTE:** `changeset.valid?` will not check constraints (such as `uniqueness_constraint`). For that, you will need to attempt to do an insert and check for errors. It's for this reason it's best practice to try inserting data and validation the returned tuple from `Friends.Repo.insert` to get the correct errors.
+
+If the insertion of the changeset succeeds, then you can do whatever you wish with the `person` returned in that result. If it fails, then you have access to the changeset and its errors. In the failure case, you may wish to present these errors to the end user.
 
 ## Querying the database
 
