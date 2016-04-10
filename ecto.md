@@ -242,9 +242,103 @@ You may wish to pattern match on the tuple in order to refer to the record inser
 
 In Ecto, you may wish to validate changes before they go to the database. For instance, you may wish that a person has provided both a first name and a last name before a record can be entered into the database. For this, Ecto has [_changesets_](https://hexdocs.pm/ecto/Ecto.Changeset.html).
 
+Let's add a changeset to our `Friends.Person` module inside `lib/friends/person.ex` now:
 
+```elixir
+def changeset(person, params \\ :empty) do
+  person
+  |> cast(params, ~w(first_name last_name))
+  |> validate_required([:first_name, :last_name])
+end
+```
 
+This changeset first casts the `first_name` and `last_name` keys from the parameters passed in to the changeset. Casting tells the changeset what parameters are allowed to be passed through in this changeset, and anything not in the list will be ignored. In this changeset, the `age` parameter will be ignored because it's not specified in the list for `cast`.
+
+On the next line, we call `validate_required` which says that, for this changeset, we expect `first_name` and `last_name` to have values specified. Let's use this changeset to attempt to create a new record without a `first_name` and `last_name`:
+
+```elixir
+person = %Friends.Person{}
+changeset = Friends.Person.changeset(person, %{})
+Friends.Repo.insert changeset
+```
+
+On the first line here, we get a struct from the `Friends.Person` module. We know what that does, because we saw it not too long ago. On the second line we do something brand new: we define a changeset. This changeset says that on the specified `person` object, we're looking to make some changes. In this case, we're not looking to change anything at all. 
+
+On the final line, rather than inserting the `person`, we insert the `changeset`. The `changeset` knows about the `person`, the changes and the validation rules that must be met before the data can be entered into the database. When this third line runs, we'll see this:
+
+```elixir
+{:error,
+ #Ecto.Changeset<action: :insert, changes: %{},
+  errors: [first_name: "can't be blank", last_name: "can't be blank"],
+  data: #Friends.Person<>, valid?: false>}
+```
+
+Just like the last time we did an insert, this returns a tuple. This time however, the first element in the tuple is `:error`, which indicates something bad happened. The specifics of what happend are included in the changeset which is returned. We can access these by doing some pattern matching:
+
+```elixir
+{ :error, changeset } = Friends.Repo.insert changeset
+```
+
+Then we can get to the errors by doing `changeset.errors`:
+
+```elixir
+[first_name: "can't be blank", last_name: "can't be blank"]
+```
+
+And we can ask the changeset itself it is valid, even before doing an insert:
+
+```
+changeset.valid?
+false
+```
+
+Since this changeset has errors, no new record was inserted into the `people`
+table.
+
+Let's try now with some valid data.
+
+```elixir
+person = %Friends.Person{}
+changeset = Friends.Person.changeset(person, %{first_name: "Ryan", last_name: "Bigg"})
+```
+
+We start out here with a normal `Friends.Person` struct. We then create a changeset for that `person` which has a `first_name` and a `last_name` parameter specified. At this point, we can ask the changeset if it has errors:
+
+```elixir
+changeset.errors
+[]
+```
+
+And we can ask if it's valid or not:
+
+```elixir
+changeset.valid?
+true
+```
+
+The changeset does not have errors, and is valid. Therefore if we try to insert this changeset it will work:
+
+```elixir
+{:ok,
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: nil,
+  first_name: "Ryan", id: 3, last_name: "Bigg"}}
+```
+
+Due to `Friends.Repo.insert` returning a tuple, we can use a `case` to determine different code paths depending on what happens:
+
+```elixir
+case Friends.Repo.insert(changeset) do
+  { :ok, person } ->
+    # do something with person
+  { :error, changeset } ->
+    # do something with changeset
+end
+```
 
 
 ## Querying the database
+
+## Updating records
+
+## Deleting records
 
