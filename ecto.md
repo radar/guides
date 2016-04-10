@@ -45,9 +45,23 @@ To install these dependencies, we will run this command:
 mix deps.get
 ```
 
-That's the first step taken now. We have installed Ecto as a dependency of our
-application. We now need to setup some configuration for Ecto so that we can
-perform actions on a database from within the application's code.
+In this same file, we'll need to add `postgrex` to our applications list:
+
+```elixir
+def application do
+  [applications: [:logger, :postgrex],
+   mod: {Friends, []}]
+end
+```
+
+The Postgrex application will receive queries from Ecto and execute them
+against our database. If we didn't do this step, we wouldn't be able to do any
+querying at all.
+
+That's the first two steps taken now. We have installed Ecto and Postgrex as
+dependencies of our application. We now need to setup some configuration for
+Ecto so that we can perform actions on a database from within the
+application's code.
 
 The first bit of configuration is going to be in `config/config.exs`. On a new line in this file, put this content
 
@@ -99,6 +113,138 @@ To be able to query a database, it first needs to exist. We can create the datab
 mix ecto.create
 ```
 
-## Querying the database
+If the database has been created successfully, then you will see this message:
 
+```
+The database for Friends.Repo has been created.
+```
+
+**NOTE:** If you get an error, you should try changing your configuration in `config/config.exs`, as it may be an authentication error.
+
+A database by itself isn't very queryable, so we will need to create a table within that database. To do that, we'll use what's referred to as a _migration_. If you've come from Active Record (or similar), you will have seen these before. A migration is a single step in the process of constructing your database.
+
+Let's create a migration now with this command:
+
+```
+mix ecto.gen.migration create_people
+```
+
+This command will generate a brand new migration file in `priv/repo/migrations`, which is empty by default:
+
+```elixir
+defmodule Friends.Repo.Migrations.CreatePeople do
+  use Ecto.Migration
+
+  def change do
+
+  end
+end
+```
+
+Let's add some code to this migration to create a new table called "people", with a few columns in it:
+
+```elixir
+defmodule Friends.Repo.Migrations.CreatePeople do
+  use Ecto.Migration
+
+  def change do
+    create table(:people) do
+      add :first_name, :string
+      add :last_name, :string
+      add :age, :integer
+    end
+  end
+end
+```
+
+This new code will tell Ecto to create a new table called people, and add three new fields: `first_name`, `last_name` and `age` to that table. The types of these fields are `string` and `integer`. (The different types that Ecto supports are covered in the [Ecto.Schema](https://hexdocs.pm/ecto/Ecto.Schema.html) documentation.)
+
+**The naming convention for tables in Ecto databases is to use a pluralized name.**
+
+To run this migration and create the `people` table, we will run this command:
+
+```
+mix ecto.migrate
+```
+
+If we found out that we made a mistake in this migration, we could run `mix ecto.rollback` to undo the changes in the migration. We could then fix the changes in the migration and run `mix ecto.migrate` again. If we ran `mix ecto.rollback` now, it would delete the table that we just created.
+
+We now have a table created in our database. The next step that we'll need to do is to create the model.
+
+## Creating the model
+
+Let's create the model within our application at `lib/friends/person.ex`:
+
+```elixir
+defmodule Friends.Person do
+  use Ecto.Schema
+
+  schema "people" do
+    field :first_name, :string
+    field :last_name, :string
+    field :age, :integer
+  end
+end
+```
+
+This model defines the schema from the database that this model maps to. In this case, we're telling Ecto that the `Friends.Person` model maps to the `people` table in the database, and the `first_name`, `last_name` and `age` fields in that table. The second argument passed to `field` tells Ecto how we want the information from the database to be represented in our model.
+
+**We've called this model `Person` because the naming convention in Ecto for models is a singularized name.**
+
+We can play around with this model in an IEx session by starting one up with `iex -S mix` and then running this code in it:
+
+```elixir
+person = %Friends.Person{}
+```
+
+This code will give us a new `Friends.Person` struct, which will have `nil` values for all the fields. We can set values on these fields by generating a new struct:
+
+```elixir
+person = %Friends.Person{age: 28}
+```
+
+Or with syntax like this:
+
+```elixir
+%{person | age: 28}
+```
+
+The model struct returned here is essentially a glorified Map. Let's take a look at how we can insert data into the database.
+
+## Inserting data
+
+We can insert a new record into our `people` table with this code:
+
+```elixir
+person = %Friends.Person{}
+Friends.Repo.insert person
+```
+
+To insert the data into our database, we call `insert` on `Friends.Repo`, which is the module that uses Ecto to talk to our database. The `person` struct here represents the data that we want to insert into the database.
+
+A successful insert will return a tuple, like so:
+
+```elixir
+{:ok,
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: nil,
+  first_name: nil, id: 1, last_name: nil}}
+```
+
+The `:ok` atom can be used for pattern matching purposes to ensure that the insert succeeds. A situation where the insert may not succeed is if you have a constraint on the database itself. For instance, if the database had a unique constraint on a field called `email` so that an email can only be used for one person record, then the insertion would fail.
+
+You may wish to pattern match on the tuple in order to refer to the record inserted into the database:
+
+```elixir
+{ :ok, person } = Friends.Repo.insert person
+```
+
+## Validating changes
+
+In Ecto, you may wish to validate changes before they go to the database. For instance, you may wish that a person has provided both a first name and a last name before a record can be entered into the database. For this, Ecto has [_changesets_](https://hexdocs.pm/ecto/Ecto.Changeset.html).
+
+
+
+
+
+## Querying the database
 
