@@ -370,7 +370,7 @@ Now that we've covered inserting data into the database, let's look at how we ca
 
 ## Querying the database
 
-Querying a database requries two steps in Ecto. First, we must construct the query and then we must execute that query against the database. Let's build a query in our `iex -S mix` session and the execute it against the database. This query will fetch the first person from our `people` table:
+Querying a database requries two steps in Ecto. First, we must construct the query and then we must execute that query against the database by passing the query to the repository. Let's build a query in our `iex -S mix` session and then pass it to our repository. This query will fetch the first person from our `people` table:
 
 ```elixir
 Friends.Person |> Ecto.Query.first
