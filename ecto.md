@@ -247,7 +247,7 @@ In Ecto, you may wish to validate changes before they go to the database. For in
 Let's add a changeset to our `Friends.Person` module inside `lib/friends/person.ex` now:
 
 ```elixir
-def changeset(person, params \\ :empty) do
+def changeset(person, params \\ %{}) do
   person
   |> cast(params, ~w(first_name last_name age))
   |> validate_required([:first_name, :last_name])
@@ -655,4 +655,20 @@ end
 ```
 
 ## Deleting records
+
+We've now covered creating (`insert`), reading (`get`, `get_by`, `where`) and updating records. The last thing that we'll cover in this guide is how to delete a record using Ecto.
+
+Similar to updating, we must first fetch a record from the database and then call `Friends.Repo.delete` to delete that record:
+
+```elixir
+person = Friends.Repo(Friends.Person, 1)
+Friends.Repo.delete(person)
+{:ok,
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:deleted>, age: 29,
+  first_name: "Ryan", id: 2, last_name: "Bigg"}}
+```
+
+Similar to `insert` and `update`, `delete` returns a tuple. If the deletion succeeds, then the first element in the tuple will be `:ok`, but if it fails then it will be an `:error`.
+
+
 
