@@ -1,0 +1,6 @@
+%{"connection": {:hex, :connection, "1.0.2"},
+  "db_connection": {:hex, :db_connection, "0.2.5"},
+  "decimal": {:hex, :decimal, "1.1.1"},
+  "ecto": {:hex, :ecto, "2.0.0-beta.2"},
+  "poolboy": {:hex, :poolboy, "1.5.1"},
+  "postgrex": {:hex, :postgrex, "0.11.1"}}

@@ -670,5 +670,8 @@ Friends.Repo.delete(person)
 
 Similar to `insert` and `update`, `delete` returns a tuple. If the deletion succeeds, then the first element in the tuple will be `:ok`, but if it fails then it will be an `:error`.
 
+## Conclusion
+
+In this guide we've covered creating, reading, updating and deleting records using Ecto. I hope that you've learned something valuable from it.
 
 
