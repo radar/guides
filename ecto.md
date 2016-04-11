@@ -8,6 +8,8 @@ fashion. If one application uses MySQL and another uses PostgreSQL but both
 use Ecto, then the database querying for both of those applications will be
 almost identical.
 
+**If you want to see the code from this guide, you can view it [at radar/guides/ecto/friends on GitHub](https://github.com/radar/guides/tree/master/ecto/friends).
+
 If you've come from the Ruby language, the equivalent there would be Active
 Record, Data Mapper, or Sequel. Java has Hibernate, and so on.
 
