@@ -249,12 +249,12 @@ Let's add a changeset to our `Friends.Person` module inside `lib/friends/person.
 ```elixir
 def changeset(person, params \\ :empty) do
   person
-  |> cast(params, ~w(first_name last_name))
+  |> cast(params, ~w(first_name last_name age))
   |> validate_required([:first_name, :last_name])
 end
 ```
 
-This changeset first casts the `first_name` and `last_name` keys from the parameters passed in to the changeset. Casting tells the changeset what parameters are allowed to be passed through in this changeset, and anything not in the list will be ignored. In this changeset, the `age` parameter will be ignored because it's not specified in the list for `cast`.
+This changeset first casts the `first_name` and `last_name` keys from the parameters passed in to the changeset. Casting tells the changeset what parameters are allowed to be passed through in this changeset, and anything not in the list will be ignored.
 
 On the next line, we call `validate_required` which says that, for this changeset, we expect `first_name` and `last_name` to have values specified. Let's use this changeset to attempt to create a new record without a `first_name` and `last_name`:
 
@@ -582,8 +582,77 @@ Ecto.Query.from(p in Friends.Person, where: p.last_name == ^last_name) |> Friend
 
 ### Composing Ecto queries
 
+Ecto queries don't have to be built in one spot. They can be built up by calling `Ecto.Query` functions on existing queries. For instance, if we want to find all people with the last name "Smith", we can do:
+
+```elixir
+query = Friends.Person |> Ecto.Query.where(last_name: "Smith") 
+```
+
+If we want to scope this down further to only people with the first name of "Jane", we can do this:
+
+```elixir
+query = query |> Ecto.Query.where(first_name: "Jane")
+```
+
+Our query will now have two `where` clauses in it:
+
+```
+#Ecto.Query<from p in Friends.Person, where: p.last_name == "Smith",
+ where: p.first_name == "Jane">
+```
+
+This can be useful if you want to do something with the first query, and then build off that query later on.
 
 ## Updating records
+
+Updating records in Ecto requires us to first fetch a record from the database, then create a changeset from that record and the changes we want to make to that record, and then to call the `Ecto.Repo.update` function.
+
+Let's fetch the first person from our database and change their age. First, we'll fetch the person:
+
+```elixir
+person = Friends.Person |> Ecto.Query.first |> Friends.Repo.one
+```
+
+Next, we'll build a changeset. We need to build a changeset because if we just create a new `Friends.Person` struct with the new age, Ecto wouldn't be able to know that the age has changed without inspecting the database. Let's build that changeset:
+
+```elixir
+changeset = Friends.Person.changeset(person, %{age: 29})
+```
+
+This changeset will inform the database that we want to update the record to have the `age` set to 29. To tell the database about the change we want to make, we run this command:
+
+```elixir
+Friends.Repo.update(changeset)
+```
+
+Just like `Friends.Repo.insert`, `Friends.Repo.update` will return a tuple:
+
+```elixir
+{:ok,
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 29,
+  first_name: "Ryan", id: 1, last_name: "Bigg"}}
+```
+
+If the changeset fails for any reason, the result of `Friends.Repo.update` will be `{:error, changeset}`. We can see this in action by passing through a blank `first_name` in our changeset's parameters:
+
+```elixir
+changeset = Friends.Person.changeset(person, %{first_name: ""})
+{:error,
+ #Ecto.Changeset<action: :update, changes: %{first_name: ""},
+  errors: [first_name: "can't be blank"], data: #Friends.Person<>,
+  valid?: false>}
+```
+
+This means that you can also use a `case` statement to do different things depending on the outcome of the `update` function:
+
+```elixir
+case Friends.Repo.update(changeset) do
+  {:ok, person} ->
+    # do something with person
+  {:error, changeset}
+    # do something with changeset
+end
+```
 
 ## Deleting records
 
