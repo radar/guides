@@ -368,9 +368,35 @@ This exception shows us the changes from the changeset, and how the changeset is
 
 Now that we've covered inserting data into the database, let's look at how we can pull that data back out.
 
-## Querying the database
+## Our first queries
 
-Querying a database requries two steps in Ecto. First, we must construct the query and then we must execute that query against the database by passing the query to the repository. Let's build a query in our `iex -S mix` session and then pass it to our repository. This query will fetch the first person from our `people` table:
+Querying a database requries two steps in Ecto. First, we must construct the query and then we must execute that query against the database by passing the query to the repository. Before we do this, let's re-create the database for our app and setup some test data. To re-create the database, we'll run these commands:
+
+```
+mix ecto.drop
+mix ecto.create
+mix ecto.migrate
+```
+
+Then to create the test data, we'll run this in an `iex -S mix` session:
+
+```elixir
+people = [
+  %Friends.Person{first_name: "Ryan", last_name: "Bigg", age: 28},
+  %Friends.Person{first_name: "John", last_name: "Smith", age: 27},
+  %Friends.Person{first_name: "Jane", last_name: "Smith", age: 26},
+]
+
+Enum.each(people, fn (person) -> Friends.Repo.insert(person) end)
+```
+
+This code will create three new people in our database, Ryan, John and Jane. Note here that we could've used a changeset to validate the data going into the database, but the choice was made not to use one.
+
+We'll be querying for these people in this section. Let's jump in!
+
+### Fetching a single record
+
+Let's start off with fetching just one record from our `people` table:
 
 ```elixir
 Friends.Person |> Ecto.Query.first
@@ -397,6 +423,164 @@ To execute the query that we've just constructed, we can call `Friends.Repo.one`
 Friends.Person |> Ecto.Query.first |> Friends.Repo.one
 ```
 
+The `one` function retrieves just one record from our database and returns a new struct from the `Friends.Person` module:
+
+```elixir
+%Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 28,
+ first_name: "Ryan", id: 1, last_name: "Bigg"}
+```
+
+Similar to `first`, there is also `last`:
+
+```elixir
+Friends.Person |> Ecto.Query.first |> Friends.Repo.one
+%Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 26,
+ first_name: "Jane", id: 3, last_name: "Smith"}
+ ```
+
+The `Ecto.Repo.one` function will only return a struct if there is one record in the
+result from the database. If there is more than one record returned, an
+`Ecto.MultipleResultsError` exception will be thrown. Some code that would
+cause that issue to happen is:
+
+```elixir
+Friends.Person |> Friends.Repo.one
+```
+
+We've left out the `Ecto.Query.first` here, and so there is no `limit` or `order` clause applied to the executed query. We'll see the executed query in the debug log:
+
+```
+[timestamp] [debug] SELECT p0."id", p0."first_name", p0."last_name", p0."age" FROM "people" AS p0 [] OK query=1.8ms
+```
+
+Then immediately after that, we will see the `Ecto.MultipleResultsError` exception:
+
+```
+** (Ecto.MultipleResultsError) expected at most one result but got 3 in query:
+
+from p in Friends.Person
+
+    lib/ecto/repo/queryable.ex:67: Ecto.Repo.Queryable.one/4
+```
+
+This happens because Ecto doesn't know what one record out of all the records
+returned that we want. Ecto will only return a result if we are explicit in
+our querying about which result we want.
+
+### Fetching all records
+
+To fetch all records from the schema, Ecto provides the `all` function:
+
+```elixir
+Friends.Person |> Friends.Repo.all
+```
+
+This will return a `Friends.Person` struct representation of all the records that currently exist within our `people` table:
+
+```elixir
+[%Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 28,
+  first_name: "Ryan", id: 1, last_name: "Bigg"},
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 27,
+  first_name: "John", id: 2, last_name: "Smith"},
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 26,
+  first_name: "Jane", id: 3, last_name: "Smith"}]
+```
+
+### Fetch a single record based on ID
+
+To fetch a record based on its ID, you use the `get` function:
+
+```elixir
+Friends.Person |> Friends.Repo.get(1)
+%Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 28,
+ first_name: "Ryan", id: 1, last_name: "Bigg"}
+```
+
+### Fetch a single record based on a specific attribute
+
+If we want to get a record based on something other than the `id` attribute, we can use `get_by`:
+
+```elixir
+ Friends.Person |> Friends.Repo.get_by(first_name: "Ryan")
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 28,
+  first_name: "Ryan", id: 1, last_name: "Bigg"}
+```
+
+### Filtering results
+
+If we want to get multiple records matching a specific attribute, we can use `where`:
+
+```elixir
+Friends.Person |> Ecto.Query.where(last_name: "Smith") |> Friends.Repo.all
+```
+
+```elixir
+[%Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 27,
+  first_name: "John", id: 2, last_name: "Smith"},
+ %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 26,
+  first_name: "Jane", id: 3, last_name: "Smith"}]
+```
+
+If we leave off the `Friends.Repo.all` on the end of this, we will see the query Ecto generates:
+
+```
+#Ecto.Query<from p in Friends.Person, where: p.last_name == "Smith">
+```
+
+We can also use this query syntax to fetch these same records:
+
+```elixir
+Ecto.Query.from(p in Friends.Person, where: p.last_name == "Smith") |> Friends.Repo.all
+```
+
+One important thing to note with both query syntaxes is that they require variables to be interpolated with the pin operator (`^`). Otherwise, this happens:
+
+```elixir
+last_name = "Smith"
+Friends.Person |> Ecto.Query.where(last_name: last_name) |> Friends.Repo.all
+```
+
+```
+** (Ecto.Query.CompileError) variable `last_name` is not a valid query expression.
+  Variables need to be explicitly interpolated in queries with ^
+             expanding macro: Ecto.Query.where/2
+             iex:1: (file)
+    (elixir) expanding macro: Kernel.|>/2
+             iex:1: (file)
+```
+
+The same will happen in the longer query syntax too:
+
+```elixir
+Ecto.Query.from(p in Friends.Person, where: p.last_name == last_name) |> Friends.Repo.all
+```
+
+```
+** (Ecto.Query.CompileError) variable `last_name` is not a valid query expression. 
+  Variables need to be explicitly interpolated in queries with ^
+             expanding macro: Ecto.Query.where/3
+             iex:1: (file)
+             expanding macro: Ecto.Query.from/2
+             iex:1: (file)
+    (elixir) expanding macro: Kernel.|>/2
+             iex:1: (file)
+```
+
+To get around this, we use the pin operator (`^`):
+
+```elixir
+last_name = "Smith"
+Friends.Person |> Ecto.Query.where(last_name: ^last_name) |> Friends.Repo.all
+```
+
+Or:
+
+```elixir
+last_name = "Smith"
+Ecto.Query.from(p in Friends.Person, where: p.last_name == ^last_name) |> Friends.Repo.all
+```
+
+### Composing Ecto queries
 
 
 ## Updating records
