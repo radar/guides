@@ -435,7 +435,7 @@ The `one` function retrieves just one record from our database and returns a new
 Similar to `first`, there is also `last`:
 
 ```elixir
-Friends.Person |> Ecto.Query.first |> Friends.Repo.one
+Friends.Person |> Ecto.Query.last |> Friends.Repo.one
 %Friends.Person{__meta__: #Ecto.Schema.Metadata<:loaded>, age: 26,
  first_name: "Jane", id: 3, last_name: "Smith"}
  ```
