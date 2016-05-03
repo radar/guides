@@ -1,0 +1,156 @@
+:source-highlighter: pygments
+
+= Ruby in 100 minutes
+
+In this tutorial we’ll explore the fundamental syntax you need to get started programming with Ruby.
+
+NOTE: This guide has been adapted from http://tutorials.jumpstartlab.com/projects/ruby_in_100_minutes.html[Jumpstart Lab's own Ruby in 100 minutes]. A few liberties have been taken with this guide to improve readability and flow.
+
+== Ruby History
+
+This section is covered best in http://tutorials.jumpstartlab.com/projects/ruby_in_100_minutes.html[Jumpstart Lab's own Ruby in 100 minutes]. 
+
+== Instructions & Interpreters
+
+Ruby is an "interpreted" programming language which means it can’t run on your processor directly, it has to be fed into a middleman called the "virtual machine" or VM. The VM takes in Ruby code on one side and speaks natively to the operating system and processor on the other. The benefit to this approach is that you can write Ruby code once and, typically, execute it on many different operating systems and hardware platforms.
+
+A Ruby program can’t run on it’s own, you need to load the VM. There are two ways to execute Ruby with the VM: through IRB and through the command line.
+
+=== Running Ruby from the command line
+
+This is the durable way to write Ruby code because you save your instructions into a file. That file can then be backed up, transferred, added to source control, etc.
+
+We might create a file named `my_program.rb` like this:
+
+[source,ruby]
+.my_program.rb
+----
+class Sample
+  def hello
+    puts "Hello, World!"
+  end
+end
+
+s = Sample.new
+s.hello
+----
+
+When you run `ruby my_program.rb` you’re actually loading the Ruby virtual machine which in turn loads your `my_program.rb`.
+
+=== Running Ruby from IRB
+
+Ruby was one of the first languages to popularize what’s called a "REPL": Read, Evaluate, Print, Loop. Think of it kind of like a calculator – as you put in each complete instruction, IRB executes that instruction and shows you the result.
+
+IRB is best used as a scratch pad for experimenting. Many developers keep an IRB window open while writing their "real" programs, using it to remember how a certain method works or debug a chunk of code.
+
+Let’s begin our experiments with IRB. **Start IRB by opening Terminal (Mac) or Command Prompt (Win) and typing `irb`.**
+
+== Strings
+
+In the real world strings tie things up. Programming strings have nothing to do with real-world strings.
+
+Programming strings are used to store collections of letters and numbers. That could be a single letter like `"a"`, a word like `"hi"`, or a sentence like `"Hello my friends."`.
+
+=== Writing Strings
+
+A Ruby string is defined as a quote (") followed by zero or more letters, numbers, or symbols and followed by a closing quote ("). The shortest possible string is called the empty string: "". It’s not uncommon for a single string to contain paragraphs or even pages of text. You can also define strings by using single quotes too.
+
+Here's how you can create a string in the IRB prompt, and in Ruby generally:
+
+.irb
+----
+irb(main):001:0> "hello world"
+=> "hello world"
+----
+
+In IRB, we're shown the result of the thing we executed. The result in this case is the string we just created.
+
+==== Asking strings to do things
+
+In Ruby, everything is an object. To accomplish anything in Ruby, you need to tell objects to perform actions (called "methods" in Ruby). To tell an object to perform an action, you use the dot operator: `.`. 
+
+===== `.length`
+
+Let's ask a string object what its length is:
+
+.irb
+----
+irb(main):001:0> "hello world".length
+=> 11
+----
+
+The length method tells you how many characters (including spaces) are in the string. In this case, there are 5 letters in the word "hello", 5 in the word "world" and there's a space, so that means our string is 11 characters long.
+
+===== `.split`
+
+Often you’ll have string that you want to break into parts. For instance, imagine you have a sentence stored in a string and want to break it into words:
+
+== Variables
+
+Programming is all about creating abstractions, and in order to create an abstraction we must be able to assign names to things. Variables are a way of creating a name for a piece of data which can potentially change over time. This is why they're called "variables".
+
+In some languages you need to specify what type of data (like a number, word, etc) can go in a certain variable. Ruby, however, has a flexible type system where any variable can hold any kind of data.
+
+=== Creating & Assigning a Variable
+
+In some languages you need to "declare" a variable before you assign a value to it. Ruby variables are automatically created when you assign a value to them; so there's no need to declare them at all. Let’s try an example:
+
+.irb
+----
+irb(main):001:0> a = 5
+=> 5
+irb(main):002:0> a
+=> 5
+----
+
+The line `a = 5` creates the variable named `a` and stores the value 5 into it. We can then retrieve that variable to get the value stored within it.
+
+==== Right side first
+
+In English we read left-to-right, so it’s natural to read code left to right. But when evaluating an assignment using the single equals (=), Ruby actually evaluates the right side first. Take the following example:
+
+.irb
+----
+irb(main):001:0> b = 10 + 5
+=> 15
+irb(main):002:0> b
+=> 15
+----
+
+The `10 + 5` is evaluated first, and the result is given the name `b`.
+
+==== Naming variables
+
+Most Ruby variables (local variables) have a few requirements imposed by the VM. They:
+
+* always start with a lowercase letter (underscore is permitted, though uncommon)
+* have no spaces
+* do not contain most special characters like $, @, and &
+
+In addition to those VM requirements, Rubyists have a few common style preferences for variable names:
+
+* use snake case where each word in the name is lowercase and connected by underscores (`_`)
+* are named after the meaning of their contents, not the type of their contents
+* aren’t abbreviated
+
+**Good variable names are be `count`, `students_in_class`, or `first_lesson`.**
+
+A few examples of bad Ruby variable names include:
+
+* `studentsInClass` – uses camel-case rather than snake-case, should be `students_in_class`
+* `1st_lesson` – variables can’t start with a number, should just be `first_lesson`
+* `students_array` – includes the type of the data in the name, should just be `students`
+* `sts` – abbreviates rather than just using students
+
+==== Exercises
+
+Use IRB to store values with each of the following variable names. Which names are good, which are actually invalid Ruby, and which are valid but go against Ruby style?
+
+* time_machine
+* student_count_integer
+* homeworkAssignment
+* 3_sections
+* top_ppl
+
+
+
