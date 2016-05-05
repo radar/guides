@@ -81,15 +81,23 @@ irb(main):001:0> "hello world".length
 
 The length method tells you how many characters (including spaces) are in the string. In this case, there are 5 letters in the word "hello", 5 in the word "world" and there's a space, so that means our string is 11 characters long.
 
-===== `.split`
+===== `.capitalize`
 
-Often you’ll have string that you want to break into parts. For instance, imagine you have a sentence stored in a string and want to break it into words:
+Ruby gives us a method that allows us to capitalize the first letter of a string. Let's check it out:
+
+.irb
+----
+irb(main):001:0> "hello world".capitalize
+=> "Hello world"
+----
+
+There are plenty of other `String` methods that can be used in Ruby. http://ruby-doc.org/core-2.3.0/String.html[The documentation for them can be found at ruby-doc.org].
 
 == Variables
 
-Programming is all about creating abstractions, and in order to create an abstraction we must be able to assign names to things. Variables are a way of creating a name for a piece of data which can potentially change over time. This is why they're called "variables".
+Programming is all about creating abstractions, and in order to create an abstraction we must be able to assign names to things. This way, we can then use these names, rather than the things they're assigned to, to build our programs. Variables are a way of creating a name for a piece of data which can potentially change over time. This is why they're called "variables".
 
-In some languages you need to specify what type of data (like a number, word, etc) can go in a certain variable. Ruby, however, has a flexible type system where any variable can hold any kind of data.
+In some languages you need to specify what type of data (like a number, word, etc) can go in a certain variable. Ruby, however, has a flexible type system where any variable can hold any type of data.
 
 === Creating & Assigning a Variable
 
@@ -97,13 +105,33 @@ In some languages you need to "declare" a variable before you assign a value to 
 
 .irb
 ----
-irb(main):001:0> a = 5
-=> 5
-irb(main):002:0> a
-=> 5
+irb(main):001:0> greeting = "Hello world"
+=> "Hello world"
+irb(main):002:0> greeting
+=> "Hello world"
 ----
 
-The line `a = 5` creates the variable named `a` and stores the value 5 into it. We can then retrieve that variable to get the value stored within it.
+The line `greeting = "Hello world"` creates the variable named `greeting` and stores the value `"Hello World"` into it. We can then retrieve that variable to get the value stored within it.
+
+==== String interpolation
+
+You can add the stored value from a variable into a string via a process called _interpolation_. 
+
+To see this in action, let's first assign another variable:
+
+.irb
+----
+irb(main):001:0> name = "Ruby"
+=> "Ruby"
+----
+
+Then we can interpolate this variable into a string with this:
+
+.irb
+----
+irb(main):002:0> greeting = "Hello #{name}"
+=> "Hello Ruby"
+----
 
 ==== Right side first
 
@@ -111,13 +139,13 @@ In English we read left-to-right, so it’s natural to read code left to right. 
 
 .irb
 ----
-irb(main):001:0> b = 10 + 5
+irb(main):001:0> sum = 10 + 5
 => 15
-irb(main):002:0> b
+irb(main):002:0> sum
 => 15
 ----
 
-The `10 + 5` is evaluated first, and the result is given the name `b`.
+The `10 + 5` is evaluated first, and the result of that evaluation is given the name `sum`.
 
 ==== Naming variables
 
