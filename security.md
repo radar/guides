@@ -143,7 +143,7 @@ Reporting Security vulnerabilities
 
 If you spot a security vulnerability in someone else's gem, then you
 first step should be to check whether this is a known vulnerability.
-One way is by searching for an advisory on [RubySec](http://www.rubysec.com).
+One way is by searching for an advisory on [RubySec](http://rubysec.com).
 
 If this looks like a newly discovered vulnerability, then you should
 contact the author(s) privately (i.e., not via a pull request or issue on a
@@ -174,9 +174,6 @@ start might be to:
   that includes the gem name, some short summary of the vulnerability, and the
   CVE ID if you have one.
 
-- Add it to [OSVDB](http://osvdb.org/). You can do this by emailing
-  moderators@osvdb.org.
-
 - Add it to [ruby-advisory-db](https://github.com/rubysec/ruby-advisory-db/).
   You can do this by following the
   [CONTRIBUTING](https://github.com/rubysec/ruby-advisory-db/blob/master/CONTRIBUTING.md)
@@ -188,9 +185,9 @@ Credits
 Several sources were used for content for this guide:
 
 * [How to cryptographically sign your RubyGem](http://www.benjaminfleischer.com/2013/11/08/how-to-sign-your-rubygem-cert/) - Step-by-step guide
-* [Signing rubygems - Pasteable instructions](http://developer.zendesk.com/blog/2013/02/03/signing-gems/)
+* [Signing rubygems - Pasteable instructions](https://developer.zendesk.com/blog/2013/02/03/signing-gems/)
 * [Twitter gem gemspec](https://github.com/sferik/twitter/blob/master/twitter.gemspec)
-* [RubyGems Trust Model Overview](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](http://goo.gl/ybFIO)
-* [Let's figure out a way to start signing RubyGems](http://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
+* [RubyGems Trust Model Overview](https://github.com/rubygems-trust/rubygems.org/wiki/Overview), [doc](https://goo.gl/ybFIO)
+* [Let's figure out a way to start signing RubyGems](https://tonyarcieri.com/lets-figure-out-a-way-to-start-signing-rubygems)
 * [A Practical Guide to Using Signed Ruby Gems - Part 3: Signing your Own](http://blog.meldium.com/home/2013/3/6/signing-gems-how-to)
 * Also see the [Resources](/resources) page.
