@@ -195,11 +195,7 @@ nokogiri-1.6.0-x86-mingw32.gem</p>
 ## require_paths=(`val`)
 
 <p>Paths in the gem to add to <code>$LOAD_PATH</code> when this gem is
-activated.</p>
-
-<p>See also require_paths</p>
-
-<p>If you have an extension you do not need to add
+activated. If you have an extension you do not need to add
 <code>&quot;ext&quot;</code> to the require path, the extension build
 process will copy the extension files into “lib” for you.</p>
 
