@@ -22,7 +22,7 @@ sometimes the operating system version.  Examples include "x86-mingw32" or
 same platform.  RubyGems will automatically download the correct version for
 your platform.  See `gem help platform` for full details.
 
-Inside a gems are the following components:
+Inside gems are the following components:
 
 * Code (including tests and supporting utilities)
 * Documentation
