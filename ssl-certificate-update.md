@@ -8,7 +8,10 @@ next: /patterns
 
 # SSL Certificate Updates
 
-**UPDATE 2014-12-21**: RubyGems 1.8.30, 2.0.15 and 2.2.3 have been released.
+**UPDATE 2016-10-06**: RubyGems 2.0.17, 2.2.5, and 2.6.7 have been released.
+Always make sure you download the latest released version.
+
+**UPDATE 2014-12-21**: RubyGems 1.8.30, 2.0.15, and 2.2.3 have been released.
 It requires manual installation, please see instructions [below](#installing-using-update-packages-new).
 
 ---
@@ -64,7 +67,7 @@ impossible.
 I've described this on [Issue #1050](https://github.com/rubygems/rubygems/issues/1050#issuecomment-61422934)
 
 We had discussed also on IRC, and patches and backports were provided to
-all major branches of RubyGems: 1.8, 2.0, 2.2 and 2.4
+all major branches of RubyGems: 1.8, 2.0, 2.2, and 2.4
 
 You can find the commits associated with these changes here:
 
@@ -91,7 +94,7 @@ meantime, please proceed using the instructions described below.
 
 ## Installing using update packages (NEW)
 
-Now that RubyGems 1.8.x, 2.0.x and 2.2.x have been released, you can manually
+Now that RubyGems 1.8.x, 2.0.x, 2.2.x and 2.6.x have been released, you can manually
 update to those versions.
 
 First, download the proper version of RubyGems for your installation (eg.
@@ -108,7 +111,8 @@ version for the version of RubyGems you need to update:
 
 - Running 1.8.x: download [1.8.30](https://github.com/rubygems/rubygems/releases/tag/v1.8.30)
 - Running 2.0.x: donwload [2.0.15](https://github.com/rubygems/rubygems/releases/tag/v2.0.15)
-- Running 2.2.x: download [2.2.3](https://github.com/rubygems/rubygems/releases/tag/v2.2.3)
+- Running 2.2.x: download [2.2.5](https://github.com/rubygems/rubygems/releases/tag/v2.2.5)
+- Running 2.6.x: download [2.6.7](https://github.com/rubygems/rubygems/releases/tag/v2.6.7)
 
 Please download the file in a directory that you can later point to (eg. the
 root of your harddrive `C:\`)
@@ -127,7 +131,7 @@ You can now salefy uninstall `rubygems-update` gem:
 ```
 C:\>gem uninstall rubygems-update -x
 Removing update_rubygems
-Successfully uninstalled rubygems-update-2.2.3
+Successfully uninstalled rubygems-update-2.6.7
 ```
 
 ## Manual solution to SSL issue
