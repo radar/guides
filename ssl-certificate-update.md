@@ -8,7 +8,7 @@ next: /patterns
 
 # SSL Certificate Updates
 
-**UPDATE 2016-10-06**: RubyGems 2.0.17, 2.2.5, and 2.6.7 have been released.
+**UPDATE 2016-10-06**: RubyGems 2.6.7 has been released.
 Always make sure you download the latest released version.
 
 **UPDATE 2014-12-21**: RubyGems 1.8.30, 2.0.15, and 2.2.3 have been released.
