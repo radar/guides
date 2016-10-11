@@ -75,6 +75,7 @@ You can find the commits associated with these changes here:
 - [2.0 branch](https://github.com/rubygems/rubygems/commit/98f5f44c7141881c756003e4256b1a96b200b98e)
 - [2.2 branch](https://github.com/rubygems/rubygems/commit/17d8922966051864a0c4bf768623e9d0c854de26)
 - [2.4 branch](https://github.com/rubygems/rubygems/commit/5a31f092d483ea7ccd91adbf08a88593cf0fbbc7)
+- [2.6 branch](https://github.com/rubygems/rubygems/commit/5ee6a59784b1736553e16fda374c18491bb66abe)
 
 Problem is, only RubyGems 2.4.4 got released, leaving Ruby installation with
 1.8, 2.0 and 2.2 in a broken state.
@@ -103,16 +104,13 @@ if running version `1.8.28`, download `1.8.30`).
 *Note*: To find the version of RubyGems you're using, please run `gem --version` in
 the command line.
 
-You can find download links at GitHub under
-[Releases](https://github.com/rubygems/rubygems/releases).
-
-Now, locate `rubygems-update-X.Y.Z.gem` where `X.Y.Z` will be the matching
+Download `rubygems-update-X.Y.Z.gem` where `X.Y.Z` will be the matching
 version for the version of RubyGems you need to update:
 
-- Running 1.8.x: download [1.8.30](https://github.com/rubygems/rubygems/releases/tag/v1.8.30)
-- Running 2.0.x: donwload [2.0.15](https://github.com/rubygems/rubygems/releases/tag/v2.0.15)
-- Running 2.2.x: download [2.2.5](https://github.com/rubygems/rubygems/releases/tag/v2.2.5)
-- Running 2.6.x: download [2.6.7](https://github.com/rubygems/rubygems/releases/tag/v2.6.7)
+- Running 1.8.x: download [1.8.30](https://rubygems.org/downloads/rubygems-update-1.8.30.gem)
+- Running 2.0.x: donwload [2.0.17](https://rubygems.org/downloads/rubygems-update-2.0.17.gem)
+- Running 2.2.x: download [2.2.5](https://rubygems.org/downloads/rubygems-update-2.2.5.gem)
+- Running 2.6.x: download [2.6.7](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
 
 Please download the file in a directory that you can later point to (eg. the
 root of your harddrive `C:\`)
@@ -152,7 +150,7 @@ Steps are simple:
 If you've read the previous sections, you will know what this means (and
 shame on you if you have not).
 
-We need to download [AddTrustExternalCARoot-2048.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/AddTrustExternalCARoot-2048.pem).
+We need to download [GlobalSignRootCA.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/index.rubygems.org/GlobalSignRootCA.pem).
 
 Use the above link and place/save this file somewhere you can later find
 easily (eg. your Desktop).
