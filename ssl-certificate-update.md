@@ -12,7 +12,7 @@ next: /patterns
 Always make sure you download the latest released version.
 
 **UPDATE 2014-12-21**: RubyGems 1.8.30, 2.0.15, and 2.2.3 have been released.
-It requires manual installation, please see instructions [below](#installing-using-update-packages-new).
+It requires manual installation, please see instructions [below](#installing-using-update-packages).
 
 ---
 
@@ -23,11 +23,35 @@ pull updates from RubyGems:
 
     SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
 
-This error is produced by changes in rubygems.org infrastructure, please
-keep reading to better understand it.
+This error is produced by changes in rubygems.org infrastructure, you can read the
+[background below](#background).
+Please follow the instructions below to update your rubygems:
 
-If you're one of those *too long, didn't read* just skip to the guide on how
-to workaround it.
+## Installing using update packages
+
+Now that RubyGems 2.6.x has been released, you can manually update to this version.
+
+Download [rubygems-update-2.6.7.gem](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
+
+Please download the file in a directory that you can later point to (eg. the
+root of your harddrive `C:\`)
+
+Now, using your Command Prompt:
+
+```
+C:\>gem install --local C:\rubygems-update-2.6.7.gem
+C:\>update_rubygems --no-ri --no-rdoc
+```
+
+After this, `gem --version` should report the new update version.
+
+You can now safely uninstall `rubygems-update` gem:
+
+```
+C:\>gem uninstall rubygems-update -x
+Removing update_rubygems
+Successfully uninstalled rubygems-update-2.6.7
+```
 
 ## Background
 
@@ -93,45 +117,6 @@ problem described before).
 Once official releases are out, installation might be simpler. In the
 meantime, please proceed using the instructions described below.
 
-## Installing using update packages (NEW)
-
-Now that RubyGems 1.8.x, 2.0.x, 2.2.x and 2.6.x have been released, you can manually
-update to those versions.
-
-First, download the proper version of RubyGems for your installation (eg.
-if running version `1.8.28`, download `1.8.30`).
-
-*Note*: To find the version of RubyGems you're using, please run `gem --version` in
-the command line.
-
-Download `rubygems-update-X.Y.Z.gem` where `X.Y.Z` will be the matching
-version for the version of RubyGems you need to update:
-
-- Running 1.8.x: download [1.8.30](https://rubygems.org/downloads/rubygems-update-1.8.30.gem)
-- Running 2.0.x: donwload [2.0.17](https://rubygems.org/downloads/rubygems-update-2.0.17.gem)
-- Running 2.2.x: download [2.2.5](https://rubygems.org/downloads/rubygems-update-2.2.5.gem)
-- Running 2.6.x: download [2.6.7](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
-
-Please download the file in a directory that you can later point to (eg. the
-root of your harddrive `C:\`)
-
-Now, using your Command Prompt:
-
-```
-C:\>gem install --local C:\rubygems-update-1.8.30.gem
-C:\>update_rubygems --no-ri --no-rdoc
-```
-
-After this, `gem --version` should report the new update version.
-
-You can now salefy uninstall `rubygems-update` gem:
-
-```
-C:\>gem uninstall rubygems-update -x
-Removing update_rubygems
-Successfully uninstalled rubygems-update-2.6.7
-```
-
 ## Manual solution to SSL issue
 
 If you have read the above detail that describe the issue, thank you.
@@ -188,7 +173,7 @@ This will open a Explorer window inside the directory we indicated.
 Now, locate `ssl_certs` directory and copy the `.pem` file we obtained from
 previous step inside.
 
-It will be listed with other files like `GeoTrustGlobalCA.pem`.
+It will be listed with other files like `AddTrustExternalCARoot.pem.`.
 
 ### Step 4: Profit
 
