@@ -34,7 +34,7 @@ Now that RubyGems 2.6.x has been released, you can manually update to this versi
 Download [rubygems-update-2.6.7.gem](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
 
 Please download the file in a directory that you can later point to (eg. the
-root of your harddrive `C:\`)
+root of your harddrive, `C:\`)
 
 Now, using your Command Prompt:
 
@@ -55,40 +55,39 @@ Successfully uninstalled rubygems-update-2.6.7
 
 ## Background
 
-For those who are not familiar with SSL and certificates, there are many
-parts that make secure serving of content possible.
+For those who are not familiar with SSL/TLS and certificates, there are
+many parts involved in securely serving content.
 
 SSL certificates are used on the website, which are obtained from a
 certificate authority (CA) and generated from a private key, along with its
 respective signature.
 
-Normally and up until a few months ago, private key signatures used SHA-1
-as way to provide a digest (or checksum) of the private key without
-distributing the key itself (remember, needs to remain private).
+Previously, RubyGems' certificates used SHA-1 to provide a digest (or
+checksum) of the private key without distributing the key itself
+(remember, these need to remain private).
 
-SHA-1 has been encountered weak and lot of web servers and sites have been
-upgrading towards SHA-2 (specifically SHA256 or higher) in order to prepare
-for the browsers changes.
+SHA-1 has been found to be weak, and a lot of websites have been
+upgrading to the more secure SHA-2 (specifically SHA-256 or higher).
 
 ## Specific problem with RubyGems
 
-The particular case of RubyGems (the command line tool) is that it requires
-to bundle inside of its code the trust certificates, which allow RubyGems
-to establish a connection with the servers even when base operating system
-is unable to verify the identity of them.
+The particular case with RubyGems (the command line tool) is that it has
+to bundle the trusted certificates with the code. This allows RubyGems
+to establish a connection with the servers even when the operating
+system it is ran on does not have these certificates.
 
-Up until a few months ago, this certificate was provided by one CA, but
-newer certificate is provided by a different one.
+Previously, this certificate was provided by one Certificate Authority,
+but the new certificate is provided by a different one.
 
-Because of this, existing installations of RubyGems would have to been
-updated before the switch of the certificate and give enough time for the
-change to spread (and people to update).
+Because of this, verions of RubyGems with both certificates were
+released, in an attempt to simplify the change.
 
-As what normally happens with software, things might get out of sync and
-coordinate such effort, to the size and usage of rubygems.org is almost
-impossible.
+However, at the scale RubyGems operates at, it's impossible to make sure
+everybody updates the software. There are also operating systems
+shipping with old versions. As such, sometimes manual intervention (as
+described above) is required.
 
-I've described this on [Issue #1050](https://github.com/rubygems/rubygems/issues/1050#issuecomment-61422934)
+This has been described on [Issue #1050](https://github.com/rubygems/rubygems/issues/1050#issuecomment-61422934)
 
 We had discussed also on IRC, and patches and backports were provided to
 all major branches of RubyGems: 1.8, 2.0, 2.2, and 2.4
