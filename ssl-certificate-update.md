@@ -34,7 +34,7 @@ Now that RubyGems 2.6.x has been released, you can manually update to this versi
 Download [rubygems-update-2.6.7.gem](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
 
 Please download the file in a directory that you can later point to (eg. the
-root of your harddrive `C:\`)
+root of your harddrive, `C:\`)
 
 Now, using your Command Prompt:
 
@@ -53,42 +53,43 @@ Removing update_rubygems
 Successfully uninstalled rubygems-update-2.6.7
 ```
 
+If this process does not work for you, you can try [manually adding the new certificate](#manual-solution-to-ssl-issue).
+
 ## Background
 
-For those who are not familiar with SSL and certificates, there are many
-parts that make secure serving of content possible.
+For those who are not familiar with SSL/TLS and certificates, there are
+many parts involved in securely serving content.
 
 SSL certificates are used on the website, which are obtained from a
 certificate authority (CA) and generated from a private key, along with its
 respective signature.
 
-Normally and up until a few months ago, private key signatures used SHA-1
-as way to provide a digest (or checksum) of the private key without
-distributing the key itself (remember, needs to remain private).
+Previously, RubyGems' certificates used SHA-1 to provide a digest (or
+checksum) of the private key without distributing the key itself
+(remember, these need to remain private).
 
-SHA-1 has been encountered weak and lot of web servers and sites have been
-upgrading towards SHA-2 (specifically SHA256 or higher) in order to prepare
-for the browsers changes.
+SHA-1 has been found to be weak, and a lot of websites have been
+upgrading to the more secure SHA-2 (specifically SHA-256 or higher).
 
 ## Specific problem with RubyGems
 
-The particular case of RubyGems (the command line tool) is that it requires
-to bundle inside of its code the trust certificates, which allow RubyGems
-to establish a connection with the servers even when base operating system
-is unable to verify the identity of them.
+The particular case with RubyGems (the command line tool) is that it has
+to bundle the trusted certificates with the code. This allows RubyGems
+to establish a connection with the servers even when the operating
+system it is ran on does not have these certificates.
 
-Up until a few months ago, this certificate was provided by one CA, but
-newer certificate is provided by a different one.
+Previously, this certificate was provided by one Certificate Authority,
+but the new certificate is provided by a different one.
 
-Because of this, existing installations of RubyGems would have to been
-updated before the switch of the certificate and give enough time for the
-change to spread (and people to update).
+Because of this, verions of RubyGems with both certificates were
+released, in an attempt to simplify the change.
 
-As what normally happens with software, things might get out of sync and
-coordinate such effort, to the size and usage of rubygems.org is almost
-impossible.
+However, at the scale RubyGems operates at, it's impossible to make sure
+everybody updates the software. There are also operating systems
+shipping with old versions. As such, sometimes manual intervention (as
+described above) is required.
 
-I've described this on [Issue #1050](https://github.com/rubygems/rubygems/issues/1050#issuecomment-61422934)
+This has been described on [Issue #1050](https://github.com/rubygems/rubygems/issues/1050#issuecomment-61422934)
 
 We had discussed also on IRC, and patches and backports were provided to
 all major branches of RubyGems: 1.8, 2.0, 2.2, and 2.4
@@ -119,11 +120,11 @@ meantime, please proceed using the instructions described below.
 
 ## Manual solution to SSL issue
 
-If you have read the above detail that describe the issue, thank you.
+If the [above approach](#installing-using-update-packages) didn't
+work for you, you can attempt to manually fix the problem by
+adding the new trust certificate.
 
-Now, you want to manually fix the issue with your installation.
-
-Steps are simple:
+The steps are as follows:
 
 - Step 1: Obtain the new trust certificate
 - Step 2: Locate RubyGems certificate directory in your installation
@@ -132,17 +133,14 @@ Steps are simple:
 
 ### Step 1: Obtain the new trust certificate
 
-If you've read the previous sections, you will know what this means (and
-shame on you if you have not).
-
-We need to download [GlobalSignRootCA.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/index.rubygems.org/GlobalSignRootCA.pem).
+We need to download the new trust certificate, [GlobalSignRootCA.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/index.rubygems.org/GlobalSignRootCA.pem).
 
 Use the above link and place/save this file somewhere you can later find
 easily (eg. your Desktop).
 
 **IMPORTANT**: File must have `.pem` as extension. Browsers like Chrome will
-try to save it as plain text file. Ensure you change the filename to have
-`.pem` in it after you have downloaded it.
+try to save it as plain text file. Ensure you change the filename to end with
+`.pem` after you have downloaded it.
 
 ### Step 2: Locate RubyGems certificate directory in your installation
 
@@ -175,7 +173,9 @@ previous step inside.
 
 It will be listed with other files like `AddTrustExternalCARoot.pem.`.
 
-### Step 4: Profit
+### Done!
 
-There is actually no step 4. You should be able to install Ruby gems without
-issues now.
+You should now be able to install Ruby gems without issues now.
+
+If you're still encountering issues, you can open an 
+[issue on GitHub](https://github.com/rubygems/rubygems).
