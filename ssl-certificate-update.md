@@ -53,6 +53,8 @@ Removing update_rubygems
 Successfully uninstalled rubygems-update-2.6.7
 ```
 
+If this process does not work for you, you can try [manually adding the new certificate](#manual-solution-to-ssl-issue).
+
 ## Background
 
 For those who are not familiar with SSL/TLS and certificates, there are
@@ -118,11 +120,11 @@ meantime, please proceed using the instructions described below.
 
 ## Manual solution to SSL issue
 
-If you have read the above detail that describe the issue, thank you.
+If the [above approach](#installing-using-update-packages) didn't
+work for you, you can attempt to manually fix the problem by
+adding the new trust certificate.
 
-Now, you want to manually fix the issue with your installation.
-
-Steps are simple:
+The steps are as follows:
 
 - Step 1: Obtain the new trust certificate
 - Step 2: Locate RubyGems certificate directory in your installation
@@ -131,17 +133,14 @@ Steps are simple:
 
 ### Step 1: Obtain the new trust certificate
 
-If you've read the previous sections, you will know what this means (and
-shame on you if you have not).
-
-We need to download [GlobalSignRootCA.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/index.rubygems.org/GlobalSignRootCA.pem).
+We need to download the new trust certificate, [GlobalSignRootCA.pem](https://raw.githubusercontent.com/rubygems/rubygems/master/lib/rubygems/ssl_certs/index.rubygems.org/GlobalSignRootCA.pem).
 
 Use the above link and place/save this file somewhere you can later find
 easily (eg. your Desktop).
 
 **IMPORTANT**: File must have `.pem` as extension. Browsers like Chrome will
-try to save it as plain text file. Ensure you change the filename to have
-`.pem` in it after you have downloaded it.
+try to save it as plain text file. Ensure you change the filename to end with
+`.pem` after you have downloaded it.
 
 ### Step 2: Locate RubyGems certificate directory in your installation
 
@@ -174,7 +173,9 @@ previous step inside.
 
 It will be listed with other files like `AddTrustExternalCARoot.pem.`.
 
-### Step 4: Profit
+### Done!
 
-There is actually no step 4. You should be able to install Ruby gems without
-issues now.
+You should now be able to install Ruby gems without issues now.
+
+If you're still encountering issues, you can open an 
+[issue on GitHub](https://github.com/rubygems/rubygems).
