@@ -6,8 +6,11 @@ previous: /what-is-a-gem
 next: /gems-with-extensions
 ---
 
-<em class="t-gray">From start to finish, learn how to package your Ruby code in a gem.</em>
-
+<p><em class="t-gray">From start to finish, learn how to package your Ruby code in a gem.</em></p>
+<p><em class="t-gray">Note: Many people use Bundler to create Gems. You can
+learn how to do that by reading the &ldquo;<a
+href="https://bundler.io/v1.13/guides/creating_gem">Developing a RubyGem
+using Bundler</a>&rdquo; guide on the Bundler website.</em></p>
 
 * [Introduction](#introduction)
 * [Your first gem](#your-first-gem)
