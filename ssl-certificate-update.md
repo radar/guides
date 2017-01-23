@@ -18,14 +18,13 @@ It requires manual installation, please see instructions [below](#installing-usi
 
 Hello,
 
-If you reached this page, means you've hit this SSL error when trying to
+You've probably reached this page after encountering the following SSL error when trying to
 pull updates from RubyGems:
 
     SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
 
-This error is produced by changes in rubygems.org infrastructure, you can read the
-[background below](#background).
-Please follow the instructions below to update your rubygems:
+This error is produced by changes in rubygems.org infrastructure. You can read the
+[background below](#background). Please follow the instructions below to update your RubyGems:
 
 ## Installing using update packages
 
