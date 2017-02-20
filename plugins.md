@@ -34,6 +34,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [rubygems-openpgp](#rubygemsopenpgp)
 * [rubygems-sandbox](#rubygemssandbox)
 * [rubygems_snapshot](#rubygemssnapshot)
+* [specific_install](#specific_install)
 * [rubygems-tasks](#rubygemstasks)
 * [rubygems_plugin_generator](#rubygemsplugingenerator)
 
@@ -250,6 +251,14 @@ Manages command-line gem tools and dependencies with a `gem  sandbox` command. T
 [https://github.com/rogerleite/rubygems_snapshot](https://github.com/rogerleite/rubygems_snapshot)
 
 Adds `gem snapshot` to create exports of all your current gems into a single file that you can import later.
+
+<a id="specific_install"> </a>
+
+## specific_install
+
+[https://github.com/rdp/specific_install](https://github.com/rdp/specific_install#readme)
+
+Allows you to install an "edge" gem straight from its GitHub repository, or install one from an arbitrary web URI.
 
 <a id="rubygemstasks"> </a>
 
