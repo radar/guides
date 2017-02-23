@@ -10,7 +10,7 @@ alias: /c-extensions
 <em class="t-gray">Creating a gem that includes an extension that is built at install time.</em>
 
 Many gems use extensions to wrap libraries that are written in C with a ruby
-wrapper.  Examples include [nokogiri](https://rubygems.org/gems/nokogiri) which
+wrapper.  Examples include [nokogiri][nokogiri] which
 wraps [libxml2 and libxslt](http://www.xmlsoft.org),
 [pg](https://rubygems.org/gems/pg) which is an interface to the [PostgreSQL
 database](http://www.postgresql.org) and the
@@ -155,6 +155,16 @@ This extension is simple with just a few parts:
 * `my_malloc_release()` to free memory from ruby
 * `Init_my_malloc()` to register the functions in the `MyMalloc` class.
 
+Now we can create the actual `MyMalloc` class and bind newly defined methods
+in Ruby (`lib/my_malloc.rb` is the correct place for that), e.g.:
+
+    class MyMalloc
+      VERSION = "1.0"
+    end
+
+    require "my_malloc/my_malloc"
+
+
 You can test building the extension as follows:
 
     $ cd ext/my_malloc
@@ -176,9 +186,13 @@ rake-compiler
 
 [rake-compiler][rake-compiler] is a set of rake
 tasks for automating extension building.  rake-compiler can be used with C or
-Java extensions in the same project (nokogiri uses it this way).
+Java extensions in the same project ([nokogiri][nokogiri] uses it this way).
 
-Adding rake-compiler is very simple:
+First install the gem:
+
+    $ gem install rake-compiler
+
+Adding rake-compiler to the `Rakefile` is very simple:
 
     require "rake/extensiontask"
 
@@ -264,3 +278,4 @@ Further Reading
 [extension.rdoc]: https://github.com/ruby/ruby/blob/trunk/doc/extension.rdoc
 [mkmf.rb]: https://github.com/ruby/ruby/blob/trunk/lib/mkmf.rb
 [rake-compiler]: https://github.com/luislavena/rake-compiler
+[nokogiri]: https://rubygems.org/gems/nokogiri
