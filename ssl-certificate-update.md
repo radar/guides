@@ -8,8 +8,8 @@ next: /patterns
 
 # SSL Certificate Updates
 
-**UPDATE 2016-10-06**: RubyGems 2.6.7 has been released.
-Always make sure you download the latest released version.
+RubyGems 2.6.8 and newer have improved SSL error messages to help you diagnose
+your problems.  Always make sure you download the latest released version.
 
 **UPDATE 2014-12-21**: RubyGems 1.8.30, 2.0.15, and 2.2.3 have been released.
 It requires manual installation, please see instructions [below](#installing-using-update-packages).
@@ -30,7 +30,7 @@ This error is produced by changes in rubygems.org infrastructure. You can read t
 
 Now that RubyGems 2.6.x has been released, you can manually update to this version.
 
-Download [rubygems-update-2.6.7.gem](https://rubygems.org/downloads/rubygems-update-2.6.7.gem)
+Download [the latest RubyGems](https://rubygems.org/pages/download)
 
 Please download the file in a directory that you can later point to (eg. the
 root of your harddrive, `C:\`)
@@ -38,8 +38,8 @@ root of your harddrive, `C:\`)
 Now, using your Command Prompt:
 
 ```
-C:\>gem install --local C:\rubygems-update-2.6.7.gem
-C:\>update_rubygems --no-ri --no-rdoc
+C:\>gem install --local C:\rubygems-update-2.6.10.gem
+C:\>update_rubygems
 ```
 
 After this, `gem --version` should report the new update version.
@@ -49,7 +49,7 @@ You can now safely uninstall `rubygems-update` gem:
 ```
 C:\>gem uninstall rubygems-update -x
 Removing update_rubygems
-Successfully uninstalled rubygems-update-2.6.7
+Successfully uninstalled rubygems-update-2.6.10
 ```
 
 If this process does not work for you, you can try [manually adding the new certificate](#manual-solution-to-ssl-issue).
