@@ -27,6 +27,7 @@ The following list of RubyGems plugins is probably not exhaustive. If you know o
 * [gem-wrappers](#gemwrappers)
 * [graph](#graph)
 * [maven-gem](#mavengem)
+* [manpages](#manpages)
 * [open-gem](#opengem)
 * [PushSafety](#pushsafety)
 * [rbenv-rehash](#rbenvrehash)
@@ -187,6 +188,15 @@ Adds a `gem graph` command to output a gem dependency graph in graphviz's dot fo
 [https://github.com/jruby/maven_gem](https://github.com/jruby/maven_gem)
 
 Adds `gem maven` to install any Maven-published Java library as though it were a gem.
+
+<a id="manpages"> </a>
+
+## manpages
+
+[https://github.com/bitboxer/manpages](https://github.com/bitboxer/manpages)
+
+Exposes manpages inside of a gem to the `man` command without the need to call `gem man` or
+another command to read the man page of a gem.
 
 <a id="opengem"> </a>
 
