@@ -32,8 +32,8 @@ Now that RubyGems 2.6.x has been released, you can manually update to this versi
 
 Download [the latest RubyGems](https://rubygems.org/pages/download)
 
-Please download the file in a directory that you can later point to (eg. the
-root of your harddrive, `C:\`)
+Please download the file in a directory that you can later point to (eg. your
+home directory, `~`, or the root of your harddrive, `C:\`)
 
 Now, using your Command Prompt:
 
