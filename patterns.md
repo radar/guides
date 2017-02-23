@@ -148,9 +148,9 @@ Let's say the following releases of a gem exist:
 * **Version 3.0.0** — Reworked the interface. Code written to version 2.x might
   not work.
 
-Someone who wants to use your gem has determined that version 2.2.0 works with
-their software, but version 2.1.0 doesn't have a feature they need. Adding a
-dependency in a gem (or a `Gemfile` from Bundler) might look like:
+You want to use a gem, and you've determined that version 2.2.0 works with
+your software, but version 2.1.0 doesn't have a feature you need. Adding a
+dependency in your gem (or a `Gemfile` from Bundler) might look like:
 
     # gemspec
     spec.add_runtime_dependency 'library',
@@ -159,12 +159,12 @@ dependency in a gem (or a `Gemfile` from Bundler) might look like:
     # bundler
     gem 'library', '>= 2.2.0'
 
-This is an "optimistic" version constraint. It's saying that all changes from
-2.x on *will* work with my software, but for version 3.0.0 this will not be
-true.
+This is an "optimistic" version constraint. It's saying that all versions greater
+than or equal to 2.2.0 will work with your software.
 
-The alternative here is to be "pessimistic". This explicitly excludes the
-version that might break your code.
+However, you might know that 3.0 introduces a breaking change and is no longer
+compatible. The way to designate this is to be "pessimistic". This explicitly
+excludes the versions that might break your code:
 
     # gemspec
     spec.add_runtime_dependency 'library',
