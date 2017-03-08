@@ -103,9 +103,8 @@
     }
   }
   @media (min-width: 580px) {
-    &:not(:last-child) {
-      margin-right: 30px;
-    }
+    .footer__sponsor {
+      margin:0 30px 36px 30px; }
   }
   @media (max-width: 1039px) {
     width: 100px;
