@@ -213,6 +213,13 @@ requirement:
 Using `~>` with prerelease versions will restrict you to prerelease versions
 only.
 
+It's also important to know that if you specify a major version only, like this:
+
+    # gemspec
+    spec.add_runtime_dependency 'library', '~> 2'
+
+It will only use the latest version from the 2.x series -- so 2.3.0 -- and not 3.0.0. This behaviour may surprise some people, but automatically allowing any major version past version 2 is more surprising behaviour.
+
 ### Requiring RubyGems
 
 Summary: don't.
