@@ -70,7 +70,7 @@ By running `bundle install`, Bundler will generate the _Gemfile.lock_ file, whic
 
 Additionally in the `bundle install` output, we will see this line:
 
-    Using foodie (0.1.0) from source at /path/to/foodie
+    Using foodie 0.0.1 from source at `.`
 
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
