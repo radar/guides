@@ -34,7 +34,7 @@ This command creates a [scaffold directory](gem-scaffold/foodie) for our new gem
 
  * [**LICENSE.txt**](gem-scaffold/foodie/LICENSE.txt): Includes the MIT license. Will only be included if you chose to have it included.
 
- * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
+ * [**.gitignore**](gem-scaffold/foodie/.gitignore): (only if we have Git). This ignores the _Gemfile.lock_ for the reason described below, anything in the _pkg_ directory (generally files put there by `rake build`), anything with a _.gem_ extension and the _.bundle_ directory.
 
  * [**foodie.gemspec**](gem-scaffold/foodie/foodie.gemspec): The Gem Specification file. This is where we provide information for Rubygems' consumption such as the name, description and homepage of our gem. This is also where we specify the dependencies our gem needs to run.
 
@@ -66,11 +66,11 @@ The benefit of putting this dependency specification inside of _foodie.gemspec_ 
 
 When we run `bundle install`, rspec will be installed for this library and any other library we use with Bundler, but not for the system. This is an important distinction to make: any gem installed by Bundler will not muck about with gems installed by `gem install`. It is effectively a sandboxed environment. It is best practice to use Bundler to manage our gems so that we do not have gem version conflicts.
 
-By running `bundle install`, Bundler will generate the **extremely important** _Gemfile.lock_ file. This file is responsible for ensuring that every system this library is developed on has the *exact same* gems so it should always be checked into version control. For more information on this file [read "THE GEMFILE.LOCK" section of the `bundle install` manpage](https://github.com/carlhuda/bundler/blob/1-0-stable/man/bundle-install.ronn#L233-L253).
+By running `bundle install`, Bundler will generate the _Gemfile.lock_ file, which keeps gem versions from changing locally until you next run `bundle update`. Since the _Gemfile.lock_ will keep the gem versions stable on your machine, it's important to realize that people who install your gem will get the *latest* versions of the gem's dependencies that are available at install time. When developing gems, unlike applications, we ignore and do not commit _Gemfile.lock_. This helps prevent false confidence in the gem's compatibility with the latest version of dependencies. Dependency version constraints are set in the gemspec. It is a good practice to `bundle update` and test with the latest versions of dependencies before releasing a new version of your gem.
 
 Additionally in the `bundle install` output, we will see this line:
 
-    Using foodie (0.1.0) from source at /path/to/foodie
+    Using foodie 0.0.1 from source at `.`
 
 Bundler detects our gem, loads the gemspec and bundles our gem just like every other gem.
 
