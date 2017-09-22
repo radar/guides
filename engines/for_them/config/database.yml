@@ -1,3 +1,0 @@
-# For testing purposes
-adapter: sqlite3
-database: db/for_them.sqlite3
