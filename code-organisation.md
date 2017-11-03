@@ -53,41 +53,49 @@ require_relative "user"
 User.new(name: "Ryan")
 ```
 
-Requiring each file as we need it might get hard after a while, especially as
-our project grows in size. What would be great would be to have one file that
-required everything else for us. Let's call this file `entrypoint.rb`. It will
-live in the same directory as `user.rb` and `response.rb`.
-
-    .
-    ├── entrypoint.rb
-    ├── response.rb
-    ├── user.rb
-    └── version.rb
-
-Inside `entrypoint.rb`, we can require both `response.rb` and `user.rb`:
+However, if we had to use the `User` class inside of `Response`, we couldn't do
+this:
 
 ```ruby
-require_relative 'response'
-require_relative 'user'
+class Response
+  def initialize(submitted_at:, user:)
+    @submitted_at = submitted_at
+    @user = User.new(user)
+  end
+end
 ```
 
-Then, in our IRB prompt, we only need to require `entrypoint.rb`:
+This is because in this `response.rb` file, the `User` class isn't defined.
+We could move the `User` class into this file, but it's good practice to keep
+Ruby classes separated into one file per class.
+
+To solve this issue, we can require the `user.rb` file from `response.rb`, like
+this:
 
 ```ruby
-require_relative 'entrypoint'
+require_relative "user"
+
+class Response
+  def initialize(submitted_at:, user:)
+    @submitted_at = submitted_at
+    @user = User.new(user)
+  end
+end
 ```
 
-This really cuts down on all the requiring we need to do! We can still use our
-`Response` and `User` classes, as if we had required them ourselves:
+Ignoring the fact that the `User.new` should probably _not_ be a
+responsibility of this class's initialize -- it should be done by whatever's
+calling `Response.new` -- this code indicates a strong dependency between the
+`Response` and the `User` class.
 
-```
-Response.new(title: "Hello world!")
-User.new(name: "Ryan")
-```
+This `require_relative` tells Ruby that the `response.rb` file must first
+require `user.rb` and then evaluate it before it can evaluate anything in
+`response.rb`.
 
 Now let's say that we had another project that wanted to make use of these
-classes, and this project's code lives in another directory. Here's what the
-directory structure of the two projects might look like:
+classes, and this project was called "comments". The comments project's code
+lives in another directory. Here's what the directory structure of the two
+projects might look like:
 
     ├── core
     │   ├── response.rb
@@ -96,7 +104,7 @@ directory structure of the two projects might look like:
         └── comment.rb
 
 In that `comments/comment.rb` file, we might want to make use of the `User`
-class, to tie together a Comment and a User, for instance. An example of this
+class also, to tie together a Comment and a User, for instance. An example of this
 would be code like this inside of `comment.rb`:
 
 ```ruby
@@ -107,12 +115,6 @@ class Comment
   end
 end
 ```
-
-Ignoring the fact that the `User.new` should probably _not_ be a
-responsibility of this class's initialize -- it should be done by whatever's
-calling `Comment.new` -- this code indicates a strong dependency between the
-`Comment` and the `User` class.
-
 So in `comment.rb`, we
 could write this to load the `user.rb` file from the `core` project:
 
