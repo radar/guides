@@ -41,8 +41,9 @@ end
 ```
 
 It's easy enough for these files at the moment to be used independently. We can
-start up an IRB console and then use `require_relative` to get Ruby to load
-these files and interpret the code inside of them. With the files loaded, we
+start up an IRB console from within the directory that contains these files and
+then use `require_relative` to get Ruby to load these files and interpret the
+code inside of them. With the files loaded, we
 can use the classes:
 
 ```
@@ -100,13 +101,14 @@ would be code like this inside of `comment.rb`:
 
 ```ruby
 class Comment
-  def initialize(name, author:)
-    @author = User.find_by(email: author)
+  def initialize(text, author:)
+    @text = text
+    @author = User.new(name: author)
   end
 end
 ```
 
-Ignoring the fact that the `User.find_by` should probably _not_ be a
+Ignoring the fact that the `User.new` should probably _not_ be a
 responsibility of this class's initialize -- it should be done by whatever's
 calling `Comment.new` -- this code indicates a strong dependency between the
 `Comment` and the `User` class.
@@ -127,11 +129,11 @@ the whole thing falls apart. This won't do! There has to be a better way.
 Indeed, there is a better way. That better way is to separate these directories
 into gems, and then to very clearly define a dependency between the two gems.
 This is a common approach within the Ruby community. You have probably already
-used some gems.
+a gem or two.
 
-In this example, comments's code depends on features from the core codebase, and
-so there should be a dependency introduced between comments and core: comments
-depends on core.
+In the previous example, comments's code depends on features from the core
+codebase, and so there should be a dependency introduced between comments and
+core: comments depends on core.
 
 Let's move our code into a gem structure now. We can generate two new gems by
 running the `bundle gem` command twice:
@@ -171,7 +173,7 @@ and most importantly: this gem's dependencies.
 
 Near the bottom of this file, we can see `jep_comments` gem's dependencies listed:
 
-```
+```ruby
 spec.add_development_dependency "bundler", "~> 1.16"
 spec.add_development_dependency "rake", "~> 10.0"
 spec.add_development_dependency "rspec", "~> 3.0"
@@ -182,21 +184,19 @@ other gems to make our gem development life easy: the `bundler`, `rake` and
 `rspec` gems.
 
 The second argument to `add_development_dependency` is the required version
-number of this package.  The little `~>` is called a "twiddle-wakka" or
-"tilde-wakka" and is explained
-[here](http://guides.rubygems.org/patterns/#declaring-dependencies).
+number of this package.  The little `~>` is [called a "twiddle-wakka" or
+"tilde-wakka" and is explained here](http://guides.rubygems.org/patterns/#declaring-dependencies).
 
 To make the jep_comments gem depend on the jep_core gem, we need to list it as a
 regular dependency, which we can do with this line, underneath the development
 dependencies:
 
-```
+```ruby
 spec.add_dependency "jep_core", "~> 0.1.0"
 ```
 
 By adding a dependency here, we're now stating that in order for `jep_comments` to
-work at all, it needs `jep_core`. This also means that when we install
-`jep_comments`, RubyGems will install `jep_core`. Otherwise, what's the point? The
+work at all, it needs `jep_core`. Otherwise, what's the point? The
 gemspec says that `jep_comments` has a dependency on `jep_core`, and so it
 _probably_ wouldn't work without `jep_core`.
 
@@ -307,7 +307,18 @@ Successfully installed jep_core-0.1.0
 1 gem installed
 ```
 
-Hooray! We've got one of our two gems installed. Now let's look at installing
+It's here that I should mention that there's a shortcut for `gem build` and
+`gem install`, and that is `rake install`. This will build a new gem, putting
+it inside the `pkg` directory, and then install it, all in one easy step! Let's
+try it now:
+
+```
+jep_core 0.1.0 built to pkg/jep_core-0.1.0.gem.
+jep_core (0.1.0) installed.
+```
+
+Hooray! We've got one of our two gems installed. We'll use `rake install` in
+the future instead of `gem build` and `gem install`. Now let's look at installing
 the `jep_comments` gem.
 
 ## Installing the jep_comments gem
@@ -317,14 +328,13 @@ ran through for the `jep_core` gem:
 
 1. Fix up the summary in `jep_comments.gemspec`
 2. Add license information to `jep_comments.gemspec`.
-3. Run `gem build jep_comments.gemspec`
-4. Run `gem install jep_comments-0.1.0.gem`
+4. Run `rake install`
 
-When we run that `gem install` command, we'll see this:
+When we run that `rake install` command, we'll see this:
 
 ```
-Successfully installed jep_comments-0.1.0
-1 gem installed
+jep_comments 0.1.0 built to pkg/jep_comments-0.1.0.gem.
+jep_comments (0.1.0) installed.
 ```
 
 Hooray on this one too! We've now got both of our gems installed. However,
@@ -386,8 +396,9 @@ require_relative '../core/user'
 
 module JepComment
   class Comment
-    def initialize(name, author:)
-      @author = User.find_by(email: author)
+    def initialize(text, author:)
+      @text = text
+      @author = JepCore::User.new(email: author)
     end
   end
 ```
@@ -515,10 +526,11 @@ NameError: uninitialized constant JepCore::User
 
 This is because Ruby is still loading the old version of our gem. We will need
 to install the new version of our gem to make Ruby load the new code. Let's do
-this now by going into the `jep_core` gem and running these commands:
+this now by going into the `jep_core` gem and re-running this command:
 
-1. `gem build jep_core.gemspec` # re-builds jep_core-0.1.0.gem
-1. `gem install jep_core-0.1.0.gem` # re-installs jep_core-0.1.0
+```
+rake install
+```
 
 With the gem newly rebuilt + installed, our code should now work:
 
@@ -528,3 +540,57 @@ irb(main):001:0> require 'jep_core'
 irb(main):002:0> JepCore::User.new(name: "Ryan") 
 => #<JepCore::User:0x007fb3390d20c0 @name="Ryan">
 ```
+
+This is a good start. We'll see the same kind of problem with our
+`jep_comments` gem if we try to use a class from there:
+
+```
+irb(main):003:0> JepComments::Comment.new("A new comment!", author: "me@ryanbigg.com")
+NameError: uninitialized constant JepComments::Comment
+```
+
+Let's fix this now. We'll go into the `jep_comments` gem and open up the
+`lib/jep_comments.rb` file, and then we'll add a `require` for the
+`jep_comments/comment.rb` file:
+
+```ruby
+require 'jep_comments/comment'
+```
+
+Because we've made changes to the `jep_comments` gem, we will need to
+re-install it too. Let's run this command inside the `jep_comments` gem to do
+that:
+
+```ruby
+rake install
+```
+
+We'll then go back into our `irb` prompt and try using the
+`JepComments::Comment` class again:
+
+```
+irb(main):001:0> require 'jep_comments'
+=> true
+irb(main):002:0> JepComments::Comment.new("A new comment!", author: "me@ryanbigg.com")
+=> #<JepComments::Comment:0x007ff95810b5b8 @text="A new comment!", @author=#<JepCore::User:0x007ff95810b540 @name="me@ryanbigg.com">>
+```
+
+This line creates a new instance of the `JepComments::Comment` class, which
+links to a `JepCore::User` class... but we didn't require `jep_core` in `irb`
+yet. What we're doing here is possible because of the `require` inside of
+`jep_comments/lib/jep_comments/comment.rb`:
+
+```ruby
+require "jep_core/user"
+```
+
+This line tells Ruby that `jep_comments/lib/jep_comments/comment.rb` requires
+`jep_core/user`. Ruby will dutifully load that file, and then continue with
+executing the remainder of the file once `jep_core/user` has been loaded.
+
+
+## Conclusion
+
+In this guide you've seen how to share code across different projects, by
+introducing dependencies between them, listing them in the gemspec and by
+cross-requiring files too.
