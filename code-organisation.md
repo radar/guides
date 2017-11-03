@@ -2,7 +2,9 @@
 
 This guide will cover:
 
-*
+* How Ruby projects are organised
+* How to build gems from scratch
+* How `require` works to load gems installed on your system
 
 ## Requiring, relatively
 
@@ -404,23 +406,125 @@ in how we've structured our gems, and how `require` works.
 ## Requiring files and the load path
 
 We've put these files at `lib/jep_core` and `lib/jep_comments`, rather than
-just under `lib` in both projects for a very good reason.
+just under `lib` in both projects for a very good reason. This is so that the
+files do not conflict with each other. Why would the files conflict? I'm glad
+you asked!
 
+When you're using gems in Ruby, their `lib` directories get added to a list of
+directories called the _load path_. The load path is where Ruby goes looking
+for files to require them. So in the case of our `jep_core` and jep_comments`
+gems, both of their `lib` directories would be on the load path.
 
+If we had a file in `jep_core/lib` that was called `user.rb` and one _also_ in
+`jep_comments/lib` that was also called `user.rb`, and then in our project we
+tried doing this:
 
+```ruby
+require "user"
+```
 
+How would Ruby know that we wanted the one from `jep_core` and not
+`jep_comments` or vice-versa? By putting these files inside a sub-directory of
+`lib`, we avoid this confusion:
 
-## How require works
+```ruby
+# "give me the user.rb" file from jep_core"
+require "jep_core/user"
+# "give me the user.rb" file from jep_comments"
+require "jep_comments/user"
+```
 
-* Talk about load path
-* Talk about LOADED_FEATURES?
-* Talk about RubyGems
-* Require adds a gem's path to the load path
-* Talk about Standard Library?
+How does Ruby know where to find these files in the first place after we've
+installed the gem? Well, an easy way to see this in action would be to try it
+out in `irb`. We've got both of our gems installed now, so this next part
+should be a cinch.
 
+Let's open up `irb` and try working with these gems. It's not important where
+you open `irb`; it will work anywhere on your machine.
 
-## Why Bundler?
+We can require the `jep_core` and `jep_comments` gem like this:
 
-* Multiple versions of gems installed
-* Dependency resolution
+```
+irb(main):001:0> require 'jep_core'
+true
+irb(main):002:0> require 'jep_comments'
+true
+```
 
+(NOTE: I have a technical explanation for how `require` finds the gem's file [on my blog](http://ryanbigg.com/2017/11/how-require-loads-a-gem))
+
+The `true` return value here tells us that Ruby has successfully found these
+files and is requiring them for the first time. If Ruby had required them
+before-hand, we would see `false` here. 
+
+But we can't use those gems' classes yet:
+
+```
+irb(main):003:0> JepCore::User.new(name: "Ryan") 
+JepCore::User.new(name: "Ryan")
+NameError: uninitialized constant JepCore::User
+	from (irb):3
+	from /Users/ryanbigg/.rubies/ruby-2.4.1/bin/irb:11:in `<main>'
+```
+
+Huh? Didn't we require the gem? Shouldn't it just _know_ about our gem's
+classes? 
+
+Yes to the first question, no to the second. Requiring a gem doesn't magically
+load all that gem's classes. What that does is require the `jep_core.rb` file
+at the root of our project, which just has this content in it:
+
+```ruby
+require "jep_core/version"
+
+module JepCore
+  # Your code goes here...
+end
+```
+
+When we do `require 'jep_core'`, it just loads this one file. There is nothing
+in our code that tells it where to find the `JepCore::User` class at the
+moment, and so it is uninitialized.
+
+This `jep_core.rb` file should be considered as the "entrypoint" to this
+project. Whatever should be made available from this gem should be required
+here, in this file. So at the top of this file, let's put a few more `require`
+calls so that our `User` and `Response` classes are loaded:
+
+```ruby
+require "jep_core/response"
+require "jep_core/user"
+require "jep_core/version"
+
+module JepCore
+  # Your code goes here...
+end
+```
+
+That's better! When this gem is loaded, it will now also load the
+`jep_core/response.rb` and `jep_core/user.rb` files too. Going back to `irb`
+and running through the same steps as before will not get us any further:
+
+```
+irb(main):001:0> require 'jep_core'
+irb(main):002:0> JepCore::User.new(name: "Ryan") 
+NameError: uninitialized constant JepCore::User
+	from (irb):2
+	from /Users/ryanbigg/.rubies/ruby-2.4.1/bin/irb:11:in `<main>'
+```
+
+This is because Ruby is still loading the old version of our gem. We will need
+to install the new version of our gem to make Ruby load the new code. Let's do
+this now by going into the `jep_core` gem and running these commands:
+
+1. `gem build jep_core.gemspec` # re-builds jep_core-0.1.0.gem
+1. `gem install jep_core-0.1.0.gem` # re-installs jep_core-0.1.0
+
+With the gem newly rebuilt + installed, our code should now work:
+
+```
+irb(main):001:0> require 'jep_core'
+=> true
+irb(main):002:0> JepCore::User.new(name: "Ryan") 
+=> #<JepCore::User:0x007fb3390d20c0 @name="Ryan">
+```
