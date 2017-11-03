@@ -43,14 +43,17 @@ end
 It's easy enough for these files at the moment to be used independently. We can
 start up an IRB console from within the directory that contains these files and
 then use `require_relative` to get Ruby to load these files and interpret the
-code inside of them. With the files loaded, we
-can use the classes:
+code inside of them. With the files loaded, we can use the classes:
 
 ```
-require_relative "response"
-Response.new(submitted_at: Time.now)
-require_relative "user"
+irb(main):001:0> require_relative "response"
+=> true
+irb(main):002:0> Response.new(submitted_at: Time.now)
+=> #<Response:0x007fb3390d20b0 @submitted_at=<time>>
+irb(main):003:0> require_relative "user"
+=> true
 User.new(name: "Ryan")
+=> #<User:0x007fb3390d20c1 @name="Ryan">
 ```
 
 However, if we had to use the `User` class inside of `Response`, we couldn't do
@@ -65,12 +68,34 @@ class Response
 end
 ```
 
+If we tried to run the same code as above in our `irb` prompt, we would see an error:
+
+```
+irb(main):001:0> require_relative "response"
+true
+irb(main):002:0> Response.new(submitted_at: Time.now, user: "ryan@example.com")
+NameError: uninitialized constant Response::User
+```
+
 This is because in this `response.rb` file, the `User` class isn't defined.
 We could move the `User` class into this file, but it's good practice to keep
 Ruby classes separated into one file per class.
 
-To solve this issue, we can require the `user.rb` file from `response.rb`, like
-this:
+To solve this issue, we could make sure that we required the `user.rb` file
+before we called `Response.new`:
+
+```
+irb(main):001:0> require_relative "response"
+=> true
+irb(main):002:0> require_relative "user"
+=> true
+irb(main):003:0> Response.new(submitted_at: Time.now)
+=> #<Response:0x007fb3390d20b0 @submitted_at=<time>>
+```
+
+But this would get annoying after a few repetitions. An easier solution is to
+require the `user.rb` file from `response.rb`, so that `user.rb` is loaded
+whenever `response.rb` is, like this:
 
 ```ruby
 require_relative "user"
@@ -86,11 +111,15 @@ end
 Ignoring the fact that the `User.new` should probably _not_ be a
 responsibility of this class's initialize -- it should be done by whatever's
 calling `Response.new` -- this code indicates a strong dependency between the
-`Response` and the `User` class.
+`Response` and the `User` class. Therefore it makes sense to have this
+`require_relative` here. Objects of the `Response` class can no longer be
+initialized without the `User` class having first been loaded.
 
 This `require_relative` tells Ruby that the `response.rb` file must first
 require `user.rb` and then evaluate it before it can evaluate anything in
 `response.rb`.
+
+## Introducing cross-project dependencies
 
 Now let's say that we had another project that wanted to make use of these
 classes, and this project was called "comments". The comments project's code
