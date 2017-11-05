@@ -47,7 +47,7 @@ rating = gets "Do you feel like the work you do is meaningful? [1-5]"
 response.answers << Answer.new(rating: rating.to_i)
 ```
 
-At only about 30 lines long, this script fits very easily into most editor
+At only about 25 lines long, this script fits very easily into most editor
 windows. But imagine a situation where this code keeps growing, and more
 classes or features get added to this file. It would quickly become hard to
 work in it, because you would be moving up-and-down the file a lot, jumping to
