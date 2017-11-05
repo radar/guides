@@ -57,6 +57,7 @@ add the method inside that.
 
 A better way to approach this problem would be to split the different classes
 and responsibilities of this script into separate files:
+
     .
     ├── answer.rb
     ├── cli.rb
