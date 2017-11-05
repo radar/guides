@@ -4,6 +4,7 @@ This guide will cover:
 
 * How Ruby projects are organised
 * How to build gems from scratch
+* How to make one gem depend on another gem
 * How `require` works to load gems installed on your system
 
 ## Requiring, relatively
@@ -14,23 +15,80 @@ files. What we'll look at in this section is how one file can load code that is
 included in a separate file. This feature is a major underpinning of how Ruby
 projects are organised.
 
-We'll start with a very simple project with just two files in it:
-
-    .
-    ├── response.rb
-    └── user.rb
-
-In `response.rb`, we might have code like this:
+We'll start with a Ruby script that exists in a single file:
 
 ```ruby
 class Response
-  def initialize(submitted_at:)
-    @submitted_at = submitted_at
+  attr_reader :answers
+
+  def initialize(user:)
+    @user = user
+    @answers = []
+  end
+end
+
+class Answer
+  def initialize(rating:)
+    @rating = rating
+  end
+end
+
+class User
+  def initialize(name:)
+    @name = name
+  end
+end
+
+user = User.new(name: "Ryan")
+response = Response.new(user: user)
+
+rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+
+response.answers << Answer.new(rating: rating.to_i)
+```
+
+At only about 30 lines long, this script fits very easily into most editor
+windows. But imagine a situation where this code keeps growing, and more
+classes or features get added to this file. It would quickly become hard to
+work in it, because you would be moving up-and-down the file a lot, jumping to
+wherever you needed to be. For instance, if you wanted to add a method to the
+answer class in this script, you would need to look for `class Answer` and then
+add the method inside that.
+
+A better way to approach this problem would be to split the different classes
+and responsibilities of this script into separate files:
+    .
+    ├── answer.rb
+    ├── cli.rb
+    ├── response.rb
+    └── user.rb
+
+Each of these files is then very short and it makes it easier to jump around
+the project. If we want to add a new method to the `Answer` class now, we know
+that the class is defined within `answer.rb`, and so we can jump there quickly
+using our editor's shortcuts.
+
+In `answer.rb`, the code would be:
+
+```ruby
+class Answer
+  def initialize(rating:)
+    @rating = rating
   end
 end
 ```
 
-And in `user.rb`, we might have code like this:
+In `response.rb`, the code would be:
+
+```ruby
+class Response
+  def initialize(user:)
+    @user = user
+  end
+end
+```
+
+And in `user.rb`, the code would be:
 
 ```ruby
 class User
@@ -40,84 +98,50 @@ class User
 end
 ```
 
-It's easy enough for these files at the moment to be used independently. We can
-start up an IRB console from within the directory that contains these files and
-then use `require_relative` to get Ruby to load these files and interpret the
-code inside of them. With the files loaded, we can use the classes:
-
-```
-irb(main):001:0> require_relative "response"
-=> true
-irb(main):002:0> Response.new(submitted_at: Time.now)
-=> #<Response:0x007fb3390d20b0 @submitted_at=<time>>
-irb(main):003:0> require_relative "user"
-=> true
-User.new(name: "Ryan")
-=> #<User:0x007fb3390d20c1 @name="Ryan">
-```
-
-However, if we had to use the `User` class inside of `Response`, we couldn't do
-this:
+Then in `cli.rb` the code would use all of these classes:
 
 ```ruby
-class Response
-  def initialize(submitted_at:, user:)
-    @submitted_at = submitted_at
-    @user = User.new(user)
-  end
-end
+user = User.new(name: "Ryan")
+response = Response.new(user: user)
+
+rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+
+response.answers << Answer.new(rating: rating.to_i)
 ```
 
-If we tried to run the same code as above in our `irb` prompt, we would see an error:
-
-```
-irb(main):001:0> require_relative "response"
-true
-irb(main):002:0> Response.new(submitted_at: Time.now, user: "ryan@example.com")
-NameError: uninitialized constant Response::User
-```
-
-This is because in this `response.rb` file, the `User` class isn't defined.
-We could move the `User` class into this file, but it's good practice to keep
-Ruby classes separated into one file per class.
-
-To solve this issue, we could make sure that we required the `user.rb` file
-before we called `Response.new`:
-
-```
-irb(main):001:0> require_relative "response"
-=> true
-irb(main):002:0> require_relative "user"
-=> true
-irb(main):003:0> Response.new(submitted_at: Time.now)
-=> #<Response:0x007fb3390d20b0 @submitted_at=<time>>
-```
-
-But this would get annoying after a few repetitions. An easier solution is to
-require the `user.rb` file from `response.rb`, so that `user.rb` is loaded
-whenever `response.rb` is, like this:
+If we try to run `cli.rb` at the moment, it will fail because it doesn't know
+where to find the `User` class:
 
 ```ruby
-require_relative "user"
-
-class Response
-  def initialize(submitted_at:, user:)
-    @submitted_at = submitted_at
-    @user = User.new(user)
-  end
-end
+cli.rb:1:in `<main>': uninitialized constant User (NameError)
 ```
 
-Ignoring the fact that the `User.new` should probably _not_ be a
-responsibility of this class's initialize -- it should be done by whatever's
-calling `Response.new` -- this code indicates a strong dependency between the
-`Response` and the `User` class. Therefore it makes sense to have this
-`require_relative` here. Objects of the `Response` class can no longer be
-initialized without the `User` class having first been loaded.
+Before the code in `cli.rb` can run, we need to tell it where to find the
+`User` class, and probably also the `Response` and `Answer` classes. We know
+that these classes are in `user.rb`, `response.rb` and `answer.rb`
+respectively, but how can we tell `cli.rb` that? The answer is with
+`require_relative`:
 
-This `require_relative` tells Ruby that the `response.rb` file must first
-require `user.rb` and then evaluate it before it can evaluate anything in
-`response.rb`.
+```ruby
+require_relative 'answer'
+require_relative 'response'
+require_relative 'user'
+
+user = User.new(name: "Ryan")
+response = Response.new(user: user)
+
+rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+
+response.answers << Answer.new(rating: rating.to_i)
+```
+
+The `require_relative` works here by looking at files located _relative_ to the
+current file; files that are in the same directory.
+
+Now when `cli.rb` runs, it will first load the `answer.rb`, evaluate that file,
+and then do the same with `response.rb` and `user.rb`. Evaluating these files
+will load in the `Answer`, `Response` and `User` classes that our `cli.rb`
+script needs to do its job.
 
 ## Introducing cross-project dependencies
 
@@ -127,6 +151,7 @@ lives in another directory. Here's what the directory structure of the two
 projects might look like:
 
     ├── core
+    │   ├── answer.rb
     │   ├── response.rb
     │   └── user.rb
     └── comments
@@ -144,16 +169,24 @@ class Comment
   end
 end
 ```
-So in `comment.rb`, we
-could write this to load the `user.rb` file from the `core` project:
+
+So in `comment.rb`, we could write this to require the `user.rb` file from the
+`core` project:
 
 ```ruby
 require_relative '../core/user'
 ```
 
-But then this means that the `comments` and `core` projects must be located in the
-same directory, together. If either `comments` or `core` gets moved, then
-the whole thing falls apart. This won't do! There has to be a better way.
+The `..` here means "in one directory 'up' from the current location". This
+will make `require_relative` start looking relative to this current file's
+location. It will look in the parent directory that `core` and `comments`
+reside in together, and then look in the `core` subdirectory to find the
+`user.rb` file.
+
+This will work, but then this means that the `comments` and `core` projects
+must be located in the same directory, together. If either `comments` or `core`
+gets moved, then the whole thing falls apart. This won't do! There has to be a
+better way.
 
 ## Depending on a gem from within another gem
 
@@ -393,16 +426,29 @@ And here's what the `jep_comments/lib` directory looks like:
 ```
 
 These are mostly the same, just the names are different. Let's take the files
-from our earlier examples and put them into our gems' `lib` directory. We'll put `response.rb` and `user.rb` inside of `jep_core/lib/jep_core`, and we'll put
-`comment.rb` and `item.rb` inside of `jep_comments/lib/jep_comments`.
+from our earlier examples and put them into our gems' `lib` directory. We'll
+put `answer.rb` `response.rb` and `user.rb` inside of `jep_core/lib/jep_core`,
+and we'll put `comment.rb` inside of `jep_comments/lib/jep_comments`.
+
+*jep_core/lib/jep_core/answer.rb*
+
+```ruby
+module JepCore
+  class Answer
+    def initialize(rating:)
+      @rating = rating
+    end
+  end
+end
+```
 
 *jep_core/lib/jep_core/response.rb*
 
 ```ruby
 module JepCore
   class Response
-    def initialize(submitted_at:)
-      @submitted_at = submitted_at
+    def initialize(user:)
+      @user = user
     end
   end
 end
@@ -429,7 +475,7 @@ module JepComment
   class Comment
     def initialize(text, author:)
       @text = text
-      @author = JepCore::User.new(email: author)
+      @author = JepCore::User.new(name: author)
     end
   end
 ```
@@ -534,6 +580,7 @@ here, in this file. So at the top of this file, let's put a few more `require`
 calls so that our `User` and `Response` classes are loaded:
 
 ```ruby
+require "jep_core/answer"
 require "jep_core/response"
 require "jep_core/user"
 require "jep_core/version"
@@ -544,8 +591,29 @@ end
 ```
 
 That's better! When this gem is loaded, it will now also load the
-`jep_core/response.rb` and `jep_core/user.rb` files too. Going back to `irb`
-and running through the same steps as before will not get us any further:
+`jep_core/response.rb` and `jep_core/user.rb` files too.  We could use
+`require_relative` here too:
+
+```ruby
+require_relative "jep_core/answer"
+require_relative "jep_core/response"
+require_relative "jep_core/user"
+require_relative "jep_core/version"
+```
+
+This is because the `jep_core.rb` file lives inside `lib`, and
+`jep_core/answer.rb` and friends are located _relative_ to the `jep_core.rb`
+file. But this is more typing than is necessary, so we'll stick with `require`.
+
+```ruby
+require "jep_core/answer"
+require "jep_core/response"
+require "jep_core/user"
+require "jep_core/version"
+```
+
+Going back to `irb` and running through the same steps as before will not get
+us any further:
 
 ```
 irb(main):001:0> require 'jep_core'
@@ -576,7 +644,7 @@ This is a good start. We'll see the same kind of problem with our
 `jep_comments` gem if we try to use a class from there:
 
 ```
-irb(main):003:0> JepComments::Comment.new("A new comment!", author: "me@ryanbigg.com")
+irb(main):003:0> JepComments::Comment.new("A new comment!", author: "Ryan")
 NameError: uninitialized constant JepComments::Comment
 ```
 
