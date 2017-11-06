@@ -759,7 +759,8 @@ executing the remainder of the file once `jep_core/user` has been loaded.
 
 In this guide you've seen how to share code across different projects, by
 introducing dependencies between them, listing them in the gemspec and by
-cross-requiring files too.
+cross-requiring files too. This guide has given you insight into how `require`
+works, and also how to build gems from scratch.
 
 ## Homework
 
