@@ -59,8 +59,9 @@ rating = gets
 response.answers << Answer.new(rating: rating.to_i)
 ```
 
-At about 40 lines long, this script fits very easily into most editor
-windows. It's just getting to the point where it's hard to see it all at once, but it's not quite there yet.
+At about 40 lines long, this script fits very easily into most editor windows.
+It's just getting to the point where it's hard to see it all at once, but it's
+not quite there yet.
 
 But imagine a situation where this code keeps growing, and more classes or
 features get added to this file. It would quickly become hard to
@@ -183,7 +184,9 @@ Do you feel like the work you do is meaningful? [1-5] 5
 Do you feel supported by your manager? [1-5] 5
 ```
 
-Separating out the code into separate files makes it much easier to jump through the different files in our project. It's for this reason that it is best practice in Ruby projects to follow the one-class-per-file rule.
+Separating out the code into separate files makes it much easier to jump
+through the different files in our project. It's for this reason that it is
+best practice in Ruby projects to follow the one-class-per-file rule.
 
 ## Introducing cross-project dependencies
 
@@ -213,7 +216,9 @@ class Comment
 end
 ```
 
-(Ignoring the fact here that `User.new` should probably not be the responsibility of the `Comment` class, but rather the responsibility of whatever calls `Comment.new`...)
+(Ignoring the fact here that `User.new` should probably not be the
+responsibility of the `Comment` class, but rather the responsibility of
+whatever calls `Comment.new`...)
 
 So in `comment.rb`, we could write this to require the `user.rb` file from the
 `core` project:
@@ -315,10 +320,12 @@ look at how we can install the `jep_comments` gem.
 
 ## Installing the jep_core gem
 
-Normally, we wouldn't have to manually install `jep_core`
-because the `jep_core` gem would be available on RubyGems, and by installing
-`jep_comments` it would automatically install `jep_core` too, because we list it
-as a dependency in `jep_comments`'s gemspec. You might've noticed this happening when you install the `rails` gem: it doesn't just install the `rails` gem but it also installs all the dependencies needed for `rails` too.
+Normally, we wouldn't have to manually install `jep_core` because the
+`jep_core` gem would be available on RubyGems, and by installing `jep_comments`
+it would automatically install `jep_core` too, because we list it as a
+dependency in `jep_comments`'s gemspec. You might've noticed this happening
+when you install the `rails` gem: it doesn't just install the `rails` gem but
+it also installs all the dependencies needed for `rails` too.
 
 Here's the beginning of the output of `gem install rails` as an example:
 
@@ -335,9 +342,12 @@ Fetching: activesupport-5.1.4.gem (100%)
 ...
 ```
 
-We didn't ask for these gems to be installed, but they are anyway because they're listed as dependencies of the `rails` gem, or dependencies of those dependencies.
+We didn't ask for these gems to be installed, but they are anyway because
+they're listed as dependencies of the `rails` gem, or dependencies of those
+dependencies.
 
-Our life isn't so easy for the `jep_core` and `jep_comments` gem, because these two gems do not exist on RubyGems.org yet. So we must install them manually.
+Our life isn't so easy for the `jep_core` and `jep_comments` gem, because these
+two gems do not exist on RubyGems.org yet. So we must install them manually.
 
 To install the `jep_core` gem, we need to first build it, which we can do with
 the `gem build` command.
@@ -594,7 +604,8 @@ out in `irb`. We've got both of our gems installed now, so this next part
 should be a cinch.
 
 Let's open up `irb` and try working with these gems. It's not important where
-you open `irb`; it will work anywhere on your machine. This is because of when you install gems, they are made globally available by default.
+you open `irb`; it will work anywhere on your machine. This is because of when
+you install gems, they are made globally available by default.
 
 We can require the `jep_core` and `jep_comments` gem like this:
 
@@ -605,7 +616,8 @@ irb(main):002:0> require "jep_comments"
 true
 ```
 
-(NOTE: I have a technical explanation for how `require` finds the gem's file [on my blog](http://ryanbigg.com/2017/11/how-require-loads-a-gem))
+(NOTE: I have a technical explanation for how `require` finds the gem's file
+[on my blog](http://ryanbigg.com/2017/11/how-require-loads-a-gem))
 
 The `true` return value here tells us that Ruby has successfully found these
 files and is requiring them for the first time. If Ruby had required them
@@ -642,7 +654,8 @@ the moment, and so that class is uninitialized.
 
 This `jep_core.rb` file should be considered as the "entrypoint" to this
 project. Whatever should be made available from this gem should be required
-here, in this file. This is so that we can simply do `require "jep_core"` and then the whole project is loaded.
+here, in this file. This is so that we can simply do `require "jep_core"` and
+then the whole project is loaded.
 
 So at the top of this file, let's put a few more `require` calls so that our
 `User` and `Response` classes are loaded:
@@ -764,5 +777,8 @@ works, and also how to build gems from scratch.
 
 ## Homework
 
-* The `cli.rb` file was left out of the `jep_core` gem. Where is the right place to put this file? How could we make it so that someone who had the `jep_core` gem installed could run the command `run_survey` and it would prompt them for the questions?
+* The `cli.rb` file was left out of the `jep_core` gem. Where is the right
+  place to put this file? How could we make it so that someone who had the
+  `jep_core` gem installed could run the command `run_survey` and it would
+  prompt them for the questions?
 
