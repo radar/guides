@@ -17,6 +17,8 @@ projects are organised.
 
 We'll start with a Ruby script that exists in a single file:
 
+**01-basic-project/project.rb**
+
 ```ruby
 class Response
   attr_reader :answers
@@ -42,21 +44,35 @@ end
 user = User.new(name: "Ryan")
 response = Response.new(user: user)
 
-rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+question_1 = "Do you feel like the work you do is meaningful?"
+
+print "#{question_1} [1-5]"
+rating = gets
+
+response.answers << Answer.new(rating: rating.to_i)
+
+question_2 = "Do you feel supported by your manager?"
+
+print "#{question_2} [1-5]"
+rating = gets
 
 response.answers << Answer.new(rating: rating.to_i)
 ```
 
-At only about 25 lines long, this script fits very easily into most editor
-windows. But imagine a situation where this code keeps growing, and more
-classes or features get added to this file. It would quickly become hard to
+At about 40 lines long, this script fits very easily into most editor
+windows. It's just getting to the point where it's hard to see it all at once, but it's not quite there yet.
+
+But imagine a situation where this code keeps growing, and more classes or
+features get added to this file. It would quickly become hard to
 work in it, because you would be moving up-and-down the file a lot, jumping to
 wherever you needed to be. For instance, if you wanted to add a method to the
-answer class in this script, you would need to look for `class Answer` and then
+`Answer` class in this script, you would need to look for `class Answer` and then
 add the method inside that.
 
 A better way to approach this problem would be to split the different classes
 and responsibilities of this script into separate files:
+
+**02-organised-project**
 
     .
     ├── answer.rb
@@ -83,8 +99,11 @@ In `response.rb`, the code would be:
 
 ```ruby
 class Response
+  attr_reader :answers
+
   def initialize(user:)
     @user = user
+    @answers = []
   end
 end
 ```
@@ -105,7 +124,17 @@ Then in `cli.rb` the code would use all of these classes:
 user = User.new(name: "Ryan")
 response = Response.new(user: user)
 
-rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+question_1 = "Do you feel like the work you do is meaningful?"
+
+print "#{question_1} [1-5]"
+rating = gets
+
+response.answers << Answer.new(rating: rating.to_i)
+
+question_2 = "Do you feel supported by your manager?"
+
+print "#{question_2} [1-5]"
+rating = gets
 
 response.answers << Answer.new(rating: rating.to_i)
 ```
@@ -131,7 +160,10 @@ require_relative 'user'
 user = User.new(name: "Ryan")
 response = Response.new(user: user)
 
-rating = gets "Do you feel like the work you do is meaningful? [1-5]"
+question = "Do you feel like the work you do is meaningful?"
+
+puts "#{question} [1-5]"
+rating = gets
 
 response.answers << Answer.new(rating: rating.to_i)
 ```
@@ -144,6 +176,15 @@ and then do the same with `response.rb` and `user.rb`. Evaluating these files
 will load in the `Answer`, `Response` and `User` classes that our `cli.rb`
 script needs to do its job.
 
+Running `ruby cli.rb` will now run through our script with no problems:
+
+```
+Do you feel like the work you do is meaningful? [1-5] 5
+Do you feel supported by your manager? [1-5] 5
+```
+
+Separating out the code into separate files makes it much easier to jump through the different files in our project. It's for this reason that it is best practice in Ruby projects to follow the one-class-per-file rule.
+
 ## Introducing cross-project dependencies
 
 Now let's say that we had another project that wanted to make use of these
@@ -153,6 +194,7 @@ projects might look like:
 
     ├── core
     │   ├── answer.rb
+    │   ├── cli.rb
     │   ├── response.rb
     │   └── user.rb
     └── comments
@@ -170,6 +212,8 @@ class Comment
   end
 end
 ```
+
+(Ignoring the fact here that `User.new` should probably not be the responsibility of the `Comment` class, but rather the responsibility of whatever calls `Comment.new`...)
 
 So in `comment.rb`, we could write this to require the `user.rb` file from the
 `core` project:
@@ -228,8 +272,8 @@ Let's look at the structure of the `jep_comments` gem:
     └── spec_helper.rb
 ```
 
-The `jep_core` gem is almost identical, but just where it would say "jep_comments"
-in the above example it would say "jep_core" instead.
+The `jep_core` gem is almost identical, but just where it would say `jep_comments`
+in the above example it would say `jep_core` instead.
 
 At the top-level of this gem, we have a file called `jep_comments.gemspec`.
 This file is the _gem specification_ and this file's job is to contain data
@@ -252,7 +296,7 @@ The second argument to `add_development_dependency` is the required version
 number of this package.  The little `~>` is [called a "twiddle-wakka" or
 "tilde-wakka" and is explained here](http://guides.rubygems.org/patterns/#declaring-dependencies).
 
-To make the jep_comments gem depend on the jep_core gem, we need to list it as a
+To make the `jep_comments` gem depend on the `jep_core` gem, we need to list it as a
 regular dependency, which we can do with this line, underneath the development
 dependencies:
 
@@ -274,11 +318,31 @@ look at how we can install the `jep_comments` gem.
 Normally, we wouldn't have to manually install `jep_core`
 because the `jep_core` gem would be available on RubyGems, and by installing
 `jep_comments` it would automatically install `jep_core` too, because we list it
-as a dependency in `jep_comments`'s gemspec.
+as a dependency in `jep_comments`'s gemspec. You might've noticed this happening when you install the `rails` gem: it doesn't just install the `rails` gem but it also installs all the dependencies needed for `rails` too.
+
+Here's the beginning of the output of `gem install rails` as an example:
+
+```
+Fetching: concurrent-ruby-1.0.5.gem (100%)
+Successfully installed concurrent-ruby-1.0.5
+Fetching: i18n-0.9.1.gem (100%)
+Successfully installed i18n-0.9.1
+Fetching: thread_safe-0.3.6.gem (100%)
+Successfully installed thread_safe-0.3.6
+Fetching: tzinfo-1.2.4.gem (100%)
+Successfully installed tzinfo-1.2.4
+Fetching: activesupport-5.1.4.gem (100%)
+...
+```
+
+We didn't ask for these gems to be installed, but they are anyway because they're listed as dependencies of the `rails` gem, or dependencies of those dependencies.
+
+Our life isn't so easy for the `jep_core` and `jep_comments` gem, because these two gems do not exist on RubyGems.org yet. So we must install them manually.
 
 To install the `jep_core` gem, we need to first build it, which we can do with
-the `gem build` command, and the `jep_core.gemspec`. We'll need to be inside
-the `jep_core` directory to run this command.
+the `gem build` command.
+
+We'll need to be inside the `jep_core` directory to run this command:
 
 ```
 gem build jep_core.gemspec
@@ -446,11 +510,12 @@ end
 *jep_core/lib/jep_core/response.rb*
 
 ```ruby
-module JepCore
-  class Response
-    def initialize(user:)
-      @user = user
-    end
+class Response
+  attr_reader :answers
+
+  def initialize(user:)
+    @user = user
+    @answers = []
   end
 end
 ```
@@ -501,7 +566,7 @@ you asked!
 
 When you're using gems in Ruby, their `lib` directories get added to a list of
 directories called the _load path_. The load path is where Ruby goes looking
-for files to require them. So in the case of our `jep_core` and jep_comments`
+for files to require them. So in the case of our `jep_core` and `jep_comments`
 gems, both of their `lib` directories would be on the load path.
 
 If we had a file in `jep_core/lib` that was called `user.rb` and one _also_ in
@@ -529,14 +594,14 @@ out in `irb`. We've got both of our gems installed now, so this next part
 should be a cinch.
 
 Let's open up `irb` and try working with these gems. It's not important where
-you open `irb`; it will work anywhere on your machine.
+you open `irb`; it will work anywhere on your machine. This is because of when you install gems, they are made globally available by default.
 
 We can require the `jep_core` and `jep_comments` gem like this:
 
 ```
-irb(main):001:0> require 'jep_core'
+irb(main):001:0> require "jep_core"
 true
-irb(main):002:0> require 'jep_comments'
+irb(main):002:0> require "jep_comments"
 true
 ```
 
@@ -571,14 +636,16 @@ module JepCore
 end
 ```
 
-When we do `require 'jep_core'`, it just loads this one file. There is nothing
-in our code that tells it where to find the `JepCore::User` class at the
-moment, and so it is uninitialized.
+When we do `require 'jep_core'`, it just loads / requires this one file. There
+is nothing in our code that tells it where to find the `JepCore::User` class at
+the moment, and so that class is uninitialized.
 
 This `jep_core.rb` file should be considered as the "entrypoint" to this
 project. Whatever should be made available from this gem should be required
-here, in this file. So at the top of this file, let's put a few more `require`
-calls so that our `User` and `Response` classes are loaded:
+here, in this file. This is so that we can simply do `require "jep_core"` and then the whole project is loaded.
+
+So at the top of this file, let's put a few more `require` calls so that our
+`User` and `Response` classes are loaded:
 
 ```ruby
 require "jep_core/answer"
@@ -635,7 +702,7 @@ rake install
 With the gem newly rebuilt + installed, our code should now work:
 
 ```
-irb(main):001:0> require 'jep_core'
+irb(main):001:0> require "jep_core"
 => true
 irb(main):002:0> JepCore::User.new(name: "Ryan") 
 => #<JepCore::User:0x007fb3390d20c0 @name="Ryan">
@@ -654,7 +721,7 @@ Let's fix this now. We'll go into the `jep_comments` gem and open up the
 `jep_comments/comment.rb` file:
 
 ```ruby
-require 'jep_comments/comment'
+require "jep_comments/comment"
 ```
 
 Because we've made changes to the `jep_comments` gem, we will need to
@@ -669,7 +736,7 @@ We'll then go back into our `irb` prompt and try using the
 `JepComments::Comment` class again:
 
 ```
-irb(main):001:0> require 'jep_comments'
+irb(main):001:0> require "jep_comments"
 => true
 irb(main):002:0> JepComments::Comment.new("A new comment!", author: "me@ryanbigg.com")
 => #<JepComments::Comment:0x007ff95810b5b8 @text="A new comment!", @author=#<JepCore::User:0x007ff95810b540 @name="me@ryanbigg.com">>
@@ -688,9 +755,13 @@ This line tells Ruby that `jep_comments/lib/jep_comments/comment.rb` requires
 `jep_core/user`. Ruby will dutifully load that file, and then continue with
 executing the remainder of the file once `jep_core/user` has been loaded.
 
-
 ## Conclusion
 
 In this guide you've seen how to share code across different projects, by
 introducing dependencies between them, listing them in the gemspec and by
 cross-requiring files too.
+
+## Homework
+
+* The `cli.rb` file was left out of the `jep_core` gem. Where is the right place to put this file? How could we make it so that someone who had the `jep_core` gem installed could run the command `run_survey` and it would prompt them for the questions?
+
