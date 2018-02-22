@@ -1,17 +1,12 @@
 # Banana, A Warden Example Application
 
-cjz was all like "bros, teach me the way of the Warden". And we said unto him
-"lol, like use Devise". But cjz refused. Some say it was a gallant refusal.
-Others said he was crazy. The third group asked "who the fuck is cjz?". And
-then it was so.
+Warden is a lightweight authentication library for Ruby applications. It's most
+commonly used in conjunction with the Devise gem.
 
-Thus, I spent some time battling the beast known as Warden to produce this
-application. Gaze unto it's soft, gooey center to understand how you too can
-use Warden by itself within a Rails app.
+This is a short guide on how Warden authenticates users in your applications.
+
 
 ## omg there is code and I don't know what it does
-
-*Everybody be cool.*
 
 Warden works by placing a thing called "middleware" in the "rack stack" for
 your application. There's a whole bunch of middleware that make up a Rails
@@ -24,10 +19,10 @@ parlance, it's called an "environment") in certain ways by adding headers,
 modifying content and other fun things. They can even stop the request in its
 tracks and return a response immediately.
 
-This particular piece of middleware, `Warden::Manager`, is provided by the
-warden gem which you may know from such places as the `Gemfile` of this
-application, and as a major component in how Devise works. This middleware is
-configured like this inside `config/application.rb`:
+There's a particular piece of middleware that the Warden gem provides called,
+`Warden::Manager`. Inside this guide's example application, you can see this
+middleware. This middleware is configured like this inside
+`config/application.rb`:
 
 ```ruby
 config.middleware.use Warden::Manager do |manager|
@@ -44,7 +39,6 @@ defined like this:
 
 ```ruby
 Warden::Strategies.add(:password) do
-
   def valid?
     params["username"] || params["password"]
   end
@@ -89,11 +83,15 @@ end
 
 And here's your first real taste of what warden does. The `env['warden']`
 object is a warden proxy object that acts as the gateway to all things
-authentication within your application. If you tell it to logout, it'll logout
-the current session. If you tell it to authenticate, then it'll authenticate
-it.
+authentication within your application. The `env` comes from Rack, but the
+`env['warden']` thing comes from the `Warden::Manager` middleware.
 
-On the first (real) line of this controller, the aforementioned `env['warden'].logout` is called which will reset the warden session every time the login form is submitted.
+If you tell it to logout, it'll logout the current session. If you tell it to
+authenticate, then it'll authenticate it.
+
+On the first (real) line of this controller, the aforementioned
+`env['warden'].logout` is called which will reset the warden session every time
+the login form is submitted.
 
 The `env['warden'].authenticate` call in this action is where the real magic
 happens though. The `authenticate` method will tell Warden to look through all
@@ -114,9 +112,4 @@ What will happen then is that if it's successful, `env['warden'].authenticate`
 will return the newly authenticated-and-signed-in `User` object which will mean
 then that the controller will render "success". If it isn't successful, then it
 will render "failure".
-
-### Fin.
-
-This has been another deliriously educational wall-o-text by me. I hope you
-enjoyed it.
 
