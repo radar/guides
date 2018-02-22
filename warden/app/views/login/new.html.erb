@@ -1,13 +1,13 @@
-<%= form_tag "/login" do %>
+<%= form_with url: '/login' do |f| %>
   <p>
-    <%= label_tag :username %><br>
-    <%= text_field_tag :username %>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
   </p>
 
   <p>
-    <%= label_tag :password %><br>
-    <%= password_field_tag :password %>
+    <%= f.label :password %>
+    <%= f.text_field :password %>
   </p>
 
-  <%= submit_tag %>
+  <%= f.submit %>
 <% end %>
