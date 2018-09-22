@@ -39,9 +39,10 @@ In either case, everything will be eager loaded in production.
 
 ### If you add code in your lib/ directory
 
+
 #### Option 1
 
-If you put something in the lib/ dir, what you are saying is: "I wrote this library, and I want to depend on it where I decide." This means that if you use your library in a rake task, but not in a rails app, you just `require` it in your rake task. If you need this library to always be loaded for your rails app, you `require` it in an initializer. If you need this library for some of your models or controllers, you `require` it in those files, and since everything under your `app/` dir is already auto- and eager- loaded as needed, your library will only be "pulled-in" if something that requires it from `app/` or rake, or your custom script, actually gets loaded.
+If you put something in the lib/ dir, what you are saying is: "I wrote this library, and I want to depend on it where I decide." This means that if you use your library in a rake task, but not in a rails app, you just `require` it in your rake task. If you need this library to always be loaded for your rails app, you `require` it in an initializer. If you need this library for some of your models or controllers, you `require_dependency` (see below why) it in those files, and since everything under your `app/` dir is already auto- and eager- loaded as needed, your library will only be "pulled-in" if something that requires it from `app/` or rake, or your custom script, actually gets loaded.
 
 #### Option 2 (bad)
 
@@ -67,3 +68,13 @@ If you add lib/ into `eager_load_paths`, everything will work great. Your files 
 #### Organizing lib
 
 Regardless of which option you pick (option 1, hint hint), in your lib/ dir you should structure your code as if you structure a gem. If you need more than 1 file, you could for example add a same-named directory where everything is properly namespaced, and let your 1 file relatively require files in that directory.
+
+#### Why use require_dependency (auto-reloading)
+
+If you use `require_dependency`, you are enabling auto-reload of your files in development across requests. `require` alone won't do it. I suggested to use it in your rails app, but not in initializers or rake tasks because rake tasks only run once, and changing initializers always requires restart.
+
+However, it won't work without one additional piece of configuration. In application.rb you should add this:
+
+```
+config.watchable_dirs['lib'] = [:rb]
+```
